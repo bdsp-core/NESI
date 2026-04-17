@@ -5,16 +5,16 @@ This repository contains the codes and model weights for the CAMS prediction tas
 ### 📁 Folder Structure
 ```bash
 YAMA/CAMS
-├── Model
-│   ├── Code
-│   └── Model Weights
-│       ├── ML Models
-│       └── DL Model
+├── model
+│   ├── code
+│   └── model weights
+│       ├── ML models
+│       └── DL model
 └── Results5Fold
 ```
 ### 📌 Description
 
-- **ModelTraining5Fld**: Contains all training-related code and trained model weights.
+- **model**: Contains all training-related code and trained model weights.
   - **Code**: Scripts used for model development and training.
   - **Model Weights**: Saved trained models.
     - **ML Models**: Traditional machine learning model checkpoints.
