@@ -4,8 +4,8 @@ This repository contains the codes and model weights for the ICANS prediction ta
 
 ### 📁 Folder Structure
 YAMA/ICANS
-│
-├── ModelTraining5Fld
+
+├──> ModelTraining5Fld
 
 │ ├── Code
 │ └── Model Weights
