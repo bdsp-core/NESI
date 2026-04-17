@@ -3,16 +3,16 @@
 This repository contains the codes and model weights for the ICANS prediction task.
 
 ### 📁 Folder Structure
+```bash
 YAMA/ICANS
-
-├──> ModelTraining5Fld
-
-│ ├── Code
-│ └── Model Weights
-│ ├── ML Models
-│ └── DL Model
+├── ModelTraining5Fld
+│   ├── Code
+│   └── Model Weights
+│       ├── ML Models
+│       └── DL Model
 │
 └── Results5Fold
+```
 ### 📌 Description
 
 - **ModelTraining5Fld**: Contains all training-related code and trained model weights.
