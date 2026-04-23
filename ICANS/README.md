@@ -5,24 +5,24 @@ This repository contains the codes and model weights for the ICANS prediction ta
 ### 📁 Folder Structure
 ```bash
 YAMA/ICANS
-├── Model
-│   ├── Training
-│   └── ModelCheckpoints
-│       ├── KNN_ICANS
-│       ├── LR_ICANS
-│       ├── RESNEY_GAPonly
-│       ├── RESNET_notimeshift
-│       ├── RESNET_TIMESHIFT
-│       └── SVM_ICANS
-└── Results5Fld
-└── MorgothActivations
-│   ├── BS
-│   ├── FOCGEN
-│   ├── IIIC
-│   ├── NM
-│   ├── SLEEP
-│   ├── SLOWING
-│   └──  SPIKES
+      ├── Model
+      │   ├── Training
+      │   └── ModelCheckpoints
+      │       ├── KNN_ICANS
+      │       ├── LR_ICANS
+      │       ├── RESNEY_GAPonly
+      │       ├── RESNET_notimeshift
+      │       ├── RESNET_TIMESHIFT
+      │       └── SVM_ICANS
+      └── Results5Fld
+      └── MorgothActivations
+      │   ├── BS
+      │   ├── FOCGEN
+      │   ├── IIIC
+      │   ├── NM
+      │   ├── SLEEP
+      │   ├── SLOWING
+      │   └──  SPIKES
 ```
 ### 📌 Description
 
