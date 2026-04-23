@@ -5,20 +5,29 @@ This repository contains the codes and model weights for the CAMS prediction tas
 ### 📁 Folder Structure
 ```bash
 YAMA/CAMS
-├── model
-│   ├── code
-│   └── model weights
-│       ├── ML models
-│       └── DL model
-└── Results5Fold
+      ├── Model
+      │   ├── Training
+      │   └── ModelCheckpoints
+      │       ├── KNN_CAMS
+      │       ├── LR_CAMS
+      │       ├── RESNEY_GAPonly
+      │       ├── RESNET_notimeshift
+      │       ├── RESNET_TIMESHIFT
+      │       └── SVM_CAMS
+      └── Results5Fld
+      └── MorgothActivations
+      │   ├── BS
+      │   ├── FOCGEN
+      │   ├── IIIC
+      │   ├── NM
+      │   ├── SLEEP
+      │   ├── SLOWING
+      │   └──  SPIKES
 ```
 ### 📌 Description
 
-- **model**: Contains all training-related code and trained model weights.
-  - **Code**: Scripts used for model development and training.
-  - **Model Weights**: Saved trained models.
-    - **ML Models**: Traditional machine learning model checkpoints.
-    - **DL Model**: Deep learning model checkpoints.
-
-- **Results5Fold**: Contains evaluation results from 5-fold cross-validation experiments.
-
+- **Model**: Contains all training-related code and trained model weights.
+  - **Training**: Scripts used for model development and training with % fold cross validation.
+  - **ModelCheckpoints**: Saved weights of the ML/DL models.
+    
+- **Results5Fld**: Contains evaluation results from 5-fold cross-validation experiments.
