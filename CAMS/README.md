@@ -27,7 +27,7 @@ YAMA/CAMS
 ### 📌 Description
 
 - **Model**: Contains all training-related code and trained model weights.
-  - **Training**: Scripts used for model development and training with % fold cross validation.
+  - **Training**: Scripts used for model development and training with 5 fold cross validation.
   - **ModelCheckpoints**: Saved weights of the ML/DL models.
     
 - **Results5Fld**: Contains evaluation results from 5-fold cross-validation experiments.
