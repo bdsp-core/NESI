@@ -8,12 +8,20 @@ YAMA/CAMS
       ├── Model
       │   ├── Training
       │   └── ModelCheckpoints
-      │       ├── KNN_CAMS
-      │       ├── LR_CAMS
-      │       ├── RESNEY_GAPonly
-      │       ├── RESNET_notimeshift
-      │       ├── RESNET_TIMESHIFT
-      │       └── SVM_CAMS
+      │       ├── 3class
+      │             ├── KNN_CAMS
+      │             ├── LR_CAMS
+      │             ├── RESNEY_GAPonly
+      │             ├── RESNET_notimeshift
+      │             ├── RESNET_TIMESHIFT
+      │             └── SVM_CAMS
+      │       ├── 8class
+      │             ├── KNN_CAMS
+      │             ├── LR_CAMS
+      │             ├── RESNEY_GAPonly
+      │             ├── RESNET_notimeshift
+      │             ├── RESNET_TIMESHIFT
+      │             └── SVM_CAMS
       └── Results5Fld
       └── MorgothActivations
       │   ├── BS
