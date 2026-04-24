@@ -5,8 +5,12 @@ This repository contains the codes and model weights for the RASS prediction tas
 ### 📁 Folder Structure
 ```bash
 YAMA/RASS
+      ├── Cohort
+      │     ├── MGH Cohort metadata (csv file)
+      │     ├── BWH Cohort metadata (csv file)
       ├── Model
       │   ├── Training
+      │   ├── Testing
       │   └── ModelCheckpoints
       │       ├── LR_RASS
       │       ├── RESNEY_GAPonly
