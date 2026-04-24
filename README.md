@@ -18,6 +18,8 @@ By leveraging EEG as an objective, continuous physiological signal, YAMA aims to
 The framework supports both dataset-specific and unified modeling approaches, enabling cross-scale learning and generalization across heterogeneous clinical cohorts. This facilitates consistent neurological monitoring and opens avenues for early detection of deterioration and outcome prediction, including mortality risk.
 
 📂 Repository Structure
+
+```
 YAMA/
 │── RASS/                  # Codes, Model weights for RASS Prediction Model
 │── GCS/                   # Codes, Model weights for GCS Prediction Model
@@ -28,7 +30,7 @@ YAMA/
 │── requirements.txt       # Python dependencies
 │── environment.yml        # Conda environment (recommended)
 │── README.md              # Project documentation
-
+```
 
 ## ⚙️ Installation
 
