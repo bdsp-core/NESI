@@ -15,6 +15,9 @@ YAMA/ICANS
       │       ├── RESNET_TIMESHIFT
       │       └── SVM_ICANS
       └── Results5Fld
+      └── ICANS_Best_DL_model
+      │   ├── ResNetGAP
+      │       ├── RESNETGAP_Best_ICANS.pth (best model weight)
       └── MorgothActivations
       │   ├── BS
       │   ├── FOCGEN
