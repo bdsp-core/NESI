@@ -32,6 +32,27 @@ YAMA/
 │── README.md              # Project documentation
 ```
 
+## ⚠️ Note: Necessary Steps Before Installation
+
+🚨 **IMPORTANT REQUIREMENT**
+
+We have used **MORGOTH** as the foundational model for EEG feature extraction.
+
+Before installing YAMA, you **must first set up MORGOTH**.
+
+👉 Please visit the MORGOTH repository and create its required environment:
+
+🔗 **MORGOTH Repository:** [https://github.com/bdsp-core/morgoth]
+
+---
+
+### ⚙️ Setup Requirement
+- Follow the installation instructions provided in the MORGOTH repository
+- Ensure the virtual environment for MORGOTH is properly created and functional
+- YAMA depends on MORGOTH for feature extraction from raw EEG signals
+
+⚠️ **Do NOT proceed with YAMA installation until MORGOTH is fully set up.**
+
 ## ⚙️ Installation
 
 ### 🔹 1. Clone the repository
