@@ -98,5 +98,4 @@ python -m ipykernel install --user --name torchenv
 For questions, please contact:
 
 Arka Roy – aroy11@bidmc.harvard.edu
-
 Brandon Westover - bwestove@bidmc.harvard.edu
