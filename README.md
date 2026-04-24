@@ -32,7 +32,7 @@ YAMA/
 │── README.md              # Project documentation
 ```
 
-## ⚠️ Note: Necessary Steps Before Installation
+## ⚠️ Necessary Steps Before Installation
 
 🚨 **IMPORTANT REQUIREMENT**
 
