@@ -93,3 +93,8 @@ python -c "import torch; import numpy; import shap; print('Environment OK')"
 ```bash
 python -m ipykernel install --user --name torchenv
 ```
+📬 Contact
+
+For questions, please contact:
+Arka Roy – aroy11@bidmc.harvard.edu
+Brandon Westover - bwestove@bidmc.harvard.edu
