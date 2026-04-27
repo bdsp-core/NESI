@@ -365,24 +365,45 @@ def morgoth_10minfea_matrix(data_frame):
     
     return X, Y_grouped, Y_raw, Y_raw_transformed, dataset_names, file_names
 
-# X_train_data_global, Ygrouped_train_global, Yraw_train_global, Yraw_transformed_train_global, train_dataset_names_global,trn_filenames_global = morgoth_10minfea_matrix(df_train)
-# X_val_data_global, Ygrouped_val_global, Yraw_val_global, Yraw_transformed_val_global, val_dataset_names_global, val_filenames_global = morgoth_10minfea_matrix(df_val)
+X_train_data_global, Ygrouped_train_global, Yraw_train_global, Yraw_transformed_train_global, train_dataset_names_global,trn_filenames_global = morgoth_10minfea_matrix(df_train)
+X_val_data_global, Ygrouped_val_global, Yraw_val_global, Yraw_transformed_val_global, val_dataset_names_global, val_filenames_global = morgoth_10minfea_matrix(df_val)
 X_tst_data_global, Ygrouped_tst_global, Yraw_tst_global, Yraw_transformed_tst_global, tst_dataset_names_global, tst_filenames_global = morgoth_10minfea_matrix(df_test)
 
-# X_train_data_global_trch = torch.tensor(X_train_data_global, dtype=torch.float32)
-# X_val_data_global_trch   = torch.tensor(X_val_data_global, dtype=torch.float32)
+#-------- Save the 591*17 dim input data for train validation and test cases ----------
+results_dir = NESI_ROOT / "Results"
+results_dir.mkdir(parents=True, exist_ok=True)
+import pickle
+
+with open(results_dir / "NESITripletIP_Morgoth_train_data.pkl", "wb") as f:
+    pickle.dump(X_train_data_global, f)
+print('Input Train data saved!')
+
+with open(results_dir / "NESITripletIP_Morgoth_val_data.pkl", "wb") as f:
+    pickle.dump(X_val_data_global, f)
+print('Input Validation data saved!')
+
+with open(results_dir / "NESITripletIP_Morgoth_test_data.pkl", "wb") as f:
+    pickle.dump(X_tst_data_global, f)
+print('Input Test data saved!')
+
+#--------------------------------------------------------------
+# YOU CAN LOAD THEM DIRECTLY FROM HERE AND RUN FROM HERE
+#--------------------------------------------------------------
+
+X_train_data_global_trch = torch.tensor(X_train_data_global, dtype=torch.float32)
+X_val_data_global_trch   = torch.tensor(X_val_data_global, dtype=torch.float32)
 X_tst_data_global_trch   = torch.tensor(X_tst_data_global, dtype=torch.float32)
 
-# Ygrouped_train_global_trch = torch.tensor(Ygrouped_train_global, dtype=torch.long)
-# Ygrouped_val_global_trch   = torch.tensor(Ygrouped_val_global, dtype=torch.long)
+Ygrouped_train_global_trch = torch.tensor(Ygrouped_train_global, dtype=torch.long)
+Ygrouped_val_global_trch   = torch.tensor(Ygrouped_val_global, dtype=torch.long)
 Ygrouped_tst_global_trch   = torch.tensor(Ygrouped_tst_global, dtype=torch.long)
 
-# Yraw_train_global_trch = torch.tensor(Yraw_train_global, dtype=torch.long)
-# Yraw_val_global_trch   = torch.tensor(Yraw_val_global, dtype=torch.long)
+Yraw_train_global_trch = torch.tensor(Yraw_train_global, dtype=torch.long)
+Yraw_val_global_trch   = torch.tensor(Yraw_val_global, dtype=torch.long)
 Yraw_tst_global_trch   = torch.tensor(Yraw_tst_global, dtype=torch.long)
 
-# train_dataset_names_global = np.array(train_dataset_names_global)
-# val_dataset_names_global   = np.array(val_dataset_names_global)
+train_dataset_names_global = np.array(train_dataset_names_global)
+val_dataset_names_global   = np.array(val_dataset_names_global)
 tst_dataset_names_global   = np.array(tst_dataset_names_global)
 
 
@@ -501,12 +522,12 @@ model_trained = model_trained.to(device)
 model_trained.eval()
 
 # --------- CREATE LOADERS ----------
-# train_ds_all_global = TensorDataset(X_train_data_global_trch)
-# val_ds_all_global   = TensorDataset(X_val_data_global_trch)
+train_ds_all_global = TensorDataset(X_train_data_global_trch)
+val_ds_all_global   = TensorDataset(X_val_data_global_trch)
 tst_ds_all_global   = TensorDataset(X_tst_data_global_trch)
 
-# train_dl_all_global = DataLoader(train_ds_all_global, batch_size=128, shuffle=False)
-# val_dl_all_global   = DataLoader(val_ds_all_global, batch_size=128, shuffle=False)
+train_dl_all_global = DataLoader(train_ds_all_global, batch_size=128, shuffle=False)
+val_dl_all_global   = DataLoader(val_ds_all_global, batch_size=128, shuffle=False)
 tst_dl_all_global   = DataLoader(tst_ds_all_global, batch_size=128, shuffle=False)
 
 # --------- FUNCTION TO EXTRACT EMBEDDINGS ----------
@@ -522,12 +543,12 @@ def get_embeddings(model_trained, dataloader):
     return torch.cat(all_embeddings, dim=0)
 
 # --------- GET EMBEDDINGS ----------
-# train_embeddings_global = get_embeddings(model_trained, train_dl_all_global)
-# val_embeddings_global = get_embeddings(model_trained, val_dl_all_global)
+train_embeddings_global = get_embeddings(model_trained, train_dl_all_global)
+val_embeddings_global = get_embeddings(model_trained, val_dl_all_global)
 tst_embeddings_global = get_embeddings(model_trained, tst_dl_all_global)
 
-# print("Train embeddings shape:", train_embeddings_global.shape)
-# print("Val embeddings shape:", val_embeddings_global.shape)
+print("Train embeddings shape:", train_embeddings_global.shape)
+print("Val embeddings shape:", val_embeddings_global.shape)
 print("Test embeddings shape:", tst_embeddings_global.shape)
 print('\n')
 
@@ -572,12 +593,12 @@ model_score.to(device)
 
 model_score.eval()
 
-# train_scores_global = get_scores(model_score, train_embeddings_global, device=device)
-# val_scores_global   = get_scores(model_score, val_embeddings_global, device=device)
+train_scores_global = get_scores(model_score, train_embeddings_global, device=device)
+val_scores_global   = get_scores(model_score, val_embeddings_global, device=device)
 tst_scores_global  = get_scores(model_score, tst_embeddings_global, device=device)
 
-# print("Train EEG NESI shape:", train_scores_global.shape)
-# print("Val EEG NESI shape:", val_scores_global.shape)
+print("Train EEG NESI shape:", train_scores_global.shape)
+print("Val EEG NESI shape:", val_scores_global.shape)
 print("Test EEG NESI shape:", tst_scores_global.shape)
 print('\n')
 
@@ -658,21 +679,71 @@ def plot_score_distributions_by_raw(
     plt.tight_layout()
     plt.show()
 
-# plot_score_distributions_by_raw(
-#     predicted_scores=train_scores_global,
-#     y_raw=Yraw_train_global,
-#     dataset_names=train_dataset_names_global,
-#     title="Train Set NESI Distribution"
-# )
-# plot_score_distributions_by_raw(
-#     predicted_scores=val_scores_global,
-#     y_raw=Yraw_val_global,
-#     dataset_names=val_dataset_names_global,
-#     title="Validation Set NESI Distribution"
-# )
+plot_score_distributions_by_raw(
+    predicted_scores=train_scores_global,
+    y_raw=Yraw_train_global,
+    dataset_names=train_dataset_names_global,
+    title="Train Set NESI Distribution"
+)
+plot_score_distributions_by_raw(
+    predicted_scores=val_scores_global,
+    y_raw=Yraw_val_global,
+    dataset_names=val_dataset_names_global,
+    title="Validation Set NESI Distribution"
+)
 plot_score_distributions_by_raw(
     predicted_scores=tst_scores_global,
     y_raw=Yraw_tst_global,
     dataset_names=tst_dataset_names_global,
     title="Test Set NESI Distribution"
 )
+
+## **Save the NESI and TRiplet embeddings in your suitable location**
+
+import pandas as pd
+
+df_train_results = pd.DataFrame({
+    "Filename": trn_filenames_global,
+    "Dataset": train_dataset_names_global,
+    "TrueScore": Yraw_train_global,
+    "TransformedTrueScore": Yraw_transformed_train_global,
+    "PredictedNESI": train_scores_global
+})
+df_train_results["WhichSet"] = "Train"
+
+
+df_val_results = pd.DataFrame({
+    "Filename": val_filenames_global,
+    "Dataset": val_dataset_names_global,
+    "TrueScore": Yraw_val_global,
+    "TransformedTrueScore": Yraw_transformed_val_global,
+    "PredictedNESI": val_scores_global
+})
+df_val_results["WhichSet"] = "Validation"
+
+
+df_tst_results = pd.DataFrame({
+    "Filename": tst_filenames_global,
+    "Dataset": tst_dataset_names_global,
+    "TrueScore": Yraw_tst_global,
+    "TransformedTrueScore": Yraw_transformed_tst_global,
+    "PredictedNESI": tst_scores_global
+})
+df_tst_results["WhichSet"] = "Test"
+
+results_dir = NESI_ROOT / "Results"
+df_train_results.to_csv(results_dir / "NESI_train_results.csv", index=False)
+df_val_results.to_csv(results_dir / "NESI_val_results.csv", index=False)
+df_tst_results.to_csv(results_dir / "NESI_test_results.csv", index=False)
+
+# Save Embeddings 
+import pickle
+
+with open(results_dir / "NESI_train_embeddings.pkl", "wb") as f:
+    pickle.dump(train_embeddings_global, f)
+
+with open(results_dir / "NESI_val_embeddings.pkl", "wb") as f:
+    pickle.dump(val_embeddings_global, f)
+
+with open(results_dir / "NESI_test_embeddings.pkl", "wb") as f:
+    pickle.dump(tst_embeddings_global, f)
