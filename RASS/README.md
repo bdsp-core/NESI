@@ -11,11 +11,7 @@ YAMA/RASS
       ├── Model
       │   ├── Training
       │   ├── Testing
-      │   └── ModelCheckpoints
-      │       ├── LR_RASS
-      │       ├── RESNEY_GAPonly
-      │       ├── RESNET_notimeshift
-      │       ├── RESNET_TIMESHIFT
+      │    
       └── Results5Fld
       └── RASS_Best_DL_model
       │   ├── ResNetGAP
@@ -26,7 +22,7 @@ YAMA/RASS
 
 - **Model**: Contains all training-related code and trained model weights.
   - **Training**: Scripts used for model development and training with 5 fold cross validation.
-  - **ModelCheckpoints**: Saved weights of the ML/DL models.
+  - **ModelCheckpoints**: This has to be downloaded from the AWS. Due to Space realted constraint; we did not upload the Saved weights of the ML/DL model here in RASS folder of GitHub. Please download them from the AWS
     
 - **Results5Fld**: Contains evaluation results from 5-fold cross-validation experiments.
 
