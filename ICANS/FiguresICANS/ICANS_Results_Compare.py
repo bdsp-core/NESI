@@ -297,6 +297,140 @@ plot_fold_confmats_grid(
 
 # In[ ]:
 
+import matplotlib.pyplot as plt
+import numpy as np
+import numpy as np
+
+
+def compute_classwise_mae(results, num_classes):
+    """
+    Returns: array of shape (folds, classes)
+    """
+    n_folds = len(results)
+    mae_matrix = np.zeros((n_folds, num_classes))
+
+    for f, fold in enumerate(results):
+        if 'Y_true' in fold:
+            y_true = np.array(fold['Y_true'])
+            y_pred = np.array(fold['Y_pred'])
+
+        else:
+            y_true = np.array(fold['True_grouped_ICANS'])
+            y_pred = np.array(fold['Predictions_grouped_ICANS'])
+
+        for c in range(num_classes):
+            idx = np.where(y_true == c)[0]
+
+            if len(idx) > 0:
+                mae = np.mean(np.abs(y_true[idx] - y_pred[idx]))
+            else:
+                mae = np.nan  # handle missing class
+
+            mae_matrix[f, c] = mae
+
+    return mae_matrix
+
+def get_class_labels(num_classes):
+    if num_classes == 3:
+        return ['No/Mild (0-1)', 'Moderate (2-5)', 'Severe (6-7)']
+    elif num_classes == 8:
+        return [str(i) for i in range(8)]
+    else:
+        return [f'Class {i}' for i in range(num_classes)]
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_mae_bar_with_ci(results_list, model_names, num_classes):
+    """
+    Refined Bar plot: mean MAE per class with 95% CI
+    """
+    class_labels = get_class_labels(num_classes)
+    n_models = len(results_list)
+    
+    # Increase figure height slightly to accommodate the top legend
+    fig, ax = plt.subplots(figsize=(8, 6), dpi=150)
+
+    # Use a professional color palette
+    base_colors = plt.cm.get_cmap('Set3')(np.linspace(0, 1, n_models))
+    
+    # Calculate width based on number of models to prevent overlap
+    width = 0.8 / n_models  
+
+    for m_idx, results in enumerate(results_list):
+        mae_matrix = compute_classwise_mae(results, num_classes)
+
+        # Statistical calculations
+        mean_mae = np.nanmean(mae_matrix, axis=0)
+        std_mae = np.nanstd(mae_matrix, axis=0)
+        n_folds = np.sum(~np.isnan(mae_matrix), axis=0)
+        # Handle division by zero for folds
+        ci = 1.96 * (std_mae / np.sqrt(n_folds + 1e-9))
+
+        # Centering the bars
+        positions = np.arange(num_classes) + (m_idx - n_models/2) * width + width/2
+
+        ax.bar(
+            positions,
+            mean_mae,
+            width=width,
+            yerr=ci,
+            capsize=3, # Smaller caps look cleaner
+            color=base_colors[m_idx],
+            alpha=0.8, # Slightly higher opacity for visibility
+            edgecolor='black',
+            linewidth=0.8,
+            label=model_names[m_idx]
+        )
+
+    # --- Formatting Fixes ---
+    
+    ax.set_xticks(np.arange(num_classes))
+    ax.set_xticklabels(class_labels, rotation=25, ha='right', fontsize=10)
+    
+    ax.set_xlabel("Neurotoxicity Severity Classes", fontsize=11, fontweight='bold')
+    ax.set_ylabel("Mean Absolute Error (MAE)", fontsize=11, fontweight='bold')
+
+    # Title - smaller pad, larger font than before
+    ax.set_title(
+        "MAE Comparison Across Models (5-fold CV)\n"
+        "No/Mild (0), Moderate (1-2), Severe (3-4)",
+        fontsize=10,
+        pad=90 
+    )
+
+    # Legend Fix: Move it higher and use fewer columns if names are long
+    # bbox_to_anchor coordinates are (x, y)
+    ax.legend(
+        loc='lower center',
+        bbox_to_anchor=(0.5, 1.05),
+        ncol=3, # Reduced columns to prevent horizontal squashing
+        fontsize=8,
+        frameon=True, # A light frame helps readability
+        edgecolor='0.8'
+    )
+
+    # Gridlines for readability
+    ax.yaxis.grid(True, linestyle='--', alpha=0.7, zorder=0)
+    ax.set_axisbelow(True)
+
+    plt.tight_layout()
+    plt.show()
+
+
+all_models_results = [LR_fold_results_median, LR_fold_results_mean, LR_fold_results_covupper,
+                     SVM_fold_results_median, SVM_fold_results_mean, SVM_fold_results_covupper,
+                     KNN_fold_results_median, KNN_fold_results_mean, KNN_fold_results_covupper,
+                     RESNET_onlyGAP, RESNET_noshuffle, RESNET_withshuffle] 
+model_names = ['LR-Median','LR-Mean', 'LR-Covar_upper', 
+               'SVM-Median','SVM-Mean','SVM-Covar_upper',
+               'KNN-Median','KNN-Mean','KNN-Covar_upper',
+               'ResNet-only GAP Ordinal','ResNet-BiLSTM-no shuffle Ordinal','ResNet-BiLSTM-with shuffle Ordinal']
 
 
 
+plot_mae_bar_with_ci(
+    results_list=all_models_results,
+    model_names=model_names,
+    num_classes=3
+)
