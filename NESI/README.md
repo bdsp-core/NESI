@@ -8,6 +8,11 @@ YAMA/NESI
       ├── model
       │   ├── Training
       │   ├── Testing
+      |   ├── AblationStudy
+      |   |   ├── Training
+      |   |   ├── Testing
+      |   |   ├── ModelCheckpoints
+      |   |   └── FiguresAblation
       │   └── ModelCheckpoints
       │       
       └── FiguresNESI
@@ -15,7 +20,7 @@ YAMA/NESI
       │   ├── RASS_bespoke.pth
       │   ├── GCS_bespoke.pth
       │   ├── ICANS_bespoke.pth
-      │   ├── CAMS_bespoke.pth
+          └── CAMS_bespoke.pth
 ```
 ### 📌 Description
 
