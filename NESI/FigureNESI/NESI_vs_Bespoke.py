@@ -1447,7 +1447,7 @@ def plot_individual_vs_global_correct(
     icans_levels = sorted(np.unique(icans_y))
 
     colors = ["#AEC6CF", "#FFB7B2", "#B2E2F2", "#CFCFC4", "#FDFD96", "#B39EB5", "#FFD1DC"]
-    fig, axes = plt.subplots(2, 4, figsize=(15, 8.5))
+    fig, axes = plt.subplots(2, 4, figsize=(10,5), dpi=150)
 
     box_style = dict(
         patch_artist=True, showfliers=True,
@@ -1469,11 +1469,11 @@ def plot_individual_vs_global_correct(
         ax_top, ax_bot = axes[0, i], axes[1, i]
 
         # --- Plotting ---
-        bp1 = ax_top.boxplot(group_data(bad, y, levels), **box_style)
+        bp1 = ax_bot.boxplot(group_data(bad, y, levels), **box_style)
         for j, box in enumerate(bp1['boxes']): box.set_facecolor(colors[j % len(colors)])
 
         mask = global_dataset_names == name
-        bp2 = ax_bot.boxplot(group_data(global_scores[mask], global_yraw[mask], levels), **box_style)
+        bp2 = ax_top.boxplot(group_data(global_scores[mask], global_yraw[mask], levels), **box_style)
         for j, box in enumerate(bp2['boxes']): box.set_facecolor(colors[j % len(colors)])
 
         # --- Formatting (Spines, Ticks, Labels) ---
@@ -1489,16 +1489,16 @@ def plot_individual_vs_global_correct(
             ax.grid(axis='y', linestyle='--', alpha=0.3)
 
         # Set specific X-labels for the bottom row
-        ax_bot.set_xlabel(f"True {name} Score", fontweight='bold', fontsize=9)
+        ax_bot.set_xlabel(f"True {name} Score", fontweight='bold', fontsize=10)
 
         # Stacking titles to prevent horizontal overlap
-        ax_top.set_title(f"{name}\nρ={rho_ind}", fontweight='bold', pad=12)
-        ax_bot.set_title(f"ρ={rho_global}", fontweight='bold', pad=12)
+        ax_bot.set_title(f"ρ={rho_ind}", fontweight='bold', pad=10)
+        ax_top.set_title(f"{name}\nρ={rho_global}", fontweight='bold', pad=10)
 
-    axes[0, 0].set_ylabel("Bespoke Model's NESI", fontweight='bold', fontsize=10)
-    axes[1, 0].set_ylabel("Universal Model's NESI", fontweight='bold', fontsize=10)
+    axes[1, 0].set_ylabel("Bespoke Model's NESI", fontweight='bold', fontsize=10)
+    axes[0, 0].set_ylabel("Universal Model's NESI", fontweight='bold', fontsize=10)
 
-    fig.suptitle(title, fontsize=14, fontweight='bold', y=0.98)
+    #fig.suptitle(title, fontsize=10, fontweight='bold', y=0.98)
     plt.tight_layout(rect=[0, 0, 1, 0.94])
     plt.subplots_adjust(wspace=0.35, hspace=0.5) 
     plt.show()
