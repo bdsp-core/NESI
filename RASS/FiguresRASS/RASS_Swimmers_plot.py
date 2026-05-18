@@ -169,7 +169,7 @@ df_full['y_coord'] = df_full['BDSPPatientID'].map(pid_to_y)
 
 # ---------- Color map for RASS ----------
 rass_levels = np.arange(-5, 5)
-base_cmap = plt.cm.Blues_r
+base_cmap = plt.cm.magma
 colors = base_cmap(np.linspace(0.15, 0.95, len(rass_levels)))
 cmap = mcolors.ListedColormap(colors)
 norm = mcolors.BoundaryNorm(np.arange(-5.5, 5.5, 1), cmap.N)
@@ -217,7 +217,7 @@ ax.set_xticklabels(tick_labels, rotation=45)
 
 ax.grid(True, which='major', axis='x', linestyle='--', alpha=0.4)
 
-ax.set_xlabel("Time since EEG start (Minutes)")
+ax.set_xlabel("Time since EEG start (Hours)")
 ax.set_ylabel(f"No. of unique patients")
 ax.set_title("Swimmer Plot (0–30 Hours): RASS Assessments")
 ax.set_ylim(len(unique_pids), 0)
