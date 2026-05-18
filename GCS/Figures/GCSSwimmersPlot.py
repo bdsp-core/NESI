@@ -37,9 +37,9 @@ df_s0002=pd.read_csv(metadata_s0002_path)
 GCS_EEG_all_df_censor_mgb=pd.concat([df_s0002, df_s0001], ignore_index=True)
 subs_GCS=GCS_EEG_all_df_censor_mgb['BDSPPatientID'].unique()
 
-GCS_EEG_all_df_censor_mgb=GCS_EEG_all_df_censor_mgb.drop(columns=['DateOfBirth',	'DateOfDeath',	'CensorDate',
+GCS_EEG_all_df_censor_mgb=GCS_EEG_all_df_censor_mgb.drop(columns=['DateOfBirth',    'DateOfDeath',  'CensorDate',
                                                                     'HospitalAdmitDTS', 'HospitalDischargeDTS',
-                                                                    'AgeAtVisit',	'PatientRace', 'EthnicGroupDSC', 'SexDSC'])
+                                                                    'AgeAtVisit',   'PatientRace', 'EthnicGroupDSC', 'SexDSC'])
 
 df = GCS_EEG_all_df_censor_mgb.copy()
 
@@ -240,7 +240,7 @@ patient_groups = dict(tuple(df_plot.groupby('BDSPPatientID')))
 unique_pids = df_plot['BDSPPatientID'].dropna().unique()
 
 # ---------- Figure ----------
-fig, ax = plt.subplots(figsize=(7, 6), dpi=200)
+fig, ax = plt.subplots(figsize=(6, 5), dpi=200)
 
 gcs_levels = np.arange(3, 16)  # 3 to 15 inclusive
 
@@ -307,15 +307,17 @@ for i, pid in enumerate(tqdm(unique_pids, desc="Processing patients"), start=1):
             c=c,
             cmap=cmap,
             norm=norm,
-            s=2,
+            s=1,
+            alpha=0.9,
             edgecolors='none',
             zorder=3,
             rasterized=True
         )
 
 # ---------- Axes ----------
-ax.set_xlabel("Time (Hours)")
-ax.set_ylabel("Patient #")
+ax.set_xlabel("Time since EEG start (Hours)")
+ax.set_ylabel(f"No. of unique patients")
+ax.set_title("Swimmer Plot (0–30 Hours): GCS Assessments")
 
 tick_interval = 500
 ytick_indices = [1] + list(range(tick_interval, len(unique_pids) + 1, tick_interval))
@@ -325,11 +327,18 @@ ax.set_yticklabels([str(i) for i in ytick_indices])
 
 ax.set_xlim(0, 30)
 ax.margins(x=0, y=0)
+ax.set_xticks(np.arange(0, 31, 1))
+ax.set_xticklabels([f"{i}h" for i in range(31)], rotation=45)
+
+ax.set_xticks(np.arange(0, 30.5, 0.5), minor=True)
+ax.tick_params(axis='x', which='minor', length=3)
+
+ax.grid(True, which='major', axis='x', linestyle='--', alpha=0.4)
 
 # ---------- Colorbar ----------
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
 sm.set_array([])
-cbar = plt.colorbar(sm, ax=ax, label="gcs Level", fraction=0.046, pad=0.04, shrink=0.7)
+cbar = plt.colorbar(sm, ax=ax, label="GCS Level", fraction=0.046, pad=0.04, shrink=0.7)
 cbar.set_ticks(gcs_levels)
 cbar.set_ticklabels(gcs_levels)
 
