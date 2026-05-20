@@ -150,15 +150,17 @@ def subjectwise_evaluation_plots(
     fig, ax = plt.subplots(1, 3, figsize=figsize, dpi=dpi)
 
     ax[0].hist(mae_list, bins=20, color=pastel, edgecolor='black')
-    ax[0].set_xlabel("Mean absolute error")
-    ax[0].set_ylabel("Count of subjects")
+    ax[0].set_xlabel("Mean absolute error", fontsize=12)
+    ax[0].set_ylabel("Count of subjects", fontsize=12)
     
     ax[1].hist(agree_list, bins=20, color=pastel, edgecolor='black')
-    ax[1].set_xlabel("Percent(|y-y'|<=1) %")
+    ax[1].set_xlabel("Percent(|y-y'|<=1) %", fontsize=12)
     
     ax[2].hist(spearman_list, bins=20, color=pastel, edgecolor='black')
-    ax[2].set_xlabel("Spearman correlation (ρ)")
+    ax[2].set_xlabel("Spearman correlation (ρ)", fontsize=12)
     
+    for i in range(3):
+        ax[i].tick_params(axis='both', labelsize=12)
     plt.tight_layout()
 
     # ---------------------------------------------------------

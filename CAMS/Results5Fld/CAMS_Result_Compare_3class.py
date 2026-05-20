@@ -55,11 +55,7 @@ from sklearn.metrics import (accuracy_score, f1_score, classification_report,
                              confusion_matrix, roc_curve, auc)
 from sklearn.preprocessing import label_binarize
 import seaborn as sns
-plt.rcParams.update({
-    'font.size': 9,
-    'font.weight': 'bold',
-    'font.family': 'serif'
-})
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -336,11 +332,24 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
 
     class_labels = get_class_labels(num_classes)
     n_models = len(results_list)
-
+    pastel_colors = [
+        "#AFCBFF",  # pastel blue
+        "#A0E7E5",  # pastel cyan
+        "#B4F8C8",  # pastel mint green
+        "#FBE7C6",  # pastel peach
+        "#FFB7B2",  # pastel pink
+        "#E2C2FF",  # pastel lavender
+        "#FFD6A5",  # pastel orange
+        "#FDFFB6",  # pastel yellow
+        "#CAFFBF",  # soft lime green
+        "#9BF6FF",  # sky cyan
+        "#BDB2FF",  # soft violet-blue
+        "#FFC6FF"   # pastel magenta
+    ]
     base_colors = plt.cm.tab10(np.linspace(0, 1, n_models))
     width = 0.6 / n_models   # 🔥 smaller width → more gap
 
-    fig, ax = plt.subplots(figsize=(10, 6), dpi =150)
+    fig, ax = plt.subplots(figsize=(8, 6), dpi =210)
 
     for m_idx, results in enumerate(results_list):
 
@@ -360,10 +369,10 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
             width=width,
             yerr=ci,
             capsize=5,
-            color=base_colors[m_idx],
-            alpha=0.5,  # 🔥 lighter bars
+            color=pastel_colors[m_idx],
+            alpha=0.9,  # 🔥 lighter bars
             edgecolor='black',  # 🔥 black border
-            linewidth=1.2,
+            linewidth=1,
             label=model_names[m_idx]
         )
 
@@ -374,23 +383,24 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
 
     # Axis formatting
     ax.set_xticks(np.arange(num_classes))
-    ax.set_xticklabels(class_labels, rotation=0, ha='right')
+    ax.set_xticklabels(class_labels, rotation=0, ha='right', fontsize=10)
 
-    ax.set_xlabel("Classes")
-    ax.set_ylabel("MAE")
+    ax.set_xlabel("CAMS groups", fontsize=10)
+    ax.set_ylabel("Mean absolute error (MAE)")
 
-    ax.set_title(
-        "MAE Comparison Across Models (5 fold)\n"
-        "No/Mild delirium (0-1), Moderate (2-5), Severe (6-7)",
-        fontsize=13,
-        pad=60
-    )
+    # ax.set_title(
+    #     "MAE Comparison Across Models (5 fold)\n"
+    #     "No/Mild delirium (0-1), Moderate (2-5), Severe (6-7)",
+    #     fontsize=13,
+    #     pad=60
+    # )
 
     # Legend on top
     ax.legend(
         loc='upper center',
         bbox_to_anchor=(0.5, 1.18),
         ncol=4,
+        fontsize=9, 
         frameon=False
     )
 
