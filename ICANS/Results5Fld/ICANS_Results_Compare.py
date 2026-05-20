@@ -55,11 +55,7 @@ from sklearn.metrics import (accuracy_score, f1_score, classification_report,
                              confusion_matrix, roc_curve, auc)
 from sklearn.preprocessing import label_binarize
 import seaborn as sns
-plt.rcParams.update({
-    'font.size': 9,
-    'font.weight': 'bold',
-    'font.family': 'serif'
-})
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -332,7 +328,7 @@ def compute_classwise_mae(results, num_classes):
 
 def get_class_labels(num_classes):
     if num_classes == 3:
-        return ['No/Mild (0-1)', 'Moderate (2-5)', 'Severe (6-7)']
+        return ['No/Mild (0)', 'Moderate (1-2)', 'Severe (3-4)']
     elif num_classes == 8:
         return [str(i) for i in range(8)]
     else:
@@ -349,9 +345,23 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
     n_models = len(results_list)
     
     # Increase figure height slightly to accommodate the top legend
-    fig, ax = plt.subplots(figsize=(8, 6), dpi=150)
+    fig, ax = plt.subplots(figsize=(8, 6), dpi=210)
 
     # Use a professional color palette
+    pastel_colors = [
+        "#AFCBFF",  # pastel blue
+        "#A0E7E5",  # pastel cyan
+        "#B4F8C8",  # pastel mint green
+        "#FBE7C6",  # pastel peach
+        "#FFB7B2",  # pastel pink
+        "#E2C2FF",  # pastel lavender
+        "#FFD6A5",  # pastel orange
+        "#FDFFB6",  # pastel yellow
+        "#CAFFBF",  # soft lime green
+        "#9BF6FF",  # sky cyan
+        "#BDB2FF",  # soft violet-blue
+        "#FFC6FF"   # pastel magenta
+    ]
     base_colors = plt.cm.get_cmap('Set3')(np.linspace(0, 1, n_models))
     
     # Calculate width based on number of models to prevent overlap
@@ -376,7 +386,7 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
             width=width,
             yerr=ci,
             capsize=3, # Smaller caps look cleaner
-            color=base_colors[m_idx],
+            color=pastel_colors[m_idx],
             alpha=0.8, # Slightly higher opacity for visibility
             edgecolor='black',
             linewidth=0.8,
@@ -386,18 +396,18 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
     # --- Formatting Fixes ---
     
     ax.set_xticks(np.arange(num_classes))
-    ax.set_xticklabels(class_labels, rotation=25, ha='right', fontsize=10)
+    ax.set_xticklabels(class_labels, rotation=15, ha='right', fontsize=10)
     
-    ax.set_xlabel("Neurotoxicity Severity Classes", fontsize=11, fontweight='bold')
-    ax.set_ylabel("Mean Absolute Error (MAE)", fontsize=11, fontweight='bold')
+    ax.set_xlabel("Neurotoxicity Severity Classes", fontsize=11, fontweight='normal')
+    ax.set_ylabel("Mean Absolute Error (MAE)", fontsize=11, fontweight='normal')
 
     # Title - smaller pad, larger font than before
-    ax.set_title(
-        "MAE Comparison Across Models (5-fold CV)\n"
-        "No/Mild (0), Moderate (1-2), Severe (3-4)",
-        fontsize=10,
-        pad=90 
-    )
+    # ax.set_title(
+    #     "MAE Comparison Across Models (5-fold CV)\n"
+    #     "No/Mild (0), Moderate (1-2), Severe (3-4)",
+    #     fontsize=10,
+    #     pad=90 
+    # )
 
     # Legend Fix: Move it higher and use fewer columns if names are long
     # bbox_to_anchor coordinates are (x, y)
@@ -406,7 +416,7 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
         bbox_to_anchor=(0.5, 1.05),
         ncol=3, # Reduced columns to prevent horizontal squashing
         fontsize=8,
-        frameon=True, # A light frame helps readability
+        frameon=False, # A light frame helps readability
         edgecolor='0.8'
     )
 
