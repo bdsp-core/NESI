@@ -1,0 +1,17 @@
+# Regenerable / large derived data files (rebuild with the *_features_csv.py scripts)
+NESI_window_features.csv
+NESI_full_features.csv
+NESI_full_features_missing.csv
+NESI_full_features_perpatient.csv
+NESI_balanced_features.csv
+NESI_perpatient_stratified.csv
+NESI_window_stratified.csv
+NESI_pacmap_coords.csv
+
+# Per-script ad-hoc logs
+*.log
+sync_logs/
+
+# Python bytecode
+__pycache__/
+*.pyc
