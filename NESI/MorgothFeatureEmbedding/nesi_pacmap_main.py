@@ -1,14 +1,17 @@
 """
-Single PaCMAP run producing two figures:
+Canonical PaCMAP pipeline + all paper figures.
 
-  1. NESI_pacmap_feature_grid.png  - 3x5 grid (NESI + 13 features), viridis
-     for features. "Slowing" panel replaces "NoSlowing" (s = 1 - p_NoSlowing
-     applied BEFORE logit + z-score).
+Run order:
+  1. Stratify per-patient median NESI into 12 bins, sample 400 patients/bin.
+  2. Compute Slowing = 1 - NoSlowing, then logit + per-column z-score.
+  3. PaCMAP with NESI weighted 2x as the 14th input feature (canonical
+     embedding); a no-NESI PaCMAP is also run for comparison figures.
+  4. Render canonical figures (1x2 overview, clinical atlas), supporting
+     figures (no-NESI vs with-NESI side-by-side, weight sweep, smoothed
+     IIIC map), and dump XY+rgb+labels to NESI_pacmap_iiic_data.npz for
+     the HTML smoothness explorer.
 
-  2. NESI_pacmap_iiic_color.png    - same embedding, points coloured by the
-     dominant IIIC pattern (or burst suppression).
-
-Coloring rule for figure 2:
+Coloring rule for the IIIC categorical map:
     if Burst_vs_NoBurst >= BURST_THRESHOLD:
         color = black                             # burst suppression
     else:
@@ -28,7 +31,6 @@ import pacmap
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 IN_CSV = SCRIPT_DIR / "NESI_window_features.csv"
-OUT_GRID = SCRIPT_DIR / "NESI_pacmap_feature_grid.png"
 OUT_IIIC = SCRIPT_DIR / "NESI_pacmap_iiic_color.png"
 OUT_IIIC_SMOOTH = SCRIPT_DIR / "NESI_pacmap_iiic_smooth.png"
 OUT_IIIC_WITH_NESI = SCRIPT_DIR / "NESI_pacmap_iiic_with_nesi.png"
@@ -90,6 +92,56 @@ FEATURE_GROUPS = [
     ('Generalized abnormalities',   ['GenSlowing', 'IIIC_GRDA',
                                      'IIIC_GPD']),
     ('Seizure / ictal',             ['IIIC_Seizure']),
+]
+
+# ─── Clinical 4-category colors for Figure 2's panel borders ──────────────
+SECTION_BORDER = {
+    'physiologic':        '#7FB97F',   # green
+    'slowing':            '#D9B872',   # tan / yellow
+    'rhythmic_periodic':  '#E89B9B',   # pink
+    'ictal_suppression':  '#D45959',   # red
+}
+
+# Each panel in the Figure 2 redesign -> which border color group.
+PANEL_SECTION = {
+    'Awake':              'physiologic',
+    'Normal_vs_Abnormal': 'physiologic',
+    'N1':                 'physiologic',
+    'N2':                 'physiologic',
+    'FocalSlowing':       'slowing',
+    'GenSlowing':         'slowing',
+    'IIIC_LRDA':          'rhythmic_periodic',
+    'IIIC_GRDA':          'rhythmic_periodic',
+    'IIIC_LPD':           'rhythmic_periodic',
+    'IIIC_GPD':           'rhythmic_periodic',
+    'IIIC_Seizure':       'ictal_suppression',
+    'Burst_vs_NoBurst':   'ictal_suppression',
+}
+
+# Short panel titles for the redesigned Figure 2.
+SHORT_TITLE = {
+    'Awake':              'Awake',
+    'Normal_vs_Abnormal': 'Normal',
+    'N1':                 'N1',
+    'N2':                 'N2',
+    'FocalSlowing':       'Focal slowing',
+    'GenSlowing':         'Gen. slowing',
+    'IIIC_LRDA':          'LRDA',
+    'IIIC_GRDA':          'GRDA',
+    'IIIC_LPD':           'LPD',
+    'IIIC_GPD':           'GPD',
+    'IIIC_Seizure':       'Seizure',
+    'Burst_vs_NoBurst':   'Suppression',
+}
+
+# Figure 2 ordering (top = benign → bottom = severe).
+PHYSIOLOGIC_PANELS = ['Awake', 'Normal_vs_Abnormal', 'N1', 'N2']
+# Each tuple is (focal_panel, generalized_panel).
+ABNORMAL_ROWS = [
+    ('FocalSlowing', 'GenSlowing'),
+    ('IIIC_LRDA',    'IIIC_GRDA'),
+    ('IIIC_LPD',     'IIIC_GPD'),
+    ('IIIC_Seizure', 'Burst_vs_NoBurst'),
 ]
 COORDS_CSV = SCRIPT_DIR / "NESI_pacmap_coords.csv"
 
@@ -183,18 +235,6 @@ def logit_z(X, eps=0.1):
     sd = L.std(axis=0, keepdims=True)
     sd[sd == 0] = 1.0
     return (L - mu) / sd
-
-
-def panel(ax, XY, values, title, *, cmap, vmin, vmax, point_size, label=None):
-    sc = ax.scatter(XY[:, 0], XY[:, 1], c=values, cmap=cmap,
-                    vmin=vmin, vmax=vmax,
-                    s=point_size, marker='o', edgecolors='none', alpha=0.6)
-    ax.set_title(title, fontsize=9, fontweight='bold')
-    ax.set_xticks([]); ax.set_yticks([])
-    cb = plt.colorbar(sc, ax=ax, fraction=0.045, pad=0.02)
-    cb.ax.tick_params(labelsize=6)
-    if label:
-        cb.set_label(label, fontsize=7)
 
 
 def jitter_xy_rgb(XY, rgb, n_copies=JITTER_COPIES,
@@ -488,40 +528,29 @@ def _feature_title(fname):
 
 def render_fig1_overview(XY, rgb, labels, sub, counts, *,
                           n_patients, n_windows, out_path):
-    """Figure 1: 1x3 overview. A = NESI, B = Rich IIIC, C = P(Normal)."""
+    """Figure 1: 1x2 overview. A = NESI, B = Rich IIIC categorical."""
     XY_aug, rgb_aug = jitter_xy_rgb(XY, rgb)
     labels_aug = np.tile(labels, JITTER_COPIES + 1)
     nesi_aug = np.tile(sub['NESI'].to_numpy(), JITTER_COPIES + 1)
-    pnormal_aug = np.tile(sub['Normal_vs_Abnormal'].to_numpy(),
-                          JITTER_COPIES + 1)
 
-    fig = plt.figure(figsize=(18.5, 6.5), dpi=140)
+    fig = plt.figure(figsize=(14, 6.5), dpi=140)
     gs = fig.add_gridspec(
-        1, 5,
-        width_ratios=[1.0, 0.035, 1.0, 1.0, 0.035],
-        wspace=0.12,
+        1, 3,
+        width_ratios=[1.0, 0.04, 1.0],
+        wspace=0.10,
         left=0.03, right=0.97, top=0.90, bottom=0.04,
     )
     axA = fig.add_subplot(gs[0, 0])
     ax_nesi_cb = fig.add_subplot(gs[0, 1])
     axB = fig.add_subplot(gs[0, 2])
-    axC = fig.add_subplot(gs[0, 3])
-    ax_prob_cb = fig.add_subplot(gs[0, 4])
 
     sc_n = _scatter_nesi_on_ax(axA, XY_aug, nesi_aug)
-    axA.set_title("A. NESI", fontsize=12, fontweight='bold')
+    axA.set_title("A. NESI (continuous)", fontsize=12, fontweight='bold')
     cb = fig.colorbar(sc_n, cax=ax_nesi_cb)
     cb.set_label("NESI", fontsize=10); cb.ax.tick_params(labelsize=8)
 
     _scatter_iiic_rich_on_ax(axB, XY_aug, rgb_aug, labels_aug, counts)
-    axB.set_title("B. Dominant IIIC pattern", fontsize=12, fontweight='bold')
-
-    sc_p = _scatter_feature_on_ax(axC, XY_aug, pnormal_aug)
-    axC.set_title("C. Normal vs Abnormal\nP(Normal): 0 = Abnormal, 1 = Normal",
-                  fontsize=11, fontweight='bold')
-    cb2 = fig.colorbar(sc_p, cax=ax_prob_cb)
-    cb2.set_label("P(Normal)", fontsize=10)
-    cb2.ax.tick_params(labelsize=8)
+    axB.set_title("B. Dominant IIIC category", fontsize=12, fontweight='bold')
 
     fig.suptitle(
         f"PaCMAP overview  (NESI weight = 2)  —  "
@@ -533,75 +562,124 @@ def render_fig1_overview(XY, rgb, labels, sub, counts, *,
     print(f"Saved {out_path}")
 
 
+def _style_panel_border(ax, color, lw=2.5):
+    for spine in ax.spines.values():
+        spine.set_color(color)
+        spine.set_linewidth(lw)
+
+
 def render_fig2_atlas(XY, sub, *, n_patients, n_windows, out_path):
-    """Figure 2: feature-loading atlas, clinically grouped, shared 0-1 cbar."""
-    XY_aug, _ = jitter_xy_rgb(XY, np.zeros((len(XY), 3)))  # rgb unused
+    """Figure 2 redesign: top row = 4 physiologic panels; below that, 4 rows
+    of 2 panels each split into focal | generalized columns. Top-to-bottom
+    progression = benign -> severe. Each panel has a category-coloured
+    border. Shared 0-1 colorbar on the right; legend at the bottom.
+    """
+    XY_aug, _ = jitter_xy_rgb(XY, np.zeros((len(XY), 3)))
     feat_aug = {f: np.tile(sub[f].to_numpy(), JITTER_COPIES + 1)
                 for f in INPUT_FEATURES}
 
-    n_panel_cols = 3
-    # Alternate (header thin row, panel row) for each group.
-    height_ratios = []
-    for _ in FEATURE_GROUPS:
-        height_ratios.append(0.18)
-        height_ratios.append(1.0)
-    n_grid_rows = len(height_ratios)
-
-    fig = plt.figure(figsize=(15.5, 4.2 * len(FEATURE_GROUPS) + 1.2), dpi=140)
+    # Layout:
+    #   cols = [arrow, p0, p1, p2, p3, colorbar]      6 columns
+    #   rows = [physio, gap, focal-gen-header, ab1, ab2, ab3, ab4, legend]
+    fig = plt.figure(figsize=(14.5, 22.0), dpi=130)
     gs = fig.add_gridspec(
-        n_grid_rows, n_panel_cols + 1,
-        width_ratios=[1.0] * n_panel_cols + [0.04],
-        height_ratios=height_ratios,
-        hspace=0.22, wspace=0.08,
-        left=0.03, right=0.94, top=0.965, bottom=0.02,
+        8, 6,
+        width_ratios=[0.10, 1.0, 1.0, 1.0, 1.0, 0.05],
+        height_ratios=[1.0, 0.05, 0.20, 1.0, 1.0, 1.0, 1.0, 0.40],
+        hspace=0.22, wspace=0.10,
+        left=0.04, right=0.95, top=0.965, bottom=0.02,
     )
 
-    for g_idx, (group_name, group_feats) in enumerate(FEATURE_GROUPS):
-        header_row = 2 * g_idx
-        panel_row = 2 * g_idx + 1
+    # ── Benign → severe arrow column on the left (spans all panel rows) ──
+    ax_arrow = fig.add_subplot(gs[0:7, 0])
+    ax_arrow.set_axis_off()
+    ax_arrow.set_xlim(0, 1); ax_arrow.set_ylim(0, 1)
+    ax_arrow.annotate(
+        '', xy=(0.6, 0.04), xytext=(0.6, 0.96),
+        xycoords='axes fraction',
+        arrowprops=dict(arrowstyle='->', lw=1.8, color='0.4'),
+    )
+    ax_arrow.text(0.6, 1.00, 'benign', ha='center', va='bottom',
+                  fontsize=11, color='0.3', fontweight='bold',
+                  transform=ax_arrow.transAxes)
+    ax_arrow.text(0.6, 0.00, 'severe', ha='center', va='top',
+                  fontsize=11, color='0.3', fontweight='bold',
+                  transform=ax_arrow.transAxes)
 
-        ax_h = fig.add_subplot(gs[header_row, :n_panel_cols])
-        ax_h.set_xticks([]); ax_h.set_yticks([])
-        for spine in ('top', 'right', 'left'):
-            ax_h.spines[spine].set_visible(False)
-        ax_h.spines['bottom'].set_color('0.4')
-        ax_h.spines['bottom'].set_linewidth(0.8)
-        ax_h.text(0.0, 0.55, group_name,
-                  fontsize=14, fontweight='bold', color='0.15',
-                  ha='left', va='center', transform=ax_h.transAxes)
-        ax_h.set_xlim(0, 1); ax_h.set_ylim(0, 1)
+    # ── Row 0: 4 physiologic panels (Awake | Normal | N1 | N2) ──
+    for j, fname in enumerate(PHYSIOLOGIC_PANELS):
+        ax = fig.add_subplot(gs[0, 1 + j])
+        _scatter_feature_on_ax(ax, XY_aug, feat_aug[fname])
+        ax.set_title(SHORT_TITLE[fname], fontsize=11, fontweight='bold')
+        _style_panel_border(ax, SECTION_BORDER[PANEL_SECTION[fname]])
 
-        n_in_group = len(group_feats)
-        if n_in_group == 1:
-            cols_to_use = [1]  # centered single panel
-        elif n_in_group == 2:
-            cols_to_use = [0, 2]
-        else:
-            cols_to_use = list(range(n_in_group))
+    # ── Row 2: focal/generalized column headers ──
+    ax_h_focal = fig.add_subplot(gs[2, 1:3])
+    ax_h_focal.set_axis_off()
+    ax_h_focal.text(0.5, 0.5, "Focal · lateralized",
+                    fontsize=12, fontweight='bold', color='0.15',
+                    ha='center', va='center', transform=ax_h_focal.transAxes)
+    ax_h_gen = fig.add_subplot(gs[2, 3:5])
+    ax_h_gen.set_axis_off()
+    ax_h_gen.text(0.5, 0.5, "Generalized · diffuse",
+                  fontsize=12, fontweight='bold', color='0.15',
+                  ha='center', va='center', transform=ax_h_gen.transAxes)
 
-        for j, fname in enumerate(group_feats):
-            col = cols_to_use[j]
-            ax = fig.add_subplot(gs[panel_row, col])
-            _scatter_feature_on_ax(ax, XY_aug, feat_aug[fname])
-            ax.set_title(_feature_title(fname),
-                          fontsize=10.5, fontweight='bold')
+    # ── Rows 3-6: focal vs generalized pairs, top->bottom = benign->severe ──
+    for i, (focal, gen) in enumerate(ABNORMAL_ROWS):
+        grid_row = 3 + i
 
-    # Single shared colorbar (right-edge column, spans full figure height).
-    ax_cb = fig.add_subplot(gs[:, n_panel_cols])
-    sm = plt.cm.ScalarMappable(cmap=PROB_CMAP,
-                                norm=Normalize(vmin=0, vmax=1))
+        ax_f = fig.add_subplot(gs[grid_row, 1:3])
+        _scatter_feature_on_ax(ax_f, XY_aug, feat_aug[focal])
+        ax_f.set_title(SHORT_TITLE[focal], fontsize=11, fontweight='bold')
+        _style_panel_border(ax_f, SECTION_BORDER[PANEL_SECTION[focal]])
+
+        ax_g = fig.add_subplot(gs[grid_row, 3:5])
+        _scatter_feature_on_ax(ax_g, XY_aug, feat_aug[gen])
+        ax_g.set_title(SHORT_TITLE[gen], fontsize=11, fontweight='bold')
+        _style_panel_border(ax_g, SECTION_BORDER[PANEL_SECTION[gen]])
+
+    # ── Shared probability colorbar on the right (panel rows only) ──
+    ax_cb = fig.add_subplot(gs[0:7, 5])
+    sm = plt.cm.ScalarMappable(cmap=PROB_CMAP, norm=Normalize(vmin=0, vmax=1))
     sm.set_array([])
     cb = fig.colorbar(sm, cax=ax_cb)
     cb.set_label("Feature probability / loading  "
                   "(0 = absent / low, 1 = high)", fontsize=10)
     cb.ax.tick_params(labelsize=8)
 
+    # ── Bottom legend row: category swatches + severity note ──
+    ax_legend = fig.add_subplot(gs[7, 1:5])
+    ax_legend.set_axis_off()
+    legend_handles = [
+        mpatches.Patch(facecolor='white', edgecolor=SECTION_BORDER['physiologic'],
+                       linewidth=2.5, label='physiologic'),
+        mpatches.Patch(facecolor='white', edgecolor=SECTION_BORDER['slowing'],
+                       linewidth=2.5, label='slowing'),
+        mpatches.Patch(facecolor='white',
+                       edgecolor=SECTION_BORDER['rhythmic_periodic'],
+                       linewidth=2.5, label='rhythmic / periodic'),
+        mpatches.Patch(facecolor='white',
+                       edgecolor=SECTION_BORDER['ictal_suppression'],
+                       linewidth=2.5, label='ictal / suppression'),
+    ]
+    ax_legend.legend(
+        handles=legend_handles, loc='upper center', ncol=4, fontsize=10,
+        bbox_to_anchor=(0.5, 1.0), frameon=False, handletextpad=0.6,
+    )
+    ax_legend.text(
+        0.5, 0.10,
+        "Top → bottom = increasing NESI severity",
+        ha='center', va='center', fontsize=10, color='0.4',
+        transform=ax_legend.transAxes, style='italic',
+    )
+
     fig.suptitle(
         f"PaCMAP feature-loading atlas  (NESI weight = 2)  —  "
         f"n={n_windows} windows from {n_patients} patients",
         fontsize=12, fontweight='bold', y=0.985,
     )
-    fig.savefig(out_path, dpi=140, bbox_inches='tight')
+    fig.savefig(out_path, dpi=130, bbox_inches='tight')
     plt.close(fig)
     print(f"Saved {out_path}")
 
@@ -729,37 +807,6 @@ def main():
     coords['pacmap_y'] = XY[:, 1]
     coords.to_csv(COORDS_CSV, index=False)
     print(f"Wrote coords -> {COORDS_CSV}")
-
-    point_size = max(1.5, 100 / np.sqrt(len(sub)))
-
-    # ── Figure 1: feature grid ──
-    ncols, nrows = 5, 3
-    fig, axes = plt.subplots(nrows, ncols, figsize=(4.0 * ncols, 4.0 * nrows),
-                              dpi=170)
-    axes_flat = axes.reshape(-1)
-    panel(axes_flat[0], XY, sub.NESI.to_numpy(),
-          "NESI", cmap='coolwarm', vmin=-3, vmax=3,
-          point_size=point_size, label="NESI")
-    for i, fname in enumerate(INPUT_FEATURES, start=1):
-        vals = sub[fname].to_numpy()
-        lo, hi = np.quantile(vals, [0.01, 0.99])
-        if hi - lo < 1e-6:
-            lo, hi = float(vals.min()), float(max(vals.max(), vals.min() + 1e-6))
-        panel(axes_flat[i], XY, vals, fname, cmap='viridis',
-              vmin=lo, vmax=hi, point_size=point_size,
-              label=f"{fname} prob.")
-    for j in range(1 + len(INPUT_FEATURES), nrows * ncols):
-        axes_flat[j].axis('off')
-    fig.suptitle(
-        f"PaCMAP of MORGOTH window-vectors  "
-        f"(n={len(sub)} windows from {sub.PatientID.nunique()} patients; "
-        f"13 features, logit + z-score normalized)",
-        fontsize=12, fontweight='bold', y=0.995,
-    )
-    fig.tight_layout(rect=[0, 0, 1, 0.97])
-    fig.savefig(OUT_GRID, dpi=170, bbox_inches='tight')
-    plt.close(fig)
-    print(f"Saved {OUT_GRID}")
 
     # ── Figure 2: IIIC categorical coloring with within-category gradient ──
     labels = assign_iiic_label(sub)
