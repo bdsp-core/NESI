@@ -387,7 +387,7 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
             yerr=ci,
             capsize=3, # Smaller caps look cleaner
             color=pastel_colors[m_idx],
-            alpha=0.8, # Slightly higher opacity for visibility
+            alpha=0.93, # Slightly higher opacity for visibility
             edgecolor='black',
             linewidth=0.8,
             label=model_names[m_idx]
@@ -414,7 +414,7 @@ def plot_mae_bar_with_ci(results_list, model_names, num_classes):
     ax.legend(
         loc='lower center',
         bbox_to_anchor=(0.5, 1.05),
-        ncol=3, # Reduced columns to prevent horizontal squashing
+        ncol=4, # Reduced columns to prevent horizontal squashing
         fontsize=8,
         frameon=False, # A light frame helps readability
         edgecolor='0.8'
