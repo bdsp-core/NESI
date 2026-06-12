@@ -2,6 +2,7 @@
 
 ## Method
 <img width="4409" height="2640" alt="NESI_method" src="https://github.com/user-attachments/assets/4877c1a1-c5fb-4739-b164-41fc67a7af7f" />
+Fig.1: Illustrates (a) the overall framework for predicting the Neurophysiological Encephalopathy Severity Index (NESI); (b) the training strategy of the MORGOTH activation encoder for learning compact embedding representations using a triplet-based contrastive learning approach; and (c) the training process of the NESI prediction head employing a pairwise ranking learning framework.
 
 
 This repository contains the codes and model weights for the NESI prediction task.
