@@ -262,14 +262,14 @@ train_val, test = train_test_split(
     df_subjects,
     test_size=0.2,
     stratify=df_subjects['Dataset'],
-    random_state=42
+    random_state=40
 )
 
 train, val = train_test_split(
     train_val,
     test_size=0.125,
     stratify=train_val['Dataset'],
-    random_state=42
+    random_state=40
 )
 
 train_ids = set(train['BDSPPatientID'])
