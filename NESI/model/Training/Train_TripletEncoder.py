@@ -698,7 +698,7 @@ print(f"Size of trainset : {len(train_dataset)}")
 print(f"Size of validset : {len(val_dataset)}")
 print(f"Size of Testset : {len(tst_dataset)}")
 
-bs = 64
+bs = 128
 train_dataloader = DataLoader(train_dataset, batch_size=bs, shuffle=True)
 val_dataloader   = DataLoader(val_dataset, batch_size=bs, shuffle=False)
 tst_dataloader   = DataLoader(tst_dataset, batch_size=bs, shuffle=False)
