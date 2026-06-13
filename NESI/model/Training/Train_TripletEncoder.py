@@ -1009,7 +1009,7 @@ model_onlygap = MORGOTH_ResNet1D_onlyGAP_CORAL(num_features=17)
 base_model_dir = NESI_ROOT / "model" / "ModelCheckpointsNew" / "Triplet" 
 trainloss_history, valloss_history, final_path = Training_triplet_function(
     model= model_onlygap,
-    lr=0.005,
+    lr=0.0005,
     n_epochs=200,
     train_dl= train_dataloader,
     valid_dl= val_dataloader,
