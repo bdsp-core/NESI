@@ -2,6 +2,8 @@
 
 **A unified, continuous, EEG-based index of encephalopathy severity for critical care.**
 
+**🔬 Live interactive demo: https://bdsp-core.github.io/NESI/** — click any point on the PaCMAP embedding to view its 10-minute EEG segment (color by NESI, dominant IIC pattern, or MORGOTH feature).
+
 This repository contains the code and trained model weights for NESI, a continuous
 electroencephalography (EEG)-derived measure of acute brain dysfunction. Instead of predicting each
 bedside scale separately, NESI treats the major consciousness/encephalopathy scales as noisy
