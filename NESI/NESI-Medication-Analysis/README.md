@@ -9,6 +9,18 @@ This repository contains the analysis code for the medication analysis. It is or
 2. **Medication exposure summary** — extracts, classifies, and summarizes
    medication exposure across the four BDSP cohorts (I0001 GCS, I0001
    RASS, I0001 CAMS, I0002 GCS), producing Table 1 of the manuscript.
+3. **Data in eleveld-pk-analysis and medication-exposure** - Data is uploaded in AWS. Please download using terminal via the command:
+
+   Example:
+   aws s3 cp \
+   s3://bdsp-opendata-credentialed/yama/NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/ \
+   /home/ayush/Desktop/GitHub-YAMA/NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/ \
+   --recursive
+
+   aws s3 cp \
+   s3://bdsp-opendata-credentialed/yama/NESI/NESI-Medication-Analysis/medication-exposure/data/ \
+   /home/ayush/Desktop/GitHub-YAMA/NESI/NESI-Medication-Analysis/medication-exposure/data/ \
+   --recursive
 
 The two pipelines are independent and share no runtime state, but both
 analyze patients drawn from the same source cohorts.
