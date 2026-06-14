@@ -14,7 +14,8 @@ YAMA/GCS
       │     ├── BWH Cohort metadata (csv file)
       │     ├── BIDMC Cohort metadata (csv file)
       │     ├── Table1_GCS.py (Code for Table 1 for GCS Cohort)
-      │     ├── AWSKeyPathDownload_GCSEEG.py 
+      │     ├── AWSKeyPathDownload_GCSEEG_MGH.py (code to generate AWS S3 path instructions to download GCS EEGs for S0001)
+      │     ├── AWSKeyPathDownload_GCSEEG_BWH.py (code to generate AWS S3 path instructions to download GCS EEGs for S0002)
       │     ├── MGH_GCS_download_AWS.txt (Ouput from above code containing end to S3 path instrutions to download ecah EEG file)
       │     ├── BWH_GCS_download_AWS.txt (Ouput from above code containing end to S3 path instrutions to download ecah EEG file)
       ├── EEGPreprocessingDownloadSQA/
