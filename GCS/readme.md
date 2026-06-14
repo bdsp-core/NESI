@@ -65,7 +65,7 @@ Contains cohort-level metadata and preprocessing utilities.
 
 EEG extraction, preprocessing, and signal quality assessment pipeline.
 
-- ⏱️ `EEG_download_10min_GCS_MGB.py` — Downloads session-wise 10-min EEG segments with valid GCS recordings (N × 19 × 120000)
+- ⏱️ `GCS_EEG_download_MGH.py`, `GCS_EEG_download_BWH.py` — Downloads session-wise 10-min EEG segments with valid GCS recordings (N × 19 × 120000)
 - 🧩 `Create_individual_eeg10min_GCS.py` — Converts downloaded session EEGs into individual 10-min EEG files
 - 🧪 `EEG_SQA_based_segment_discard.py` — Performs signal quality assessment and discards low-quality EEG segments
 
@@ -78,10 +78,6 @@ EEG extraction, preprocessing, and signal quality assessment pipeline.
 - 📊 `GCSTraining_Final_Metadata.csv` — Metadata mapping EEG segments to GCS labels
 - 🧠 `GCS_DL_ResNets_5Fls.py` — Ordinal deep learning model (ResNet) for GCS prediction
 - 📈 `GCS_ML_Baselines_5fld.py` — Classical ML baselines (SVM, LR, KNN) with 5-fold CV
-
-### 🧪 Testing
-
-- 🔍 `GCS_Test_DL_ResNets_5fld.py` — Evaluation script for trained DL models
 
 ---
 
