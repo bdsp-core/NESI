@@ -1,6 +1,10 @@
 ## RASS Prediction Task
 
 This repository contains the codes and CORN-based ordinal regression model weights for the RASS prediction task.
+<img width="1279" height="523" alt="Screenshot 2026-06-14 at 12 29 28 PM" src="https://github.com/user-attachments/assets/440f1bd7-9259-4483-b732-bf6e6e1d4d28" />
+
+Supplementary Fig: Illustrates the method for predicting the individual neurological/ neurocognitive score prediction using the EEG recordings.
+
 
 ### 📁 Folder Structure
 ```bash
