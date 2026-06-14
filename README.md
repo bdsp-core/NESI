@@ -1,124 +1,128 @@
-# YAMA
-**YAMA: Yielding Automated Mortality and Altered mental status prediction from EEG**
+# NESI — Neurophysiologic Encephalopathy Severity Index
+
+**A unified, continuous, EEG-based index of encephalopathy severity for critical care.**
+
+This repository contains the code and trained model weights for NESI, a continuous
+electroencephalography (EEG)-derived measure of acute brain dysfunction. Instead of predicting each
+bedside scale separately, NESI treats the major consciousness/encephalopathy scales as noisy
+observations of a single shared latent construct and recovers that physiologic dimension directly
+from EEG, placing patients on one axis spanning alertness → delirium → sedation → coma.
 
 ## 📌 Overview
 
-YAMA (Yielding Automated Mortality and Altered Mental Status Prediction) is a machine learning framework designed to estimate clinically relevant neurological severity and consciousness scores directly from EEG signals.
+Disorders of consciousness are assessed at the bedside with multiple, partially redundant scales
+that are intermittent, subjective, and often discordant. NESI unifies four of them —
+**RASS** (Richmond Agitation–Sedation Scale), **GCS** (Glasgow Coma Scale),
+**CAM-S** (Confusion Assessment Method–Severity), and **ICANS** (immune effector cell–associated
+neurotoxicity syndrome grading) — onto a single continuous severity scale.
 
-The system targets multiple standardized clinical assessment scales, including:
+The pipeline has three stages:
 
-* Glasgow Coma Scale (GCS) for level of consciousness
-* Richmond Agitation-Sedation Scale (RASS) for sedation and agitation
-* Confusion Assessment Method (CAMS) for delirium detection
-* Immune Effector Cell-Associated Neurotoxicity Syndrome (ICANS) grading
-* NESI (Neurophysiological EEG-based Severity Index)
+1. **Foundation-model features** — each 10-minute EEG segment is passed through the
+   [MORGOTH](https://github.com/bdsp-core/morgoth) clinical-EEG foundation model, yielding a
+   591×17 matrix of event-level feature activations.
+2. **Contrastive encoder** — a supervised-contrastive ResNet compresses that matrix to a 40-D
+   embedding.
+3. **Pairwise-ranking head** — a Siamese MLP maps the embedding to a single scalar NESI value,
+   trained with within-scale and cross-scale ordinal pairs (assembled into a unified dataset,
+   SPECTRA) so severity is learned on one scale-agnostic axis.
 
-By leveraging EEG as an objective, continuous physiological signal, YAMA aims to provide automated and scalable estimation of neurological status, particularly in critically ill patients where bedside assessments may be intermittent, subjective, or infeasible.
+**Key results** (held-out test set; see the manuscript): NESI agrees strongly with all four scales
+(Spearman ρ ≈ 0.72–0.84), shows higher AUROC than GCS for longitudinal in-hospital mortality
+(≈0.82 vs 0.76 at 20 h), and tracks propofol effect-site concentration more closely than RASS.
 
-The framework supports both dataset-specific and unified modeling approaches, enabling cross-scale learning and generalization across heterogeneous clinical cohorts. This facilitates consistent neurological monitoring and opens avenues for early detection of deterioration and outcome prediction, including mortality risk.
+> **Project naming:** this repository was previously named *YAMA*; it is the codebase for the NESI
+> project described above. The per-cohort scale models (RASS/GCS/CAM-S/ICANS) are the building
+> blocks that feed the unified NESI model.
 
-📂 Repository Structure
+## 📦 Data & published release
+
+This repo holds **code and model weights only**. The data (EEG segments, MORGOTH activations,
+assembled training/validation/test sets, per-cohort metadata, derived tables) are de-identified
+(surrogate subject IDs; shifted dates) and distributed under **credentialed access** on BDSP:
+
+- **Published dataset (bdsp.io):** https://bdsp.io/content/1yizvr4l41wmiljc6lou/1.0.0/
+- **Credentialed S3:** `s3://bdsp-opendata-credentialed/yama/`
+- **DOIs:** version `10.60508/rrbg-ba24` · core `10.60508/65as-th98`
+- **Provenance:** `yama/segment_index.csv` (every segment → its continuous source EEG) and
+  `yama/source_eeg_files.csv`.
+
+See **[`NESI/REPRODUCE.md`](NESI/REPRODUCE.md)** for a figure/table → script map and the run order.
+
+## 📂 Repository structure
 
 ```
-YAMA/
-│── RASS/                  # Codes, Model weights for RASS Prediction Model
-│── GCS/                   # Codes, Model weights for GCS Prediction Model
-│── ICANS/                 # Codes, Model weights for CAMS Prediction Model
-│── CAMS/                  # Codes, Model weights for ICANS Prediction Model
-│── NESI/                  # Codes, Model weights for NESI Prediction Model
-│── Figures/               # Codes for Figures
-│── requirements.txt       # Python dependencies
-│── environment.yml        # Conda environment (recommended)
-│── README.md              # Project documentation
+NESI/
+├── RASS/        # cohort: code + weights for the RASS scale model
+├── GCS/         # cohort: code + weights for the GCS scale model
+├── CAMS/        # cohort: code + weights for the CAM-S scale model
+├── ICANS/       # cohort: code + weights for the ICANS scale model
+├── Death/       # in-hospital mortality analysis (NESI vs GCS)
+├── NESI/        # the unified NESI model: training, testing, ablations, figures,
+│                #   medication/propofol (Eleveld PK) analysis, REPRODUCE.md, requirements.txt
+├── SupplementaryScorePredictionResults/
+├── figures/
+├── requirements.txt
+├── environment.yml
+└── README.md
 ```
 
-## ⚠️ Necessary Steps Before Installation
+## ⚠️ Prerequisite: MORGOTH
 
-🚨 **IMPORTANT REQUIREMENT**
+NESI uses **MORGOTH** as the EEG feature-extraction foundation model. **Set up MORGOTH first:**
 
-We have used **MORGOTH** as the foundational model for EEG feature extraction.
+🔗 https://github.com/bdsp-core/morgoth
 
-Before installing YAMA, you **must first set up MORGOTH**.
-
-👉 Please visit the MORGOTH repository and create its required environment:
-
-🔗 **MORGOTH Repository:** [https://github.com/bdsp-core/morgoth]
-
----
-
-### ⚙️ Setup Requirement
-- Follow the installation instructions provided in the MORGOTH repository
-- Ensure the virtual environment for MORGOTH is properly created and functional
-- YAMA depends on MORGOTH for feature extraction from raw EEG signals
-
-⚠️ **Do NOT proceed with YAMA installation until MORGOTH is fully set up.**
+Follow its installation instructions and ensure its environment is functional before installing
+NESI; the pipeline depends on MORGOTH to turn raw EEG into the 591×17 feature matrices.
 
 ## ⚙️ Installation
 
-### 🔹 1. Clone the repository
-
 ```bash
-git clone https://github.com/bdsp-core/YAMA.git
-cd YAMA
-```
+# 1. Clone
+git clone https://github.com/bdsp-core/NESI.git
+cd NESI
 
----
-
-### 🔹 2. Create and activate Conda environment
-
-We recommend using the provided environment file for full reproducibility.
-
-```bash
+# 2. Create the environment (recommended)
 conda env create -f environment.yml
 conda activate torchenv
-```
 
----
-
-### 🔹 3. Install PyTorch (CUDA support)
-
-If using GPU acceleration, install the appropriate PyTorch build:
-
-```bash
+# 3. (GPU) install the matching PyTorch build
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# 4. Install remaining dependencies
+pip install -r requirements.txt          # or: pip install -r NESI/requirements.txt
+
+# 5. Verify
+python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 ```
 
-> ⚠️ Ensure the CUDA version matches your system configuration.
+> Ensure the CUDA version matches your system. GPU is recommended for training.
 
----
+## 🔁 Reproducing the paper
 
-### 🔹 4. (Optional) Install remaining pip dependencies
+1. Request credentialed access to the dataset (link above) and `aws s3 sync` the cohort(s) you need.
+2. Set up MORGOTH and this environment.
+3. Follow **[`NESI/REPRODUCE.md`](NESI/REPRODUCE.md)**, which maps each figure and table to the
+   script that produces it (training → evaluation → figures), and lists where the trained
+   checkpoints and result files live.
 
-If any packages are missing from the conda environment:
+## 📑 Citation
 
-```bash
-pip install -r requirements.txt
-```
+If you use NESI, please cite the dataset and the manuscript:
 
----
+> Roy A, Surrao K, Sun C, Jing J, … Kimchi EY, Zafar SF, Eckhardt CA, Westover MB.
+> *Neurophysiologic Encephalopathy Severity Index (NESI) — Data and Code.* Brain Data Science
+> Platform (2026). https://doi.org/10.60508/65as-th98
 
-### 🔹 5. Verify installation
+(Manuscript citation to be added on publication.)
 
-Run the following to confirm the environment is correctly set up:
-
-```bash
-python -c "import torch; import numpy; import shap; print('Environment OK')"
-```
-
----
-
-### 🧠 Notes
-
-* Conda environment ensures reproducibility across systems
-* GPU support is recommended for training models
-* If using Jupyter, register the kernel:
-
-```bash
-python -m ipykernel install --user --name torchenv
-```
 ## 📬 Contact
 
-For questions, collaborations, or inquiries, please contact:
+- **Arka Roy** — aroy11@bidmc.harvard.edu
+- **M. Brandon Westover** — mbwest@stanford.edu
 
-- **Arka Roy** – aroy11@bidmc.harvard.edu  
-- **Brandon Westover** – bwestove@bidmc.harvard.edu  
+## License
+
+See [`LICENSE.txt`](LICENSE.txt). The accompanying data are governed by the BDSP Credentialed
+Health Data License and Data Use Agreement (see the bdsp.io project page).
