@@ -44,4 +44,4 @@ python serve_deploy.py            # serves deploy/ at http://localhost:8000
 
 ## Hosted demo
 
-A live, clickable version is hosted at: **[URL to be added]**.
+A live, clickable version is hosted at: **https://bdsp-core.github.io/NESI/**
