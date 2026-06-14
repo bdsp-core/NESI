@@ -45,8 +45,144 @@ YAMA/ICANS
 ```
 ### 📌 Description
 
-- **Model**: Contains all training-related code and trained model weights.
-  - **Training**: Scripts used for model development and training with % fold cross validation.
-  - **ModelCheckpoints**: Saved weights of the ML/DL models.
-    
-- **Results5Fld**: Contains evaluation results from 5-fold cross-validation experiments.
+# 🧠 ICANS Module (`YAMA/ICANS`)
+
+---
+
+# 📁 Project Overview
+
+The ICANS module is designed for **predicting ICANS severity from EEG-derived features** using both:
+
+- Classical ML models (SVM, LR, KNN)  
+- Deep learning architectures (ResNet-based ordinal regression)
+
+It follows a **5-fold cross-validation framework** and uses:
+
+- Raw EEG-derived 10-minute segments  
+- MORGOTH feature representations (591 × 17 feature space)
+
+---
+
+# 📂 Directory Structure (Clean Overview)
+
+---
+
+## 🗂️ Cohort & Metadata
+
+Contains clinical cohort definition and preprocessing scripts.
+
+- **ICANS_cohort_metadata.csv**  
+  → Patient-level ICANS labels and demographic metadata  
+
+- **Table1_ICANS.py**  
+  → Generates cohort statistics (Table 1 style summary)
+
+---
+
+## 🧪 Model Training Pipeline
+
+---
+
+### 📌 Training Data & Features
+
+- **ICANSTraining_Final_Metadata.csv**  
+  → Maps EEG 10-min segments → ICANS labels  
+  → Core supervised learning dataset  
+
+---
+
+### 🤖 Deep Learning Models
+
+- **ICANS_DL_ResNets_5Fls.py**  
+  → Ordinal deep learning pipeline  
+  → ResNet-based architecture  
+  → 5-fold cross-validation training  
+
+---
+
+### 📊 Classical Machine Learning Baselines
+
+- **ICANS_ML_Baselines_5fld.py**  
+  → Implements:
+  - Support Vector Machine (SVM)  
+  - Logistic Regression (LR)  
+  - K-Nearest Neighbors (KNN)
+
+---
+
+## 💾 Model Checkpoints
+
+Stored best-performing trained models per method:
+
+- KNN_ICANS/  
+- LR_ICANS/  
+- SVM_ICANS/  
+- RESNET_GAPonly/  
+- RESNET_notimeshift/  
+- RESNET_TIMESHIFT/  
+
+Each folder contains:
+- trained model weights  
+- fold-wise checkpoints  
+- best validation models  
+
+---
+
+## 📊 Results & Evaluation (5-Fold CV)
+
+**Results5Fld/** → Central evaluation hub for all models
+
+Includes:
+
+- Aggregated results (mean/median performance)  
+- Covariance-based feature experiments (upper triangular matrices)  
+- MORGOTH feature-based DL results (591 × 17 representation)
+
+---
+
+## 🔍 Analysis Scripts
+
+- **ICANS_Results_Compare.py**
+  - Compares all models across:
+    - Accuracy  
+    - AUROC  
+    - F1-score  
+    - Ordinal metrics  
+
+- **ICANS_MORGOTH_Activation_Visualize.py**
+  - Visualizes feature activation patterns per ICANS class  
+  - Heatmap-based interpretability of MORGOTH features  
+
+---
+
+## 🧠 Best Deep Learning Model
+
+📦 **ICANS_Best_DL_model/ResNetGAP/**  
+- **RESNETGAP_Best_ICANS.pth**  
+→ Best-performing ResNet-GAP model checkpoint  
+
+---
+
+## 🔬 MORGOTH Activation Repository
+
+Stored both locally and on AWS.
+
+### Feature Groups:
+
+- BS (Burst Suppression)  
+- FOCGEN (Focal Generalized activity)  
+- IIIC (ICU EEG classification patterns)  
+- NM (Normal/Abnormal morphology)  
+- SLEEP (Sleep stages)  
+- SLOWING (Generalized/Focal slowing)  
+- SPIKES (Epileptiform activity)  
+
+---
+
+### 🧠 Usage
+
+Used for:
+
+- Interpretability analysis  
+- Class-wise EEG dynamics  
+- Feature saliency across ICANS severity  
