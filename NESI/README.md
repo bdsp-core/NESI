@@ -10,22 +10,34 @@ This repository contains the codes and model weights for the NESI prediction tas
 ### 📁 Folder Structure
 ```bash
 YAMA/NESI
-      ├── model
+      ├── model (NESI prediction model)
       │   ├── Training
+      |   |   ├── CAMSTraining_Final_Metadata.csv
+      |   |   ├── GCSTraining_Final_Metadata.csv
+      |   |   ├── ICANSTraining_Final_Metadata.csv
+      |   |   ├── RASSTraining_Final_Metadata.csv
+      |   |   ├── Train_NESI.py (NESI Prediction head code-Training)
+      |   |   ├── Train_TripletEncoder.py (Contrastive Encoder Training code)
       │   ├── Testing
-      |   ├── AblationStudy
+      |   |   ├── NESI_Test_Universal.py
+      |   |   ├── NESI_Test_Universal_Fulldataset.py (Morgoth Activations needed to dowloaded from AWS)
+      |   |   ├── FAST_NESIvsBeSpoke_plot.py (compare NESI model vs BeSpokes)
+      |   ├── AblationStudy 
       |   |   ├── Training
       |   |   ├── Testing
       |   |   ├── ModelCheckpoints
       |   |   └── FiguresAblation
-      │   └── ModelCheckpoints
-      │       
-      └── FiguresNESI
+      │   └── ModelCheckpoints (NESI model's checkpoint)    
+      └── FiguresNESI (Contains the .png figures)
       └── BespokeModelCheckpoints
-      │   ├── RASS_bespoke.pth
-      │   ├── GCS_bespoke.pth
-      │   ├── ICANS_bespoke.pth
-          └── CAMS_bespoke.pth
+      │   ├── Training (for RASS, GCS, CAMS, and ICANS Bespokes)
+      |   |   ├──RASS
+      |   |        └── RASS_bespoke_Triplet_model_training.py
+      |   |        └── RASS_bespoke_BADNESS_PREDICTOR_MODEL.py
+      │   ├── Testing
+      │   ├── ModelCheckpoint
+          └── Resultts
+
 ```
 ### 📌 Description
 
