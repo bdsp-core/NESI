@@ -1,0 +1,8 @@
+eeg_pngs/
+poc/
+deploy/
+explorer.html
+coverage.png
+batch_render.log
+batch_render_errors.log
+__pycache__/
