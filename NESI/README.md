@@ -75,7 +75,8 @@ Contains the core NESI model development framework.
 * **Testing/**: Scripts for evaluating trained NESI model on independent datasets and comparing NESI model's performance against bespoke badmess score prediction models that are trained on individual clinical score data groups.
 * **AblationStudy/**: Training, testing, checkpoints, and figure generation code used for model ablation experiments.
   <img width="622" height="505" alt="Screenshot 2026-06-14 at 11 03 23 AM" src="https://github.com/user-attachments/assets/97852ffe-b445-41e4-8717-04445ea40b60" />
-      Supplementary Fig: Baseline NESI prediction pipelines used for ablation analyses to evaluate the effectiveness of incorporating the MORGOTH       activation encoder for NESI prediction. Illustrates (a) the alternative/baseline NESI prediction pipelines without using MORGOTH activation encoder; NESI prediction performance on a common hold-out testing set for the baseline systems trained with (b) median, (c) mean features derived from the MORGOTH activation matrix. 
+
+Supplementary Fig: Baseline NESI prediction pipelines used for ablation analyses to evaluate the effectiveness of incorporating the MORGOTH       activation encoder for NESI prediction. Illustrates (a) the alternative/baseline NESI prediction pipelines without using MORGOTH activation encoder; NESI prediction performance on a common hold-out testing set for the baseline systems trained with (b) median, (c) mean features derived from the MORGOTH activation matrix. 
 
 * **ModelCheckpoints/**: Saved checkpoints of trained NESI models.
 
