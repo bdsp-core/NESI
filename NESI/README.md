@@ -28,15 +28,20 @@ YAMA/NESI
       |   |   ├── ModelCheckpoints
       |   |   └── FiguresAblation
       │   └── ModelCheckpoints (NESI model's checkpoint)    
-      └── FiguresNESI (Contains the .png figures)
-      └── BespokeModelCheckpoints
+      ├── FiguresNESI (Contains the .png figures)
+      ├── BespokeModelCheckpoints
       │   ├── Training (for RASS, GCS, CAMS, and ICANS Bespokes)
       |   |   ├──RASS
       |   |        └── RASS_bespoke_Triplet_model_training.py
       |   |        └── RASS_bespoke_BADNESS_PREDICTOR_MODEL.py
       │   ├── Testing
       │   ├── ModelCheckpoint
-          └── Resultts
+      |   └── Resultts
+      ├── ScaleVsNESI
+      ├── DeathPrediction_NESIvsGCS
+      |   └── model_SeqLR
+      |   └──Results
+      ├── NESI-Medication-Analysis
 
 ```
 ### 📌 Description
