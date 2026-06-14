@@ -8,6 +8,26 @@ Fig.1: Illustrates (a) the overall framework for predicting the Neurophysiologic
 
 This repository contains the codes and model weights for the NESI prediction task.
 
+## 📦 Data Access
+
+This repository holds **code and trained model weights**. The **data** (EEG segments, MORGOTH
+feature activations, assembled training/validation/test sets, per-cohort metadata, and derived
+result tables) are distributed separately under credentialed access on the Brain Data Science
+Platform (BDSP):
+
+- **Dataset (credentialed S3):** `s3://bdsp-opendata-credentialed/yama/`
+- **Project page / access terms:** https://bdsp.io/projects/1yizvr4l41wmiljc6lou/overview/
+- **Reproduce:** see [`REPRODUCE.md`](REPRODUCE.md) for a figure/table→script map; install the
+  environment with `pip install -r requirements.txt` (Python 3.9).
+
+The de-identified cohort/metadata and result CSVs that used to live under `*/Cohort/`,
+`DiagnosisMetadtafiles/`, `NESI/Bespoke_models/Results/`, and the supplementary PaCMAP
+`*_metadata_with_NESI.csv` are now in the credentialed bucket, mirroring the same relative paths
+under `yama/` (e.g. `yama/RASS/Cohort/RASS_BWH_HarvardEEG_metadata.csv`). A unified per-segment
+index with source-EEG provenance is at `yama/segment_index.csv`, and the list of continuous source
+recordings is at `yama/source_eeg_files.csv`. Access requires credentialed approval and the BDSP
+Data Use Agreement.
+
 ### 📁 Folder Structure
 ```bash
 YAMA/NESI
@@ -66,7 +86,7 @@ YAMA/NESI
 
 ## 📌 Repository Structure: NESI/
 
-This repository contains the code, models, datasets, and analysis pipelines used for the development, evaluation, and application of the **Neurocognitive EEG Severity Index (NESI)**. The repository is organized into multiple modules covering model training, benchmarking, downstream clinical analysis, and visualization.
+This repository contains the code, models, and analysis pipelines used for the development, evaluation, and application of the **Neurophysiologic Encephalopathy Severity Index (NESI)**. The repository is organized into multiple modules covering model training, benchmarking, downstream clinical analysis, and visualization.
 
 ---
 
