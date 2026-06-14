@@ -1,4 +1,5 @@
 ## Neurophysiologic Encephalopathy Severity Index  
+This repo contains the NESI prediction pipeline and related analysis.
 
 ## Method
 <img width="4409" height="2640" alt="NESI_method" src="https://github.com/user-attachments/assets/4877c1a1-c5fb-4739-b164-41fc67a7af7f" />
