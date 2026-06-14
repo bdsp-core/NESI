@@ -200,7 +200,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>YAMA NESI PaCMAP Explorer</title>
+  <title>NESI PaCMAP Explorer</title>
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; height: 100%;
@@ -255,7 +255,7 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 </head>
 <body>
   <div class="header">
-    <h1>YAMA NESI PaCMAP Explorer</h1>
+    <h1>NESI PaCMAP Explorer</h1>
     <span class="meta">
       n=__N_TOTAL__  •  __N_AVAILABLE__ EEGs available  •
       click anywhere → snaps to nearest available (marked
