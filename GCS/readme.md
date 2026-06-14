@@ -12,20 +12,21 @@ YAMA/GCS
       ├── Cohort/
       │     ├── MGH Cohort metadata (csv file)
       │     ├── BWH Cohort metadata (csv file)
+      │     ├── BIDMC Cohort metadata (csv file)
       │     ├── Table1_GCS.py (Code for Table 1 for GCS Cohort)
-      │     ├── AWSKeyPathDownload_GCSEEG.py (Code to build end to end path to download EEGs from AWS to local machine)
-      │     ├── GCSEEG_download_AWS.txt (Ouput from above code containing end to S3 path instrutions to download ecah EEG file)
+      │     ├── AWSKeyPathDownload_GCSEEG.py 
+      │     ├── MGH_GCS_download_AWS.txt (Ouput from above code containing end to S3 path instrutions to download ecah EEG file)
+      │     ├── BWH_GCS_download_AWS.txt (Ouput from above code containing end to S3 path instrutions to download ecah EEG file)
       ├── EEGPreprocessingDownloadSQA/
-      |           ├──EEG_download_10min_GCS_MGB.py (Downloads Session-wise all relevant 10 min EEG segs which has a valid GCS recording: N*19*120000)
+      |           ├──GCS_EEG_download_MGH.py (Downloads Session-wise all relevant 10 min EEG segs which has a valid GCS recording: N*19*120000) 
+      |           ├──GCS_EEG_download_BWH.py (Downloads Session-wise all relevant 10 min EEG segs which has a valid GCS recording: N*19*120000)
       |           ├──Create_individual_eeg10min_GCS.py (Creates 10 min individual EEGs that were downloaded using previous code)
-      |           ├──EEG_SQA_based_segment_discard.py (checks SQA and tells which EEGs can be discraded)
       ├── Model/
-      │     ├── Training
+      │     ├── Training/
       |            └── GCSTraining_Final_Metadata.csv (contains 10 min EEG seg filename and corresponding GCS value: metadata)
       |            └── GCS_DL_ResNets_5Fls.py (Ordinal Deep Learning model training code for GCS predection task)
       |            └── GCS_ML_Baselines_5fld.py (SVM, LR, KNN model training code for GCS prediction task)
-      │     ├── Testing
-      |            └── GCS_Test_DL_ResNets_5fld.py (Testing code for DL models)
+      │     ├── Testing/
       │    
       └── Results5Fld/
       |            └──Results for mean, median Covarraince upper trainagular matrix based SVM, LR, KNN model's result object for 5 fold-CVD
@@ -52,6 +53,7 @@ Contains cohort-level metadata and preprocessing utilities.
 
 - 📄 MGH Cohort metadata (CSV file)
 - 📄 BWH Cohort metadata (CSV file)
+- 📄 BIDMC Cohort metadata (CSV file)
 - 🧠 `Table1_GCS.py` — Code for Table 1 generation for GCS cohort
 - ☁️ `AWSKeyPathDownload_GCSEEG.py` — Builds end-to-end S3 paths to download EEGs from AWS to local machine
 - 📜 `GCSEEG_download_AWS.txt` — Output file containing S3 download paths for each EEG file
