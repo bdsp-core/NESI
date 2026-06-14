@@ -64,70 +64,114 @@ YAMA/NESI
 ```
 ### 📌 Description
 
-## Repository Structure: NESI/
+## 📌 Repository Structure: NESI/
 
-This repository contains the code, models, datasets, and analysis pipelines used for the development, evaluation, and application of the Neurocognitive EEG Severity Index (NESI). The repository is organized into several modules corresponding to model training, benchmarking, downstream clinical analyses, and visualization.
+This repository contains the code, models, datasets, and analysis pipelines used for the development, evaluation, and application of the **Neurocognitive EEG Severity Index (NESI)**. The repository is organized into multiple modules covering model training, benchmarking, downstream clinical analysis, and visualization.
 
-### `model/`
+---
+
+## 🤖 `model/`
 
 Contains the core NESI model development framework.
 
-* **Training/**: Training scripts and metadata files used to train the NESI contrastive encoder and NESI prediction head using SPECTRA: RASS, GCS, CAMS, and ICANS clinical scales together.
-* **Testing/**: Scripts for evaluating trained NESI model on independent datasets and comparing NESI model's performance against bespoke badmess score prediction models that are trained on individual clinical score data groups.
-* **AblationStudy/**: Training, testing, checkpoints, and figure generation code used for model ablation experiments.
-  <img width="622" height="505" alt="Screenshot 2026-06-14 at 11 03 23 AM" src="https://github.com/user-attachments/assets/97852ffe-b445-41e4-8717-04445ea40b60" />
+- **Training/**
+  - Training scripts and metadata used to train the NESI contrastive encoder and prediction head.
+  - Uses SPECTRA clinical scales: **RASS, GCS, CAMS, and ICANS** jointly for representation learning.
 
-Supplementary Fig: Baseline NESI prediction pipelines used for ablation analyses to evaluate the effectiveness of incorporating the MORGOTH       activation encoder for NESI prediction. Illustrates (a) the alternative/baseline NESI prediction pipelines without using MORGOTH activation encoder; NESI prediction performance on a common hold-out testing set for the baseline systems trained with (b) median, (c) mean features derived from the MORGOTH activation matrix. 
+- **Testing/**
+  - Evaluation scripts for NESI models on independent datasets.
+  - Compares NESI performance against bespoke badness-score prediction models trained on individual clinical scales.
 
-* **ModelCheckpoints/**: Saved checkpoints of trained NESI models.
+- **AblationStudy/**
+  - Training, testing, checkpoints, and figure generation code for ablation experiments.
+  - Evaluates model variants without components such as the MORGOTH activation encoder.
 
-### `FiguresNESI/`
+  📊 *Supplementary Figure: Ablation Pipeline Overview*
+
+  <img width="622" height="505" alt="Screenshot 2026-06-14 at 11 03 23 AM" src="https://github.com/user-attachments/assets/97852ffe-b445-41e4-8717-04445ea40b60" />
+
+  **Figure Caption:**
+  Baseline NESI prediction pipelines used for ablation analyses to evaluate the effectiveness of incorporating the MORGOTH activation encoder.  
+  The figure illustrates:
+  - (a) Baseline NESI pipelines without the MORGOTH encoder  
+  - (b) NESI performance using **median MORGOTH features**  
+  - (c) NESI performance using **mean MORGOTH features**
+
+- **ModelCheckpoints/**
+  - Saved checkpoints of trained NESI models.
+
+---
+
+## 📊 `FiguresNESI/`
 
 Contains publication-quality figures and visualizations generated throughout the NESI project.
 
-### `Bespoke_models/`
+---
 
-Implementation of task-specific (bespoke) models developed for individual clinical scales including RASS, GCS, CAMS, and ICANS.
+## 🧠 `Bespoke_models/`
 
-* **Training/**: Training scripts for individual bespoke models (Contrastive encoder+Badness score predictor head).
-* **Testing/**: Evaluation and inference scripts.
-* **ModelCheckpoint/**: Saved model weights (for each bespoke models for each dataset).
-* **Results/**: Performance metrics and outputs.
+Implementation of task-specific (bespoke) models for individual clinical scales, including **RASS, GCS, CAMS, and ICANS**.
 
-### `ScaleVsNESI/`
+- **Training/**
+  - Training scripts for individual bespoke models (contrastive encoder + badness score predictor head).
 
-Analysis scripts and results comparing NESI against individual clinical scale predictions.
+- **Testing/**
+  - Evaluation and inference pipelines.
 
-### `DeathPrediction_NESIvsGCS/`
+- **ModelCheckpoint/**
+  - Saved model weights for each dataset and model variant.
 
-Contains survival and mortality prediction experiments comparing NESI-based features against GCS-based approaches.
+- **Results/**
+  - Performance metrics and evaluation outputs.
 
-* **model_SeqLR/**: Sequential logistic regression modeling training code NESI vs GCS.
-* **Results/**: Evaluation outputs and figures.
+---
 
-### `NESI-Medication-Analysis/`
+## 📈 `ScaleVsNESI/`
 
-Pharmacologic analyses investigating relationships between medication exposure and NESI.
+Analysis scripts and results comparing **NESI against individual clinical scale-based prediction models**.
 
-#### `eleveld-pk-analysis/` (Pipeline 1)
+---
 
-Pharmacokinetic modeling pipeline based on the Eleveld framework.
+## 🧬 `DeathPrediction_NESIvsGCS/`
 
-* Configuration files and analysis scripts.
-* **data/**: Input datasets.
-* **outputs/**: Generated results and figures.
+Survival and mortality prediction experiments comparing NESI-based representations against GCS-based models.
 
-#### `medication-exposure/` (Pipeline 2)
+- **model_SeqLR/**
+  - Sequential logistic regression models for NESI vs GCS survival prediction.
 
-Medication exposure analysis pipeline for quantifying and studying medication administration patterns relative to NESI trajectories.
+- **Results/**
+  - Evaluation outputs, figures, and performance summaries.
 
-* Analysis scripts and configuration files.
-* **data/**: Input datasets.
+---
 
-### `MORGOTHActivationViz_GroupbyNESI/`
+## 💊 `NESI-Medication-Analysis/`
 
-Tools and datasets for visualizing MORGOTH feature activations stratified by NESI severity groups. Includes scripts for generating activation distributions and group-wise feature visualizations.
+Pharmacological analysis investigating relationships between medication exposure and NESI trajectories.
 
+### 📂 `eleveld-pk-analysis/` (Pipeline 1)
+Pharmacokinetic modeling pipeline based on the **Eleveld framework**.
+
+- Configuration files and analysis scripts
+- **data/** → input datasets
+- **outputs/** → generated results and figures
+
+---
+
+### 📂 `medication-exposure/` (Pipeline 2)
+Medication exposure analysis pipeline for quantifying and analyzing drug administration patterns relative to NESI trajectories.
+
+- Analysis scripts and configuration files
+- **data/** → input datasets
+
+---
+
+## 🧠 `MORGOTHActivationViz_GroupbyNESI/`
+
+Tools and datasets for visualizing **MORGOTH feature activations stratified by NESI severity groups**.
+
+- Generates activation distributions across NESI bins
+- Provides group-wise feature visualization scripts
+- Supports interpretation of latent EEG representations across severity levels
 ### `MorgothFeatureEmbedding/`
 
 Visualization and embedding analysis of MORGOTH latent representations, including PacMAP projections and exploratory feature-space analyses.
