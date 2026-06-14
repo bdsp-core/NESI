@@ -36,9 +36,73 @@ YAMA/RASS
 ```
 ### 📌 Description
 
-- **Model**: Contains all training-related code and trained model weights.
-  - **Training**: Scripts used for model development and training with 5 fold cross validation.
-  - 📌📌**ModelCheckpoints**: This has to be downloaded from the AWS. Due to Space realted constraint; we did not upload the Saved weights of the ML/DL model here in RASS folder of GitHub. Please download them from the AWS
-    
-- **Results5Fld**: Contains evaluation results from 5-fold cross-validation experiments.
+## 📌 RASS Module (`YAMA/RASS`)
 
+This module contains the complete pipeline for **RASS (Richmond Agitation-Sedation Scale) prediction using EEG data**, including cohort construction, preprocessing, machine learning/deep learning models, and downstream analysis/visualization.
+
+---
+
+## 📁 Cohort/
+
+Contains cohort-level metadata and preprocessing utilities.
+
+- 📄 MGH Cohort metadata (CSV file)
+- 📄 BWH Cohort metadata (CSV file)
+- 🧠 `Table1_RASS.py` — Code for Table 1 generation for RASS cohort
+- ☁️ `AWSKeyPathDownload_RASSEEG.py` — Builds end-to-end S3 paths to download EEGs from AWS to local machine
+- 📜 `RASSEEG_download_AWS.txt` — Output file containing S3 download paths for each EEG file
+
+---
+
+## ⚙️ EEGPreprocessingDownloadSQA/
+
+EEG extraction, preprocessing, and signal quality assessment pipeline.
+
+- ⏱️ `EEG_download_10min_RASS_MGB.py` — Downloads session-wise 10-min EEG segments with valid RASS recordings (N × 19 × 120000)
+- 🧩 `Create_individual_eeg10min_RASS.py` — Converts downloaded session EEGs into individual 10-min EEG files
+- 🧪 `EEG_SQA_based_segment_discard.py` — Performs signal quality assessment and discards low-quality EEG segments
+
+---
+
+## 🤖 Model/
+
+### 🏋️ Training
+
+- 📊 `RASSTraining_Final_Metadata.csv` — Metadata mapping EEG segments to RASS labels
+- 🧠 `RASS_DL_ResNets_5Fls.py` — Ordinal deep learning model (ResNet) for RASS prediction
+- 📈 `RASS_ML_Baselines_5fld.py` — Classical ML baselines (SVM, LR, KNN) with 5-fold CV
+
+### 🧪 Testing
+
+- 🔍 `RASS_Test_DL_ResNets_5fld.py` — Evaluation script for trained DL models
+
+---
+
+## 📊 Results5Fld/
+
+Model evaluation outputs and analysis scripts.
+
+- 📦 Contains results for:
+  - Covariance-based SVM / LR / KNN models
+  - MORGOTH feature-based deep learning models (591 × 17 feature representation)
+- 📉 `RASS_Results_Compare.py` — Compares performance metrics across all models
+- 🔥 `RASS_EEG_morgoth_activation.py` — Heatmap visualization of MORGOTH feature activations across RASS groups
+- 🏊 `RASS_Swimmers_plot.py` — Subject-wise longitudinal RASS trajectory visualization
+
+---
+
+## 🏆 RASS_Best_DL_model/
+
+- 🧠 `ResNetGAP/`
+  - 🥇 `RESNETGAP_Best_RASS.pth` — Best trained model checkpoint
+
+---
+
+## 🎨 FiguresRASS/
+
+Contains all publication-quality figures:
+
+- 📊 Model performance plots
+- 🔥 Activation heatmaps
+- 📈 Cohort distribution plots
+- 🏊 Longitudinal RASS trajectory plots
