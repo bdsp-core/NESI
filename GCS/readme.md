@@ -56,8 +56,8 @@ Contains cohort-level metadata and preprocessing utilities.
 - 📄 BWH Cohort metadata (CSV file)
 - 📄 BIDMC Cohort metadata (CSV file)
 - 🧠 `Table1_GCS.py` — Code for Table 1 generation for GCS cohort
-- ☁️ `AWSKeyPathDownload_GCSEEG.py` — Builds end-to-end S3 paths to download EEGs from AWS to local machine
-- 📜 `GCSEEG_download_AWS.txt` — Output file containing S3 download paths for each EEG file
+- ☁️ `AWSKeyPathDownload_GCSEEG_MGH.py`, `AWSKeyPathDownload_GCSEEG_BWH.py` — Builds end-to-end S3 paths to download EEGs from AWS to local machine
+- 📜 `MGH_GCS_download_AWS.txt`, `BWH_GCS_download_AWS.txt` — Output file containing S3 download paths for each EEG file
 
 ---
 
