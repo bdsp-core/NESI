@@ -11,37 +11,54 @@ This repository contains the codes and model weights for the NESI prediction tas
 ```bash
 YAMA/NESI
       ├── model (NESI prediction model)
-      │   ├── Training
-      |   |   ├── CAMSTraining_Final_Metadata.csv
-      |   |   ├── GCSTraining_Final_Metadata.csv
-      |   |   ├── ICANSTraining_Final_Metadata.csv
-      |   |   ├── RASSTraining_Final_Metadata.csv
-      |   |   ├── Train_NESI.py (NESI Prediction head code-Training)
-      |   |   ├── Train_TripletEncoder.py (Contrastive Encoder Training code)
-      │   ├── Testing
-      |   |   ├── NESI_Test_Universal.py
-      |   |   ├── NESI_Test_Universal_Fulldataset.py (Morgoth Activations needed to dowloaded from AWS)
-      |   |   ├── FAST_NESIvsBeSpoke_plot.py (compare NESI model vs BeSpokes)
-      |   ├── AblationStudy 
-      |   |   ├── Training
-      |   |   ├── Testing
-      |   |   ├── ModelCheckpoints
-      |   |   └── FiguresAblation
-      │   └── ModelCheckpoints (NESI model's checkpoint)    
-      ├── FiguresNESI (Contains the .png figures)
-      ├── BespokeModelCheckpoints
-      │   ├── Training (for RASS, GCS, CAMS, and ICANS Bespokes)
-      |   |   ├──RASS
-      |   |        └── RASS_bespoke_Triplet_model_training.py
-      |   |        └── RASS_bespoke_BADNESS_PREDICTOR_MODEL.py
-      │   ├── Testing
-      │   ├── ModelCheckpoint
-      |   └── Resultts
-      ├── ScaleVsNESI
-      ├── DeathPrediction_NESIvsGCS
-      |   └── model_SeqLR
-      |   └──Results
-      ├── NESI-Medication-Analysis
+      │         ├── Training
+      |         |   ├── CAMSTraining_Final_Metadata.csv
+      |         |   ├── GCSTraining_Final_Metadata.csv
+      |         |   ├── ICANSTraining_Final_Metadata.csv
+      |         |   ├── RASSTraining_Final_Metadata.csv
+      |         |   ├── Train_NESI.py (NESI Prediction head code-Training)
+      |         |   ├── Train_TripletEncoder.py (Contrastive Encoder Training code)
+      │         ├── Testing
+      |         |   ├── NESI_Test_Universal.py
+      |         |   ├── NESI_Test_Universal_Fulldataset.py (Morgoth Activations needed to dowloaded from AWS)
+      |         |   ├── FAST_NESIvsBeSpoke_plot.py (compare NESI model vs BeSpokes)
+      |         ├── AblationStudy 
+      |         |   ├── Training/
+      |         |   ├── Testing/
+      |         |   ├── ModelCheckpoints/
+      |         |   └── FiguresAblation/
+      │         └── ModelCheckpoints/ (NESI model's checkpoint)    
+      ├── FiguresNESI/ (Contains the .png figures)
+      ├── Bespoke_models/
+      │         ├── Training/ (for RASS, GCS, CAMS, and ICANS Bespokes)
+      |         |   ├──RASS/
+      |         |        └── RASS_bespoke_Triplet_model_training.py
+      |         |        └── RASS_bespoke_BADNESS_PREDICTOR_MODEL.py
+      │         ├── Testing/
+      │         ├── ModelCheckpoint/
+      |         └── Resultts/
+      ├── ScaleVsNESI/
+      ├── DeathPrediction_NESIvsGCS/
+      |         └── model_SeqLR/
+      |         └──Results/
+      ├── NESI-Medication-Analysis/
+      |      ├── README.md                                 
+      |      ├── eleveld-pk-analysis/                      (Pipeline 1)
+      |      │   ├── path_configs.py
+      |      │   ├── (analysis scripts at top level)
+      |      │   ├── data/
+      |      │   └── outputs/
+      |      └── medication-exposure/                      (Pipeline 2)
+      |          ├── med_config.py
+      |          ├── (analysis scripts at top level)
+      |          └── data/
+      ├──MORGOTHActivationViz_GroupbyNESI/ (Data and code for NESI grouped Morgoth feature Vizualize)
+      |      ├── FAST_NESI_group_morgothactivation.py
+      |      ├──NESIbin1_data.py
+      |      ├──NESIbin2_data.py
+      |      ├──NESIbin3_data.py
+      |      ├──NESI_combined_MorgothActivation_bw.png
+      ├──MorgothFeatureEmbedding/ (PacMaps of MORGOTH Features)
 
 ```
 ### 📌 Description
