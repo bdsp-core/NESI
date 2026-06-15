@@ -34,7 +34,7 @@ YAMA/CAMS
       └── CAMS_Best_DL_model
       │   ├── ResNetGAP
       │       ├── RESNETGAP_Best_CAMS.pth (best model weight)
-      └── FigureCAMS
+      └── Figures
 ```
 ### 📌 Description
 

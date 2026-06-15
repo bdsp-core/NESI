@@ -180,7 +180,7 @@ subjectwise_evaluation_plots(
     RESNET_ordinal_onlyGAP,
     figsize=(10, 3),
     dpi=150,
-    save_path=RASS_ROOT / "FiguresRASS" / "RASS_pred_MAE_1levelACC_Corr.png" 
+    save_path=RASS_ROOT / "Figures" / "RASS_pred_MAE_1levelACC_Corr.png" 
 )
 
 

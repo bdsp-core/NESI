@@ -962,7 +962,7 @@ dataset_payload = {
     }
 }
 
-ICANS_model_test_saving_path = ICANS_ROOT / "ICANS" / "FiguresICANS" / "LogitsAgainstOtherScalesvsICANSModel.png"
+ICANS_model_test_saving_path = ICANS_ROOT / "ICANS" / "Figures" / "LogitsAgainstOtherScalesvsICANSModel.png"
 plot_all_scales_boxplot_grid(
     dataset_payload,
     figsize=(7,5),
