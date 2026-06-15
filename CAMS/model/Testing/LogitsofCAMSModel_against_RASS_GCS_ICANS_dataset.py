@@ -989,7 +989,7 @@ dataset_payload = {
 }
 
 
-CAMS_model_test_saving_path = ICANS_ROOT / "CAMS" / "FigureCAMS" / "LogitsAgainstOtherScalesvsCAMSModel.png"
+CAMS_model_test_saving_path = ICANS_ROOT / "CAMS" / "Figures" / "LogitsAgainstOtherScalesvsCAMSModel.png"
 
 plot_all_scales_boxplot_grid(
     dataset_payload,

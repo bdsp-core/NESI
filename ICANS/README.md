@@ -41,7 +41,7 @@ YAMA/ICANS
       │         ├── SLEEP/
       │         ├── SLOWING/
       │         └──  SPIKES/
-      └── FiguresICANS
+      └── Figures
 ```
 ### 📌 Description
 

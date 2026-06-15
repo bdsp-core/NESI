@@ -36,7 +36,7 @@ YAMA/RASS
       └── RASS_Best_DL_model/
       │   ├── ResNetGAP/
       │       ├── RESNETGAP_Best_RASS.pth (best model weight)
-      └── FiguresRASS
+      └── Figures
 ```
 ### 📌 Description
 
@@ -102,7 +102,7 @@ Model evaluation outputs and analysis scripts.
 
 ---
 
-## 🎨 FiguresRASS/
+## 🎨 Figures/
 
 Contains all publication-quality figures:
 

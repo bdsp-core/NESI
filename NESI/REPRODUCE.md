@@ -21,9 +21,9 @@ companion dataset `s3://bdsp-opendata-credentialed/icans/`.
 ## End-to-end pipeline (run order)
 
 1. **EEG download + preprocessing + SQA**
-   - `RASS/EEGPrepeocessingDownloadSQA/`, `GCS/EEGPreprocessingDownloadSQA/`
+   - `RASS/EEGPreprocessingDownloadSQA/`, `GCS/EEGPreprocessingDownloadSQA/`
    - 10-minute segment creation: `create_individual_eeg10min_{RASS,GCS}.py`
-   - signal-quality assessment / bad-segment discard: `RASS/EEGPrepeocessingDownloadSQA/EEG_SQA_based_segment_discard.py`
+   - signal-quality assessment / bad-segment discard: `RASS/EEGPreprocessingDownloadSQA/EEG_SQA_based_segment_discard.py`
    - ICANS awake-segment selection: `ICANS/SLEEPHeadbasedSelectEEGSegments/ICANS_group_Best10minEEGSelection.ipynb`
 2. **MORGOTH feature extraction** → 591×17 activation matrices (foundation-model inference)
 3. **Model training**

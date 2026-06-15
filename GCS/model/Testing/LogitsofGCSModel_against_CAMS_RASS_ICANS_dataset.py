@@ -978,7 +978,7 @@ dataset_payload = {
     }
 }
 
-GCS_model_test_saving_path = GCS_ROOT / "GCS" / "FigureGCS" / "LogitsAgainstOtherScalesvsGCSModel.png"
+GCS_model_test_saving_path = GCS_ROOT / "GCS" / "Figures" / "LogitsAgainstOtherScalesvsGCSModel.png"
 
 plot_all_scales_boxplot_grid(
     dataset_payload,
