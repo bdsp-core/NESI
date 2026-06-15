@@ -51,6 +51,14 @@ assembled training/validation/test sets, per-cohort metadata, derived tables) ar
 
 See **[`NESI/REPRODUCE.md`](NESI/REPRODUCE.md)** for a figure/table → script map and the run order.
 
+**Medication data via OMOP.** The medication exposures (originally pulled from S3 parquet MARs) are
+now in the BDSP **OMOP Aurora** database and are far easier to query there
+(`BDSPPatientID` == OMOP `person_id`; administrations are `drug_type_concept_id = 38000180`).
+A ready-to-run, verified reproduction lives in
+**[`NESI/NESI-Medication-Analysis/omop/`](NESI/NESI-Medication-Analysis/omop/)** — it reproduces
+Table 2's RASS propofol exposure from OMOP at **3,245 / 6,188 = 52.4%** vs the published
+**3,250 / 6,188 = 52.5%** (denominator exact; 5-patient / 0.1-pp difference).
+
 ## 📂 Repository structure
 
 ```
