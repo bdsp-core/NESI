@@ -28,13 +28,8 @@ from sklearn.metrics import (
 )
 from scipy.stats import spearmanr, wilcoxon
 
-# ---------------- Deep Learning (PyTorch) ----------------
-import torch
-from torch import nn
-from torch.nn import functional as F
-from torch.utils.data import TensorDataset, DataLoader
-from torch.optim.lr_scheduler import _LRScheduler
-from torchsummary import summary
+# (PyTorch imports removed: this figure regenerates from cached result CSVs
+#  and needs no deep-learning stack.)
 
 
 # # **Plot helper function**
@@ -480,19 +475,31 @@ def plot_individual_vs_global_correct(
     cams_levels = sorted(np.unique(cams_y))
     icans_levels = sorted(np.unique(icans_y))
 
-    colors = ["#AEC6CF", "#FFB7B2", "#B2E2F2", "#CFCFC4", "#FDFD96", "#B39EB5", "#FFD1DC"]
+    import re, sys
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from nesi_fig_style import (apply_style, save_fig, panel_label, DATASET_COLORS,
+                                FS_TICK, FS_LEGEND, FS_AXLABEL)
+    apply_style()
+
+    def _rho_compact(s):
+        nums = re.findall(r'-?\d+\.\d+', str(s))
+        if len(nums) >= 3:
+            m, lo, hi = float(nums[0]), float(nums[1]), float(nums[2])
+            return f"ρ = {m:.2f} [{lo:.2f}, {hi:.2f}]"
+        return f"ρ = {s}"
 
     fig, axes = plt.subplots(2, 4, figsize=(14, 7), sharey=False)
 
     box_style = dict(
         patch_artist=True,
         showfliers=True,
-        flierprops={'marker': 'o', 'markersize': 3, 'markerfacecolor': 'black', 'alpha': 0.3},
-        widths=0.6,
-        boxprops=dict(edgecolor='black', linewidth=1.5),
-        whiskerprops=dict(color='black', linewidth=1.5),
-        capprops=dict(color='black', linewidth=1.5),
-        medianprops=dict(color='black', linewidth=2)
+        flierprops={'marker': 'o', 'markersize': 2.5, 'markerfacecolor': 'black',
+                    'markeredgecolor': 'none', 'alpha': 0.25},
+        widths=0.62,
+        boxprops=dict(edgecolor='black', linewidth=0.8),
+        whiskerprops=dict(color='black', linewidth=0.8),
+        capprops=dict(color='black', linewidth=0.8),
+        medianprops=dict(color='black', linewidth=1.4),
     )
 
     datasets_info = [
@@ -503,52 +510,46 @@ def plot_individual_vs_global_correct(
     ]
 
     for i, (name, bad, y, levels, rho_ind, rho_global) in enumerate(datasets_info):
+        face = DATASET_COLORS.get(name, "#9ecae1")   # one color per scale (Okabe-Ito)
 
-        # --- ROW 1: Individual Models ---
+        # --- ROW 1: Bespoke models ---
         ax_top = axes[0, i]
-        grouped_ind = group_data(bad, y, levels)
-        bp1 = ax_top.boxplot(grouped_ind, **box_style)
+        grp_top = group_data(bad, y, levels)
+        bp1 = ax_top.boxplot(grp_top, **box_style)
+        for box in bp1['boxes']:
+            box.set_facecolor(face); box.set_alpha(0.85)
 
-        for j, box in enumerate(bp1['boxes']):
-            box.set_facecolor(colors[j % len(colors)])
-
-        # --- ROW 2: Global Model ---
+        # --- ROW 2: Universal model ---
         ax_bot = axes[1, i]
         mask = global_dataset_names == name
-        grouped_glob = group_data(global_scores[mask], global_yraw[mask], levels)
-        bp2 = ax_bot.boxplot(grouped_glob, **box_style)
+        grp_bot = group_data(global_scores[mask], global_yraw[mask], levels)
+        bp2 = ax_bot.boxplot(grp_bot, **box_style)
+        for box in bp2['boxes']:
+            box.set_facecolor(face); box.set_alpha(0.85)
 
-        for j, box in enumerate(bp2['boxes']):
-            box.set_facecolor(colors[j % len(colors)])
-
-        # --- formatting ---
-        for ax in [ax_top, ax_bot]:
-            for spine in ax.spines.values():
-                spine.set_visible(True)
-                spine.set_edgecolor('black')
-                spine.set_linewidth(1.5)
-
+        # --- formatting: x tick labels carry per-box sample sizes ---
+        for ax, grp in ((ax_top, grp_top), (ax_bot, grp_bot)):
+            ns = [len(g) for g in grp]
             ax.set_xticks(range(1, len(levels) + 1))
-            ax.set_xticklabels(levels, rotation=45)
+            ax.set_xticklabels([f"{lev}\nn={n}" for lev, n in zip(levels, ns)],
+                               rotation=0, fontsize=FS_TICK - 2.5)
             ax.grid(axis='y', linestyle='--', alpha=0.3)
+            ax.set_axisbelow(True)
 
-        # --- TITLES WITH YOUR STRINGS ---
-        ax_top.set_title(
-            f"{name} \n ρ={rho_ind}",
-            fontweight='bold'
-        )
+        ax_top.set_title(f"{name}\n{_rho_compact(rho_ind)}", fontsize=FS_AXLABEL)
+        ax_bot.set_title(f"{name}\n{_rho_compact(rho_global)}", fontsize=FS_AXLABEL)
+        ax_bot.set_xlabel(f"{name} score")
 
-        ax_bot.set_title(
-            f"{name} \n ρ={rho_global}",
-            fontweight='bold'
-        )
+    axes[0, 0].set_ylabel("Bespoke model's NESI")
+    axes[1, 0].set_ylabel("Universal model's NESI")
+    panel_label(axes[0, 0], "A", x=-0.32, y=1.06)   # A = bespoke row
+    panel_label(axes[1, 0], "B", x=-0.32, y=1.06)   # B = universal row
+    fig.text(0.5, 0.01, "Boxes: median & IQR; whiskers: 1.5×IQR; points: outliers.",
+             ha='center', fontsize=FS_LEGEND, style='italic')
 
-    axes[0, 0].set_ylabel("Bespoke Model's NESI", fontweight='bold')
-    axes[1, 0].set_ylabel("Universal Model's  NESI", fontweight='bold')
-
-    #fig.suptitle(title, fontsize=18, fontweight='bold')
-    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-    plt.show()
+    plt.tight_layout(rect=[0, 0.03, 1, 1])
+    save_fig(fig, "Figure2")
+    plt.close(fig)
 
 
 # In[74]:

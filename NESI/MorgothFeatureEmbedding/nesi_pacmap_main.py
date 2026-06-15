@@ -255,7 +255,7 @@ def _scatter_iiic_rich_on_ax(ax, XY_aug, rgb_aug, labels_aug, counts):
         for cat in IIIC_LEGEND_ORDER
     ]
     ax.legend(handles=handles, loc='upper right', fontsize=7,
-              framealpha=0.9, title="IIIC category", title_fontsize=8)
+              frameon=False, title="IIIC category", title_fontsize=8)
 
 
 def _scatter_feature_on_ax(ax, XY_aug, vals_aug):
