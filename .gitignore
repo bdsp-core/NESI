@@ -1,22 +1,38 @@
-/NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/
-/NESI/NESI-Medication-Analysis/medication-exposure/data/
-ICANS/SLEEPHeadbasedSelectEEGSegments/AllContiniousEEGSegments/
-RASS/Cohort/I0001_RASS_metadata_with_target_medications.csv
-Death/MorgothActivations/
-NESI/Data/
-RASS/MorgothActivations/
-GCS/MorgothActivations/
-RASS/MorgothActivations/
-NESI/FigureNESI/
-RASS/MorgothActivations/
-RASS/model/
-LR_RASS/
-RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
+# =====================================================================
+# NESI repository .gitignore
+# Code + model-loading scripts are tracked; large de-identified data and
+# intermediate results live on credentialed S3 (s3://bdsp-opendata-credentialed/yama/).
+# =====================================================================
 
-# macOS
+# ---- OS / editor / Python junk ----
 .DS_Store
-
-# Fig2 intermediate results (hosted on S3)
-NESI/Bespoke_models/Results/
 __pycache__/
 *.pyc
+.ipynb_checkpoints/
+.~lock.*#
+*~
+
+# ---- MORGOTH feature activations (per cohort) — hosted on S3 ----
+CAMS/MorgothActivations/
+GCS/MorgothActivations/
+ICANS/MorgothActivations/
+RASS/MorgothActivations/
+Death/MorgothActivations/
+
+# ---- Assembled datasets / large derived tables — hosted on S3 ----
+NESI/Data/
+NESI/Bespoke_models/Results/
+RASS/Cohort/I0001_RASS_metadata_with_target_medications.csv
+ICANS/SLEEPHeadbasedSelectEEGSegments/AllContiniousEEGSegments/
+
+# ---- Medication-analysis local data — hosted on S3 ----
+NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/
+NESI/NESI-Medication-Analysis/medication-exposure/data/
+
+# ---- Large model checkpoints — hosted on S3 ----
+RASS/model/
+RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
+LR_RASS/
+
+# ---- Regenerable figure-pipeline scratch outputs ----
+NESI/FigureNESI/
