@@ -12,3 +12,6 @@ RASS/MorgothActivations/
 RASS/model/
 LR_RASS/
 RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
+
+# macOS
+.DS_Store
