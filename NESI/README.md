@@ -23,7 +23,7 @@ Platform (BDSP):
 The de-identified cohort/metadata and result CSVs that used to live under `*/Cohort/`,
 `DiagnosisMetadtafiles/`, `NESI/Bespoke_models/Results/`, and the supplementary PaCMAP
 `*_metadata_with_NESI.csv` are now in the credentialed bucket, mirroring the same relative paths
-under `yama/` (e.g. `yama/RASS/Cohort/RASS_BWH_HarvardEEG_metadata.csv`). A unified per-segment
+under `yama/` (e.g. `yama/cohort_models/RASS/Cohort/RASS_BWH_HarvardEEG_metadata.csv`). A unified per-segment
 index with source-EEG provenance is at `yama/segment_index.csv`, and the list of continuous source
 recordings is at `yama/source_eeg_files.csv`. Access requires credentialed approval and the BDSP
 Data Use Agreement.
@@ -52,7 +52,7 @@ YAMA/NESI
       ├── FiguresNESI/ (Contains the .png figures)
       ├── Bespoke_models/
       │         ├── Training/ (for RASS, GCS, CAMS, and ICANS Bespokes)
-      |         |   ├──RASS/
+      |         |   ├──cohort_models/RASS/
       |         |        └── RASS_bespoke_Triplet_model_training.py
       |         |        └── RASS_bespoke_BADNESS_PREDICTOR_MODEL.py
       │         ├── Testing/

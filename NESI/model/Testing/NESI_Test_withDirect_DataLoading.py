@@ -237,7 +237,7 @@ if NESI_ROOT is None:
 
 # RASS_ROOT = None
 # for parent in current.parents:
-#     if (parent / "RASS").exists():
+#     if (parent / "NESI").exists():
 #         RASS_ROOT = parent
 #         break
 
@@ -252,7 +252,7 @@ if NESI_ROOT is None:
 
 # GCS_ROOT = None
 # for parent in current.parents:
-#     if (parent / "GCS").exists():
+#     if (parent / "NESI").exists():
 #         GCS_ROOT = parent
 #         break
 
@@ -270,7 +270,7 @@ if NESI_ROOT is None:
 
 # CAMS_ROOT = None
 # for parent in current.parents:
-#     if (parent / "CAMS").exists():
+#     if (parent / "NESI").exists():
 #         CAMS_ROOT = parent
 #         break
 
@@ -287,7 +287,7 @@ if NESI_ROOT is None:
 
 # ICANS_ROOT = None
 # for parent in current.parents:
-#     if (parent / "ICANS").exists():
+#     if (parent / "NESI").exists():
 #         ICANS_ROOT = parent
 #         break
 
@@ -298,10 +298,10 @@ if NESI_ROOT is None:
 
 # def morgoth_output_file_location(data_group):
 #     base_paths = {
-#         "RASS": RASS_ROOT / "RASS" / "MorgothActivations",
-#         "GCS": GCS_ROOT / "GCS" / "MorgothActivations",
-#         "CAMS": CAMS_ROOT / "CAMS" / "MorgothActivations",
-#         "ICANS": ICANS_ROOT / "ICANS" / "MorgothActivations"
+#         "RASS": RASS_ROOT / "cohort_models" / "RASS" / "MorgothActivations",
+#         "GCS": GCS_ROOT / "cohort_models" / "GCS" / "MorgothActivations",
+#         "CAMS": CAMS_ROOT / "cohort_models" / "CAMS" / "MorgothActivations",
+#         "ICANS": ICANS_ROOT / "cohort_models" / "ICANS" / "MorgothActivations"
 #     }
 
 #     root = base_paths[data_group]
