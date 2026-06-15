@@ -70,8 +70,8 @@ NESI/
 ├── Death/       # in-hospital mortality analysis (NESI vs GCS)
 ├── NESI/        # the unified NESI model: training, testing, ablations, figures,
 │                #   medication/propofol (Eleveld PK) analysis, REPRODUCE.md, requirements.txt
+├── MainPaperFigures/  # final main-text figures (PNG + PDF) and their generators (Codes/)
 ├── SupplementaryScorePredictionResults/
-├── figures/
 ├── requirements.txt
 ├── environment.yml
 └── README.md
