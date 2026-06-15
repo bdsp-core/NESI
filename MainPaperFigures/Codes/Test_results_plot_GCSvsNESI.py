@@ -77,21 +77,35 @@ nesi_mean, nesi_low, nesi_up = compute_mean_ci(results_lr_nesi)
 
 
 # ---------------- PLOT ----------------
-plt.figure(figsize=(7,5), dpi=200)
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nesi_fig_style import apply_style, save_fig, SERIES_COLORS, FS_LEGEND
+apply_style()
 
-# GCS
-plt.plot(hour_points, gcs_mean, marker='o', label='GCS')
-plt.fill_between(hour_points, gcs_low, gcs_up, alpha=0.2)
+fig, ax = plt.subplots(figsize=(6.0, 4.2))
 
-# NESI
-plt.plot(hour_points, nesi_mean, marker='s', label='NESI')
-plt.fill_between(hour_points, nesi_low, nesi_up, alpha=0.2)
+# NESI (orange) plotted first so it reads as the lead series
+ax.plot(hour_points, nesi_mean, marker='s', markersize=5, linewidth=1.8,
+        linestyle='-', color=SERIES_COLORS['NESI'], markeredgecolor='white',
+        markeredgewidth=0.6, label='NESI', zorder=3)
+ax.fill_between(hour_points, nesi_low, nesi_up, color=SERIES_COLORS['NESI'],
+                alpha=0.15, linewidth=0, zorder=1)
 
-plt.xlabel('Hour')
-plt.ylabel('AUROC')
-plt.xticks(hour_points)
+ax.plot(hour_points, gcs_mean, marker='o', markersize=5, linewidth=1.8,
+        linestyle='--', color=SERIES_COLORS['GCS'], markeredgecolor='white',
+        markeredgewidth=0.6, label='GCS', zorder=3)
+ax.fill_between(hour_points, gcs_low, gcs_up, color=SERIES_COLORS['GCS'],
+                alpha=0.18, linewidth=0, zorder=1)
 
-plt.grid(True)
-plt.legend()
+ax.set_xlabel('Hours since monitoring onset')
+ax.set_ylabel('AUROC')
+ax.set_xticks(hour_points)
+ax.grid(axis='y', linewidth=0.5, alpha=0.35)
+ax.set_axisbelow(True)
 
-plt.show()
+leg = ax.legend(loc='lower left', frameon=False, title='Score (shaded: 95% CI)',
+                title_fontsize=FS_LEGEND)
+leg._legend_box.align = 'left'
+
+save_fig(fig, 'Figure5')
+plt.close(fig)

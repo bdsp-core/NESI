@@ -33,7 +33,12 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.gridspec as gridspec
 from matplotlib.colors import to_rgb, LinearSegmentedColormap, Normalize
+from matplotlib.cm import ScalarMappable
 from sklearn.decomposition import PCA
+
+import sys as _sys
+_sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nesi_fig_style import apply_style, save_fig, FS_LEGEND
 
 # Data and outputs live alongside this script.
 from pathlib import Path
@@ -202,8 +207,9 @@ def build_rgb_image(X_sorted, nesi_sorted_scaled, names_sorted, color_map):
     return rgb_img
 
 
-def plot_combined(X, Y_raw, names, nesi, out_path, figsize=(11, 6.5),
-                  bw=False):
+def plot_combined(X, Y_raw, names, nesi, out_path=None, figsize=(11, 6.5),
+                  bw=False, basename=None):
+    apply_style()
     names = np.array(names)
     Y_raw = np.array(Y_raw)
     nesi = np.array(nesi, dtype=float)
@@ -296,16 +302,22 @@ def plot_combined(X, Y_raw, names, nesi, out_path, figsize=(11, 6.5),
                        'right = worst)',
                        fontsize=8)
     ax_main.set_ylabel('NESI  +  MORGOTH event-level EEG features', fontsize=8)
-    fig.suptitle(
-        'MORGOTH Feature Activation Map across full NESI range\n'
-        f'(per-level equalized, cap {TARGET_PER_LEVEL}/level; '
-        'sort: raw score in worse direction, then NESI; NESI shown as top row)',
-        fontsize=9, fontweight='bold', y=0.995,
-    )
 
-    fig.savefig(out_path, dpi=300, bbox_inches='tight')
+    # Intensity colorbar (white=0 -> black=1). Descriptive title lives in caption.
+    gray_cmap = LinearSegmentedColormap.from_list('wb', ['white', 'black'])
+    sm = ScalarMappable(norm=Normalize(0, 1), cmap=gray_cmap)
+    cb = fig.colorbar(sm, ax=ax_main, fraction=0.015, pad=0.012)
+    cb.set_label('Feature activation probability (dark = higher)\n'
+                 'NESI row: white→black = low→high NESI',
+                 fontsize=FS_LEGEND + 1)
+    cb.ax.tick_params(labelsize=FS_LEGEND)
+
+    if out_path is not None:
+        fig.savefig(out_path, dpi=300, bbox_inches='tight')
+        print(f"Saved {out_path}")
+    if basename is not None:
+        save_fig(fig, basename)
     plt.close(fig)
-    print(f"Saved {out_path}")
 
 
 def main():
@@ -313,10 +325,8 @@ def main():
     print(f"Loaded {len(Y)} cases total "
           f"(GCS:{(names=='GCS').sum()}, RASS:{(names=='RASS').sum()}, "
           f"CAMS:{(names=='CAMS').sum()}, ICANS:{(names=='ICANS').sum()})")
-    plot_combined(X, Y, names, nesi, bw=False,
-                  out_path=OUT_DIR / 'NESI_combined_MorgothActivation_color.png')
-    plot_combined(X, Y, names, nesi, bw=True,
-                  out_path=OUT_DIR / 'NESI_combined_MorgothActivation_bw.png')
+    # Official main-paper figure is the black-and-white version (Figure4).
+    plot_combined(X, Y, names, nesi, bw=True, basename='Figure4')
 
 
 if __name__ == '__main__':

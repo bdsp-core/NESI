@@ -35,6 +35,17 @@ NESI_CMAP = plt.cm.RdBu_r
 NESI_VMIN, NESI_VMAX = -3.0, 3.0
 NESI_NORM = Normalize(vmin=NESI_VMIN, vmax=NESI_VMAX)
 
+# shared main-paper figure style (MainPaperFigures/Codes/nesi_fig_style.py)
+import sys as _sys
+_sys.path.insert(0, str(SCRIPT_DIR.parents[1] / "MainPaperFigures" / "Codes"))
+try:
+    from nesi_fig_style import (apply_style as _apply_style, save_fig as _save_fig,
+                                NESI_CBAR_LABEL as _NESI_CBAR_LABEL)
+except Exception:
+    _apply_style = lambda: None
+    _save_fig = None
+    _NESI_CBAR_LABEL = "NESI (z-scored; red = more impaired)"
+
 
 # ---------------------------------------------------------------------------
 # Ordinal logistic (proportional-odds) fit
@@ -217,11 +228,12 @@ def transformed_to_raw(scale: str, t: np.ndarray) -> np.ndarray:
 # ---------------------------------------------------------------------------
 
 def main():
+    _apply_style()
     import os
     os.makedirs(OUT_DIR, exist_ok=True)
 
     df_all = pd.read_csv(CSV_PATH)
-    df_all = df_all.dropna(subset=["NESI", "TransformedRawScores", "DatasetType"])
+    df_all = df_all.dropna(subset=["NESI", "TransformedRawScores", "Dataset"])
 
     print("=" * 70)
     print(f"Total rows: {len(df_all):,}")
@@ -229,8 +241,8 @@ def main():
           f"max={df_all.NESI.max():.3f}  mean={df_all.NESI.mean():.3f}  "
           f"std={df_all.NESI.std():.3f}")
     if "WhichSet" in df_all.columns:
-        print("\nRows by DatasetType × WhichSet:")
-        ct = pd.crosstab(df_all.DatasetType, df_all.WhichSet, margins=True)
+        print("\nRows by Dataset × WhichSet:")
+        ct = pd.crosstab(df_all.Dataset, df_all.WhichSet, margins=True)
         print(ct.to_string())
         df = df_all[df_all["WhichSet"] == FIT_ON_SPLIT].copy()
         print(f"\nFitting curves on split = {FIT_ON_SPLIT!r}  (n={len(df):,})")
@@ -243,7 +255,7 @@ def main():
     fits: dict[str, dict] = {}
 
     for scale in scales:
-        sub = df[df.DatasetType == scale]
+        sub = df[df.Dataset == scale]
         y = sub.TransformedRawScores.to_numpy().astype(int)
         nesi = sub.NESI.to_numpy()
         K = int(y.max()) + 1
@@ -397,9 +409,11 @@ def main():
 
             ax.text(0.03, 0.97, title_text,
                     transform=ax.transAxes,
-                    fontsize=9, ha="left", va="top",
-                    bbox=dict(boxstyle="round,pad=0.25",
-                              fc="white", ec="none", alpha=0.85))
+                    fontsize=8, fontweight="bold", ha="left", va="top",
+                    bbox=dict(boxstyle="round,pad=0.2",
+                              fc="white", ec="0.7", lw=0.5, alpha=1.0))
+            if i == j:
+                ax.set_facecolor("#eef2f6")  # tint diagonal (score vs NESI) panels
             ax.grid(alpha=0.15)
             ax.tick_params(labelsize=8)
 
@@ -409,15 +423,12 @@ def main():
     sm = plt.cm.ScalarMappable(cmap=NESI_CMAP, norm=NESI_NORM)
     sm.set_array([])
     cax = fig.add_axes([0.935, 0.15, 0.013, 0.7])
-    fig.colorbar(sm, cax=cax, label="NESI  (red = worse)")
+    fig.colorbar(sm, cax=cax, label=_NESI_CBAR_LABEL)
 
-    fig.suptitle(
-        "NESI and the clinical scales.  Diagonals: score vs NESI.  "
-        "Off-diagonals: joint score pairs under the shared-NESI noise "
-        "model.  80 / 95 % credible regions; fill = posterior E[NESI | X, Y].",
-        fontsize=10.5, y=0.985,
-    )
+    # Descriptive title intentionally omitted from artwork (lives in the caption).
     fig.savefig(f"{OUT_DIR}/figure_main.png", dpi=150, bbox_inches="tight")
+    if _save_fig is not None:
+        _save_fig(fig, "Figure3")
     plt.close(fig)
     print(f"\nWrote {OUT_DIR}/figure_main.png")
 

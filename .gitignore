@@ -15,3 +15,8 @@ RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
 
 # macOS
 .DS_Store
+
+# Fig2 intermediate results (hosted on S3)
+NESI/Bespoke_models/Results/
+__pycache__/
+*.pyc
