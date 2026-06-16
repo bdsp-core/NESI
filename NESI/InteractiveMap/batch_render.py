@@ -40,9 +40,9 @@ BUCKET = "bdsp-opendata-credentialed"
 AWS_PROFILE = "opendata"
 
 DATASET_S3_PREFIX = {
-    "CAMS":  "yama/CAMS/CAMS_10minEEGSegments/",
-    "ICANS": "yama/ICANS/ICANS_10minEEGSegments/",
-    "RASS":  "yama/RASS/RASS_EEG10minSegments/",
+    "CAMS":  "yama/cohort_models/CAMS/CAMS_10minEEGSegments/",
+    "ICANS": "yama/cohort_models/ICANS/ICANS_10minEEGSegments/",
+    "RASS":  "yama/cohort_models/RASS/RASS_EEG10minSegments/",
 }
 
 

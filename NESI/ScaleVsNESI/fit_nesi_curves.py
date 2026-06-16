@@ -37,7 +37,7 @@ NESI_NORM = Normalize(vmin=NESI_VMIN, vmax=NESI_VMAX)
 
 # shared main-paper figure style (MainPaperFigures/Codes/nesi_fig_style.py)
 import sys as _sys
-_sys.path.insert(0, str(SCRIPT_DIR.parents[1] / "MainPaperFigures" / "Codes"))
+_sys.path.insert(0, str(SCRIPT_DIR.parents[1] / "figures" / "main" / "Codes"))
 try:
     from nesi_fig_style import (apply_style as _apply_style, save_fig as _save_fig,
                                 NESI_CBAR_LABEL as _NESI_CBAR_LABEL)

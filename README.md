@@ -49,7 +49,7 @@ assembled training/validation/test sets, per-cohort metadata, derived tables) ar
 - **Provenance:** `yama/segment_index.csv` (every segment → its continuous source EEG) and
   `yama/source_eeg_files.csv`.
 
-See **[`NESI/REPRODUCE.md`](NESI/REPRODUCE.md)** for a figure/table → script map and the run order.
+See **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)** for a figure/table → script map and the run order.
 
 **Medication data via OMOP.** The medication exposures (originally pulled from S3 parquet MARs) are
 now in the BDSP **OMOP Aurora** database and are far easier to query there
@@ -63,15 +63,16 @@ Table 2's RASS propofol exposure from OMOP at **3,245 / 6,188 = 52.4%** vs the p
 
 ```
 NESI/
-├── RASS/        # cohort: code + weights for the RASS scale model
-├── GCS/         # cohort: code + weights for the GCS scale model
-├── CAMS/        # cohort: code + weights for the CAM-S scale model
-├── ICANS/       # cohort: code + weights for the ICANS scale model
-├── Death/       # in-hospital mortality analysis (NESI vs GCS)
-├── NESI/        # the unified NESI model: training, testing, ablations, figures,
-│                #   medication/propofol (Eleveld PK) analysis, REPRODUCE.md, requirements.txt
-├── MainPaperFigures/  # final main-text figures (PNG + PDF) and their generators (Codes/)
-├── SupplementaryScorePredictionResults/
+├── cohort_models/      # per-scale building-block models (code + weights)
+│   ├── RASS/  GCS/  CAMS/  ICANS/
+├── NESI/               # the unified NESI model: training, testing, ablations,
+│                       #   embedding atlas, ScaleVsNESI, medication/propofol
+│                       #   (Eleveld PK), DeathPrediction (NESI vs GCS), requirements.txt
+├── mortality_analysis/ # in-hospital mortality cohort assembly + NESI correlation
+├── figures/
+│   ├── main/           # final main-text figures (PNG + PDF) + generators (Codes/)
+│   └── supplementary_score_prediction/
+├── docs/               # REPRODUCE.md (figure/table → script map) + guides
 ├── requirements.txt
 ├── environment.yml
 └── README.md
@@ -113,7 +114,7 @@ python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 
 1. Request credentialed access to the dataset (link above) and `aws s3 sync` the cohort(s) you need.
 2. Set up MORGOTH and this environment.
-3. Follow **[`NESI/REPRODUCE.md`](NESI/REPRODUCE.md)**, which maps each figure and table to the
+3. Follow **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)**, which maps each figure and table to the
    script that produces it (training → evaluation → figures), and lists where the trained
    checkpoints and result files live.
 

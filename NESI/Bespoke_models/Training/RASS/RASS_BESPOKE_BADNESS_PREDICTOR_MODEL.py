@@ -259,7 +259,7 @@ else:
 
 RASS_ROOT = None
 for parent in current.parents:
-    if (parent / "RASS").exists():
+    if (parent / "NESI").exists():
         RASS_ROOT = parent
         break
 
@@ -274,7 +274,7 @@ else:
 
 GCS_ROOT = None
 for parent in current.parents:
-    if (parent / "GCS").exists():
+    if (parent / "NESI").exists():
         GCS_ROOT = parent
         break
 
@@ -292,7 +292,7 @@ else:
 
 CAMS_ROOT = None
 for parent in current.parents:
-    if (parent / "CAMS").exists():
+    if (parent / "NESI").exists():
         CAMS_ROOT = parent
         break
 
@@ -309,7 +309,7 @@ else:
 
 ICANS_ROOT = None
 for parent in current.parents:
-    if (parent / "ICANS").exists():
+    if (parent / "NESI").exists():
         ICANS_ROOT = parent
         break
 
@@ -319,10 +319,10 @@ if ICANS_ROOT is None:
 
 def morgoth_output_file_location(data_group):
     base_paths = {
-        "RASS": RASS_ROOT / "RASS" / "MorgothActivations",
-        "GCS": GCS_ROOT / "GCS" / "MorgothActivations",
-        "CAMS": CAMS_ROOT / "CAMS" / "MorgothActivations",
-        "ICANS": ICANS_ROOT / "ICANS" / "MorgothActivations"
+        "RASS": RASS_ROOT / "cohort_models" / "RASS" / "MorgothActivations",
+        "GCS": GCS_ROOT / "cohort_models" / "GCS" / "MorgothActivations",
+        "CAMS": CAMS_ROOT / "cohort_models" / "CAMS" / "MorgothActivations",
+        "ICANS": ICANS_ROOT / "cohort_models" / "ICANS" / "MorgothActivations"
     }
 
     root = base_paths[data_group]
@@ -501,7 +501,7 @@ class MORGOTH_ResNet1D_onlyGAP(nn.Module):
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # --------- LOAD MODEL ----------
-model_path_trained = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
+model_path_trained = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "cohort_models" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
 
 model_trained = MORGOTH_ResNet1D_onlyGAP(num_features=17)
 model_trained.load_state_dict(
@@ -922,7 +922,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 model = EEGScoringModel()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
-model_bespoke_bdness_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "BespokeBadnessCheckpoint" / "RASS" / "RASS_Bespoke_Badness_Bet_model.pth"
+model_bespoke_bdness_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "BespokeBadnessCheckpoint" / "cohort_models" / "RASS" / "RASS_Bespoke_Badness_Bet_model.pth"
 
 train_model(
     model=model,

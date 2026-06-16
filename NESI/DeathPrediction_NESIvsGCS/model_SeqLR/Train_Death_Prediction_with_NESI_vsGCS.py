@@ -81,9 +81,9 @@ if GCS_ROOT is None:
     raise RuntimeError("GCS folder not found")
 
 
-metadata_s0001_path = GCS_ROOT / "GCS" / "Cohort" / "GCS_MGH_HarvardEEG_metadata.csv"
-metadata_s0002_path = GCS_ROOT / "GCS" / "Cohort" / "GCS_BWH_HarvardEEG_metadata.csv"
-metadata_i0002_path = GCS_ROOT / "GCS" / "Cohort" / "GCS_BIDMC_HarvardEEG_metadata.csv"
+metadata_s0001_path = GCS_ROOT / "cohort_models" / "GCS" / "Cohort" / "GCS_MGH_HarvardEEG_metadata.csv"
+metadata_s0002_path = GCS_ROOT / "cohort_models" / "GCS" / "Cohort" / "GCS_BWH_HarvardEEG_metadata.csv"
+metadata_i0002_path = GCS_ROOT / "cohort_models" / "GCS" / "Cohort" / "GCS_BIDMC_HarvardEEG_metadata.csv"
 
 df_s0001=pd.read_csv(metadata_s0001_path)
 df_s0002=pd.read_csv(metadata_s0002_path)
@@ -140,7 +140,7 @@ for parent in current.parents:
 if DEATH_ROOT is None:
     raise RuntimeError("DEATH folder not found")
 
-death_single_seeion_path = DEATH_ROOT / "Death" / "Cohort" / "YAMA_FINAL_DEATH_RANDOM_SINGLE_SESSIONS_COHORT.csv"
+death_single_seeion_path = DEATH_ROOT / "mortality_analysis" / "Cohort" / "YAMA_FINAL_DEATH_RANDOM_SINGLE_SESSIONS_COHORT.csv"
 df_death_singlesession = pd.read_csv(death_single_seeion_path)
 
 print('Total unique patients death cohort ==> ', df_death_singlesession['BDSPPatientID'].nunique())
@@ -590,11 +590,11 @@ df_SeqGCS_curation_final
 
 
 # ------------ BATCH-1 ---------------------
-batch1_data_path = DEATH_ROOT / "Death" / "Cohort" / "Subject_inhospDied_label_batch1_MGB_BIDMC.csv"
+batch1_data_path = DEATH_ROOT / "mortality_analysis" / "Cohort" / "Subject_inhospDied_label_batch1_MGB_BIDMC.csv"
 ddd_all_label_batch1 = pd.read_csv(batch1_data_path)
 
 # ------------ BATCH-2 ---------------------
-batch2_data_path = DEATH_ROOT / "Death" / "Cohort" / "Subject_inhospDied_label_batch2_MGB_BIDMC.csv"
+batch2_data_path = DEATH_ROOT / "mortality_analysis" / "Cohort" / "Subject_inhospDied_label_batch2_MGB_BIDMC.csv"
 ddd_all_label_batch2 = pd.read_csv(batch2_data_path)
 
 # ---------- Combined Batch-1 and Batch-2 ---------------
@@ -627,7 +627,7 @@ import pandas as pd
 
 
 ######################### CAUTION (YOU NEED TO DOWNLOAD THE MORGOTH ACTIVATIONS DATA FROM AWS FROM DEATH FOLDER) ################
-dir_bs = DEATH_ROOT / "Death" / "MorgothActivations" / "BS"
+dir_bs = DEATH_ROOT / "mortality_analysis" / "MorgothActivations" / "BS"
 
 files = [f for f in os.listdir(dir_bs) if f.endswith('.csv')]
 

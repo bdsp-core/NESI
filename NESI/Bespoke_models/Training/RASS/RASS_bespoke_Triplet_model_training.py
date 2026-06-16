@@ -353,7 +353,7 @@ else:
 
 RASS_ROOT = None
 for parent in current.parents:
-    if (parent / "RASS").exists():
+    if (parent / "NESI").exists():
         RASS_ROOT = parent
         break
 
@@ -368,7 +368,7 @@ else:
 
 GCS_ROOT = None
 for parent in current.parents:
-    if (parent / "GCS").exists():
+    if (parent / "NESI").exists():
         GCS_ROOT = parent
         break
 
@@ -386,7 +386,7 @@ else:
 
 CAMS_ROOT = None
 for parent in current.parents:
-    if (parent / "CAMS").exists():
+    if (parent / "NESI").exists():
         CAMS_ROOT = parent
         break
 
@@ -403,7 +403,7 @@ else:
 
 ICANS_ROOT = None
 for parent in current.parents:
-    if (parent / "ICANS").exists():
+    if (parent / "NESI").exists():
         ICANS_ROOT = parent
         break
 
@@ -413,10 +413,10 @@ if ICANS_ROOT is None:
 
 def morgoth_output_file_location(data_group):
     base_paths = {
-        "RASS": RASS_ROOT / "RASS" / "MorgothActivations",
-        "GCS": GCS_ROOT / "GCS" / "MorgothActivations",
-        "CAMS": CAMS_ROOT / "CAMS" / "MorgothActivations",
-        "ICANS": ICANS_ROOT / "ICANS" / "MorgothActivations"
+        "RASS": RASS_ROOT / "cohort_models" / "RASS" / "MorgothActivations",
+        "GCS": GCS_ROOT / "cohort_models" / "GCS" / "MorgothActivations",
+        "CAMS": CAMS_ROOT / "cohort_models" / "CAMS" / "MorgothActivations",
+        "ICANS": ICANS_ROOT / "cohort_models" / "ICANS" / "MorgothActivations"
     }
 
     root = base_paths[data_group]
@@ -929,7 +929,7 @@ def Training_triplet_function(
 
 tic = time.perf_counter()
 model_onlygap = MORGOTH_ResNet1D_onlyGAP_CORAL(num_features=17)
-base_model_dir = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "RASS" / 
+base_model_dir = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "cohort_models" / "RASS" / 
 
 
 trainloss_history, valloss_history, final_path = Training_triplet_function(
@@ -958,7 +958,7 @@ print(f"Elapsed time: {(toc - tic)/60:0.4f} mins")
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # --------- LOAD MODEL ----------
-model_path_trained = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
+model_path_trained = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints_NEW" / "TripletCheckpoint" / "cohort_models" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
 
 model_trained = MORGOTH_ResNet1D_onlyGAP_CORAL(num_features=17)
 model_trained.load_state_dict(
