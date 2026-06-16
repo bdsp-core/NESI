@@ -13,26 +13,29 @@ __pycache__/
 *~
 
 # ---- MORGOTH feature activations (per cohort) — hosted on S3 ----
-CAMS/MorgothActivations/
-GCS/MorgothActivations/
-ICANS/MorgothActivations/
-RASS/MorgothActivations/
-Death/MorgothActivations/
+cohort_models/CAMS/MorgothActivations/
+cohort_models/GCS/MorgothActivations/
+cohort_models/ICANS/MorgothActivations/
+cohort_models/RASS/MorgothActivations/
+mortality_analysis/MorgothActivations/
 
 # ---- Assembled datasets / large derived tables — hosted on S3 ----
 NESI/Data/
 NESI/Bespoke_models/Results/
-RASS/Cohort/I0001_RASS_metadata_with_target_medications.csv
-ICANS/SLEEPHeadbasedSelectEEGSegments/AllContiniousEEGSegments/
+cohort_models/RASS/Cohort/I0001_RASS_metadata_with_target_medications.csv
+cohort_models/ICANS/SLEEPHeadbasedSelectEEGSegments/AllContiniousEEGSegments/
 
 # ---- Medication-analysis local data — hosted on S3 ----
 NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/
 NESI/NESI-Medication-Analysis/medication-exposure/data/
 
 # ---- Large model checkpoints — hosted on S3 ----
-RASS/model/
-RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
+cohort_models/RASS/model/
+cohort_models/RASS/model/ModelCheckpoints/SVM_RASS/SVM/cov_upper/
 LR_RASS/
 
 # ---- Regenerable figure-pipeline scratch outputs ----
 NESI/FigureNESI/
+
+# Local manuscript working directory (not part of the code release)
+NESI/nesi-manuscript/

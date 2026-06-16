@@ -246,7 +246,7 @@ else:
 
 RASS_ROOT = None
 for parent in current.parents:
-    if (parent / "RASS").exists():
+    if (parent / "NESI").exists():
         RASS_ROOT = parent
         break
 
@@ -261,7 +261,7 @@ else:
 
 GCS_ROOT = None
 for parent in current.parents:
-    if (parent / "GCS").exists():
+    if (parent / "NESI").exists():
         GCS_ROOT = parent
         break
 
@@ -279,7 +279,7 @@ else:
 
 CAMS_ROOT = None
 for parent in current.parents:
-    if (parent / "CAMS").exists():
+    if (parent / "NESI").exists():
         CAMS_ROOT = parent
         break
 
@@ -296,7 +296,7 @@ else:
 
 ICANS_ROOT = None
 for parent in current.parents:
-    if (parent / "ICANS").exists():
+    if (parent / "NESI").exists():
         ICANS_ROOT = parent
         break
 
@@ -306,10 +306,10 @@ if ICANS_ROOT is None:
 
 def morgoth_output_file_location(data_group):
     base_paths = {
-        "RASS": RASS_ROOT / "RASS" / "MorgothActivations",
-        "GCS": GCS_ROOT / "GCS" / "MorgothActivations",
-        "CAMS": CAMS_ROOT / "CAMS" / "MorgothActivations",
-        "ICANS": ICANS_ROOT / "ICANS" / "MorgothActivations"
+        "RASS": RASS_ROOT / "cohort_models" / "RASS" / "MorgothActivations",
+        "GCS": GCS_ROOT / "cohort_models" / "GCS" / "MorgothActivations",
+        "CAMS": CAMS_ROOT / "cohort_models" / "CAMS" / "MorgothActivations",
+        "ICANS": ICANS_ROOT / "cohort_models" / "ICANS" / "MorgothActivations"
     }
 
     root = base_paths[data_group]
@@ -627,8 +627,8 @@ filenames_forRASSbadness = np.array(filenames_forRASSbadness)
 # In[33]:
 
 
-triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
-badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "RASS" / "RASS_Bespoke_Badness_Bet_model.pth"
+triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "cohort_models" / "RASS" / "ResNetGAP_RASS_BestModel.pth"
+badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "cohort_models" / "RASS" / "RASS_Bespoke_Badness_Bet_model.pth"
 device = "cuda" if torch.cuda.is_available() else "cpu" 
 
 RASSBespoke_triplet_embeddings, RASSBespoke_badness = get_triplet_embeddings_NESI(
@@ -685,8 +685,8 @@ filenames_forGCSbadness = np.array(filenames_forGCSbadness)
 
 # In[30]:
 
-triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "GCS" / "ResNetGAP_GCS_BestModel.pth"
-badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "GCS" / "GCS_Bespoke_Badness_Bet_model.pth"
+triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "cohort_models" / "GCS" / "ResNetGAP_GCS_BestModel.pth"
+badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "cohort_models" / "GCS" / "GCS_Bespoke_Badness_Bet_model.pth"
 device = "cuda" if torch.cuda.is_available() else "cpu" 
 
 GCSBespoke_triplet_embeddings, GCSBespoke_badness = get_triplet_embeddings_NESI(
@@ -736,8 +736,8 @@ filenames_forCAMSbadness = np.array(filenames_forCAMSbadness)
 
 
 # In[19]:
-triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "CAMS" / "ResNetGAP_CAMS_BestModel.pth"
-badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "CAMS" / "CAMS_Bespoke_Badness_Bet_model.pth"
+triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "cohort_models" / "CAMS" / "ResNetGAP_CAMS_BestModel.pth"
+badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "cohort_models" / "CAMS" / "CAMS_Bespoke_Badness_Bet_model.pth"
 
 device = "cuda" if torch.cuda.is_available() else "cpu" 
 
@@ -788,8 +788,8 @@ filenames_forICANSbadness = np.array(filenames_forICANSbadness)
 
 
 # In[25]:
-triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "ICANS" / "ResNetGAP_ICANS_BestModel.pth"
-badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "ICANS" / "ICANS_Bespoke_Badness_Bet_model.pth"
+triplet_model_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "TripletCheckpoint" / "cohort_models" / "ICANS" / "ResNetGAP_ICANS_BestModel.pth"
+badnessmodel_path = NSEI_ROOT / "Bespoke_models"/ "ModelCheckpoints" / "BespokeBadnessCheckpoint" / "cohort_models" / "ICANS" / "ICANS_Bespoke_Badness_Bet_model.pth"
 
 device = "cuda" if torch.cuda.is_available() else "cpu" 
 
