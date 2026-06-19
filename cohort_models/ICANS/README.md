@@ -33,7 +33,7 @@ YAMA/ICANS
       └── ICANS_Best_DL_model/
       │   ├── ResNetGAP/
       │       ├── RESNETGAP_Best_ICANS.pth (best model weight)
-      └── MorgothActivations/ (Also uploaded in AWS)
+      └── MorgothActivations/ (They are uploaded in AWS--download from AWS)
       │         ├── BS/
       │         ├── FOCGEN/
       │         ├── IIIC/
