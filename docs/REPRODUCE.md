@@ -37,7 +37,7 @@ companion dataset `s3://bdsp-opendata-credentialed/icans/`.
 | Figure | What it shows | Script(s) |
 |--------|---------------|-----------|
 | Fig. 1 | Pipeline schematic | Conceptual diagram (method image in `NESI/README.md`) |
-| Fig. 2 | Universal vs. bespoke Spearman performance (boxplots + ρ, Wilcoxon) | `NESI/model/Testing/FAST_NESIvsBeSpoke_plot.py`; `NESI/Bespoke_models/Testing/TESTING_NESIvsBeSpokeBadness_Compare.py`; `NESI/FigureNESI/NESI_vs_Bespoke.py` |
+| Fig. 2 | Universal vs. bespoke Spearman performance (boxplots + ρ, Wilcoxon) | `NESI/model/Testing/FAST_NESIvsBeSpoke_plot.py`; `NESI/Bespoke_models/Testing/TESTING_NESIvsBeSpokeBadness_Compare.py`; `NESI/Bespoke_models/Results/NESI_vs_Bespoke.py` |
 | Fig. 3 | Worm-model latent fits (NESI vs each scale) | `NESI/ScaleVsNESI/fit_nesi_curves.py` |
 | Fig. 4 | MORGOTH feature activations stratified by NESI | `NESI/MORGOTHActivationViz_GroupedbyNESI/NESI_grouped_morgoth_activation_visualization.py` (fast variant: `FAST_NESI_group_morgothactivation.py`) |
 | Fig. 5 | Longitudinal mortality AUROC, NESI vs GCS | train: `NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Train_Death_Prediction_with_NESI_vsGCS.py`; plot: `NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Test_results_plot_GCSvsNESI.py` |
