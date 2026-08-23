@@ -30,35 +30,51 @@ The `RASSModel/` and `morgoth/` directories contain the model and supporting com
 
 ---
 
-# ⚠️ Prerequisite: MORGOTH 🧠
+# 🐍 Environment Setup
 
-NESI uses **MORGOTH** as the EEG feature-extraction foundation model.
+The NESI external validation pipeline requires two separate Conda environments. We recommend keeping the same naming convention used by the project:
 
-👉 **MORGOTH must be set up before running the NESI external validation pipeline.**
+🔬 morgoth — used for EEG feature extraction with MORGOTH
+🤖 torchenv — used for the RASS prediction pipeline
 
+Keeping these environments separate helps avoid dependency and version conflicts between MORGOTH and the RASS prediction code.
+
+1️⃣ Create the morgoth Environment 🔬
+
+The morgoth environment should be created and configured by following the installation instructions provided in the MORGOTH repository.
 🔗 [MORGOTH Repository](https://github.com/bdsp-core/morgoth)
 
-Follow the MORGOTH installation instructions and make sure its environment is working correctly before running NESI.
+Please follow the MORGOTH installation procedure exactly as specified in its repository and ensure that the environment is named:
 
-MORGOTH transforms the raw EEG into the **591 × 17 feature matrices** used by NESI. 🧩
+conda activate morgoth
 
-```text
-Raw EEG 🧠
-    │
-    ▼
- MORGOTH 🔬
-    │
-    ▼
-591 × 17 Features 📊
-    │
-    ▼
-RASS Model 🤖
-    │
-    ▼
-Continuous RASS Prediction 📈
-```
+This environment is responsible for transforming raw EEG into the 591 × 17 feature representation used by NESI.
 
----
+⚠️ Important: Make sure the morgoth environment is fully functional before proceeding with the NESI environment.
+
+2️⃣ Create the torchenv Environment 🤖
+
+The torchenv environment is used for the NESI/RASS prediction pipeline.
+
+From the root of the NESI repository (or under this folder the environment related folders are present use them), create the environment using the provided environment file:
+
+conda env create -f environment.yml
+
+Then activate it:
+
+conda activate torchenv
+
+Alternatively, if you are setting up the environment manually, install the dependencies listed in the repository's requirements.txt:
+
+pip install -r requirements.txt
+
+For GPU systems using CUDA 12.4, install the corresponding PyTorch build:
+
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+Finally, verify that the environment is working:
+
+python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 
 # ⚙️ Installation
 
