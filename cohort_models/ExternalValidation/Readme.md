@@ -52,7 +52,7 @@ Raw EEG 🧠
 591 × 17 Features 📊
     │
     ▼
-NESI RASS Model 🤖
+RASS Model 🤖
     │
     ▼
 Continuous RASS Prediction 📈
@@ -126,7 +126,7 @@ Run:
 python cohort_models/ExternalValidation/Continious_RASSPrediction.py
 ```
 
-This processes the EEG segment through the MORGOTH/NESI pipeline and generates the **continuous RASS predictions**. 📈
+This processes the EEG segment through the MORGOTH-RASS prediction ORdinal model pipeline and generates the **continuous RASS predictions**. 📈
 
 ⬇️
 
@@ -147,50 +147,15 @@ This creates a Python-based visualization showing the **predicted continuous RAS
 For EEG and RASS prediction visualization:
 
 ```matlab
-RASS_EEG_Prediction_viz
-```
+RASS_EEG_Prediction_viz.m,
 
-For EEG spectrum + RASS visualization:
-
-```matlab
-RASS_EEG_Spectrum_All
+RASS_EEG_Spectrum_All.m
 ```
 
 These provide a more detailed look at how the **EEG spectral characteristics** relate to the predicted RASS trajectory. 🧠📈
 
 ---
 
-# 🗺️ At a Glance
-
-```text
-             🧠 EEG Segment
-                    │
-                    ▼
-             🔬 MORGOTH
-                    │
-                    ▼
-             📊 591 × 17
-              Features
-                    │
-                    ▼
-             🤖 NESI Model
-                    │
-                    ▼
-          📈 Continuous RASS
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-     🐍 Python            📊 MATLAB
-   Visualization        Visualization
-          │                   │
-          ▼                   ▼
-   RASS Trajectory     EEG + Spectrum
-                         + RASS
-```
-
-## 🎯 In Short
-
-**EEG goes in → MORGOTH does the feature extraction → NESI predicts RASS → Python/MATLAB helps you visualize what happened.** 🧠➡️🔬➡️🤖➡️📈
 
 Happy validating! 🚀🧠
 
