@@ -32,49 +32,50 @@ The `RASSModel/` and `morgoth/` directories contain the model and supporting com
 
 # 🐍 Environment Setup
 
-The NESI external validation pipeline requires two separate Conda environments. We recommend keeping the same naming convention used by the project:
+The NESI external validation pipeline requires **two separate Conda environments**. We recommend keeping the same naming convention used by the project:
 
-🔬 morgoth — used for EEG feature extraction with MORGOTH
-🤖 torchenv — used for the RASS prediction pipeline
+- 🔬 **`morgoth`** — used for EEG feature extraction with MORGOTH
+- 🤖 **`torchenv`** — used for the RASS prediction pipeline
 
 Keeping these environments separate helps avoid dependency and version conflicts between MORGOTH and the RASS prediction code.
 
-1️⃣ Create the morgoth Environment 🔬
+## 1️⃣ Create the `morgoth` Environment 🔬
 
-The morgoth environment should be created and configured by following the installation instructions provided in the MORGOTH repository.
+The `morgoth` environment should be created and configured by following the installation instructions provided in the MORGOTH repository.
+
 🔗 [MORGOTH Repository](https://github.com/bdsp-core/morgoth)
 
 Please follow the MORGOTH installation procedure exactly as specified in its repository and ensure that the environment is named:
 
-conda activate morgoth
+    conda activate morgoth
 
-This environment is responsible for transforming raw EEG into the 591 × 17 feature representation used by NESI.
+This environment is responsible for transforming raw EEG into the **591 × 17 feature representation** used by NESI.
 
-⚠️ Important: Make sure the morgoth environment is fully functional before proceeding with the NESI environment.
+> ⚠️ **Important:** Make sure the `morgoth` environment is fully functional before proceeding with the NESI environment.
 
-2️⃣ Create the torchenv Environment 🤖
+## 2️⃣ Create the `torchenv` Environment 🤖
 
-The torchenv environment is used for the NESI/RASS prediction pipeline.
+The `torchenv` environment is used for the NESI/RASS prediction pipeline.
 
-From the root of the NESI repository (or under this folder the environment related folders are present use them), create the environment using the provided environment file:
+From the root of the NESI repository (or under this folder, where the environment-related files are present), create the environment using the provided environment file:
 
-conda env create -f environment.yml
+    conda env create -f environment.yml
 
 Then activate it:
 
-conda activate torchenv
+    conda activate torchenv
 
-Alternatively, if you are setting up the environment manually, install the dependencies listed in the repository's requirements.txt:
+Alternatively, if you are setting up the environment manually, install the dependencies listed in the repository's `requirements.txt`:
 
-pip install -r requirements.txt
+    pip install -r requirements.txt
 
 For GPU systems using CUDA 12.4, install the corresponding PyTorch build:
 
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 
 Finally, verify that the environment is working:
 
-python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
+    python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 
 # ⚙️ Installation
 
