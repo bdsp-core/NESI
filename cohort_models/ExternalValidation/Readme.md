@@ -77,51 +77,6 @@ Finally, verify that the environment is working:
 
     python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 
-# ⚙️ Installation
-
-### 1️⃣ Clone NESI
-
-```bash
-git clone https://github.com/bdsp-core/NESI.git
-cd NESI
-```
-
-### 2️⃣ Create the environment 🐍
-
-We recommend using the provided Conda environment:
-
-```bash
-conda env create -f environment.yml
-conda activate torchenv
-```
-
-### 3️⃣ Install the matching PyTorch build 🔥
-
-For systems using CUDA 12.4:
-
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-```
-
-### 4️⃣ Install remaining dependencies 📦
-
-```bash
-pip install -r requirements.txt
-```
-
-or:
-
-```bash
-pip install -r NESI/requirements.txt
-```
-
-### 5️⃣ Verify the environment ✅
-
-```bash
-python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
-```
-
-> 💡 **Tip:** Make sure your PyTorch CUDA version matches the CUDA version available on your system. A GPU 🚀 is recommended for EEG feature extraction and RASS prediction.
 
 ---
 
