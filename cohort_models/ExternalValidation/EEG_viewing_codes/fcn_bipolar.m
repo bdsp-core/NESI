@@ -1,0 +1,20 @@
+function dataBipolar=fcn_bipolar(data)
+    dataBipolar(9,:)=data(1,:)-data(2,:);
+    dataBipolar(10,:)=data(2,:)-data(3,:);
+    dataBipolar(11,:)=data(3,:)-data(4,:);
+    dataBipolar(12,:)=data(4,:)-data(8,:);
+    dataBipolar(13,:)=data(12,:)-data(13,:);
+    dataBipolar(14,:)=data(13,:)-data(14,:);
+    dataBipolar(15,:)=data(14,:)-data(15,:);
+    dataBipolar(16,:)=data(15,:)-data(19,:);
+    dataBipolar(1,:)=data(1,:)-data(5,:);
+    dataBipolar(2,:)=data(5,:)-data(6,:);
+    dataBipolar(3,:)=data(6,:)-data(7,:);
+    dataBipolar(4,:)=data(7,:)-data(8,:);
+    dataBipolar(5,:)=data(12,:)-data(16,:);
+    dataBipolar(6,:)=data(16,:)-data(17,:);
+    dataBipolar(7,:)=data(17,:)-data(18,:);
+    dataBipolar(8,:)=data(18,:)-data(19,:);
+    dataBipolar(17,:)=data(9,:)-data(10,:);
+    dataBipolar(18,:)=data(10,:)-data(11,:);
+end
