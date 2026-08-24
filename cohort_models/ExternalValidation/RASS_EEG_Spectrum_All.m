@@ -2,7 +2,8 @@ clc;
 close all;
 clear all;
 %%
-source_eeg_pathname = '/home/ayush/Desktop/KIMCHI_LAB_DATA/ErikaSegmentEEG';
+% Change these Paths as per your computer's directory
+source_eeg_pathname = '/home/ayush/Desktop/KIMCHI_LAB_DATA/ErikaSegmentEEG';  
 jj_callback_pathname = '/home/ayush/Desktop/EEG_viewing_codes/Callbacks';
 prediction_pathname = '/home/ayush/Desktop/KIMCHI_LAB_DATA/RASSPredictions';
 image_saving_dir = '/home/ayush/Desktop/KIMCHI_LAB_DATA/Plots_RASSPred';
