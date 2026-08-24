@@ -10,6 +10,7 @@ The pipeline takes EEG → extracts meaningful representations using **MORGOTH**
 cohort_models/
 └── ExternalValidation/
     ├── 📁 RASSModel/
+        ├── RESNETGAP_Best_RASS.pth (Weight file of the RASS prediction model)
     ├── 📁 morgoth/
     ├── 🐍 Continious_RASSPrediction.py
     ├── 🐍 RASSPredictionVisualizationErikaSeg.py
