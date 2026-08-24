@@ -593,12 +593,12 @@ current = Path(__file__).resolve()
 CONTPRED_ROOT = None
 
 for parent in current.parents:
-    if parent.name == "KIMCHI_LAB_DATA":
+    if parent.name == "ExternalValidation":
         CONTPRED_ROOT = parent
         break
 
 if CONTPRED_ROOT is None:
-    raise RuntimeError("KIMCHI_LAB_DATA folder not found.")
+    raise RuntimeError("ExternalValidation folder not found.")
 
 
 
