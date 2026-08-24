@@ -16,6 +16,7 @@ cohort_models/
     ├── 🐍 RASSPredictionVisualizationErikaSeg.py
     ├── 📊 RASS_EEG_Prediction_viz.m
     ├── 📊 RASS_EEG_Spectrum_All.m
+    ├── **Keep your EEG EDF files Here Only**
     └── 📖 Readme.md
 ```
 
