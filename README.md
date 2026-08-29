@@ -69,6 +69,8 @@ NESI/
 │                       #   embedding atlas, ScaleVsNESI, medication/propofol
 │                       #   (Eleveld PK), DeathPrediction (NESI vs GCS), requirements.txt
 ├── mortality_analysis/ # in-hospital mortality cohort assembly + NESI correlation
+├── comparators/        # external baseline models kept for head-to-head comparison
+│   └── AIrhythm/       #   PhysioNet/CinC 2023 coma-prognostication entry (EEG+ECG features → boosted trees)
 ├── figures/
 │   ├── main/           # final main-text figures (PNG + PDF) + generators (Codes/)
 │   └── supplementary_score_prediction/
@@ -117,6 +119,19 @@ python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 3. Follow **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)**, which maps each figure and table to the
    script that produces it (training → evaluation → figures), and lists where the trained
    checkpoints and result files live.
+
+## 🧪 Comparators
+
+Baseline models we compare NESI against live under **[`comparators/`](comparators/)**, each with
+its own documentation and upstream license. Currently:
+
+- **[`comparators/AIrhythm/`](comparators/AIrhythm/)** — the AIrhythm entry (Morteza Zabihi) to the
+  PhysioNet/CinC 2023 coma-prognostication challenge: 382 hand-engineered EEG/ECG features per
+  3-minute window, pooled over multi-hour blocks, fed to an ensemble of 51 CatBoost / stacked
+  classifiers trained across three different cross-validation partitions. Serves as the
+  feature-engineered counterpoint to NESI's MORGOTH-embedding pipeline in the mortality analysis.
+  Note that it targets *poor neurological outcome (CPC 3–5)*, not death — see its README for what
+  a fair head-to-head requires.
 
 ## 📑 Citation
 
