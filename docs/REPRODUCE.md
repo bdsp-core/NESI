@@ -58,6 +58,21 @@ companion dataset `s3://bdsp-opendata-credentialed/icans/`.
 | Propofol effect-site concentration (Cₑ) via Eleveld 2018 PK/PD | `NESI/NESI-Medication-Analysis/eleveld-pk-analysis/eleveld_propofol.py`, `eleveld_run_cohort.py` |
 | NESI-vs-RASS Cₑ correlation (paired cluster bootstrap) | `NESI/NESI-Medication-Analysis/eleveld-pk-analysis/nesi_vs_rass_correlation_comparison.py` |
 
+## Comparator models
+
+External baselines are kept under `comparators/` and are **not** part of the figure/table
+pipeline above; they are run separately and their outputs folded into the mortality comparison.
+
+| Comparator | Code | Docs |
+|---|---|---|
+| AIrhythm (PhysioNet/CinC 2023 coma prognostication; EEG+ECG features → boosted-tree ensemble) | `comparators/AIrhythm/team_code/` | `comparators/AIrhythm/README.md` |
+
+AIrhythm needs its own Python 3.8 environment (`comparators/AIrhythm/team_code/requirements.txt`,
+or the provided `Dockerfile`) — `esig` and the pinned CatBoost/XGBoost versions conflict with the
+NESI environment. It also expects continuous PhysioNet-layout recordings rather than our 10-minute
+HEEDB segments; the required adapter and the label realignment to in-hospital death are described
+in its README.
+
 ## Trained weights
 
 Trained model weights are committed under `NESI/model/ModelCheckpoints/`
