@@ -10,6 +10,11 @@ bedside scale separately, NESI treats the major consciousness/encephalopathy sca
 observations of a single shared latent construct and recovers that physiologic dimension directly
 from EEG, placing patients on one axis spanning alertness → delirium → sedation → coma.
 
+> **Where this fits.** **L5 — query & consume**, in the BDSP OMOP repo family. Medication
+> exposures are reproduced from `omop_prod.drug_exposure` rather than S3 parquet MARs. Reads the
+> finished OMOP CDM; depends on no pipeline internals.
+> Family members carry the topic `bdsp-omop`.
+
 ## 📌 Overview
 
 Disorders of consciousness are assessed at the bedside with multiple, partially redundant scales
