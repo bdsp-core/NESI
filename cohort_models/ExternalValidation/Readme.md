@@ -7,7 +7,7 @@ The pipeline processes raw EDF EEG recordings, extracts continuous EEG represent
 - **RASS** — Richmond Agitation-Sedation Scale
 - **GCS** — Glasgow Coma Scale severity
 - **CAMS** — Confusion Assessment Method severity
-- **NESI** — Neurological EEG Severity Index
+- **NESI** — Neurophysiologic Encephalopathy Severity Index
 
 For EEG segments longer than 10 minutes, predictions are generated continuously using overlapping 10-minute windows. Segment-level predictions can subsequently be summarized using the **mode / majority vote** to obtain one final prediction for each EEG segment.
 
