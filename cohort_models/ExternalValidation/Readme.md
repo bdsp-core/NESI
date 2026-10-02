@@ -487,13 +487,12 @@ Two environments are used because MORGOTH and the downstream NESI models have di
 
 ## 1. MORGOTH Environment (morgoth)
 
-The `morgoth` environment is responsible for EEG representation extraction.
+NESI uses **MORGOTH** as the EEG feature-extraction foundation model. **Set up MORGOTH first:**
 
-Follow the MORGOTH installation instructions and activate the environment using:
+🔗 https://github.com/bdsp-core/morgoth
 
-```bash
-conda activate morgoth
-```
+Follow its installation instructions and ensure its environment is functional before installing
+NESI; the pipeline depends on MORGOTH to turn raw EEG into the 591×17 feature matrices.
 
 The external-validation pipeline calls MORGOTH from this environment automatically.
 
