@@ -1,18 +1,16 @@
 from pathlib import Path
 import pandas as pd
 
-input_path = Path("/your/input/path")
-
 current = Path(__file__).resolve()
 CONTPRED_ROOT = None
 
 for parent in current.parents:
-    if parent.name == "KIMCHI_LAB_DATA":
+    if parent.name == "ExternalValidation":
         CONTPRED_ROOT = parent
         break
 
 if CONTPRED_ROOT is None:
-    raise RuntimeError("KIMCHI_LAB_DATA folder not found.")
+    raise RuntimeError("ExternalValidation folder not found.")
 
 
 RASS_results_path = CONTPRED_ROOT / "Products" / "RASSPredictions"
@@ -167,5 +165,5 @@ ax2.set_ylabel("True GCS")
 plt.tight_layout()
 plt.show()
 
-csv_save_path = CONTPRED_ROOT / "Final_Results_Prediction_Cohort_Model.csv"
+csv_save_path = CONTPRED_ROOT / "Final_Results_Prediction_RASS_GCS_CAMS_Cohort_Model.csv"
 df_results.to_csv(csv_save_path, index = False)
