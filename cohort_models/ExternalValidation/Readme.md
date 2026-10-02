@@ -501,39 +501,26 @@ The external-validation pipeline calls MORGOTH from this environment automatical
 
 ## 2. NESI / Prediction Environment (torchenv)
 
-Create the prediction environment using:
+## ⚙️ Installation
 
 ```bash
+# 1. Clone
+git clone https://github.com/bdsp-core/NESI.git
+cd NESI
+
+# 2. Create the environment (recommended)
 conda env create -f environment.yml
-```
-
-Then activate it:
-
-```bash
 conda activate torchenv
+
+# 3. (GPU) install the matching PyTorch build
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# 4. Install remaining dependencies
+pip install -r requirements.txt          # or: pip install -r NESI/requirements.txt
+
+# 5. Verify
+python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 ```
-
-Alternatively:
-
-```bash
-pip install -r requirements.txt
-```
-
-For a CUDA-enabled installation, install the appropriate PyTorch version for your system.
-
-Verify the environment:
-
-```bash
-python -c "import torch, numpy, pandas, mne; print('Environment OK')"
-```
-
-Check GPU availability:
-
-```bash
-python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.device_count())"
-```
-
----
 
 # 🚀 Running External Validation
 
