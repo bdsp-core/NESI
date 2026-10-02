@@ -485,7 +485,7 @@ Channel names are standardized automatically where possible.
 
 Two environments are used because MORGOTH and the downstream NESI models have different dependency requirements.
 
-## 1. MORGOTH Environment
+## 1. MORGOTH Environment (morgoth)
 
 The `morgoth` environment is responsible for EEG representation extraction.
 
@@ -499,7 +499,7 @@ The external-validation pipeline calls MORGOTH from this environment automatical
 
 ---
 
-## 2. NESI / Prediction Environment
+## 2. NESI / Prediction Environment (torchenv)
 
 Create the prediction environment using:
 
