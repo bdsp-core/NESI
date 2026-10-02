@@ -558,6 +558,10 @@ contains the required subject and EEG-segment information.
 ## Step 3 — Run continuous inference
 
 ```bash
+conda activate torchenv
+```
+
+```bash
 python Continious_RASS_GCS_CAMS_NESI_Prediction.py
 ```
 
