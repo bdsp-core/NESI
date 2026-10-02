@@ -706,7 +706,7 @@ edf_files = sorted(EEG_ROOT.glob("*.edf"))
 if not edf_files:
     raise FileNotFoundError(f"No .edf files found in {EEG_ROOT}")
 
-for i in tqdm(range(0, 52), total=52):
+for i in tqdm(range(len(edf_files)), total=len(edf_files)):
     # GET EDF FILE
     edf_path = edf_files[i]  
     edf_filename = edf_path.stem
