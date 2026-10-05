@@ -39,3 +39,9 @@ NESI/FigureNESI/
 
 # Local manuscript working directory (not part of the code release)
 NESI/nesi-manuscript/
+
+# ---- External Validation Gitignores ----
+cohort_models/ExternalValidation/EDF_EEGS
+cohort_models/ExternalValidation/Products
+cohort_models/ExternalValidation/morgoth/checkpoints
+cohort_models/ExternalValidation/KIMCHI_FINAL_METADATA.xlsx
