@@ -587,7 +587,15 @@ Match clinical annotation
 External-validation metrics
 ```
 
-## Step 5 — Visualize
+## Step 5 — Recreate Fig 2 on External Results
+
+Use the scripts under:
+
+```text
+Figure2_Recreate_using_NESI/
+```
+
+## Step 6 — Visualize
 
 Use the scripts under:
 
