@@ -50,7 +50,17 @@ from scipy.stats import spearmanr, wilcoxon
 
 
 
-Bespoke_Root = Path("/Users/arkaroy457/Desktop/NESI paper Death/Results")
+current = Path(__file__).resolve()
+NESI_ROOT = None
+for parent in current.parents:
+    if parent.name == "NESI":
+        NESI_ROOT = parent
+        break
+
+if NESI_ROOT is None:
+    raise RuntimeError("NESI folder not found")
+
+Bespoke_Root =NESI_ROOT / "Bespoke_models" / "Results"
 
 
 
