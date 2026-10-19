@@ -14,6 +14,7 @@ JITTER_COPIES = 4
 JITTER_SIGMA_FRAC = 0.006
 DOT_SIZE = 4.0
 BURST_THRESHOLD = 0.5
+
 IIIC_PALETTE = {'Seizure':'#E13238','LPD':'#F08C2A','GPD':'#F2D549','LRDA':'#AABF45','GRDA':'#7AC8E3','Other':'#5C3A87','Burst':'#000000'}
 IIIC_LEGEND_ORDER = ['Burst','Seizure','LPD','GPD','LRDA','GRDA','Other']
 CAT_PROB_COL = {'Burst':'Burst_vs_NoBurst','Seizure':'IIIC_Seizure','LPD':'IIIC_LPD','GPD':'IIIC_GPD','LRDA':'IIIC_LRDA','GRDA':'IIIC_GRDA','Other':'Awake'}
@@ -66,25 +67,60 @@ def main():
     axA,axB = fig.add_subplot(gs[0,0]),fig.add_subplot(gs[0,1])
 
     order = np.argsort(np.abs(nesi_aug))
-    axA.scatter(xy_aug[order,0],xy_aug[order,1],c=nesi_aug[order],cmap='RdBu_r',vmin=-3,vmax=3,s=DOT_SIZE,marker='o',edgecolors='none',alpha=0.55)
+    sc = axA.scatter(
+        xy_aug[order,0],xy_aug[order,1],
+        c=nesi_aug[order],cmap='RdBu_r',
+        vmin=-3,vmax=3,s=DOT_SIZE,
+        marker='o',edgecolors='none',alpha=0.55
+    )
+
+    # Horizontal NESI colorbar below subplot A
+    cbar = fig.colorbar(
+        sc,ax=axA,orientation='horizontal',
+        fraction=0.035,pad=0.02,shrink=0.65
+    )
+    cbar.set_label('NESI',fontsize=11)
+    cbar.set_ticks([-3,-2,-1,0,1,2,3])
+    cbar.ax.tick_params(labelsize=10)
 
     for cat in ['Other','GRDA','LRDA','GPD','LPD','Seizure','Burst']:
         mask = labels_aug == cat
-        axB.scatter(xy_aug[mask,0],xy_aug[mask,1],c=rgb_aug[mask],s=DOT_SIZE,marker='o',edgecolors='none',alpha=0.55)
+        axB.scatter(
+            xy_aug[mask,0],xy_aug[mask,1],
+            c=rgb_aug[mask],s=DOT_SIZE,
+            marker='o',edgecolors='none',alpha=0.55
+        )
 
-    handles = [mpatches.Patch(color=IIIC_PALETTE[cat],label=f'{cat} (n={int(counts.get(cat,0))})') for cat in IIIC_LEGEND_ORDER]
-    axB.legend(handles=handles,loc='upper right',fontsize=7,frameon=False,title='IIIC category',title_fontsize=8)
+    handles = [
+        mpatches.Patch(
+            color=IIIC_PALETTE[cat],
+            label=f'{cat} (n={int(counts.get(cat,0))})'
+        ) for cat in IIIC_LEGEND_ORDER
+    ]
+    axB.legend(
+        handles=handles,loc='upper right',
+        fontsize=7,frameon=False,
+        title='IIIC category',title_fontsize=8
+    )
 
     for ax,title in [(axA,'A. NESI (continuous)'),(axB,'B. Dominant IIIC category')]:
         ax.set_title(title,fontsize=12,fontweight='bold')
-        ax.set_xticks([]);ax.set_yticks([])
+        ax.set_xticks([])
+        ax.set_yticks([])
         ax.set_aspect('equal',adjustable='box')
-        for spine in ax.spines.values(): spine.set_visible(False)
-    fig.savefig(SCRIPT_DIR / "NESI_pacmap.png", dpi=500, bbox_inches='tight')
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+
+    fig.savefig(SCRIPT_DIR / "NESI_pacmap.png",dpi=500,bbox_inches='tight')
 
     display(fig)
     plt.close(fig)
-    print(f'Input: {len(df):,} windows | Rotation: {ROTATION_DEGREES}° CCW | Vertical flip: {FLIP_VERTICAL}')
+
+    print(
+        f'Input: {len(df):,} windows | '
+        f'Rotation: {ROTATION_DEGREES}° CCW | '
+        f'Vertical flip: {FLIP_VERTICAL}'
+    )
 
 if __name__ == '__main__':
     main()
