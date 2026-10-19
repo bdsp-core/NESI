@@ -29,13 +29,10 @@ from tqdm import tqdm
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 YAMA_NESI = SCRIPT_DIR.parent
-
-YAMA_ROOT = Path("/home/ayush/Desktop/GitHub-YAMA")
-#YAMA_ROOT = YAMA_NESI.parent 
-#META_CSV = (YAMA_NESI / "MORGOTHActivationViz_GroupedbyNESI"
-#            / "UniversalBadnessModelResult_Full.csv")
-META_CSV = (YAMA_NESI / "PacMAP"
+YAMA_ROOT = YAMA_NESI.parent 
+META_CSV = (YAMA_NESI / "MORGOTHActivationViz_GroupedbyNESI"
             / "UniversalBadnessModelResult_Full.csv")
+
 OUT_CSV = SCRIPT_DIR / "NESI_window_features.csv"
 
 MAX_SNIPPETS_PER_PATIENT = 10
