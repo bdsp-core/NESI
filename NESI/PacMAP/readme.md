@@ -24,7 +24,8 @@ To reproduce the visualization using the provided coordinates:
 
 ```bash
 python NESI_PACMAP_main.py
+```
+[NESI_PACMAP_main.py](https://github.com/user-attachments/files/33686042/NESI_PACMAP_main.py)
+<img width="6680" height="3279" alt="NESI_pacmap" src="https://github.com/user-attachments/assets/2faa1134-29b4-4f9e-8b63-ed15646c9c12" />
 
-[NESI_PACMAP_main.py](https://github.com/user-attachments/files/33686027/NESI_PACMAP_main.py)
-<img width="6680" height="3279" alt="NESI_pacmap" src="https://github.com/user-attachments/assets/b2e1a51e-d46d-4981-8405-8d41268460da" />
 
