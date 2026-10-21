@@ -186,29 +186,43 @@ for race in [
 # In[7]:
 
 
+import pandas as pd
+
 print('#######################################################')
 print('#            Recorded Death Information               #')
 print('#######################################################')
 
-# One row per unique subject
-sub_df = df_cams[['BDSPPatientID', 'DateOfDeath (shifted)']].drop_duplicates(
-    subset='BDSPPatientID'
-)
+df = df_cams.copy()
 
-total_subjects = sub_df['BDSPPatientID'].nunique()
+def extract_date(s):
+    return pd.to_datetime(
+        s.astype("string").str.strip().str.extract(r"(\d{4}-\d{2}-\d{2})", expand=False),
+        format="%Y-%m-%d", errors="coerce"
+    )
 
-# Define groups
-has_death = sub_df['DateOfDeath (shifted)'].notna()
-censored = sub_df['DateOfDeath (shifted)'].isna()
+admit = extract_date(df["Date Hosp Admit (shifted)"])
+discharge = extract_date(df["Date Hosp Discharge (shifted)"])
+death = extract_date(df["DateOfDeath (shifted)"])
 
-n_death = has_death.sum()
-n_censored = censored.sum()
+all_patients = set(df["BDSPPatientID"].dropna().unique())
+patients_died = set(df.loc[df["DateOfDeath (shifted)"].notna(), "BDSPPatientID"].dropna().unique())
 
-print(f"Survival Status Summary (N = {total_subjects})\n")
+mask = death.notna() & admit.notna() & discharge.notna() & (death >= admit) & (death <= discharge)
+patients_died_in_hospital = set(df.loc[mask, "BDSPPatientID"].dropna().unique())
 
-print(f"Death recorded: {n_death} ({100*n_death/total_subjects:.1f}%)")
-print(f"Censored (no death date): {n_censored} ({100*n_censored/total_subjects:.1f}%)")
+n_total = len(all_patients)
+n_death = len(patients_died)
+n_censored = n_total - n_death
+n_in_hospital = len(patients_died_in_hospital)
+n_not_in_hospital = n_death - n_in_hospital
 
+print(f"Survival Status Summary (N = {n_total})\n")
+print(f"Death recorded: {n_death} ({100*n_death/n_total:.1f}%)")
+print(f"Censored (no death date): {n_censored} ({100*n_censored/n_total:.1f}%)")
+
+print(f"\nAmong patients with recorded death (N = {n_death}):")
+print(f"Died in hospital: {n_in_hospital} ({100*n_in_hospital/n_death:.1f}%)")
+print(f"No matching in-hospital death: {n_not_in_hospital} ({100*n_not_in_hospital/n_death:.1f}%)")
 
 # # **Diagnosis**
 
