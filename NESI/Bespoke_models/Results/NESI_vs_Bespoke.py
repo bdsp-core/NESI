@@ -449,35 +449,22 @@ tst_spearman_conf_bespoke_ICANS = f"{bespoke_mean_ICANS:.2f} [{bespoke_ci_ICANS[
 #          visual formatting is changed)
 # =========================================================================
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 def plot_individual_vs_global_correct(
-    # ---------------- individual models ----------------
-    rass_bad, rass_y,
-    gcs_bad, gcs_y,
-    cams_bad, cams_y,
-    icans_bad, icans_y,
-
-    # ---------------- global model ----------------
+    rass_bad, rass_y, gcs_bad, gcs_y, cams_bad, cams_y, icans_bad, icans_y,
     global_scores, global_yraw, global_dataset_names,
-
-    # ---------------- SPEARMAN STRINGS ----------------
-    spearman_bespoke_RASS,
-    spearman_bespoke_GCS,
-    spearman_bespoke_CAMS,
-    spearman_bespoke_ICANS,
-
-    spearman_global_RASS,
-    spearman_global_GCS,
-    spearman_global_CAMS,
-    spearman_global_ICANS,
-
-    title=None  # kept for signature compatibility; not shown (matches Fig 2, no suptitle)
+    spearman_bespoke_RASS, spearman_bespoke_GCS,
+    spearman_bespoke_CAMS, spearman_bespoke_ICANS,
+    spearman_global_RASS, spearman_global_GCS,
+    spearman_global_CAMS, spearman_global_ICANS,
+    title=None
 ):
     plt.rcParams.update({'font.size': 12, 'font.family': 'sans-serif'})
 
     def to_numpy(x):
-        if hasattr(x, "detach"):
-            return x.detach().cpu().numpy()
-        return np.array(x)
+        return x.detach().cpu().numpy() if hasattr(x, "detach") else np.asarray(x)
 
     def group_data(badness, yraw, levels):
         grouped, counts = [], []
@@ -487,28 +474,24 @@ def plot_individual_vs_global_correct(
             counts.append(len(vals))
         return grouped, counts
 
-    # ---------------- convert ----------------
-    rass_bad = to_numpy(rass_bad); rass_y = to_numpy(rass_y)
-    gcs_bad  = to_numpy(gcs_bad);  gcs_y  = to_numpy(gcs_y)
-    cams_bad = to_numpy(cams_bad); cams_y = to_numpy(cams_y)
-    icans_bad = to_numpy(icans_bad); icans_y = to_numpy(icans_y)
-
+    rass_bad, rass_y = to_numpy(rass_bad), to_numpy(rass_y)
+    gcs_bad, gcs_y = to_numpy(gcs_bad), to_numpy(gcs_y)
+    cams_bad, cams_y = to_numpy(cams_bad), to_numpy(cams_y)
+    icans_bad, icans_y = to_numpy(icans_bad), to_numpy(icans_y)
     global_scores = to_numpy(global_scores)
-    global_yraw = np.array(global_yraw)
-    global_dataset_names = np.array(global_dataset_names)
+    global_yraw = to_numpy(global_yraw)
+    global_dataset_names = to_numpy(global_dataset_names)
 
-    # ---------------- levels ----------------
     rass_levels = [-5, -4, -3, -2, -1, 0]
-    gcs_levels  = list(range(3, 16))
+    gcs_levels = list(range(3, 16))
     cams_levels = sorted(np.unique(cams_y))
     icans_levels = sorted(np.unique(icans_y))
 
-    # ---------------- one color per dataset (matches Fig 2) ----------------
     dataset_colors = {
-        "RASS":  "#7EB0D5",   # blue
-        "GCS":   "#F4B860",   # orange/gold
-        "CAMS":  "#3FB8A5",   # teal/green
-        "ICANS": "#C77DB0",   # purple/mauve
+        "RASS": "#7EB0D5",
+        "GCS": "#F4B860",
+        "CAMS": "#3FB8A5",
+        "ICANS": "#C77DB0"
     }
 
     fig, axes = plt.subplots(2, 4, figsize=(22, 11), sharey=False)
@@ -516,8 +499,8 @@ def plot_individual_vs_global_correct(
     box_style = dict(
         patch_artist=True,
         showfliers=True,
-        flierprops={'marker': 'o', 'markersize': 3, 'markerfacecolor': 'gray',
-                    'markeredgecolor': 'none', 'alpha': 0.3},
+        flierprops=dict(marker='o', markersize=3, markerfacecolor='gray',
+                        markeredgecolor='none', alpha=0.3),
         widths=0.6,
         boxprops=dict(edgecolor='black', linewidth=1.3),
         whiskerprops=dict(color='black', linewidth=1.3),
@@ -525,40 +508,31 @@ def plot_individual_vs_global_correct(
         medianprops=dict(color='black', linewidth=2)
     )
 
-    # per-dataset x-tick rotation: GCS is crowded (13 levels) so its
-    # "score / n=count" labels collide at 0 degrees — rotate just that one.
     tick_rotation = {"RASS": 0, "GCS": 45, "CAMS": 0, "ICANS": 0}
-    tick_fontsize  = {"RASS": 8, "GCS": 7, "CAMS": 8, "ICANS": 8}
 
     datasets_info = [
         ("RASS", rass_bad, rass_y, rass_levels, spearman_bespoke_RASS, spearman_global_RASS, "RASS score"),
         ("GCS", gcs_bad, gcs_y, gcs_levels, spearman_bespoke_GCS, spearman_global_GCS, "GCS score"),
-        ("CAMS", cams_bad, cams_y, cams_levels, spearman_bespoke_CAMS, spearman_global_CAMS, "CAMS score"),
-        ("ICANS", icans_bad, icans_y, icans_levels, spearman_bespoke_ICANS, spearman_global_ICANS, "ICANS score"),
+        ("CAMS", cams_bad, cams_y, cams_levels, spearman_bespoke_CAMS, spearman_global_CAMS, "CAM-S score"),
+        ("ICANS", icans_bad, icans_y, icans_levels, spearman_bespoke_ICANS, spearman_global_ICANS, "ICANS score")
     ]
 
     for i, (name, bad, y, levels, rho_ind, rho_global, xlabel) in enumerate(datasets_info):
-
         color = dataset_colors[name]
+        ax_top, ax_bot = axes[0, i], axes[1, i]
 
-        # --- ROW A: Bespoke (individual) Models ---
-        ax_top = axes[0, i]
         grouped_ind, n_ind = group_data(bad, y, levels)
         bp1 = ax_top.boxplot(grouped_ind, **box_style)
         for box in bp1['boxes']:
             box.set_facecolor(color)
 
-        # --- ROW B: Universal (Global) Model ---
-        ax_bot = axes[1, i]
         mask = global_dataset_names == name
         grouped_glob, n_glob = group_data(global_scores[mask], global_yraw[mask], levels)
         bp2 = ax_bot.boxplot(grouped_glob, **box_style)
         for box in bp2['boxes']:
             box.set_facecolor(color)
 
-        # --- formatting shared by both rows ---
         for ax, n_counts in [(ax_top, n_ind), (ax_bot, n_glob)]:
-            # L-shaped axes: keep only left + bottom spines, drop top + right
             ax.spines['top'].set_visible(False)
             ax.spines['right'].set_visible(False)
             ax.spines['left'].set_visible(True)
@@ -569,43 +543,65 @@ def plot_individual_vs_global_correct(
             ax.spines['bottom'].set_linewidth(1.5)
 
             ax.set_xticks(range(1, len(levels) + 1))
-            # two-line tick labels: score value on top, "n=###" below
             tick_labels = [f"{lvl}\nn={n}" for lvl, n in zip(levels, n_counts)]
-
             rot = tick_rotation[name]
-            fsz = tick_fontsize[name]
+
             if rot == 0:
                 ax.set_xticklabels(tick_labels, fontsize=10)
             else:
-                # rotated labels need right-alignment so they tuck under their tick
-                ax.set_xticklabels(tick_labels, fontsize=10, rotation=rot, ha='right',
-                                    rotation_mode='anchor')
+                ax.set_xticklabels(tick_labels, fontsize=10, rotation=rot,
+                                   ha='right', rotation_mode='anchor')
 
             ax.tick_params(axis='x', length=0)
             ax.grid(axis='y', linestyle='--', alpha=0.3)
 
-        # --- titles: "NAME \n ρ = mean [lo, hi]" ---
-        ax_top.set_title(f"{name}\n" + r"$\mathbf{\rho}$ = " + f"{rho_ind}", fontweight='bold', fontsize=15)
-        ax_bot.set_title(f"{name}\n" + r"$\mathbf{\rho}$ = " + f"{rho_global}", fontweight='bold', fontsize=15)
+        display_name = "CAM-S" if name == "CAMS" else name
 
-        # --- x-axis label only on the bottom row ---
+        ax_top.set_title(
+            f"{display_name}\n" + r"$\mathbf{\rho}$ = " + f"{rho_ind}",
+            fontweight='bold', fontsize=15
+        )
+        ax_bot.set_title(
+            f"{display_name}\n" + r"$\mathbf{\rho}$ = " + f"{rho_global}",
+            fontweight='bold', fontsize=15
+        )
         ax_bot.set_xlabel(xlabel, fontweight='normal', fontsize=15)
 
-    # --- y-axis labels only on the leftmost column ---
-    axes[0, 0].set_ylabel("Bespoke model's NESI", fontweight='normal', fontsize=14)
-    axes[1, 0].set_ylabel("Universal model's NESI", fontweight='normal', fontsize=14)
+    axes[0, 0].set_ylabel(
+        "Scale-Specific\nBespoke Model's NESI",
+        fontweight='bold', fontsize=14
+    )
+    axes[1, 0].set_ylabel(
+        "Universal Model's NESI",
+        fontweight='bold', fontsize=14
+    )
 
-    # --- panel letters A / B, top-left of each row ---
     fig.text(0.005, 0.96, "A", fontsize=20, fontweight='bold')
     fig.text(0.005, 0.475, "B", fontsize=20, fontweight='bold')
 
-    # --- caption at bottom, matching Fig 2 ---
-    fig.text(0.5, 0.0, "Boxes: median & IQR; whiskers: 1.5×IQR; points: outliers.",
-              ha='center', fontsize=14, style='italic')
+    plt.tight_layout(rect=[0.015, 0.13, 1, 0.97], h_pad=2.0, w_pad=1.5)
 
-    plt.tight_layout(rect=[0.015, 0.02, 1, 0.97], h_pad=3.0, w_pad=1.5)
+    fig.text(
+        0.5, 0.090,
+        "Boxes: median & IQR; whiskers: 1.5×IQR; points: outliers.",
+        ha='center', va='center', fontsize=14, style='italic'
+    )
+
+    fig.text(
+        0.5, 0.055,
+        "Scale-specific bespoke models: Trained independently on data from one of the four clinical scales "
+        "(RASS, GCS, CAM-S, or ICANS) in SPECTRA.",
+        ha='center', va='center', fontsize=12, style='italic'
+    )
+
+    fig.text(
+        0.5, 0.030,
+        "Universal model: Trained jointly on data pooled across all four clinical scales in SPECTRA.",
+        ha='center', va='center', fontsize=12, style='italic'
+    )
+
+    fig.savefig("Figure2.png", dpi=600, bbox_inches="tight")
     plt.show()
-    fig.savefig("Figure2.pdf", dpi=600, bbox_inches="tight")
 
 # =========================================================================
 # STEP 3 — Call exactly as before (unchanged)
