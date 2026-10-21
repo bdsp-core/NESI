@@ -1,0 +1,44 @@
+Total Unique subjects in CAMS cohort == 629
+#######################################################
+#                    AGE                              #
+#######################################################
+Age at Visit (median [Q1, Q3]): 60.0 [48.0, 72.0]
+#                    SEX                              #
+#######################################################
+Total Unique subjects = 629
+
+Male: 331 (52.6%)
+Female: 281 (44.7%)
+Unknown or not disclosed: 17 (2.7%)
+#######################################################
+#                    PATIENT RACE                     #
+#######################################################
+Race Summary (N = 629)
+
+White: 474 (75.4%)
+Black/African American: 46 (7.3%)
+Asian: 20 (3.2%)
+More than one race: 2 (0.3%)
+Other/Unknown: 87 (13.8%)
+#######################################################
+#            Recorded Death Information               #
+#######################################################
+Survival Status Summary (N = 629)
+
+Death recorded: 216 (34.3%)
+Censored (no death date): 413 (65.7%)
+
+Among patients with recorded death (N = 216):
+Died in hospital: 75 (34.7%)
+No matching in-hospital death: 141 (65.3%)
+#######################################################
+#                    DIAGNOSIS                        #
+#######################################################
+
+Total unique patients: 629
+
+Unknown/Other: 319 (50.7%)
+Neurological: 217 (34.5%)
+Cardiac/Circulatory: 43 (6.8%)
+Systemic/Metabolic: 36 (5.7%)
+Respiratory: 14 (2.2%)
