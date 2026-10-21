@@ -1,0 +1,48 @@
+Total Unique subjects in ICANS cohort == 246
+Total Unique subjects in ICANS cohort == 245
+#######################################################
+#                    AGE                              #
+#######################################################
+Age at Visit (median [Q1, Q3]): 63.0 [55.0, 69.0]
+#                    SEX                              #
+#######################################################
+Total Unique subjects = 245
+
+Male: 157 (64.1%)
+Female: 87 (35.5%)
+Unknown: 1 (0.4%)
+#######################################################
+#                    PATIENT RACE                     #
+#######################################################
+Total: 245
+Asian               4 (1.6%)
+Black               2 (0.8%)
+Other/Unknown    129 (52.7%)
+White            110 (44.9%)
+Name: Race, dtype: object
+
+
+#######################################################
+#            Recorded Death Information               #
+#######################################################
+Survival Status Summary (N = 245)
+
+Death recorded: 37 (15.1%)
+Censored (no death date): 208 (84.9%)
+
+Among patients with recorded death (N = 37):
+Died in hospital: 0 (0.0%)
+No matching in-hospital death: 37 (100.0%)
+#######################################################
+#               DIAGNOSIS-MALIGNANCY                  #
+#######################################################
+Total: 245
+DLBCL         104 (42.4%)
+PMBCL            5 (2.0%)
+MCL              2 (0.8%)
+FL               4 (1.6%)
+MZL              1 (0.4%)
+B-ALL            2 (0.8%)
+Aggressive       3 (1.2%)
+Indolent      124 (50.6%)
+Name: Diagnosis_group, dtype: object

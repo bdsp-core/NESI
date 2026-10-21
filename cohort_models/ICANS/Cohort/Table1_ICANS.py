@@ -241,35 +241,40 @@ print('\n')
 # In[29]:
 
 
+import pandas as pd
+
 print('#######################################################')
 print('#            Recorded Death Information               #')
 print('#######################################################')
 
-death_per_patient = (
-    df_icans
-    .groupby('StudyID')['DeathDate']
-    .first()
-    .reset_index()
-)
+df = df_icans.copy()
 
-# Convert to datetime and keep only date
-death_per_patient['DeathDate'] = pd.to_datetime(death_per_patient['DeathDate'], errors='coerce').dt.date
+def extract_date(s):
+    return pd.to_datetime(s, errors="coerce", format="mixed").dt.normalize()
 
-# Create a summary column
-death_per_patient['DeathStatus'] = death_per_patient['DeathDate'].apply(
-    lambda x: 'Died (Death date known)' if pd.notna(x) else 'Unknown date of death'
-)
+admit = extract_date(df["AdmitDate"])
+discharge = extract_date(df["DCDate"])
+death = extract_date(df["DeathDate"])
 
-# Count patients and calculate percent
-counts = death_per_patient['DeathStatus'].value_counts()
-percent = death_per_patient['DeathStatus'].value_counts(normalize=True) * 100
+all_patients = set(df["StudyID"].dropna().unique())
+patients_died = set(df.loc[df["DeathDate"].notna(), "StudyID"].dropna().unique())
 
-# Combine counts and percent into one string
-death_summary = counts.astype(str) + ' (' + percent.round(1).astype(str) + '%)'
+mask = death.notna() & admit.notna() & discharge.notna() & (death >= admit) & (death <= discharge)
+patients_died_in_hospital = set(df.loc[mask, "StudyID"].dropna().unique())
 
-print(f"Total patients: {len(death_per_patient)}\n")
-print(death_summary)
+n_total = len(all_patients)
+n_death = len(patients_died)
+n_censored = n_total - n_death
+n_in_hospital = len(patients_died_in_hospital)
+n_not_in_hospital = n_death - n_in_hospital
 
+print(f"Survival Status Summary (N = {n_total})\n")
+print(f"Death recorded: {n_death} ({100*n_death/n_total:.1f}%)")
+print(f"Censored (no death date): {n_censored} ({100*n_censored/n_total:.1f}%)")
+
+print(f"\nAmong patients with recorded death (N = {n_death}):")
+print(f"Died in hospital: {n_in_hospital} ({100*n_in_hospital/n_death:.1f}%)")
+print(f"No matching in-hospital death: {n_not_in_hospital} ({100*n_not_in_hospital/n_death:.1f}%)")
 
 # # **Diagnosis**
 
