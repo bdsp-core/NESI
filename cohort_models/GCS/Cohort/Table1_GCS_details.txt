@@ -1,0 +1,53 @@
+Total Unique subjects in GCS cohort == 7651
+#######################################################
+#                    AGE                              #
+#######################################################
+Age at Visit (median [Q1, Q3]): 65.0 [53.0, 75.0]
+#######################################################
+#                    SEX                              #
+#######################################################
+Total Unique subjects = 7651
+
+Male: 4118 (53.8%)
+Female: 3533 (46.2%)
+#######################################################
+#                    PATIENT RACE                     #
+#######################################################
+Race Summary (N = 7651)
+
+White: 5755 (75.2%)
+Black/African American: 767 (10.0%)
+Asian: 255 (3.3%)
+More than one race: 17 (0.2%)
+Other/Unknown: 857 (11.2%)
+#######################################################
+#            Recorded Death Information               #
+#######################################################
+Survival Status Summary (N = 7651)
+
+Death recorded: 4661 (60.9%)
+Censored (no death date): 2990 (39.1%)
+****************************************
+Survival Status Summary (N = 7651)
+
+Death recorded: 4661 (60.9%)
+Censored (no death date): 2990 (39.1%)
+
+Among patients with recorded death (N = 4661):
+Died in hospital: 2024 (43.4%)
+No matching in-hospital death: 2637 (56.6%)
+#######################################################
+#                    DIAGNOSIS                        #
+#######################################################
+
+Total patients in YAMA-Death cohort: 7651
+Patients Diagnosis found in combined diagnosis file: 22348
+Common patients: 7629
+
+Diagnosis Group Summary (N = 7651)
+
+Neurological: 3803 (49.7%)
+Unknown/Other: 1702 (22.2%)
+Systemic/Metabolic: 1190 (15.6%)
+Cardiac/Circulatory: 550 (7.2%)
+Respiratory: 406 (5.3%)

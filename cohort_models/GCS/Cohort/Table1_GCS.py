@@ -105,6 +105,7 @@ columns_need = [
     'SiteID',
     'BDSPPatientID',
     'HospitalAdmitDTS',
+    'HospitalDischargeDTS',
     'DateOfDeath',
     'CensorDate',
     'SexDSC',
@@ -299,7 +300,38 @@ print(f"Survival Status Summary (N = {total_subjects})\n")
 print(f"Death recorded: {n_death} ({100*n_death/total_subjects:.1f}%)")
 print(f"Censored (no death date): {n_censored} ({100*n_censored/total_subjects:.1f}%)")
 
+print('*'*40)
+df = gcs_all_sites.copy()
 
+def extract_date(s):
+    return pd.to_datetime(
+        s.astype("string").str.extract(r"(\d{4}-\d{2}-\d{2})", expand=False),
+        format="%Y-%m-%d", errors="coerce"
+    )
+
+admit = extract_date(df["HospitalAdmitDTS"])
+discharge = extract_date(df["HospitalDischargeDTS"])
+death = extract_date(df["DateOfDeath"])
+
+all_patients = set(df["BDSPPatientID"].dropna().unique())
+patients_died = set(df.loc[df["DateOfDeath"].notna(), "BDSPPatientID"].dropna().unique())
+
+mask = death.notna() & admit.notna() & discharge.notna() & (death >= admit) & (death <= discharge)
+patients_died_in_hospital = set(df.loc[mask, "BDSPPatientID"].dropna().unique())
+
+n_total = len(all_patients)
+n_death = len(patients_died)
+n_censored = n_total - n_death
+n_in_hospital = len(patients_died_in_hospital)
+n_not_in_hospital = n_death - n_in_hospital
+
+print(f"Survival Status Summary (N = {n_total})\n")
+print(f"Death recorded: {n_death} ({100*n_death/n_total:.1f}%)")
+print(f"Censored (no death date): {n_censored} ({100*n_censored/n_total:.1f}%)")
+
+print(f"\nAmong patients with recorded death (N = {n_death}):")
+print(f"Died in hospital: {n_in_hospital} ({100*n_in_hospital/n_death:.1f}%)")
+print(f"No matching in-hospital death: {n_not_in_hospital} ({100*n_not_in_hospital/n_death:.1f}%)")
 # # **Diagnosis**
 
 # In[23]:
