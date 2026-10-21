@@ -1,0 +1,49 @@
+Total Unique subjects in RASS cohort == 6793
+#######################################################
+#                    AGE                              #
+#######################################################
+Age at Visit (median [Q1, Q3]): 65.0 [53.0, 74.0]
+#######################################################
+#                    SEX                              #
+#######################################################
+Total Unique subjects = 6793
+
+Male: 3776 (55.6%)
+Female: 3017 (44.4%)
+#######################################################
+#                    PATIENT RACE                     #
+#######################################################
+Race Summary (N = 6793)
+
+White: 5077 (74.7%)
+Black/African American: 719 (10.6%)
+Asian: 219 (3.2%)
+More than one race: 12 (0.2%)
+Other/Unknown: 766 (11.3%)
+#######################################################
+#            Recorded Death Information               #
+#######################################################
+Survival Status Summary (N = 6793)
+
+Death recorded: 4184 (61.6%)
+Censored (no death date): 2609 (38.4%)
+****************************************
+Total unique patients: 6793
+Total patients who died: 4184
+  Died in hospital: 2137
+  Died outside recorded hospital windows: 2047
+#######################################################
+#                    DIAGNOSIS                        #
+#######################################################
+
+Total patients in YAMA-Death cohort: 6793
+Patients Diagnosis found in combined diagnosis file: 22348
+Common patients: 6793
+
+Diagnosis Group Summary (N = 6793)
+
+Neurological: 2977 (43.8%)
+Unknown/Other: 1404 (20.7%)
+Systemic/Metabolic: 1257 (18.5%)
+Cardiac/Circulatory: 695 (10.2%)
+Respiratory: 460 (6.8%)
