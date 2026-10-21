@@ -570,10 +570,10 @@ def create_pairs(
 
     if dataset_weights is None:
         dataset_weights = {
-            "RASS": 0.3,
-            "GCS": 0.3,
-            "CAMS": 0.2,
-            "ICANS": 0.2,
+            "RASS": 0.2,
+            "GCS": 0.2,
+            "CAMS": 0.3,
+            "ICANS": 0.3,
         }
 
     def sample_idx(cands):
