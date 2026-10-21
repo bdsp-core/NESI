@@ -224,6 +224,36 @@ print(f"Survival Status Summary (N = {total_subjects})\n")
 print(f"Death recorded: {n_death} ({100*n_death/total_subjects:.1f}%)")
 print(f"Censored (no death date): {n_censored} ({100*n_censored/total_subjects:.1f}%)")
 
+# --------- how many died in hospital vs how many did not die in hospital
+
+print('*'*40)
+
+
+df = RASS_EEG_all_df_censor_mgb.copy()
+
+def extract_date(s):
+    return pd.to_datetime(
+        s.astype("string").str.extract(r"(\d{4}-\d{2}-\d{2})", expand=False),
+        format="%Y-%m-%d", errors="coerce"
+    )
+
+admit = extract_date(df["HospitalAdmitDTS"])
+discharge = extract_date(df["HospitalDischargeDTS"])
+death = extract_date(df["DateOfDeath"])
+
+mask = death.between(admit, discharge, inclusive="both")
+
+total_patients = df["BDSPPatientID"].nunique()
+patients_died = set(df.loc[df["DateOfDeath"].notna(), "BDSPPatientID"].dropna())
+patients_died_in_hospital = set(df.loc[mask.fillna(False), "BDSPPatientID"].dropna())
+
+print("Total unique patients:", total_patients)
+print("Total patients who died:", len(patients_died))
+print("  Died in hospital:", len(patients_died_in_hospital))
+print("  Died outside recorded hospital windows:", len(patients_died - patients_died_in_hospital))
+
+
+
 
 # # **Diagnosis**
 
