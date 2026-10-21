@@ -582,21 +582,29 @@ def plot_individual_vs_global_correct(
     plt.tight_layout(rect=[0.015, 0.13, 1, 0.97], h_pad=2.0, w_pad=1.5)
 
     fig.text(
-        0.5, 0.090,
-        "Boxes: median & IQR; whiskers: 1.5×IQR; points: outliers.",
-        ha='center', va='center', fontsize=14, style='italic'
+        0.5, 0.095,
+        "Boxes: median & IQR; whiskers: 1.5×IQR; points: outliers. "
+        "Values above each subplot indicate Spearman's ρ with 95% bootstrap confidence intervals.",
+        ha='center', va='center', fontsize=12, style='italic'
+    )
+
+    fig.text(
+        0.5, 0.075,
+        "n denotes the number of EEG observations at each clinical score level. "
+        "Higher NESI values indicate greater neurological impairment.",
+        ha='center', va='center', fontsize=12, style='italic'
     )
 
     fig.text(
         0.5, 0.055,
-        "Scale-specific bespoke models: Trained independently on data from one of the four clinical scales "
+        "Panel A: Scale-specific bespoke models: Trained independently on data from one of the four clinical scales "
         "(RASS, GCS, CAM-S, or ICANS) in SPECTRA.",
         ha='center', va='center', fontsize=12, style='italic'
     )
 
     fig.text(
         0.5, 0.030,
-        "Universal model: Trained jointly on data pooled across all four clinical scales in SPECTRA.",
+        "Panel B: Universal model: Trained jointly on data pooled across all four clinical scales in SPECTRA.",
         ha='center', va='center', fontsize=12, style='italic'
     )
 
