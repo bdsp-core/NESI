@@ -4,11 +4,11 @@ Patient- and segment-level files are distributed through the credentialed BDSP r
 
 | Path under `NESI_DATA_ROOT` | Bytes | SHA-256 (first 12) | Current S3 location |
 |---|---:|---|---|
-| `NESI/Bespoke_models/Results/CAMSBespokescore_results.csv` | 44555 | `d9ac8b4e9413` | pending upload |
+| `NESI/Bespoke_models/Results/CAMSBespokescore_results.csv` | 44555 | `d9ac8b4e9413` | `yama/NESI/Bespoke_models/Results/CAMSBespokescore_results.csv` |
 | `NESI/Bespoke_models/Results/Final_NESIscores_full_dataset_result.csv` | 17242871 | `cdff9800becd` | `yama/NESI/Bespoke_models/Results/Final_NESIscores_full_dataset_result.csv` |
-| `NESI/Bespoke_models/Results/GCSBespokescore_results.csv` | 9067678 | `dcfa38eb2995` | pending upload |
+| `NESI/Bespoke_models/Results/GCSBespokescore_results.csv` | 9067678 | `dcfa38eb2995` | `yama/NESI/Bespoke_models/Results/GCSBespokescore_results.csv` |
 | `NESI/Bespoke_models/Results/ICANSBespokescore_results.csv` | 61191 | `45af8769889c` | `yama/NESI/Bespoke_models/Results/ICANSBespokescore_results.csv` |
-| `NESI/Bespoke_models/Results/RASSBespokescore_results.csv` | 8087181 | `2b70366d9ecf` | pending upload |
+| `NESI/Bespoke_models/Results/RASSBespokescore_results.csv` | 8087181 | `2b70366d9ecf` | `yama/NESI/Bespoke_models/Results/RASSBespokescore_results.csv` |
 | `NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin1_data.pkl` | 240984 | `91b25472b911` | `yama/NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin1_data.pkl` |
 | `NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin2_data.pkl` | 228136 | `8c69f3697688` | `yama/NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin2_data.pkl` |
 | `NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin3_data.pkl` | 169590 | `5093026a026c` | `yama/NESI/MORGOTHActivationViz_GroupedbyNESI/NESIbin3_data.pkl` |
