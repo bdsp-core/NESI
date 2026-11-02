@@ -9,6 +9,8 @@ from Train_TripletEncoder.py and Train_NESI.py.
 
     python reproduce/retrain_split_fix.py                 # withhold overlapping patients
     python reproduce/retrain_split_fix.py --keep-overlap  # same data as the original, new seed
+    python reproduce/retrain_split_fix.py --mode downsample  # R3.6: RASS and GCS training patients reduced to 10%
+    python reproduce/retrain_split_fix.py --mode upweight    # R3.6: anchors weighted toward CAM-S and ICANS
     python reproduce/retrain_split_fix.py --smoke         # quick end-to-end test
 """
 import argparse
@@ -39,8 +41,12 @@ TRAIN_DIR = REPO / "NESI/model/Training"
 CACHE = ROOT.parent / "train_f32.npy.mem"
 
 
-def load_defs(path, names, ns):
+def load_defs(path, names, ns, patches=()):
     src = Path(path).read_text()
+    for old, new in patches:
+        if old not in src:
+            sys.exit(f"Expected text not found in {path}: {old}")
+        src = src.replace(old, new)
     for node in ast.parse(src).body:
         if isinstance(node, (ast.ClassDef, ast.FunctionDef)) and node.name in names:
             exec(compile(ast.Module([node], []), str(path), "exec"), ns)
@@ -97,19 +103,31 @@ def embed(model, x, idx, device, bs=512):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--keep-overlap", action="store_true")
+    ap.add_argument("--mode", choices=["standard", "downsample", "upweight"], default="standard")
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
 
     name = ("smoke_" if a.smoke else "") + ("keep_overlap" if a.keep_overlap else "withhold_overlap") + f"_seed{a.seed}"
+    if a.mode != "standard":
+        name = f"{a.mode}_{name}"
     out = ROOT.parent / "retrain" / name
     out.mkdir(parents=True, exist_ok=True)
     random.seed(a.seed), np.random.seed(a.seed), torch.manual_seed(a.seed)
     device = "mps" if torch.backends.mps.is_available() else ("cuda" if torch.cuda.is_available() else "cpu")
 
     ns = {"torch": torch, "nn": nn, "F": F, "np": np, "Dataset": Dataset, "os": os, "copy": copy, "random": random, "tqdm": tqdm}
-    load_defs(TRAIN_DIR / "Train_TripletEncoder.py", {"TripletDataset", "ResidualBlock1D", "MORGOTH_ResNet1D_onlyGAP_CORAL", "Training_triplet_function"}, ns)
-    load_defs(TRAIN_DIR / "Train_NESI.py", {"create_pairs", "PairDataset", "EEGScoringModel", "pairwise_loss", "train_model"}, ns)
+    enc_patches, head_patches = (), ()
+    if a.mode == "upweight":
+        # Anchors favor the small cohorts: 40% each for CAM-S and ICANS, 10% each for RASS and GCS
+        ns["ANCHOR_P"] = {"CAMS": 0.4, "GCS": 0.1, "ICANS": 0.4, "RASS": 0.1}
+        enc_patches = [("np.random.choice(self.unique_datasets)", "np.random.choice(self.unique_datasets, p=[ANCHOR_P[str(d)] for d in self.unique_datasets])")]
+        head_patches = [
+            ('"RASS": 0.2', '"RASS": 0.1'), ('"GCS": 0.2', '"GCS": 0.1'), ('"CAMS": 0.3', '"CAMS": 0.4'), ('"ICANS": 0.3', '"ICANS": 0.4'),
+            ("random.sample(indices, min(anchor_count, len(indices)))", "random.choices(indices, k=anchor_count)"),
+        ]
+    load_defs(TRAIN_DIR / "Train_TripletEncoder.py", {"TripletDataset", "ResidualBlock1D", "MORGOTH_ResNet1D_onlyGAP_CORAL", "Training_triplet_function"}, ns, enc_patches)
+    load_defs(TRAIN_DIR / "Train_NESI.py", {"create_pairs", "PairDataset", "EEGScoringModel", "pairwise_loss", "train_model"}, ns, head_patches)
 
     sets = load_sets()
     withhold = pd.read_csv(ROOT.parent / "overlap_rows_to_withhold.csv")
@@ -117,6 +135,11 @@ def main():
     for k in ["train", "val"]:
         r = sets[k][1]
         mask = np.zeros(len(r), bool) if a.keep_overlap else withheld_mask(r, withhold)
+        if a.mode == "downsample":
+            # Keep a fixed 10% of RASS and GCS patients in each set; CAM-S and ICANS stay whole
+            ids = r[r.Dataset.isin(["RASS", "GCS"])].BDSPPatientID.astype(str).drop_duplicates().sort_values().values
+            kept = set(np.random.default_rng(a.seed).choice(ids, max(1, len(ids) // 10), replace=False))
+            mask = mask | (r.Dataset.isin(["RASS", "GCS"]).values & ~r.BDSPPatientID.astype(str).isin(kept).values)
         keep[k] = np.where(~mask)[0]
         print(f"{k}: {len(r)} rows, withheld {mask.sum()}, using {len(keep[k])}", flush=True)
     if a.smoke:
