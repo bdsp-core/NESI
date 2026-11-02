@@ -98,6 +98,8 @@ SCRIPTS = {
 }
 
 
+TORCH_SCRIPTS = {"sfig7_9"}
+
 # Paths the scripts expect -> file name under NESI_DATA_ROOT/s3
 S3_LINKS = {
     "cohort_models/GCS/Cohort/GCS_BIDMC_HarvardEEG_metadata.csv": "GCS_BIDMC_HarvardEEG_metadata.csv",
@@ -142,6 +144,11 @@ def build_workspace():
         if src.exists() and not dst.exists():
             dst.symlink_to(src)
             linked += 1
+    # Some scripts locate the project root by a pre-restructure RASS/ folder
+    (work / "RASS").symlink_to(work / "cohort_models" / "RASS")
+    # Imported but unused by the figure scripts; not in every environment
+    (BUILD / "stubs").mkdir(exist_ok=True)
+    (BUILD / "stubs" / "torchsummary.py").write_text("def summary(*a, **k):\n    pass\n")
     print(f"workspace: {work} ({linked} data links)")
     return work
 
@@ -174,14 +181,14 @@ def run_torch():
 def run_scripts(work, timeout=900):
     res, logs = {}, OUT / "logs"
     logs.mkdir(parents=True, exist_ok=True)
-    env = dict(os.environ, MPLBACKEND="Agg", PYTHONWARNINGS="ignore")
+    env = dict(os.environ, MPLBACKEND="Agg", PYTHONWARNINGS="ignore", PYTHONPATH=str(BUILD / "stubs"), OMP_NUM_THREADS="4")
     for key, rel in SCRIPTS.items():
         path = work / rel
         scan = lambda: {p: p.stat().st_mtime for ext in ("*.png", "*.pdf") for p in work.rglob(ext)}
         before = scan()
         t = time.time()
         try:
-            r = subprocess.run([sys.executable, path.name], cwd=path.parent, capture_output=True, text=True, env=env, timeout=timeout)
+            r = subprocess.run([TORCH_PY if key in TORCH_SCRIPTS else sys.executable, path.name], cwd=path.parent, capture_output=True, text=True, env=env, timeout=timeout)
             (logs / f"{key}.log").write_text(r.stdout[-200000:] + "\n--STDERR--\n" + r.stderr[-20000:])
             new = [str(p.relative_to(work)) for p, m in scan().items() if before.get(p) != m]
             last = r.stderr.strip().splitlines()[-1][:170] if r.stderr.strip() else ""
