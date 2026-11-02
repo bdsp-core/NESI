@@ -392,6 +392,19 @@ def revision_tables(ctx):
     for x in a.itertuples():
         ctx.num[f"ABL.{x.Head}.{x.Scale}.rho"], ctx.num[f"ABL.{x.Head}.{x.Scale}.delta"] = x.rho, x.delta
     ctx.num.update(json.load(open(ctx.root / "intermediates/external/numbers.json")))
+    m = pd.read_csv(t / "mortality_summary.csv", header=None, index_col=0)[1]
+    for k, v in m.items():
+        ctx.num[f"MORT2.{k}"] = v
+    d = pd.read_csv(t / "mortality_delong.csv")
+    for x in d.itertuples():
+        k = f"MORT2.delta.{x.a}|{x.b}|{x.hour}"
+        ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".p_holm"] = x.delta, x.lo, x.hi, x.p_holm
+    a = pd.read_csv(t / "artifact_tolerance.csv")
+    for x in a.itertuples():
+        ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi
+    r = pd.read_csv(t / "retrain_summary.csv")
+    for x in r.itertuples():
+        ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.rho"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.lo"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.hi"] = x.rho_new, x.lo, x.hi
 
 
 ALL = [
