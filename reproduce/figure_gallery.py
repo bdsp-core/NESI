@@ -31,7 +31,7 @@ MAIN = {
     "3": (["final/Fig3.png", "_diff_Fig3.png"], "Regenerated", "figures_final.py (fit_nesi_curves.py). Second image: pixel difference from the published figure."),
     "4": (["final/Fig4.png", "_diff_Fig4.png"], "Regenerated", "figures_final.py. Second image: pixel difference from the published figure."),
     "5": (["mortality_auroc_available_covariates.png"], "Rebuilt, changed", "mortality.py. The published Fig 5 came from mislabeled NESI and GCS results; rebuilt with the covariates available."),
-    "6": (["@figures/main/Figure6.png"], "Not reproducible yet", "The repo's Figure6_pacmap_embedding.py makes an earlier two-panel layout. The published six-panel figure comes from NESI_composite_pacmap.py, which needs Arka's indication files."),
+    "6": (["Figure6_composite.png"], "Partly regenerated", "figure6_composite.py from the saved PaCMAP coordinates. Panels A-C match the published figure, every n included. Panels D-F use our keyword report labels, which flag fewer patients than the LLM labels the paper describes (3,353 / 525 / 1,021 published vs 1,790 / 225 / 621); the highlighted regions look the same. The manuscript keeps the published figure until the LLM labels are available."),
     "7": (["final/Fig7.png"], "Regenerated, matches", "external_validation.py from Erika's files. Values and n match the published figure."),
     "8": (["sedation/figure_sedation_combined_stratum.png"], "Regenerated, matches", "sedation.py (Christine's code) from her full 1,000-resample run. All three panels match the figure in the manuscript."),
 }
