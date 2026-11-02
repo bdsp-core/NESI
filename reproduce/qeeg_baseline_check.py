@@ -104,8 +104,7 @@ def summarize(d, miss=0):
         y = {"RASS": -g.RawScore, "GCS": 15 - g.RawScore}.get(ds, g.RawScore)
         row = dict(Scale=ds, Segments=len(g), NESI=stats.spearmanr(y, g.NESI)[0])
         for c in ["rel_delta", "delta_alpha", "sef95"]:
-            s = stats.spearmanr(y, g[c])[0]
-            row[c] = -s if c == "sef95" else s
+            row[c] = stats.spearmanr(y, g[c])[0]  # signed, as in the supplement (SEF95 falls with severity)
         rows.append(row)
     r = pd.DataFrame(rows).round(3)
     r.to_csv(OUT / "qeeg_baseline_check.csv", index=False)

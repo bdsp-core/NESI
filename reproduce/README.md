@@ -28,7 +28,7 @@ Checking a number or adjusting a figure never needs a retrain or raw EEG. `run_a
 | `retrain/*/test_scores.csv`: sensitivity retrains | `retrain_split_fix.py` and its options | About 2.5 h per run |
 | `retrain/loco_*`, `retrain/mapping_*`: leave-one-cohort-out and SPECTRA mappings | `retrain_split_fix.py --leave-out`, `--mapping` | About 2.5 h per run |
 | `intermediates/mortality/`: NESI on the mortality cohort | `mortality.py features` | About 5 h |
-| `sedation_repo/`: medication models and bootstrap draws | `sedation.py --from-source` | Many hours |
+| `intermediates/sedation/`: medication models and bootstrap draws (1,000 resamples), restored into `sedation_repo/` by the fast route | `sedation.py --from-source` | About 7 h on 16 cores |
 | `intermediates/artifact_per_segment.csv` | `artifact_tolerance.py --refresh` | About 1 h, depending on the network |
 | `intermediates/rass_positive_features.npz` | Delete it, then run `rass_positive.py` | Minutes, depending on the network |
 
@@ -36,7 +36,7 @@ Medication steps use `NESI_SEDATION_PYTHON`, a Python with `pandas<3` and the pa
 
 ## Data
 
-`github_moved/` mirrors the paths in [`docs/DATA_FILES.md`](../docs/DATA_FILES.md). `s3/` holds files from `s3://bdsp-opendata-credentialed/yama/`. `drive/` holds `i0001_RASS_Meds_NESI.csv`, which is not yet in the S3 release.
+`github_moved/` mirrors the paths in [`docs/DATA_FILES.md`](../docs/DATA_FILES.md). `s3/` holds files from `s3://bdsp-opendata-credentialed/yama/`. `drive/` holds `i0001_RASS_Meds_NESI.csv`, which is also in the S3 release at `yama/NESI/NESI-Medication-Analysis/sedation-strata/data/`.
 
 ## Current coverage
 
