@@ -120,6 +120,8 @@ python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
 ## 🔁 Reproducing the paper
 
 1. Request credentialed access to the dataset (link above) and `aws s3 sync` the cohort(s) you need.
+   Set `NESI_DATA_ROOT` to your local copy and run `python link_data.py`, which links the files in
+   [`docs/DATA_FILES.md`](docs/DATA_FILES.md) into the paths the scripts read.
 2. Set up MORGOTH and this environment.
 3. Follow **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)**, which maps each figure and table to the
    script that produces it (training → evaluation → figures), and lists where the trained
