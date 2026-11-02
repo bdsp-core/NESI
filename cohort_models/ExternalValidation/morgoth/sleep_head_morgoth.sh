@@ -25,10 +25,9 @@
 #--leave_one_hemisphere_out no or left or right or middel (Set the EEG signals to 0 for the left, right, or middle hemisphere)
 #--rewrite_results no | yes (Default no Overwrite the original results when new results are available.)
 
-password="***REMOVED***"
 
 # 7. SLEEP 3 stages with 19 channels --------------------------------------------------------
-echo "$password" | sudo OMP_NUM_THREADS=1 $(which python) -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=1 finetune_classification.py \
+sudo OMP_NUM_THREADS=1 $(which python) -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=1 finetune_classification.py \
             --predict \
             --model base_patch200_200 \
             --task_model checkpoints/SLEEP.pth \
