@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TUAB: abnormal classification -------------------------------------------------
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune_tuab_base2 \
 #        --log_dir log/finetune_tuab_base2 \
 #        --model base_patch200_200 \
@@ -26,7 +26,7 @@
 
 
 # TUEV: event classification -------------------------------------------------
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune_tuev_base \
 #        --log_dir log/finetune_tuev_base2 \
 #        --model base_patch200_200 \
@@ -51,7 +51,7 @@
 
 
 #TUEP: epilepsy classification -------------------------------------------------
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune_tuep_base \
 #        --log_dir log/finetune_tuep_base2 \
 #        --model base_patch200_200 \
@@ -80,7 +80,7 @@
 
 # NORMAL ----------------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #          --output_dir checkpoints/finetune6_NORMAL2 \
 #          --log_dir log/finetune6_NORMAL2 \
 #          --dataset NORMAL \
@@ -109,7 +109,7 @@
 
 # SLOWING ----------------------------------------------------------------------
 EPOCH=5
-echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
           --output_dir checkpoints/finetune6_SLOWING2 \
           --log_dir log/finetune6_SLOWING2 \
           --dataset SLOWING \
@@ -137,7 +137,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # BS ----------------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune6_BS2 \
 #        --log_dir log/finetune6_BS2 \
 #        --dataset BS \
@@ -166,7 +166,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # IIIC  ----------------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune6_IIIC2 \
 #        --log_dir log/finetune6_IIIC2 \
 #        --dataset IIIC \
@@ -198,7 +198,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # FOC GEN SPIKES 3 class--------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune6_FOCGENSPIKES2 \
 #        --log_dir log/finetune6_FOCGENSPIKES2 \
 #        --dataset FOC_GEN_SPIKES \
@@ -228,7 +228,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # SPIKES -----------------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune6_SPIKE \
 #        --log_dir log/finetune6_SPIKE \
 #        --dataset SPIKES \
@@ -261,7 +261,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
  # MGB 3 stages SLEEP----------------------------------------------------------------------
 # EPOCH=10
-# echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+# sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #         --output_dir checkpoints/finetune6_MGBSLEEP3stages \
 #         --log_dir log/finetune6_MGBSLEEP3stages \
 #         --dataset MGBSLEEP3stages \
@@ -291,7 +291,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # SLEEPPSG  ----------------------------------------------------------------------
 # EPOCH=10
-# echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+# sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #         --output_dir checkpoints/finetune6_SLEEPPSG \
 #         --log_dir log/finetune6_SLEEPPSG \
 #         --dataset SLEEPPSG \
@@ -318,7 +318,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 
 # EPOCH=30
-# echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+# sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #         --output_dir checkpoints/finetune_BCHPSG_scaling_focal \
 #         --log_dir log/finetune_BCHPSG_scaling_focal \
 #         --dataset SLEEPPSG \
@@ -352,7 +352,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
  # MASS SLEEP----------------------------------------------------------------------
 # EPOCH=30
-# echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+# sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #         --output_dir checkpoints/finetune3_MASS \
 #         --log_dir log/finetune3_MASS \
 #         --dataset SLEEPMASS \
@@ -381,7 +381,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
  # PENN SLEEP----------------------------------------------------------------------
 # EPOCH=10
-# echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+# sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #         --output_dir checkpoints/finetune3_PENN_nofinetune \
 #         --log_dir log/finetune3_PENN_nofinetune \
 #         --dataset SLEEPPENN \
@@ -415,7 +415,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # FOC SPIKES --------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune3_FOCSPIKES \
 #        --log_dir log/finetune3_FOCSPIKES \
 #        --dataset FOC_SPIKES \
@@ -440,10 +440,10 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 #        --disable_qkv_bias \
 #        --seed 0
 #
-#echo "***REMOVED***" | sudo mkdir checkpoints/finetune3_FOCSPIKES_Occasion
-#echo "***REMOVED***" | sudo cp checkpoints/finetune3_FOCSPIKES/checkpoint-best.pth checkpoints/finetune3_FOCSPIKES_Occasion/checkpoint-0.pth
+#sudo mkdir checkpoints/finetune3_FOCSPIKES_Occasion
+#sudo cp checkpoints/finetune3_FOCSPIKES/checkpoint-best.pth checkpoints/finetune3_FOCSPIKES_Occasion/checkpoint-0.pth
 #EPOCH=3
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune3_FOCSPIKES_Occasion \
 #        --log_dir log/finetune3_FOCSPIKES_Occasion \
 #        --dataset GEN_SPIKES \
@@ -473,7 +473,7 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 
 # GEN SPIKES --------------------------------------------------------------
 #EPOCH=10
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune3_GENSPIKES \
 #        --log_dir log/finetune3_GENSPIKES \
 #        --dataset GEN_SPIKES \
@@ -498,10 +498,10 @@ echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/
 #        --disable_qkv_bias \
 #        --seed 0
 
-#echo "***REMOVED***" | sudo mkdir /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES_Occasion
-#echo "***REMOVED***" | sudo cp /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES/checkpoint-best.pth /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES_Occasion/checkpoint-0.pth
+#sudo mkdir /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES_Occasion
+#sudo cp /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES/checkpoint-best.pth /home/exx/Documents/EEG_report/EEGfounder/checkpoints/finetune3_GENSPIKES_Occasion/checkpoint-0.pth
 #EPOCH=3
-#echo "***REMOVED***" | sudo -S OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
+#sudo OMP_NUM_THREADS=1 ~/miniconda3/envs/torchenv/bin/python -m torch.distributed.run --nnodes=1 --nproc_per_node=2 --master_port=12345 finetune_classification.py \
 #        --output_dir checkpoints/finetune3_GENSPIKES_Occasion \
 #        --log_dir log/finetune3_GENSPIKES_Occasion \
 #        --dataset GEN_SPIKES \
