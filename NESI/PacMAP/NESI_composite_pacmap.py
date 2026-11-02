@@ -2,9 +2,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-SCRIPT_DIR = Path("/home/ayush/Desktop/NESI_review_material/PacMAP")
+SCRIPT_DIR = Path(__file__).resolve().parent
 IN_CSV = SCRIPT_DIR / "NESI_pacmap_coords.csv"
-INDICATION_DIR = Path("/home/ayush/Desktop/NESI_review_material/EEGIndication_Analysis/NeuroIndication_Datasetwise")
+INDICATION_DIR = SCRIPT_DIR.parents[1] / "EEGIndication_Analysis/NeuroIndication_Datasetwise"
 
 INDICATION_FILES = {
     "RASS": "RASS_NESI_fullmetadata_with_NeuroReports_Qwen3_V2.csv",
@@ -90,7 +90,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-DIAG_ROOT = Path("/home/ayush/Desktop/NESI_review_material")
+DIAG_ROOT = SCRIPT_DIR.parents[1]
 diag_files = [
     DIAG_ROOT / "DiagnosisMetadtafiles" / "File1.xlsx",
     DIAG_ROOT / "DiagnosisMetadtafiles" / "File2.xlsx",
@@ -207,9 +207,9 @@ if "MorgothOutputFilename" not in df.columns:
 df["BDSPPatientID"] = df["MorgothOutputFilename"].apply(extract_pid)
 
 # Verify extraction
-test_filename = "sub-S0002122422458_ses-1_eeg_10min_seg5.csv"
+test_filename = "sub-S0000123456789_ses-1_eeg_10min_seg5.csv"
 test_pid = extract_pid(test_filename)
-assert test_pid == "122422458", f"Incorrect extraction: {test_pid}"
+assert test_pid == "123456789", f"Incorrect extraction: {test_pid}"
 
 
 # Merge original and broad diagnosis categories
@@ -628,7 +628,7 @@ def plot_nesi_pacmap(
 
 plot_nesi_pacmap(
     df_data=df_pacmap_enriched,
-    fig_save_path = '/home/ayush/Desktop/NESI_review_material/PacMAP/NESI_composite_PacMAP.png',
+    fig_save_path = str(SCRIPT_DIR / "NESI_composite_PacMAP.png"),
 
     # Subplot C: Severe clinical states
     rass_scores=[-5],

@@ -6,7 +6,7 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import to_rgb, LinearSegmentedColormap
 from IPython.display import display
 
-SCRIPT_DIR = Path("/home/ayush/Desktop/NESI_review_material/PacMAP")
+SCRIPT_DIR = Path(__file__).resolve().parent
 IN_CSV = SCRIPT_DIR / 'NESI_pacmap_coords.csv'
 ROTATION_DEGREES = 90
 FLIP_VERTICAL = True

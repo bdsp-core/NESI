@@ -139,11 +139,11 @@ def group_cams(x):
 # In[131]:
 
 
-Supplementray_fig_Root = Path('/home/ayush/Desktop/GitHub-YAMA')
-RASS_ROOT = Path('/home/ayush/Desktop/GitHub-YAMA')
-GCS_ROOT = Path('/home/ayush/Desktop/GitHub-YAMA')
-CAMS_ROOT = Path('/home/ayush/Desktop/GitHub-YAMA')
-ICANS_ROOT = Path('/home/ayush/Desktop/GitHub-YAMA')
+Supplementray_fig_Root = Path(__file__).resolve().parents[3]
+RASS_ROOT = Path(__file__).resolve().parents[3]
+GCS_ROOT = Path(__file__).resolve().parents[3]
+CAMS_ROOT = Path(__file__).resolve().parents[3]
+ICANS_ROOT = Path(__file__).resolve().parents[3]
 
 
 # In[5]:

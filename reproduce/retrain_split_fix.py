@@ -11,6 +11,8 @@ from Train_TripletEncoder.py and Train_NESI.py.
     python reproduce/retrain_split_fix.py --keep-overlap  # same data as the original, new seed
     python reproduce/retrain_split_fix.py --mode downsample  # R3.6: RASS and GCS training patients reduced to 10%
     python reproduce/retrain_split_fix.py --mode upweight    # R3.6: anchors weighted toward CAM-S and ICANS
+    python reproduce/retrain_split_fix.py --leave-out GCS   # leave-one-cohort-out (Supplementary Fig. 35)
+    python reproduce/retrain_split_fix.py --mapping 7        # SPECTRA mapping M7 of Supplementary Table 5
     python reproduce/retrain_split_fix.py --smoke         # quick end-to-end test
 """
 import argparse
@@ -104,6 +106,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--keep-overlap", action="store_true")
     ap.add_argument("--mode", choices=["standard", "downsample", "upweight"], default="standard")
+    ap.add_argument("--leave-out", choices=["RASS", "GCS", "CAMS", "ICANS"])
+    ap.add_argument("--mapping", type=int, choices=range(1, 25), metavar="1-24")
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
@@ -111,6 +115,10 @@ def main():
     name = ("smoke_" if a.smoke else "") + ("keep_overlap" if a.keep_overlap else "withhold_overlap") + f"_seed{a.seed}"
     if a.mode != "standard":
         name = f"{a.mode}_{name}"
+    if a.leave_out:
+        name = f"loco_{a.leave_out}_{name}"
+    if a.mapping:
+        name = f"mapping_M{a.mapping}_{name}"
     out = ROOT.parent / "retrain" / name
     out.mkdir(parents=True, exist_ok=True)
     random.seed(a.seed), np.random.seed(a.seed), torch.manual_seed(a.seed)
@@ -130,6 +138,12 @@ def main():
     load_defs(TRAIN_DIR / "Train_NESI.py", {"create_pairs", "PairDataset", "EEGScoringModel", "pairwise_loss", "train_model"}, ns, head_patches)
 
     sets = load_sets()
+    if a.mapping:
+        sys.path.insert(0, str(REPO / "reproduce"))
+        from spectra_mappings import regroup
+
+        for k in sets:
+            sets[k][1]["GroupedScore"] = regroup(sets[k][1], a.mapping)
     withhold = pd.read_csv(ROOT.parent / "overlap_rows_to_withhold.csv")
     keep = {}
     for k in ["train", "val"]:
@@ -140,6 +154,8 @@ def main():
             ids = r[r.Dataset.isin(["RASS", "GCS"])].BDSPPatientID.astype(str).drop_duplicates().sort_values().values
             kept = set(np.random.default_rng(a.seed).choice(ids, max(1, len(ids) // 10), replace=False))
             mask = mask | (r.Dataset.isin(["RASS", "GCS"]).values & ~r.BDSPPatientID.astype(str).isin(kept).values)
+        if a.leave_out:
+            mask = mask | (r.Dataset.values == a.leave_out)
         keep[k] = np.where(~mask)[0]
         print(f"{k}: {len(r)} rows, withheld {mask.sum()}, using {len(keep[k])}", flush=True)
     if a.smoke:
@@ -203,6 +219,18 @@ def main():
             "rho_published": abs(spearmanr(g.TrueScore, g.PredictedNESI)[0]),
             "corr_new_vs_published": float(np.corrcoef(g.NewNESI, g.PredictedNESI)[0, 1]),
         }
+    if a.leave_out:
+        # The excluded scale's whole cohort, across all three sets (Supplementary Fig. 35 panels A-D)
+        parts = []
+        for k in ["train", "val", "test"]:
+            xk, rk = sets[k]
+            i = np.where(rk.Dataset.values == a.leave_out)[0]
+            if a.smoke:
+                i = i[:50]
+            with torch.no_grad():
+                sc = head(torch.from_numpy(embed(enc, xk, i, device)).to(device)).cpu().numpy()
+            parts.append(rk.iloc[i][["Dataset", "MorgothOutputFilename", "BDSPPatientID", "TrueScore", "PredictedNESI"]].assign(NewNESI=sc, Set=k))
+        pd.concat(parts).to_csv(out / "heldout_scores.csv", index=False)
     json.dump(res, open(out / "result.json", "w"), indent=1)
     print(json.dumps(res, indent=1), flush=True)
 
