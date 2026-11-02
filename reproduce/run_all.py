@@ -229,6 +229,9 @@ REVISION = [
     ("figures_elapsed_time", "figures_elapsed_time.py", "torch"),
     ("graphical_abstract", "graphical_abstract.py", "torch"),
     ("cross_score", "cross_score.py --exact", "torch"),
+    ("qeeg_supp_fig31", "qeeg_supp_fig31.py", "plain"),
+    ("loco_summary", "loco_summary.py", "plain"),
+    ("figure6_composite", "figure6_composite.py", "plain"),
 ]
 
 

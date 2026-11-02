@@ -33,7 +33,7 @@ MAIN = {
     "5": (["mortality_auroc_available_covariates.png"], "Rebuilt, changed", "mortality.py. The published Fig 5 came from mislabeled NESI and GCS results; rebuilt with the covariates available."),
     "6": (["@figures/main/Figure6.png"], "Not reproducible yet", "The repo's Figure6_pacmap_embedding.py makes an earlier two-panel layout. The published six-panel figure comes from NESI_composite_pacmap.py, which needs Arka's indication files."),
     "7": (["final/Fig7.png"], "Regenerated, matches", "external_validation.py from Erika's files. Values and n match the published figure."),
-    "8": (["sedation/figure_sedation_combined_stratum.png"], "Regenerated, CIs pending", "sedation.py (Christine's code). Panel a matches; CIs here are from a test run until the 1,000-resample AWS run finishes."),
+    "8": (["sedation/figure_sedation_combined_stratum.png"], "Regenerated, matches", "sedation.py (Christine's code) from her full 1,000-resample run. All three panels match the figure in the manuscript."),
 }
 SUPP = {
     "1": ([], "Not regenerated", "CONSORT diagram, drawn by hand."),
@@ -61,15 +61,15 @@ SUPP = {
     "28": (["mortality_decision_curve.png"], "New", "mortality.py. Replaces the likelihood-ratio figure, which came from the mislabeled analysis."),
     "29": ([], "Removed", "Calibration of the mislabeled mortality models."),
     "30": ([], "Removed", "NRI and IDI of the mislabeled mortality models."),
-    "31": (["final/SuppFig31.png"], "Relabeled; partly checked", "qeeg_baseline_check.py on a test-set sample: delta/alpha ratio and relative delta power reproduce the text's correlations within their CIs for all four scales; SEF95 does not (sign differs for GCS and CAM-S), probably a different SEF95 definition. Figure prints segment-level CIs and wasn't redrawn."),
+    "31": (["SuppFig31_qeeg.png"], "Regenerated, changed (now Supp Fig 29)", "qeeg_supp_fig31.py with patient-level CIs. Delta/alpha and relative delta reproduce the previous point estimates. SEF95 recomputed over 0.5–30 Hz; the previous ICANS value (+0.09) comes back only over 0–100 Hz, which does not reproduce CAM-S. NESI still exceeds every feature."),
     "32": ([], "Partly checked", "qeeg_baseline_check.py: on the same segments NESI (0.72-0.85) exceeds every single qEEG feature on every scale (largest |rho| 0.66). The qEEG-trained heads themselves were not retrained."),
     "33": (["supp_fig33.png"], "Regenerated, changed", "ablation_figure.py. Baseline heads retrained on NESI's own split (the published figure used another split); panel a counts corrected."),
     "34": ([], "Not reproducible yet", "Needs MORGOTH on full recordings."),
-    "35": ([], "Retraining", "Leave-one-cohort-out retrains are running on AWS."),
+    "35": (["SuppFig33_leave_one_cohort_out.png"], "Regenerated, changed (now Supp Fig 33)", "loco_summary.py from the leave-one-cohort-out retrains on the corrected split, patient-level CIs. Full-cohort values within 0.01 of the previous figure; test-set values compared with a universal model retrained the same way."),
     "36": (["SuppFig36_threshold_auroc.png"], "Regenerated", "supp_figures_fast.py. Matches."),
     "37": (["final/SuppFig37.png"], "Regenerated, changed", "morgoth_overlap.py. Excludes all 193 overlapping patients; patient-level CIs."),
     "38": (["final/SuppFig38.png"], "Regenerated, matches", "external_validation.py. The published figure is kept; values agree within 0.01."),
-    "39": (["sedation/offset_by_level_panels_stratum.png"], "Regenerated, CIs pending", "sedation.py (Christine's code). Test-run CIs until the AWS run finishes."),
+    "39": (["sedation/offset_by_level_panels_stratum.png"], "Regenerated, matches (now Supp Fig 37)", "sedation.py (Christine's code) from her full 1,000-resample run."),
 }
 MAIN_MEDIA = {"1": "image6", "2": "image3", "3": "image2", "4": "image1", "5": "image4", "6": "image5", "7": "added901", "8": "added902"}
 

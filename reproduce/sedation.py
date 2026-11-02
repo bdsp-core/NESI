@@ -4,8 +4,10 @@
     python reproduce/sedation.py                # redraw figures and rebuild tables from saved results (minutes)
     python reproduce/sedation.py --from-source  # refit every model with 1,000 resamples (many hours)
 
-Her data and saved results are in NESI_DATA_ROOT/sedation_repo, with the layout of
-NESI/NESI-Medication-Analysis. The repo itself is not written to.
+Her data are in NESI_DATA_ROOT/sedation_repo, with the layout of NESI/NESI-Medication-Analysis.
+The saved results of the full 1,000-resample run are in NESI_DATA_ROOT/intermediates/sedation,
+with the same layout; the fast route copies them into place first, and --from-source refreshes
+them. The repo itself is not written to.
 """
 import argparse
 import os
@@ -21,6 +23,22 @@ REPO = Path(__file__).resolve().parent.parent
 PY = os.environ.get("NESI_SEDATION_PYTHON", sys.executable)
 DATA = ROOT / "sedation_repo"
 PARTS = ["medication-exposure", "eleveld-pk-analysis", "sedation-strata"]
+SAVED = ROOT / "intermediates" / "sedation"
+OUTPUTS = ["medication-exposure/data/stratified_feasibility", "eleveld-pk-analysis/data/*.md"]
+
+
+def copy_outputs(src, dst):
+    """Copy the files the full run writes (OUTPUTS) from one sedation_repo layout to another."""
+    n = 0
+    for pattern in OUTPUTS:
+        for top in src.glob(pattern):
+            for f in [top] if top.is_file() else sorted(top.rglob("*")):
+                if f.is_file():
+                    t = dst / f.relative_to(src)
+                    t.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(f, t)
+                    n += 1
+    return n
 
 
 def workspace():
@@ -60,7 +78,10 @@ def main():
     if a.from_source:
         run(work / "eleveld-pk-analysis", "run_variance_all.py")
         run(work / "sedation-strata", "run_stratified_all.py")
+        print(f"saved {copy_outputs(DATA, SAVED)} files to {SAVED}")
         return
+    if SAVED.exists():
+        print(f"restored {copy_outputs(SAVED, DATA)} saved files from {SAVED}")
     strata = work / "sedation-strata"
     run(strata, "agent_stratified_model.py", "--plots-only")
     run(strata, "build_tables.py")

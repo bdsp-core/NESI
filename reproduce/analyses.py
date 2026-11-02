@@ -405,6 +405,16 @@ def revision_tables(ctx):
     r = pd.read_csv(t / "retrain_summary.csv")
     for x in r.itertuples():
         ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.rho"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.lo"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.hi"] = x.rho_new, x.lo, x.hi
+    q = pd.read_csv(t / "qeeg_supp_fig31.csv")
+    for x in q.itertuples():
+        ctx.num[f"QEEG.{x.Scale}.{x.Feature}.rho"], ctx.num[f"QEEG.{x.Scale}.{x.Feature}.lo"], ctx.num[f"QEEG.{x.Scale}.{x.Feature}.hi"] = x.rho, x.lo, x.hi
+    lo = pd.read_csv(t / "loco_summary.csv")
+    for x in lo.itertuples():
+        for c in ["full_rho", "full_lo", "full_hi", "loco_rho", "loco_lo", "loco_hi", "uni_rho", "uni_lo", "uni_hi", "delta", "delta_lo", "delta_hi"]:
+            ctx.num[f"LOCO.{x.Scale}.{c}"] = getattr(x, c)
+    f6 = pd.read_csv(t / "figure6_counts.csv")
+    for x in f6.itertuples():
+        ctx.num["FIG6." + x.Panel.replace(" ", "_")] = x.Selected
 
 
 ALL = [

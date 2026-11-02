@@ -436,3 +436,115 @@ id,doc,location,description,expected,key,tolerance
 435,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 ICANS rho,0.71,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.rho,0.0051
 436,Supp,Supp Table 19,  CI low,0.55,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.lo,0.0051
 437,Supp,Supp Table 19,  CI high,0.82,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.hi,0.0051
+438,Supp,Supp Fig 31 text,"RASS rho, delta/alpha (test-set sample)",-0.15,QEEG.RASS.delta_alpha.rho,0.0051
+439,Supp,Supp Fig 31 text,  CI low,-0.27,QEEG.RASS.delta_alpha.lo,0.0051
+440,Supp,Supp Fig 31 text,  CI high,-0.01,QEEG.RASS.delta_alpha.hi,0.0051
+441,Supp,Supp Fig 31 text,"RASS rho, relative delta (test-set sample)",-0.12,QEEG.RASS.rel_delta.rho,0.0051
+442,Supp,Supp Fig 31 text,  CI low,-0.23,QEEG.RASS.rel_delta.lo,0.0051
+443,Supp,Supp Fig 31 text,  CI high,0.02,QEEG.RASS.rel_delta.hi,0.0051
+444,Supp,Supp Fig 31 text,"RASS rho, SEF95 (test-set sample)",0.09,QEEG.RASS.sef95.rho,0.0051
+445,Supp,Supp Fig 31 text,  CI low,-0.03,QEEG.RASS.sef95.lo,0.0051
+446,Supp,Supp Fig 31 text,  CI high,0.20,QEEG.RASS.sef95.hi,0.0051
+447,Supp,Supp Fig 31 text,"RASS rho, NESI (test-set sample)",0.72,QEEG.RASS.NESI.rho,0.0051
+448,Supp,Supp Fig 31 text,  CI low,0.66,QEEG.RASS.NESI.lo,0.0051
+449,Supp,Supp Fig 31 text,  CI high,0.76,QEEG.RASS.NESI.hi,0.0051
+450,Supp,Supp Fig 31 text,"GCS rho, delta/alpha (test-set sample)",0.06,QEEG.GCS.delta_alpha.rho,0.0051
+451,Supp,Supp Fig 31 text,  CI low,-0.03,QEEG.GCS.delta_alpha.lo,0.0051
+452,Supp,Supp Fig 31 text,  CI high,0.16,QEEG.GCS.delta_alpha.hi,0.0051
+453,Supp,Supp Fig 31 text,"GCS rho, relative delta (test-set sample)",0.01,QEEG.GCS.rel_delta.rho,0.0051
+454,Supp,Supp Fig 31 text,  CI low,-0.06,QEEG.GCS.rel_delta.lo,0.0051
+455,Supp,Supp Fig 31 text,  CI high,0.10,QEEG.GCS.rel_delta.hi,0.0051
+456,Supp,Supp Fig 31 text,"GCS rho, SEF95 (test-set sample)",-0.07,QEEG.GCS.sef95.rho,0.0051
+457,Supp,Supp Fig 31 text,  CI low,-0.17,QEEG.GCS.sef95.lo,0.0051
+458,Supp,Supp Fig 31 text,  CI high,0.01,QEEG.GCS.sef95.hi,0.0051
+459,Supp,Supp Fig 31 text,"GCS rho, NESI (test-set sample)",0.72,QEEG.GCS.NESI.rho,0.0051
+460,Supp,Supp Fig 31 text,  CI low,0.66,QEEG.GCS.NESI.lo,0.0051
+461,Supp,Supp Fig 31 text,  CI high,0.76,QEEG.GCS.NESI.hi,0.0051
+462,Supp,Supp Fig 31 text,"CAM-S rho, delta/alpha (test-set sample)",0.34,QEEG.CAMS.delta_alpha.rho,0.0051
+463,Supp,Supp Fig 31 text,  CI low,0.18,QEEG.CAMS.delta_alpha.lo,0.0051
+464,Supp,Supp Fig 31 text,  CI high,0.51,QEEG.CAMS.delta_alpha.hi,0.0051
+465,Supp,Supp Fig 31 text,"CAM-S rho, relative delta (test-set sample)",0.30,QEEG.CAMS.rel_delta.rho,0.0051
+466,Supp,Supp Fig 31 text,  CI low,0.13,QEEG.CAMS.rel_delta.lo,0.0051
+467,Supp,Supp Fig 31 text,  CI high,0.48,QEEG.CAMS.rel_delta.hi,0.0051
+468,Supp,Supp Fig 31 text,"CAM-S rho, SEF95 (test-set sample)",-0.46,QEEG.CAMS.sef95.rho,0.0051
+469,Supp,Supp Fig 31 text,  CI low,-0.61,QEEG.CAMS.sef95.lo,0.0051
+470,Supp,Supp Fig 31 text,  CI high,-0.29,QEEG.CAMS.sef95.hi,0.0051
+471,Supp,Supp Fig 31 text,"CAM-S rho, NESI (test-set sample)",0.85,QEEG.CAMS.NESI.rho,0.0051
+472,Supp,Supp Fig 31 text,  CI low,0.80,QEEG.CAMS.NESI.lo,0.0051
+473,Supp,Supp Fig 31 text,  CI high,0.89,QEEG.CAMS.NESI.hi,0.0051
+474,Supp,Supp Fig 31 text,"ICANS rho, delta/alpha (test-set sample)",0.66,QEEG.ICANS.delta_alpha.rho,0.0051
+475,Supp,Supp Fig 31 text,  CI low,0.50,QEEG.ICANS.delta_alpha.lo,0.0051
+476,Supp,Supp Fig 31 text,  CI high,0.78,QEEG.ICANS.delta_alpha.hi,0.0051
+477,Supp,Supp Fig 31 text,"ICANS rho, relative delta (test-set sample)",0.43,QEEG.ICANS.rel_delta.rho,0.0051
+478,Supp,Supp Fig 31 text,  CI low,0.19,QEEG.ICANS.rel_delta.lo,0.0051
+479,Supp,Supp Fig 31 text,  CI high,0.62,QEEG.ICANS.rel_delta.hi,0.0051
+480,Supp,Supp Fig 31 text,"ICANS rho, SEF95 (test-set sample)",-0.35,QEEG.ICANS.sef95.rho,0.0051
+481,Supp,Supp Fig 31 text,  CI low,-0.63,QEEG.ICANS.sef95.lo,0.0051
+482,Supp,Supp Fig 31 text,  CI high,-0.15,QEEG.ICANS.sef95.hi,0.0051
+483,Supp,Supp Fig 31 text,"ICANS rho, NESI (test-set sample)",0.83,QEEG.ICANS.NESI.rho,0.0051
+484,Supp,Supp Fig 31 text,  CI low,0.72,QEEG.ICANS.NESI.lo,0.0051
+485,Supp,Supp Fig 31 text,  CI high,0.90,QEEG.ICANS.NESI.hi,0.0051
+486,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, full excluded cohort",0.68,LOCO.RASS.full_rho,0.0051
+487,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.67,LOCO.RASS.full_lo,0.0051
+488,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.7,LOCO.RASS.full_hi,0.0051
+489,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, test set, model trained without it",0.66,LOCO.RASS.loco_rho,0.0051
+490,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.59,LOCO.RASS.loco_lo,0.0051
+491,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.72,LOCO.RASS.loco_hi,0.0051
+492,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, test set, universal retrain",0.69,LOCO.RASS.uni_rho,0.0051
+493,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.63,LOCO.RASS.uni_lo,0.0051
+494,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.73,LOCO.RASS.uni_hi,0.0051
+495,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, universal minus leave-one-out",0.029,LOCO.RASS.delta,0.00051
+496,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.009,LOCO.RASS.delta_lo,0.00051
+497,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.052,LOCO.RASS.delta_hi,0.00051
+498,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, full excluded cohort",0.65,LOCO.GCS.full_rho,0.0051
+499,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.64,LOCO.GCS.full_lo,0.0051
+500,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.67,LOCO.GCS.full_hi,0.0051
+501,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, test set, model trained without it",0.66,LOCO.GCS.loco_rho,0.0051
+502,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.59,LOCO.GCS.loco_lo,0.0051
+503,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.7,LOCO.GCS.loco_hi,0.0051
+504,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, test set, universal retrain",0.7,LOCO.GCS.uni_rho,0.0051
+505,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.65,LOCO.GCS.uni_lo,0.0051
+506,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.74,LOCO.GCS.uni_hi,0.0051
+507,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, universal minus leave-one-out",0.045,LOCO.GCS.delta,0.00051
+508,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.022,LOCO.GCS.delta_lo,0.00051
+509,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.071,LOCO.GCS.delta_hi,0.00051
+510,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, full excluded cohort",0.78,LOCO.CAMS.full_rho,0.0051
+511,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.75,LOCO.CAMS.full_lo,0.0051
+512,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.82,LOCO.CAMS.full_hi,0.0051
+513,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, test set, model trained without it",0.86,LOCO.CAMS.loco_rho,0.0051
+514,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.8,LOCO.CAMS.loco_lo,0.0051
+515,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.89,LOCO.CAMS.loco_hi,0.0051
+516,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, test set, universal retrain",0.85,LOCO.CAMS.uni_rho,0.0051
+517,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.8,LOCO.CAMS.uni_lo,0.0051
+518,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.89,LOCO.CAMS.uni_hi,0.0051
+519,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, universal minus leave-one-out",-0.005,LOCO.CAMS.delta,0.00051
+520,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,-0.037,LOCO.CAMS.delta_lo,0.00051
+521,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.025,LOCO.CAMS.delta_hi,0.00051
+522,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, full excluded cohort",0.72,LOCO.ICANS.full_rho,0.0051
+523,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.66,LOCO.ICANS.full_lo,0.0051
+524,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.77,LOCO.ICANS.full_hi,0.0051
+525,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, test set, model trained without it",0.75,LOCO.ICANS.loco_rho,0.0051
+526,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.62,LOCO.ICANS.loco_lo,0.0051
+527,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.85,LOCO.ICANS.loco_hi,0.0051
+528,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, test set, universal retrain",0.79,LOCO.ICANS.uni_rho,0.0051
+529,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.66,LOCO.ICANS.uni_lo,0.0051
+530,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.87,LOCO.ICANS.uni_hi,0.0051
+531,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, universal minus leave-one-out",0.036,LOCO.ICANS.delta,0.00051
+532,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,-0.02,LOCO.ICANS.delta_lo,0.00051
+533,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.091,LOCO.ICANS.delta_hi,0.00051
+534,Main,"Discussion, limitations","RASS rho, scale withheld from training",0.68,LOCO.RASS.full_rho,0.0051
+535,Main,"Discussion, limitations","GCS rho, scale withheld from training",0.65,LOCO.GCS.full_rho,0.0051
+536,Main,"Discussion, limitations","CAMS rho, scale withheld from training",0.78,LOCO.CAMS.full_rho,0.0051
+537,Main,"Discussion, limitations","ICANS rho, scale withheld from training",0.72,LOCO.ICANS.full_rho,0.0051
+538,Main,Fig 6 panel B legend,Burst windows,6897,FIG6.B._Burst,0
+539,Main,Fig 6 panel B legend,Seizure windows,2297,FIG6.B._Seizure,0
+540,Main,Fig 6 panel B legend,LPD windows,2898,FIG6.B._LPD,0
+541,Main,Fig 6 panel B legend,GPD windows,3191,FIG6.B._GPD,0
+542,Main,Fig 6 panel B legend,LRDA windows,1669,FIG6.B._LRDA,0
+543,Main,Fig 6 panel B legend,GRDA windows,5681,FIG6.B._GRDA,0
+544,Main,Fig 6 panel B legend,Other windows,21197,FIG6.B._Other,0
+545,Main,Fig 6 panel C legend,RASS windows,3626,FIG6.C._RASS,0
+546,Main,Fig 6 panel C legend,GCS windows,1361,FIG6.C._GCS,0
+547,Main,Fig 6 panel C legend,CAMS windows,310,FIG6.C._CAMS,0
+548,Main,Fig 6 panel C legend,ICANS windows,78,FIG6.C._ICANS,0
+549,Main,Fig 6 panel C legend,Other windows,38455,FIG6.C._Other,0
