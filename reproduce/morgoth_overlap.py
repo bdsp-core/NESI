@@ -92,3 +92,35 @@ sites = heedb[heedb.role.isin(["pretrain", "train"])].groupby(["role", "site"]).
 print("sites", sites)
 meta_sites = roles[roles.role == "train"].groupby("site").pid.nunique().to_dict()
 print("train sites all sheets", meta_sites)
+
+# Supplementary Fig. 37: excluding every MORGOTH pretraining or training patient (top) and the full test set (bottom)
+import matplotlib  # noqa: E402
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402
+
+COLORS = {"RASS": "#2683c6", "GCS": "#efb320", "CAMS": "#22a884", "ICANS": "#cc88aa"}
+NAMES = {"RASS": "RASS", "GCS": "GCS", "CAMS": "CAM-S", "ICANS": "ICANS"}
+fig, ax = plt.subplots(2, 4, figsize=(20, 10.5))
+for row, (label, keep) in enumerate([("Excluding MORGOTH-\noverlapping patients", lambda g: g[~g.pid.isin(PRE | ALLTRAIN)]), ("Full NESI test set", lambda g: g)]):
+    for col, ds in enumerate(["RASS", "GCS", "CAMS", "ICANS"]):
+        g = keep(t[t.Dataset == ds])
+        r, lo, hi = rho_ci(g)
+        vals = sorted(g.RawScore.unique())
+        groups = [g[g.RawScore == v].NESI for v in vals]
+        a = ax[row, col]
+        b = a.boxplot(groups, patch_artist=True, widths=0.6, flierprops=dict(marker=".", markersize=3, alpha=0.4), medianprops=dict(color="black", linewidth=1.5))
+        for p in b["boxes"]:
+            p.set_facecolor(COLORS[ds])
+        a.set_xticklabels([f"{int(v)}\nn={len(x)}" for v, x in zip(vals, groups)], fontsize=6.5 if ds == "GCS" else 8)
+        a.set_title(f"{NAMES[ds]}\nρ = {r:.2f} [{lo:.2f}, {hi:.2f}], {g.pid.nunique()} patients", fontsize=11, fontweight="bold")
+        a.spines[["top", "right"]].set_visible(False)
+        a.grid(axis="y", linestyle="--", alpha=0.4)
+        if row == 1:
+            a.set_xlabel(f"{NAMES[ds]} score", fontsize=11)
+    ax[row, 0].set_ylabel(f"{label}\n\nNESI", fontsize=11)
+fig.text(0.5, 0.005, "Boxes: median and IQR; whiskers: 1.5 × IQR. ρ with 95% patient-level bootstrap CIs.", ha="center", fontsize=9, style="italic")
+fig.tight_layout(rect=(0, 0.02, 1, 1))
+FIG = OUT.parent / "figures" / "final"
+FIG.mkdir(parents=True, exist_ok=True)
+fig.savefig(FIG / "SuppFig37.png", dpi=200)
