@@ -27,9 +27,9 @@ To reproduce the visualization using the provided coordinates:
 Directly Run
 ```bash
 python STEP3A_NESI_PACMAP_Twoanel.py
-python 
+python STEP3B_NESI_composite_pacmap.py
 ```
-[NESI_PACMAP_main.py](https://github.com/user-attachments/files/33686042/NESI_PACMAP_main.py)
+
 <img width="6680" height="3279" alt="NESI_pacmap" src="https://github.com/user-attachments/assets/2faa1134-29b4-4f9e-8b63-ed15646c9c12" />
 
 
