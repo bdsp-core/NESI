@@ -1,0 +1,367 @@
+"""Recompute manuscript numbers from the released result files.
+
+Each public function fills ``ctx.num`` with key -> value pairs and may write a
+table to ``ctx.out``. ``run_all.py`` then compares those values with
+``claims.csv``. Nothing here prints or writes patient-level rows.
+"""
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+from scipy import stats
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import brier_score_loss, cohen_kappa_score, roc_auc_score, roc_curve
+
+SCALES = ["RASS", "GCS", "CAMS", "ICANS"]
+SEVERE = {
+    "RASS": lambda s: s <= -4,
+    "GCS": lambda s: s <= 8,
+    "CAMS": lambda s: s >= 6,
+    "ICANS": lambda s: s >= 3,
+}
+
+
+class Context:
+    def __init__(self, repo, root, out, boot, seed=0):
+        self.repo, self.root, self.out = Path(repo), Path(root), Path(out)
+        self.gh, self.s3, self.drive = self.root / "github_moved", self.root / "s3", self.root / "drive"
+        self.boot, self.num = boot, {}
+        self.rng = np.random.default_rng(seed)
+        self._cache = {}
+
+    def table(self, df, name):
+        path = self.out / "tables" / f"{name}.csv"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        df.to_csv(path, index=False)
+
+    def load(self, key, path, **kw):
+        if key not in self._cache:
+            self._cache[key] = pd.read_csv(path, low_memory=False, **kw)
+        return self._cache[key]
+
+    def scores(self):
+        return self.load("scores", self.gh / "NESI/Bespoke_models/Results/Final_NESIscores_full_dataset_result.csv")
+
+    def model_sets(self):
+        if "sets" not in self._cache:
+            r = pd.concat(
+                pd.read_csv(self.s3 / f"NESI_{n}_results.csv", low_memory=False) for n in ["train", "val", "test"]
+            ).rename(columns={"Filename": "MorgothOutputFilename"})
+            self._cache["sets"] = self.scores().merge(
+                r[["Dataset", "MorgothOutputFilename", "WhichSet", "PredictedNESI"]],
+                on=["Dataset", "MorgothOutputFilename"],
+            )
+        return self._cache["sets"]
+
+    def meds(self):
+        if "meds" not in self._cache:
+            m = pd.read_csv(self.drive / "i0001_RASS_Meds_NESI.csv", low_memory=False)
+            m["n"] = pd.to_numeric(m.NESI, errors="coerce")
+            m["r"] = pd.to_numeric(m["R PHS IP RASS"], errors="coerce")
+            self._cache["meds"] = m[m.n.notna() & m.r.between(-5, 0)].reset_index(drop=True)
+        return self._cache["meds"]
+
+    def meta(self, cohort):
+        files = {
+            "RASS": ["RASS_BWH", "RASS_MGH"],
+            "GCS": ["GCS_BWH", "GCS_MGH"],
+        }[cohort]
+        out = []
+        for f in files:
+            d = pd.read_csv(self.gh / f"cohort_models/{cohort}/Cohort/{f}_HarvardEEG_metadata.csv", low_memory=False)
+            d["Site"] = f.split("_")[1]
+            out.append(d)
+        return pd.concat(out)
+
+
+def rho(a, b):
+    return abs(stats.spearmanr(a, b)[0])
+
+
+def _patient_boot(ctx, t, fn, n=None):
+    groups = {p: g.index.values for p, g in t.groupby("BDSPPatientID")}
+    ids = list(groups)
+    vals = []
+    for _ in range(n or ctx.boot):
+        ix = np.concatenate([groups[ids[j]] for j in ctx.rng.integers(0, len(ids), len(ids))])
+        vals.append(fn(t.loc[ix]))
+    return np.array(vals)
+
+
+def _segment_boot(ctx, a, b):
+    v = [rho(a[i], b[i]) for i in (ctx.rng.integers(0, len(a), len(a)) for _ in range(ctx.boot))]
+    return np.mean(v), *np.percentile(v, [2.5, 97.5])
+
+
+def cohorts_and_splits(ctx):
+    f, n = ctx.scores(), ctx.num
+    for ds in SCALES:
+        t = f[f.Dataset == ds]
+        n[f"{ds}.patients"] = t.BDSPPatientID.nunique()
+        n[f"{ds}.obs"] = len(t)
+        n[f"{ds}.test_obs"] = (t.Split == "Test").sum()
+        n[f"{ds}.test_patients"] = t[t.Split == "Test"].BDSPPatientID.nunique()
+    n["all.unique_patients"] = f.BDSPPatientID.nunique()
+    n["all.test_patients"] = f[f.Split == "Test"].BDSPPatientID.nunique()
+    n["all.unique_segments"] = f.MorgothOutputFilename.nunique()
+    n["all.segments_multi_cohort"] = (f.groupby("MorgothOutputFilename").Dataset.nunique() > 1).sum()
+    pts = {k: set(v.BDSPPatientID) for k, v in f.groupby("Dataset")}
+    n["overlap.RASS_GCS"] = len(pts["RASS"] & pts["GCS"])
+    n["split.patients_multi_repo_labels"] = (f.groupby("BDSPPatientID").Split.nunique() > 1).sum()
+    m = ctx.model_sets()
+    n["split.patients_multi_model_sets"] = (m.groupby("BDSPPatientID").WhichSet.nunique() > 1).sum()
+    n["split.segments_multi_model_sets"] = (m.groupby("MorgothOutputFilename").WhichSet.nunique() > 1).sum()
+    n["split.model_test_rows"] = (m.WhichSet == "Test").sum()
+
+
+def correlations(ctx):
+    f, n, rows = ctx.scores(), ctx.num, []
+    for ds in SCALES:
+        b = pd.read_csv(ctx.gh / f"NESI/Bespoke_models/Results/{ds}Bespokescore_results.csv")
+        t = f[(f.Dataset == ds) & (f.Split == "Test")].merge(
+            b[["MorgothOutputFilename", "BespokeBadnessScore"]], on="MorgothOutputFilename"
+        ).reset_index(drop=True)
+        a, u, c = t.RawScore.values, t.NESI.values, t.BespokeBadnessScore.values
+        su, sc = _segment_boot(ctx, a, u), _segment_boot(ctx, a, c)
+        B = _patient_boot(ctx, t, lambda x: (rho(x.RawScore, x.NESI), rho(x.RawScore, x.BespokeBadnessScore)))
+        d = B[:, 0] - B[:, 1]
+        n[f"{ds}.rho"], n[f"{ds}.rho_mean_boot"] = rho(a, u), su[0]
+        n[f"{ds}.rho_seg_lo"], n[f"{ds}.rho_seg_hi"] = su[1], su[2]
+        n[f"{ds}.rho_pt_lo"], n[f"{ds}.rho_pt_hi"] = np.percentile(B[:, 0], [2.5, 97.5])
+        n[f"{ds}.bespoke"] = rho(a, c)
+        n[f"{ds}.bespoke_seg_lo"], n[f"{ds}.bespoke_seg_hi"] = sc[1], sc[2]
+        n[f"{ds}.delta"] = rho(a, u) - rho(a, c)
+        n[f"{ds}.delta_lo"], n[f"{ds}.delta_hi"] = np.percentile(d, [2.5, 97.5])
+        rows.append({k.split(".", 1)[1]: round(v, 3) for k, v in n.items() if k.startswith(ds + ".")} | {"Scale": ds})
+    ctx.table(pd.DataFrame(rows), "fig2_correlations")
+
+
+def cams_sensitivity(ctx):
+    """CAM-S test patients who also have GCS/RASS data in training or validation."""
+    m, n = ctx.model_sets(), ctx.num
+    b = pd.read_csv(ctx.gh / "NESI/Bespoke_models/Results/CAMSBespokescore_results.csv")
+    c = m[(m.Dataset == "CAMS") & (m.Split == "Test")].merge(
+        b[["MorgothOutputFilename", "BespokeBadnessScore"]], on="MorgothOutputFilename"
+    ).reset_index(drop=True)
+    seen = set(m[m.WhichSet.isin(["Train", "Validation"]) & (m.Dataset != "CAMS")].BDSPPatientID)
+    clean = c[~c.BDSPPatientID.isin(seen)].reset_index(drop=True)
+    n["CAMS.leak_patients"] = len(c) - len(clean)
+    n["CAMS.clean_rho"] = rho(clean.RawScore, clean.NESI)
+    n["CAMS.clean_bespoke"] = rho(clean.RawScore, clean.BespokeBadnessScore)
+    B = _patient_boot(ctx, clean, lambda x: (rho(x.RawScore, x.NESI), rho(x.RawScore, x.BespokeBadnessScore)), n=4000)
+    n["CAMS.clean_rho_lo"], n["CAMS.clean_rho_hi"] = np.percentile(B[:, 0], [2.5, 97.5])
+    n["CAMS.clean_delta"] = n["CAMS.clean_rho"] - n["CAMS.clean_bespoke"]
+    n["CAMS.clean_delta_lo"], n["CAMS.clean_delta_hi"] = np.percentile(B[:, 0] - B[:, 1], [2.5, 97.5])
+
+
+def supp_table1(ctx):
+    f, rows = ctx.scores(), []
+    for ds in SCALES:
+        for lvl, v in f[(f.Dataset == ds) & (f.Split == "Test")].groupby("RawScore").NESI:
+            q = (v.median(), v.quantile(0.25), v.quantile(0.75))
+            rows.append(dict(Scale=ds, Score=int(lvl), Median=q[0], Q1=q[1], Q3=q[2], N=len(v)))
+            for name, val in zip(["med", "q1", "q3"], q):
+                ctx.num[f"T1.{ds}.{int(lvl)}.{name}"] = val
+    ctx.table(pd.DataFrame(rows).round(3), "supp_table1")
+
+
+def supp_tables_2_3(ctx):
+    f, rows = ctx.scores(), []
+    for ds, sev in SEVERE.items():
+        t = f[f.Dataset == ds]
+        tr, te = t[t.Split != "Test"], t[t.Split == "Test"]
+        y, yt = sev(tr.RawScore).astype(int), sev(te.RawScore).astype(int)
+        p = LogisticRegression(C=1e6).fit(tr[["NESI"]], y).predict_proba(te[["NESI"]])[:, 1]
+        fp, tp, th = roc_curve(y, tr.NESI)
+        cut = th[np.argmax(tp - fp)]
+        hit = te.NESI >= cut
+        res = dict(
+            cut=cut,
+            sens=(hit & (yt == 1)).sum() / yt.sum(),
+            spec=((~hit) & (yt == 0)).sum() / (yt == 0).sum(),
+            ppv=(hit & (yt == 1)).sum() / hit.sum(),
+            npv=((~hit) & (yt == 0)).sum() / (~hit).sum(),
+            auc=roc_auc_score(yt, te.NESI),
+            brier=brier_score_loss(yt, p),
+        )
+        for k, v in res.items():
+            ctx.num[f"T3.{ds}.{k}"] = v
+        rows.append(dict(Scale=ds, **res))
+    ctx.table(pd.DataFrame(rows).round(3), "supp_tables_2_3")
+
+
+def threshold_aurocs(ctx):
+    f = ctx.scores()
+    for ds in SCALES:
+        te = f[(f.Dataset == ds) & (f.Split == "Test")]
+        vals = []
+        for k in np.sort(te.RawScore.unique())[:-1]:
+            y = (te.RawScore <= k) if ds in ("RASS", "GCS") else (te.RawScore > k)
+            vals.append(roc_auc_score(y, te.NESI))
+        ctx.num[f"AUC.{ds}.min"], ctx.num[f"AUC.{ds}.max"] = min(vals), max(vals)
+
+
+def ordinal_agreement(ctx):
+    """Cutoffs are midpoints of training-set group medians; the manuscript does not state its rule."""
+    f = ctx.scores()
+    for ds in SCALES:
+        t = f[f.Dataset == ds]
+        te, tr = t[t.Split == "Test"], t[t.Split != "Test"]
+        g = np.sort(tr.GroupedScore.unique())
+        med = [tr[tr.GroupedScore == x].NESI.median() for x in g]
+        cuts = sorted((med[i] + med[i + 1]) / 2 for i in range(len(g) - 1))
+        truth = te.GroupedScore.rank(method="dense").astype(int) - 1
+        if med[0] > med[-1]:
+            truth = truth.max() - truth
+        pred = np.digitize(te.NESI, cuts)
+        ctx.num[f"ORD.{ds}.maoe"] = np.abs(truth - pred).mean()
+        ctx.num[f"ORD.{ds}.qwk"] = cohen_kappa_score(truth, pred, weights="quadratic")
+
+
+def institutions_age_duration(ctx):
+    f, rows = ctx.scores(), []
+    for ds in ["RASS", "GCS"]:
+        md = ctx.meta(ds)
+        x = md.drop_duplicates(["BDSPPatientID", "SessionID"]).DurationInSeconds / 3600
+        ctx.num[f"DUR.{ds}.median_h"] = x.median()
+        ctx.num[f"DUR.{ds}.pct_le1h"] = (x <= 1).mean() * 100
+        one = md.drop_duplicates("BDSPPatientID").set_index("BDSPPatientID")
+        t = f[(f.Dataset == ds) & (f.Split == "Test")].copy()
+        t["Site"] = t.BDSPPatientID.map(one.Site).fillna("BIDMC")
+        t["Age"] = t.BDSPPatientID.map(one.AgeAtVisit)
+        for s, v in t.groupby("Site"):
+            ctx.num[f"SITE.{ds}.{s}.rho"] = rho(v.RawScore, v.NESI)
+            rows.append(dict(Scale=ds, Group=s, Patients=v.BDSPPatientID.nunique(), Segments=len(v), rho=rho(v.RawScore, v.NESI)))
+        for nm, v in [("lt65", t[t.Age < 65]), ("ge65", t[t.Age >= 65])]:
+            ctx.num[f"AGE.{ds}.{nm}.rho"] = rho(v.RawScore, v.NESI)
+            rows.append(dict(Scale=ds, Group=nm, Patients=v.BDSPPatientID.nunique(), Segments=len(v), rho=rho(v.RawScore, v.NESI)))
+    ctx.table(pd.DataFrame(rows).round(3), "supp_table12_site_age")
+
+
+def table1(ctx):
+    n = ctx.num
+    rm = ctx.meta("RASS")
+    num = pd.to_numeric(rm["R PHS IP RASS"], errors="coerce")
+    for s in [1, 2, 3, 4]:
+        n[f"RASSpos.{s}"] = (num == s).sum()
+    n["RASS.raw_patients"] = rm.BDSPPatientID.nunique()
+    p = rm.sort_values("EEGBeginDTS").groupby("BDSPPatientID").first()
+    n["T1.RASS.male"], n["T1.RASS.female"] = (p.SexDSC == "Male").sum(), (p.SexDSC == "Female").sum()
+    n["T1.RASS.age_med"] = p.AgeAtVisit.median()
+    for ds, d in [("RASS", rm), ("GCS", ctx.meta("GCS"))]:
+        a, e = pd.to_datetime(d.HospitalAdmitDTS, errors="coerce").dt.normalize(), pd.to_datetime(d.HospitalDischargeDTS, errors="coerce").dt.normalize()
+        x = pd.to_datetime(d.DateOfDeath, errors="coerce").dt.normalize()
+        g = d.assign(i=(x >= a) & (x <= e), h=x.notna()).groupby("BDSPPatientID").agg(i=("i", "max"), h=("h", "max"))
+        if ds == "GCS":
+            # BIDMC has placeholders in death_date: parse dates rather than test for non-null
+            b = pd.read_csv(ctx.s3 / "GCS_BIDMC_HarvardEEG_metadata.csv").groupby("BDSPPatientID").first()
+            bx = pd.to_datetime(b.death_date, errors="coerce").dt.normalize()
+            ba, be = pd.to_datetime(b.t0_admit, errors="coerce").dt.normalize(), pd.to_datetime(b.t1_discharge, errors="coerce").dt.normalize()
+            g = pd.concat([g, pd.DataFrame({"i": (bx >= ba) & (bx <= be), "h": bx.notna()})])
+            n["GCS.raw_patients"] = len(g)
+            n["T1.GCS.placeholder_deaths"] = b.death_date.notna().sum() - bx.notna().sum()
+        n[f"T1.{ds}.inhosp"] = g.i.sum()
+        n[f"T1.{ds}.other_death"] = (g.h & ~g.i).sum()
+        n[f"T1.{ds}.no_death"] = (~g.h).sum()
+    c = pd.read_csv(ctx.s3 / "CAMS_cohort_metadata.csv").drop_duplicates("BDSPPatientID")
+    n["CAMS.raw_patients"] = len(c)
+    n["T1.CAMS.age_med"] = pd.to_numeric(c["Age "], errors="coerce").median()
+    n["T1.CAMS.male"], n["T1.CAMS.female"] = (c.Gender == "Male").sum(), (c.Gender == "Female").sum()
+    n["T1.CAMS.any_death"] = c["DateOfDeath (shifted)"].notna().sum()
+
+
+def mortality_folds(ctx):
+    import pickle
+
+    p = ctx.repo / "NESI/DeathPrediction_NESIvsGCS/Results"
+    a = {k: pickle.load(open(p / f"results_{k}_Death.pkl", "rb")) for k in ["NESI", "GCS"]}
+    for h in [4, 20]:
+        u = np.array([x[h]["auroc"] for x in a["NESI"]])
+        g = np.array([x[h]["auroc"] for x in a["GCS"]])
+        ctx.num[f"MORT.NESI.{h}h"], ctx.num[f"MORT.GCS.{h}h"] = u.mean(), g.mean()
+        if h == 20:
+            ctx.num["MORT.p_paired_t_one_sided"] = stats.ttest_rel(u, g)[1] / 2
+
+
+def retest(ctx):
+    n, t = ctx.num, ctx.meds().copy()
+    flag = lambda c: t[c].fillna(0).astype(float) > 0
+    t["t"] = pd.to_datetime(t.RASSRecordedDTS, errors="coerce")
+    t["state"] = flag("sedative_inf_now").astype(int) * 2 + flag("opioid_inf_now").astype(int)
+    t = t.sort_values(["BDSPPatientID", "SessionID", "t"])
+    g = t.groupby(["BDSPPatientID", "SessionID"])
+    t["dt"], t["pr"], t["ps"], t["pn"] = g.t.diff().dt.total_seconds() / 3600, g.r.shift(), g.state.shift(), g.n.shift()
+    p = t[(t.dt > 0) & (t.dt <= 2) & (t.r == t.pr) & (t.state == t.ps)]
+    sem = np.sqrt(((p.n - p.pn) ** 2).mean() / 2)
+    n["RETEST.pairs"], n["RETEST.patients"], n["RETEST.sem"] = len(p), p.BDSPPatientID.nunique(), sem
+    n["RETEST.mdc"] = 1.96 * np.sqrt(2) * sem
+    n["RETEST.icc"] = 1 - sem**2 / np.concatenate([p.n, p.pn]).var(ddof=1)
+
+
+def supp_table11(ctx):
+    d, n = ctx.meds(), ctx.num
+    b = lambda c: d[c].fillna(0).astype(float) > 0
+    sed, op, pr, mi, de, ke = (b(f"{x}_inf_now") for x in ["sedative", "opioid", "propofol", "midazolam", "dexmedetomidine", "ketamine"])
+    bz, asm = b("FastActing_Benzo_Exposure"), b("LongActingASM_Exposure")
+    none24 = ~b("sedative_inf_24h") & ~b("opioid_inf_24h") & ~bz
+    G = {
+        "Reference": ~sed & ~op & ~bz,
+        "Propofol": pr & ~mi & ~de & ~ke,
+        "Dexmedetomidine": de & ~pr & ~mi & ~ke,
+        "Midazolam": mi & ~pr & ~de & ~ke,
+        "MidazolamPropofol": mi & pr & ~de & ~ke,
+        "Ketamine": ke,
+        "OpioidOnly": op & ~sed,
+        "All": pd.Series(True, index=d.index),
+        "NoInfusion24h": none24,
+        "NoInfusion24hNoASM": none24 & ~asm,
+    }
+    rows = []
+    for k, v in G.items():
+        x = d[v]
+        res = dict(obs=len(x), patients=x.BDSPPatientID.nunique(), rho=rho(x.r, x.n), auc3=roc_auc_score(x.r <= -3, x.n), auc4=roc_auc_score(x.r <= -4, x.n))
+        for name, val in res.items():
+            n[f"T11.{k}.{name}"] = val
+        rows.append(dict(Group=k, **res))
+    ctx.table(pd.DataFrame(rows).round(3), "supp_table11")
+
+
+def propofol(ctx):
+    import statsmodels.formula.api as smf
+
+    n = ctx.num
+    w = pd.read_csv(ctx.s3 / "wt_ht_per_hosp_FULL_with_eleveld.csv", low_memory=False)
+    w["NE"], w["r"] = pd.to_numeric(w.PredictedNESI, errors="coerce"), pd.to_numeric(w["R PHS IP RASS"], errors="coerce")
+    q = w[(w.propofol_only == True) & (w.PropofolSimStatus == "simulated") & w.Ce_ug_per_mL.notna() & w.NE.notna() & w.r.between(-5, 0)].rename(columns={"Ce_ug_per_mL": "CE"})  # noqa: E712
+    n["PROP.obs"], n["PROP.patients"] = len(q), q.BDSPPatientID.nunique()
+    n["PROP.rho_nesi"], n["PROP.rho_rass"] = stats.spearmanr(q.CE, q.NE)[0], stats.spearmanr(q.CE, q.r)[0]
+    Q = q[q.groupby("BDSPPatientID").NE.transform("size") >= 5].copy()
+    n["VAR.obs"], n["VAR.patients"] = len(Q), Q.BDSPPatientID.nunique()
+    Q["m"], Q["d"] = Q.groupby("BDSPPatientID").CE.transform("mean"), Q.CE - Q.groupby("BDSPPatientID").CE.transform("mean")
+    for y, tag in [("NE", "nesi"), ("r", "rass")]:
+        fit = smf.mixedlm(f"{y}~CE", Q, groups=Q.BDSPPatientID).fit(reml=True)
+        vf, vr, ve = np.var(fit.fe_params.CE * Q.CE), float(fit.cov_re.iloc[0, 0]), fit.scale
+        tot = vf + vr + ve
+        n[f"VAR.{tag}.pct_ce"], n[f"VAR.{tag}.pct_patient"], n[f"VAR.{tag}.pct_resid"] = 100 * vf / tot, 100 * vr / tot, 100 * ve / tot
+        n[f"VAR.{tag}.slope"] = fit.fe_params.CE
+        wb = smf.mixedlm(f"{y}~d+m", Q, groups=Q.BDSPPatientID).fit(reml=True)
+        n[f"WB.{tag}.within"], n[f"WB.{tag}.between"] = wb.fe_params.d, wb.fe_params.m
+        per = Q.groupby("BDSPPatientID")[["CE", y]].apply(lambda g: stats.spearmanr(g.CE, g[y])[0] if g.CE.nunique() > 1 and g[y].nunique() > 1 else np.nan).dropna()
+        n[f"WB.{tag}.median_rho"], n[f"WB.{tag}.n"] = per.median(), len(per)
+
+
+ALL = [
+    cohorts_and_splits,
+    correlations,
+    cams_sensitivity,
+    supp_table1,
+    supp_tables_2_3,
+    threshold_aurocs,
+    ordinal_agreement,
+    institutions_age_duration,
+    table1,
+    mortality_folds,
+    retest,
+    supp_table11,
+    propofol,
+]

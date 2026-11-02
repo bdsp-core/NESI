@@ -63,7 +63,7 @@ if NESI_ROOT is None:
 Bespoke_Root = NESI_ROOT / "NESI" / "Bespoke_models" / "Results"
 
 
-NESI_result_path = Bespoke_Root / "NESIscores_full_dataset_results.csv"
+NESI_result_path = Bespoke_Root / "Final_NESIscores_full_dataset_result.csv"
 RASS_bespoke_result_path = Bespoke_Root / "RASSBespokescore_results.csv"
 GCS_bespoke_result_path = Bespoke_Root / "GCSBespokescore_results.csv"
 CAMS_bespoke_result_path = Bespoke_Root / "CAMSBespokescore_results.csv"
@@ -556,9 +556,9 @@ def plot_individual_vs_global_correct(
 
 
 df_NESI_test = df_NESI_result[df_NESI_result["Split"]=="Test"]
-tst_scores_global = df_NESI_result['NESI'].to_numpy()
-Yraw_tst_global = df_NESI_result['RawScore'].to_numpy()
-tst_dataset_names_global = df_NESI_result['Dataset'].to_numpy()
+tst_scores_global = df_NESI_test['NESI'].to_numpy()
+Yraw_tst_global = df_NESI_test['RawScore'].to_numpy()
+tst_dataset_names_global = df_NESI_test['Dataset'].to_numpy()
 
 plot_individual_vs_global_correct(
     tst_badness_RASS, Yraw_tst_RASS,
