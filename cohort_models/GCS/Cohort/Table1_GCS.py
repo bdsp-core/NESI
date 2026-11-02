@@ -116,6 +116,8 @@ columns_need = [
 ]
 gcs_mgb = GCS_EEG_all_df_censor_mgb[columns_need].copy()
 gcs_bidmc = df_GCS_BIDMC_renamed[columns_need].copy()
+# BIDMC marks missing death dates with a one-character placeholder, not a blank
+gcs_bidmc['DateOfDeath'] = pd.to_datetime(gcs_bidmc['DateOfDeath'], errors='coerce')
 gcs_all_sites = pd.concat([gcs_mgb, gcs_bidmc], ignore_index=True)
 
 
