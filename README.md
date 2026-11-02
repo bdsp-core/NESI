@@ -44,7 +44,7 @@ The pipeline has three stages:
 
 ## 📦 Data & published release
 
-This repo holds **code and model weights only**. The data (EEG segments, MORGOTH activations,
+This repo holds **code, model weights and fold-level summary metrics only**. Patient- and segment-level files are listed in [`docs/DATA_FILES.md`](docs/DATA_FILES.md). The data (EEG segments, MORGOTH activations,
 assembled training/validation/test sets, per-cohort metadata, derived tables) are de-identified
 (surrogate subject IDs; shifted dates) and distributed under **credentialed access** on BDSP:
 
