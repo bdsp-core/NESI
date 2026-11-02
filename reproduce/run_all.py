@@ -98,7 +98,7 @@ SCRIPTS = {
 }
 
 
-TORCH_SCRIPTS = {"sfig7_9"}
+TORCH_SCRIPTS = {"sfig6", "sfig7_9"}
 
 # Paths the scripts expect -> file name under NESI_DATA_ROOT/s3
 S3_LINKS = {
@@ -184,13 +184,13 @@ def run_scripts(work, timeout=900):
     env = dict(os.environ, MPLBACKEND="Agg", PYTHONWARNINGS="ignore", PYTHONPATH=str(BUILD / "stubs"), OMP_NUM_THREADS="4")
     for key, rel in SCRIPTS.items():
         path = work / rel
-        scan = lambda: {p: p.stat().st_mtime for ext in ("*.png", "*.pdf") for p in work.rglob(ext)}
+        scan = lambda: {p: p.stat().st_mtime for root in (work, OUT / "figures") for ext in ("*.png", "*.pdf") for p in root.rglob(ext)}
         before = scan()
         t = time.time()
         try:
-            r = subprocess.run([TORCH_PY if key in TORCH_SCRIPTS else sys.executable, path.name], cwd=path.parent, capture_output=True, text=True, env=env, timeout=timeout)
+            r = subprocess.run([TORCH_PY if key in TORCH_SCRIPTS else sys.executable, str(HERE / "_run_script.py"), str(path), str(OUT / "figures" / key)], cwd=path.parent, capture_output=True, text=True, env=env, timeout=timeout)
             (logs / f"{key}.log").write_text(r.stdout[-200000:] + "\n--STDERR--\n" + r.stderr[-20000:])
-            new = [str(p.relative_to(work)) for p, m in scan().items() if before.get(p) != m]
+            new = [str(p) for p, m in scan().items() if before.get(p) != m]
             last = r.stderr.strip().splitlines()[-1][:170] if r.stderr.strip() else ""
             res[key] = dict(ok=r.returncode == 0, seconds=round(time.time() - t), figures=new, error="" if r.returncode == 0 else last)
         except subprocess.TimeoutExpired:

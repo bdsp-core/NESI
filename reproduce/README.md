@@ -5,7 +5,7 @@
 ```bash
 export NESI_DATA_ROOT=/path/to/data        # holds github_moved/, s3/ and drive/
 export NESI_BUILD_ROOT=/path/to/build      # optional; working copy and output/
-export NESI_TORCH_PYTHON=/path/to/python   # optional; a Python with torch
+export NESI_TORCH_PYTHON=/path/to/python   # optional; a Python with requirements.txt installed
 python reproduce/run_all.py                # everything available
 python reproduce/run_all.py --list         # every figure and table, with status
 ```
