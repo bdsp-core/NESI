@@ -60,11 +60,23 @@ def main():
     todo = sample[[(a, b) not in seen for a, b in zip(sample.Dataset, sample.MorgothOutputFilename)]]
     print(f"{len(sample)} segments, {len(todo)} to compute", flush=True)
 
+    def load_mat(path):
+        """CAM-S and ICANS segments are MATLAB v7.3 (HDF5), which scipy can't read."""
+        try:
+            return sio.loadmat(path, variable_names=["data", "Fs"])
+        except NotImplementedError:
+            import h5py
+
+            with h5py.File(path, "r") as f:
+                x = np.asarray(f["data"])
+                fs = np.asarray(f["Fs"]).squeeze()
+            return {"data": x.T if x.shape[0] > x.shape[1] else x, "Fs": fs}
+
     def one(r):
         key = f"yama/cohort_models/{r.Dataset}/{FOLDER[r.Dataset]}/{Path(r.MorgothOutputFilename).stem}.mat"
         with tempfile.NamedTemporaryFile(suffix=".mat", dir=ROOT.parent) as tmp:
             s3.download_file(BUCKET, key, tmp.name)
-            d = sio.loadmat(tmp.name, variable_names=["data", "Fs"])
+            d = load_mat(tmp.name)
             return dict(Dataset=r.Dataset, MorgothOutputFilename=r.MorgothOutputFilename, BDSPPatientID=r.BDSPPatientID, RawScore=r.RawScore, NESI=r.NESI,
                         **dict(zip(["rel_delta", "delta_alpha", "sef95"], features(d["data"], int(np.asarray(d["Fs"]).squeeze())))))
 
