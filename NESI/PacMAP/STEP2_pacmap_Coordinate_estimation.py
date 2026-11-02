@@ -25,10 +25,20 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import to_rgb, LinearSegmentedColormap
 import pacmap
 
+
+current = Path(__file__).resolve()
+NESI_ROOT = None
+for parent in [current.parent, *current.parents]:
+    if parent.name == "NESI":
+        NESI_ROOT = parent
+        break
+
+if NESI_ROOT is None:
+    raise RuntimeError("NESI root folder not found")
+
+
 SCRIPT_DIR = Path(__file__).resolve().parent
 IN_CSV = SCRIPT_DIR / "NESI_window_features.csv"
-OUT_FIG1_OVERVIEW = SCRIPT_DIR / "NESI_pacmap_fig1_overview.png"
-OUT_FIG2_ATLAS = SCRIPT_DIR / "NESI_pacmap_fig2_atlas.png"
 OUT_NPZ = SCRIPT_DIR / "NESI_pacmap_iiic_data.npz"
 
 # Scatter rendering: jitter copies + larger dots to fill in the map visually.

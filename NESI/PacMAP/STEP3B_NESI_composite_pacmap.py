@@ -2,9 +2,19 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+current = Path(__file__).resolve()
+NESI_ROOT = None
+for parent in [current.parent, *current.parents]:
+    if parent.name == "NESI":
+        NESI_ROOT = parent
+        break
+
+if NESI_ROOT is None:
+    raise RuntimeError("NESI root folder not found")
+
+SCRIPT_DIR = Path(NESI_ROOT/"PacMAP")
 IN_CSV = SCRIPT_DIR / "NESI_pacmap_coords.csv"
-INDICATION_DIR = SCRIPT_DIR.parents[1] / "EEGIndication_Analysis/NeuroIndication_Datasetwise"
+INDICATION_DIR = Path(NESI_ROOT.parent/"RevisionRelatedMaterials"/"EEGIndication_Analysis"/"NeuroIndication_Datasetwise")
 
 INDICATION_FILES = {
     "RASS": "RASS_NESI_fullmetadata_with_NeuroReports_Qwen3_V2.csv",
@@ -90,7 +100,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-DIAG_ROOT = SCRIPT_DIR.parents[1]
+DIAG_ROOT = Path("/home/ayush/Desktop/NESI_review_material")
 diag_files = [
     DIAG_ROOT / "DiagnosisMetadtafiles" / "File1.xlsx",
     DIAG_ROOT / "DiagnosisMetadtafiles" / "File2.xlsx",
@@ -207,9 +217,9 @@ if "MorgothOutputFilename" not in df.columns:
 df["BDSPPatientID"] = df["MorgothOutputFilename"].apply(extract_pid)
 
 # Verify extraction
-test_filename = "sub-S0000123456789_ses-1_eeg_10min_seg5.csv"
+test_filename = "sub-S0002REDACTED_ID_ses-1_eeg_10min_seg5.csv"
 test_pid = extract_pid(test_filename)
-assert test_pid == "123456789", f"Incorrect extraction: {test_pid}"
+assert test_pid == "REDACTED_ID", f"Incorrect extraction: {test_pid}"
 
 
 # Merge original and broad diagnosis categories
@@ -545,7 +555,7 @@ def plot_nesi_pacmap(
         handles = [
             mpatches.Patch(
                 color='#D62728',
-                label=f"{panel['indication']} (n={n_selected})"
+                label=f"{'Stroke' if panel['indication'] == 'Stroke / Cerebrovascular Disease' else panel['indication']} (n={n_selected})"
             ),
             mpatches.Patch(
                 color=panel['other_color'],
@@ -628,7 +638,7 @@ def plot_nesi_pacmap(
 
 plot_nesi_pacmap(
     df_data=df_pacmap_enriched,
-    fig_save_path = str(SCRIPT_DIR / "NESI_composite_PacMAP.png"),
+    fig_save_path = NESI_ROOT/"PacMAP"/"NESI_composite_PacMAP.png",
 
     # Subplot C: Severe clinical states
     rass_scores=[-5],
@@ -668,7 +678,7 @@ plot_nesi_pacmap(
 
     # Subplot F: Stroke + LPD
     subplot6={
-        'indication':'Stroke / Cerebrovascular Disease',
+        'indication':'Stroke',
         'pattern':'LPD',
         'pattern_threshold':0.7,
         'nesi_min':0.25,
@@ -679,7 +689,7 @@ plot_nesi_pacmap(
 
     # Figure settings
     figsize=(20,13),
-    title_fontsize=14,
-    legend_fontsize=10,
-    legend_title_fontsize=10
+    title_fontsize=16,
+    legend_fontsize=14,
+    legend_title_fontsize=14
 )

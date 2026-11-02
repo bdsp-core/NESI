@@ -22,17 +22,26 @@ import multiprocessing as mp
 import os
 import re
 import sys
-
+from pathlib import Path
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-YAMA_NESI = SCRIPT_DIR.parent
-YAMA_ROOT = YAMA_NESI.parent 
-META_CSV = (YAMA_NESI / "MORGOTHActivationViz_GroupedbyNESI"
-            / "UniversalBadnessModelResult_Full.csv")
+current = Path(__file__).resolve()
+NESI_ROOT = None
+for parent in [current.parent, *current.parents]:
+    if parent.name == "NESI":
+        NESI_ROOT = parent
+        break
 
+if NESI_ROOT is None:
+    raise RuntimeError("NESI root folder not found")
+
+
+SCRIPT_DIR = NESI_ROOT/"PacMAP"
+
+
+META_CSV = SCRIPT_DIR / "UniversalBadnessModelResult_Full.csv"
 OUT_CSV = SCRIPT_DIR / "NESI_window_features.csv"
 
 MAX_SNIPPETS_PER_PATIENT = 10
@@ -67,7 +76,7 @@ def extract_pid(fn: str) -> str:
 
 
 def head_dir(dataset: str, head: str) -> Path:
-    return YAMA_ROOT / dataset / "MorgothActivations" / head
+    return NESI_ROOT / "cohort_models" / dataset / "MorgothActivations" / head
 
 
 def load_head(path: Path) -> np.ndarray:

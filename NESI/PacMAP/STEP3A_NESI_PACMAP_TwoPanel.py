@@ -6,7 +6,17 @@ import matplotlib.patches as mpatches
 from matplotlib.colors import to_rgb, LinearSegmentedColormap
 from IPython.display import display
 
-SCRIPT_DIR = Path(__file__).resolve().parent
+current = Path(__file__).resolve()
+NESI_ROOT = None
+for parent in [current.parent, *current.parents]:
+    if parent.name == "NESI":
+        NESI_ROOT = parent
+        break
+
+if NESI_ROOT is None:
+    raise RuntimeError("NESI root folder not found")
+
+SCRIPT_DIR = Path(NESI_ROOT/"PacMAP")
 IN_CSV = SCRIPT_DIR / 'NESI_pacmap_coords.csv'
 ROTATION_DEGREES = 90
 FLIP_VERTICAL = True
