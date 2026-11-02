@@ -217,9 +217,13 @@ REVISION = [
     ("external_validation", "external_validation.py", "torch"),
     ("ordinal_agreement", "ordinal_agreement.py", "torch"),
     ("ablation_figure", "ablation_figure.py", "torch"),
-    ("mortality", "mortality.py", "torch"),
+    ("mortality", "mortality.py analyze", "torch"),
     ("fivefold_wilcoxon", "fivefold_wilcoxon.py", "torch"),
     ("icans_subgroups", "icans_subgroups.py", "torch"),
+    ("morgoth_overlap", "morgoth_overlap.py", "torch"),
+    ("eeg_type", "eeg_type.py", "torch"),
+    ("supp_figures_fast", "supp_figures_fast.py", "torch"),
+    ("run_cohort_figures", "run_cohort_figures.py", "torch"),
     ("figures_final", "figures_final.py", "plain"),
     ("figures_relabel", "figures_relabel.py", "torch"),
     ("figures_elapsed_time", "figures_elapsed_time.py", "torch"),
@@ -232,11 +236,12 @@ def run_revision():
     logs.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ, MPLBACKEND="Agg", PYTHONWARNINGS="ignore")
     for key, script, kind in REVISION:
+        script, *args = script.split()
         if not (HERE / script).exists():
             res[key] = "script not in this checkout"
             continue
         t = time.time()
-        r = subprocess.run([TORCH_PY if kind == "torch" else sys.executable, str(HERE / script)], capture_output=True, text=True, env=env)
+        r = subprocess.run([TORCH_PY if kind == "torch" else sys.executable, str(HERE / script), *args], capture_output=True, text=True, env=env)
         (logs / f"{key}.log").write_text(r.stdout[-200000:] + "\n--STDERR--\n" + r.stderr[-20000:])
         last = r.stderr.strip().splitlines()[-1][:160] if r.stderr.strip() else ""
         res[key] = f"ok {time.time() - t:.0f}s" if r.returncode == 0 else f"FAILED {last}"
