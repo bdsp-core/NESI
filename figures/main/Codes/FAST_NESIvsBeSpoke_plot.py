@@ -556,9 +556,9 @@ def plot_individual_vs_global_correct(
 
 
 df_NESI_test = df_NESI_result[df_NESI_result["Split"]=="Test"]
-tst_scores_global = df_NESI_result['NESI'].to_numpy()
-Yraw_tst_global = df_NESI_result['RawScore'].to_numpy()
-tst_dataset_names_global = df_NESI_result['Dataset'].to_numpy()
+tst_scores_global = df_NESI_test['NESI'].to_numpy()
+Yraw_tst_global = df_NESI_test['RawScore'].to_numpy()
+tst_dataset_names_global = df_NESI_test['Dataset'].to_numpy()
 
 plot_individual_vs_global_correct(
     tst_badness_RASS, Yraw_tst_RASS,
