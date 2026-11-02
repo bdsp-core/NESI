@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""Fig. 6: six-panel PaCMAP composite, from saved coordinates and our report-derived indications.
+"""Fig. 6: six-panel PaCMAP composite, from saved coordinates and Qwen3 indication labels.
 
-The published figure came from NESI/PacMAP/NESI_composite_pacmap.py, which needs per-recording
-LLM (Qwen3) indication files that are not available. Panels A-C use only the saved coordinates
-(NESI/PacMAP/NESI_pacmap_coords.csv) and match the published figure exactly. Panels D-F use the
-keyword labels from indications_from_reports.py (intermediates/indication_labels.csv), matched to
-each recording's own report by patient and session (CAM-S filenames carry no session, so CAM-S uses
-any report for the patient; ICANS has no linked reports). Panel letters and selection rules follow
-the published figure, including its D, F, E order.
+Follows Arka Roy's NESI/PacMAP/STEP3B_NESI_composite_pacmap.py. Panels A-C use the saved coordinates
+(NESI/PacMAP/NESI_pacmap_coords.csv). Panels D-F flag windows whose EEG report the Qwen3-14B labeler
+assigned Post-Cardiac Arrest or Stroke / Cerebrovascular Disease (intermediates/indication_llm_labels.csv,
+matched by cohort and filename). Panel letters and selection rules follow the published figure,
+including its D, F, E order.
 """
-import glob
 import os
 from pathlib import Path
 
@@ -25,7 +22,6 @@ ROOT = Path(os.environ["NESI_DATA_ROOT"])
 BUILD = Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build")) / "output"
 (BUILD / "figures").mkdir(parents=True, exist_ok=True)
 (BUILD / "tables").mkdir(parents=True, exist_ok=True)
-REP = ROOT / "intermediates" / "reports"
 
 IIIC_PALETTE = {"Seizure": "#E13238", "LPD": "#F08C2A", "GPD": "#F2D549", "LRDA": "#AABF45",
                 "GRDA": "#7AC8E3", "Other": "#5C3A87", "Burst": "#000000"}
@@ -43,29 +39,19 @@ PANELS = [("D. Post-Cardiac Arrest with Burst", "Arrest", "Post-Cardiac Arrest",
 
 
 def indications(df):
-    """Per-row indication flags from the recording's own report(s)."""
-    lab = pd.read_csv(ROOT / "intermediates" / "indication_labels.csv")
-    link = pd.concat([pd.read_csv(f, usecols=["BDSPPatientID", "SessionID", "DeidentifiedName(Reports)"], low_memory=False)
-                      for f in glob.glob(str(REP / "*reports_findings.csv"))]).rename(columns={"DeidentifiedName(Reports)": "report"})
-    link["pid"] = link.BDSPPatientID.astype(str).str.replace(r"\.0$", "", regex=True)
-    link["ses"] = pd.to_numeric(link.SessionID, errors="coerce")
-    link = link.merge(lab, on="report")
-    flags = ["Arrest", "Stroke"]
-    by_ses = link.groupby(["pid", "ses"])[flags].max()
-    by_pid = link.groupby("pid")[flags].max()
-    pid = df.PatientID.astype(str).str.extract(r"^sub-[A-Z]\d{4}(\d+)$")[0]
-    ses = pd.to_numeric(df.MorgothOutputFilename.astype(str).str.extract(r"_ses-(\d+)_")[0], errors="coerce")
-    out = pd.DataFrame(False, index=df.index, columns=flags)
-    k = pd.MultiIndex.from_arrays([pid, ses])
-    s = by_ses.reindex(k)
-    s.index = df.index
-    p = by_pid.reindex(pid)
-    p.index = df.index
-    use_pid = ses.isna() & pid.notna()
-    for f in flags:
-        out[f] = s[f].where(~use_pid, p[f]).astype("boolean").fillna(False).astype(bool)
-    linked = (s[flags[0]].notna() & ~use_pid) | (p[flags[0]].notna() & use_pid)
-    return out, linked
+    """Per-window indication flags from the Qwen3 label of the window's own EEG report, matched by
+    cohort and filename as in the published script."""
+    lab = pd.read_csv(ROOT / "intermediates" / "indication_llm_labels.csv", usecols=["Dataset", "Filename", "IndicationNeuroreport_LLM"])
+    norm = lambda x: x.astype("string").str.strip().str.replace(r"(?i)\.csv$", "", regex=True)
+    lab = lab.assign(ds=lab.Dataset.astype("string").str.strip().str.upper(), fn=norm(lab.Filename)).dropna(subset=["fn"])
+    lab = lab[lab.fn != ""].drop_duplicates(["ds", "fn"])
+    key = pd.DataFrame({"ds": df.Dataset.astype("string").str.strip().str.upper(), "fn": norm(df.MorgothOutputFilename)})
+    m = key.merge(lab[["ds", "fn", "IndicationNeuroreport_LLM"]], on=["ds", "fn"], how="left")
+    m.index = df.index
+    txt = m.IndicationNeuroreport_LLM
+    out = pd.DataFrame({f: txt.str.contains(pat, case=False, regex=False).fillna(False).astype(bool)
+                        for f, pat in [("Arrest", "Post-Cardiac Arrest"), ("Stroke", "Stroke / Cerebrovascular Disease")]})
+    return out, txt.notna()
 
 
 def category_cmap(cat):
@@ -166,5 +152,5 @@ for k, v in cnt.items():
 for d in list(EXTREME) + ["Other"]:
     counts.loc[len(counts), ["Panel", "Selected"]] = [f"C. {d}", int((ext == d).sum())]
 counts.to_csv(BUILD / "tables" / "figure6_counts.csv", index=False)
-print(f"{len(df):,} windows; {int(linked.sum()):,} linked to a report")
+print(f"{len(df):,} windows; {int(linked.sum()):,} with an indication label")
 print(counts.to_string(index=False))

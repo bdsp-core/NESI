@@ -548,3 +548,83 @@ id,doc,location,description,expected,key,tolerance
 547,Main,Fig 6 panel C legend,CAMS windows,310,FIG6.C._CAMS,0
 548,Main,Fig 6 panel C legend,ICANS windows,78,FIG6.C._ICANS,0
 549,Main,Fig 6 panel C legend,Other windows,38455,FIG6.C._Other,0
+550,Main,ICANS segment selection (Results),"ICANS rho, maximum-awake",0.83,ICSEG.max_awake.rho,0.0051
+551,Main,ICANS segment selection (Results),  CI low,0.72,ICSEG.max_awake.lo,0.0051
+552,Main,ICANS segment selection (Results),  CI high,0.9,ICSEG.max_awake.hi,0.0051
+553,Main,ICANS segment selection (Results),"ICANS rho, random awake",0.75,ICSEG.random_awake.rho,0.0051
+554,Main,ICANS segment selection (Results),  CI low,0.59,ICSEG.random_awake.lo,0.0051
+555,Main,ICANS segment selection (Results),  CI high,0.87,ICSEG.random_awake.hi,0.0051
+556,Main,ICANS segment selection (Results),"ICANS rho, all segments",0.38,ICSEG.all_segments.rho,0.0051
+557,Main,ICANS segment selection (Results),  CI low,0.12,ICSEG.all_segments.lo,0.0051
+558,Main,ICANS segment selection (Results),  CI high,0.71,ICSEG.all_segments.hi,0.0051
+559,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, maximum-awake",0.83,ICSEG.max_awake.rho,0.0051
+560,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.72,ICSEG.max_awake.lo,0.0051
+561,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.9,ICSEG.max_awake.hi,0.0051
+562,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, random awake",0.75,ICSEG.random_awake.rho,0.0051
+563,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.59,ICSEG.random_awake.lo,0.0051
+564,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.87,ICSEG.random_awake.hi,0.0051
+565,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, all segments",0.38,ICSEG.all_segments.rho,0.0051
+566,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.12,ICSEG.all_segments.lo,0.0051
+567,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.71,ICSEG.all_segments.hi,0.0051
+568,Main,ICANS excluding controls (Results),"ICANS rho, patients with any grade above 0",0.55,ICSUB.1.rho,0.0051
+569,Main,ICANS excluding controls (Results),  CI low,0.31,ICSUB.1.lo,0.0051
+570,Main,ICANS excluding controls (Results),  CI high,0.77,ICSUB.1.hi,0.0051
+571,Supp,"Indication-stratified text, ICANS excluding controls","ICANS rho, patients with any grade above 0",0.55,ICSUB.1.rho,0.0051
+572,Supp,"Indication-stratified text, ICANS excluding controls",  CI low,0.31,ICSUB.1.lo,0.0051
+573,Supp,"Indication-stratified text, ICANS excluding controls",  CI high,0.77,ICSUB.1.hi,0.0051
+574,Main,Fig 6 panels D-F legend,Post-cardiac arrest with burst windows,3353,FIG6.D._Post-Cardiac_Arrest_with_Burst,0
+575,Main,Fig 6 panels D-F legend,Stroke with LPD windows,525,FIG6.E._Stroke_with_LPD,0
+576,Main,Fig 6 panels D-F legend,Post-cardiac arrest with GPD windows,1021,FIG6.F._Post-Cardiac_Arrest_with_GPD,0
+577,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status RASS test rho,0.72,IND.Testing.Altered_Mental_Status.RASS.rho,0.0051
+578,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Altered_Mental_Status.RASS.lo,0.0051
+579,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.RASS.hi,0.0051
+580,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status GCS test rho,0.73,IND.Testing.Altered_Mental_Status.GCS.rho,0.0051
+581,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.68,IND.Testing.Altered_Mental_Status.GCS.lo,0.0051
+582,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.GCS.hi,0.0051
+583,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status CAMS test rho,0.76,IND.Testing.Altered_Mental_Status.CAMS.rho,0.0051
+584,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.61,IND.Testing.Altered_Mental_Status.CAMS.lo,0.0051
+585,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.86,IND.Testing.Altered_Mental_Status.CAMS.hi,0.0051
+586,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures RASS test rho,0.75,IND.Testing.Suspected_Seizures.RASS.rho,0.0051
+587,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.69,IND.Testing.Suspected_Seizures.RASS.lo,0.0051
+588,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.79,IND.Testing.Suspected_Seizures.RASS.hi,0.0051
+589,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures GCS test rho,0.74,IND.Testing.Suspected_Seizures.GCS.rho,0.0051
+590,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.69,IND.Testing.Suspected_Seizures.GCS.lo,0.0051
+591,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.78,IND.Testing.Suspected_Seizures.GCS.hi,0.0051
+592,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures CAMS test rho,0.82,IND.Testing.Suspected_Seizures.CAMS.rho,0.0051
+593,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Suspected_Seizures.CAMS.lo,0.0051
+594,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.9,IND.Testing.Suspected_Seizures.CAMS.hi,0.0051
+595,Supp,Indication-stratified text (Supp Fig 27),Stroke RASS test rho,0.65,IND.Testing.Stroke.RASS.rho,0.0051
+596,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.52,IND.Testing.Stroke.RASS.lo,0.0051
+597,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.73,IND.Testing.Stroke.RASS.hi,0.0051
+598,Supp,Indication-stratified text (Supp Fig 27),Stroke GCS test rho,0.67,IND.Testing.Stroke.GCS.rho,0.0051
+599,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.58,IND.Testing.Stroke.GCS.lo,0.0051
+600,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.74,IND.Testing.Stroke.GCS.hi,0.0051
+601,Supp,Indication-stratified text (Supp Fig 27),Stroke CAMS test rho,0.78,IND.Testing.Stroke.CAMS.rho,0.0051
+602,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.5,IND.Testing.Stroke.CAMS.lo,0.0051
+603,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.91,IND.Testing.Stroke.CAMS.hi,0.0051
+604,Main,Table 1 indication counts,Altered_Mental_Status RASS patients,5551,INDN.Altered_Mental_Status.RASS,0
+605,Main,Table 1 indication counts,Altered_Mental_Status GCS patients,6204,INDN.Altered_Mental_Status.GCS,0
+606,Main,Table 1 indication counts,Altered_Mental_Status CAMS patients,290,INDN.Altered_Mental_Status.CAMS,0
+607,Main,Table 1 indication counts,Altered_Mental_Status ICANS patients,106,INDN.Altered_Mental_Status.ICANS,0
+608,Main,Table 1 indication counts,Suspected_Seizures RASS patients,4280,INDN.Suspected_Seizures.RASS,0
+609,Main,Table 1 indication counts,Suspected_Seizures GCS patients,4859,INDN.Suspected_Seizures.GCS,0
+610,Main,Table 1 indication counts,Suspected_Seizures CAMS patients,186,INDN.Suspected_Seizures.CAMS,0
+611,Main,Table 1 indication counts,Suspected_Seizures ICANS patients,93,INDN.Suspected_Seizures.ICANS,0
+612,Main,Table 1 indication counts,Post-Cardiac_Arrest RASS patients,1035,INDN.Post-Cardiac_Arrest.RASS,0
+613,Main,Table 1 indication counts,Post-Cardiac_Arrest GCS patients,843,INDN.Post-Cardiac_Arrest.GCS,0
+614,Main,Table 1 indication counts,Post-Cardiac_Arrest CAMS patients,46,INDN.Post-Cardiac_Arrest.CAMS,0
+615,Main,Table 1 indication counts,Post-Cardiac_Arrest ICANS patients,0,INDN.Post-Cardiac_Arrest.ICANS,0
+616,Main,Table 1 indication counts,Known_Epilepsy RASS patients,761,INDN.Known_Epilepsy.RASS,0
+617,Main,Table 1 indication counts,Known_Epilepsy GCS patients,969,INDN.Known_Epilepsy.GCS,0
+618,Main,Table 1 indication counts,Known_Epilepsy CAMS patients,39,INDN.Known_Epilepsy.CAMS,0
+619,Main,Table 1 indication counts,Known_Epilepsy ICANS patients,1,INDN.Known_Epilepsy.ICANS,0
+620,Main,Table 1 indication counts,Stroke RASS patients,2221,INDN.Stroke.RASS,0
+621,Main,Table 1 indication counts,Stroke GCS patients,2708,INDN.Stroke.GCS,0
+622,Main,Table 1 indication counts,Stroke CAMS patients,85,INDN.Stroke.CAMS,0
+623,Main,Table 1 indication counts,Stroke ICANS patients,1,INDN.Stroke.ICANS,0
+624,Main,Table 1 indication counts,Other RASS patients,76,INDN.Other.RASS,0
+625,Main,Table 1 indication counts,Other GCS patients,154,INDN.Other.GCS,0
+626,Main,Table 1 indication counts,Other CAMS patients,137,INDN.Other.CAMS,0
+627,Main,Table 1 indication counts,Other ICANS patients,109,INDN.Other.ICANS,0
+628,Supp,Supp Fig 10 text,"Median MAE, cardiac/circulatory",0.63,SF10.Cardiac.median,0.0051
+629,Supp,Supp Fig 10 text,"Median MAE, neurological",0.83,SF10.Neurological.median,0.0051

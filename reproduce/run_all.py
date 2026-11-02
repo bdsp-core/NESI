@@ -232,6 +232,9 @@ REVISION = [
     ("qeeg_supp_fig31", "qeeg_supp_fig31.py", "plain"),
     ("loco_summary", "loco_summary.py", "plain"),
     ("mapping_summary", "mapping_summary.py", "plain"),
+    ("icans_segment_ablation", "icans_segment_ablation.py", "plain"),
+    ("indication_stratified", "indication_stratified.py", "plain"),
+    ("supp_fig10_diagnosis", "supp_fig10_diagnosis.py", "plain"),
     ("figure6_composite", "figure6_composite.py", "plain"),
 ]
 

@@ -31,6 +31,8 @@ Checking a number or adjusting a figure never needs a retrain or raw EEG. `run_a
 | `intermediates/sedation/`: medication models and bootstrap draws (1,000 resamples), restored into `sedation_repo/` by the fast route | `sedation.py --from-source` | About 7 h on 16 cores |
 | `intermediates/artifact_per_segment.csv` | `artifact_tolerance.py --refresh` | About 1 h, depending on the network |
 | `intermediates/rass_positive_features.npz` | Delete it, then run `rass_positive.py` | Minutes, depending on the network |
+| `intermediates/indication_llm_labels.csv`: Qwen3-14B indication label per EEG report (labels and IDs only) | Arka Roy's labeling run; full files with report-derived text at `s3://bdsp-opendata-credentialed/yama/RevisionRelatedMaterials/EEGIndication_Analysis/` | Hours on one GPU |
+| `intermediates/icans_segment_ablation/`: NESI for random-awake and all-day ICANS segments | `RevisionRelatedMaterials/ICANS_Awake_Segment_Ablation/` (needs MORGOTH activations) | Hours |
 
 Medication steps use `NESI_SEDATION_PYTHON`, a Python with `pandas<3` and the packages in `NESI/NESI-Medication-Analysis`.
 
@@ -40,4 +42,4 @@ Medication steps use `NESI_SEDATION_PYTHON`, a Python with `pandas<3` and the pa
 
 ## Current coverage
 
-This is a work in progress. Some manuscript analyses have no code in this repository yet; `--list` shows them as `missing`, and the report shows them on every run. `claims.csv` registers only part of the numbers in the manuscript. A `DIFF` in the report means a recomputed value differs from the manuscript and needs review.
+This is a work in progress. Some manuscript analyses have no code in this repository yet; `--list` shows them as `missing`, and the report shows them on every run. Two figure sets have source code (`RevisionRelatedMaterials/`) but no saved intermediate yet, so they are not regenerated: Supplementary Figs 18–23 (needs per-recording NESI series from full-length EEG) and Supplementary Fig 30 (needs per-channel qEEG features for the test set). `claims.csv` registers only part of the numbers in the manuscript. A `DIFF` in the report means a recomputed value differs from the manuscript and needs review.
