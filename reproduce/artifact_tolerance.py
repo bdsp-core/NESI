@@ -8,9 +8,9 @@ file exists, this script only recomputes the summary; --refresh rebuilds it from
 """
 import ast
 import concurrent.futures as cf
+import io
 import os
 import sys
-import tempfile
 from pathlib import Path
 
 import boto3
@@ -51,27 +51,28 @@ sample = pd.concat(parts, ignore_index=True)
 def one(i):
     r = sample.iloc[i]
     key = f"yama/cohort_models/{r.Dataset}/{r.Dataset}_EEG10minSegments/{Path(r.MorgothOutputFilename).stem}.mat"
-    with tempfile.NamedTemporaryFile(suffix=".mat", dir=ROOT.parent) as tmp:
-        s3.download_file(BUCKET, key, tmp.name)
-        d = sio.loadmat(tmp.name, variable_names=["data", "Fs"])
-        return i, pct(np.asarray(d["data"]), int(np.asarray(d["Fs"]).squeeze()))
+    d = sio.loadmat(io.BytesIO(s3.get_object(Bucket=BUCKET, Key=key)["Body"].read()), variable_names=["data", "Fs"])
+    return i, pct(np.asarray(d["data"]), int(np.asarray(d["Fs"]).squeeze()))
 
 
 PER_SEGMENT = INTER / "artifact_per_segment.csv"
 if PER_SEGMENT.exists() and "--refresh" not in sys.argv:
     sample = pd.read_csv(PER_SEGMENT, low_memory=False)
 else:
-    vals = {}
-    with cf.ThreadPoolExecutor(8) as ex:
-        futs = [ex.submit(one, i) for i in range(len(sample))]
+    # Progress is saved as it goes, so an interrupted run resumes
+    PARTIAL = INTER / "artifact_partial.csv"
+    vals = dict(pd.read_csv(PARTIAL).values) if PARTIAL.exists() else {}
+    with cf.ThreadPoolExecutor(6) as ex:
+        futs = [ex.submit(one, i) for i in range(len(sample)) if i not in vals]
         for k, fu in enumerate(cf.as_completed(futs)):
             try:
                 i, v = fu.result()
                 vals[i] = v
             except Exception as e:
                 print("miss", type(e).__name__, str(e)[:80], flush=True)
-            if k % 100 == 0:
-                print(k, flush=True)
+            if k % 50 == 0:
+                pd.Series(vals).rename_axis("i").reset_index().to_csv(PARTIAL, index=False)
+                print(len(vals), flush=True)
     sample["pct_unusable"] = sample.index.map(vals)
     sample = sample.dropna(subset=["pct_unusable"])
     sample[["Dataset", "BDSPPatientID", "MorgothOutputFilename", "RawScore", "NESI", "pct_unusable"]].to_csv(PER_SEGMENT, index=False)
