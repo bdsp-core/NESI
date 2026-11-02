@@ -1,6 +1,7 @@
 # med_config.py
 """
-Centralized paths and constants for the NESI-YAMA medication exposure pipeline.
+Centralized paths and constants for all three pipelines (Eleveld PK analysis,
+medication exposure, sedation strata).
 
 This is a TEMPLATE. Before running any pipeline scripts, fill in all paths
 marked with TODO. THEN SAVE THIS AS med_config.py for it to work with the other scripts. 
@@ -129,7 +130,21 @@ I0002_TABLES_TO_EXTRACT = [
 GCS_NESI_LOOKUP_CSV  = Path(r"TODO_path/GCS_NESI_lookup.csv")
 RASS_NESI_LOOKUP_CSV = Path(r"TODO_path/RASS_NESI_lookup.csv")
 
+# ─── Eleveld / propofol analyses (eleveld-pk-analysis/) ──────────────────────
 
+# wt_ht_per_hosp_FULL_with_eleveld_expanded.csv (Eleveld Ce per RASS observation)
+OUTPUT_CSV             = Path(r"TODO_path/eleveld_outputs/csv")
+# eleveld_timeseries_expanded.parquet; variance decomposition reports
+OUTPUT_PARQUET         = Path(r"TODO_path/eleveld_outputs/parquet")
+# Outputs of validate_eleveld_vs_pas.py
+ELEVELD_VALIDATION_DIR = Path(r"TODO_path/eleveld_validation")
+
+
+# ─── Vasopressor intervals (add_sedation_windows_opiates.py) ─────────────────
+# Pressor flags are NA if these are not set.
+
+VASOPRESSOR_EXPOSURE_DIR            = Path(r"TODO_path/i0001/vasopressor_exposure")
+I0001_CAMS_VASOPRESSOR_EXPOSURE_DIR = Path(r"TODO_path/i0001_cams/vasopressor_exposure")
 # ─── General output ──────────────────────────────────────────────────────────
 
 OUTPUT_DIR = Path(r"TODO_path/medications_output")
