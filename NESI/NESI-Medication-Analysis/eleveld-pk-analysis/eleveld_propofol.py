@@ -18,6 +18,9 @@ Usage:
 Where infusion_events is a list of (start_min, rate_mg_per_min) tuples
 representing piecewise-constant infusion (use rate=0 for off, and add
 boluses as a brief high-rate segment OR use add_bolus() helper).
+
+
+FIXED VARIABLE
 """
 
 import numpy as np
@@ -34,7 +37,7 @@ T2 = {
     6:  1.11,    # Q3 ref (L/min)
     8:  42.3,    # CL maturation E50 (weeks PMA)
     9:  9.06,    # CL maturation slope
-    10: 0.0156,  # Smaller V2 with age
+    10: -0.0156,  # Smaller V2 with age
     11: -0.00286,  # Lower CL with age (sign per equation: f_aging(θ11))
     12: 33.6,    # Weight for 50% of max V1 (kg)
     13: -0.0138, # Smaller V3 with age (V3 uses f_opiates(θ13) per paper)
