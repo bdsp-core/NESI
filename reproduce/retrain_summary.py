@@ -22,7 +22,7 @@ def rho(a, b):
 
 rows = []
 for f in sorted((ROOT.parent / "retrain").glob("*/test_scores.csv")):
-    if "smoke" in f.parent.name:
+    if "smoke" in f.parent.name or f.parent.name.startswith("mapping_"):  # mappings: mapping_summary.py
         continue
     d = pd.read_csv(f, low_memory=False)
     for ds, g in d.groupby("Dataset"):

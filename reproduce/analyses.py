@@ -412,6 +412,10 @@ def revision_tables(ctx):
     for x in lo.itertuples():
         for c in ["full_rho", "full_lo", "full_hi", "loco_rho", "loco_lo", "loco_hi", "uni_rho", "uni_lo", "uni_hi", "delta", "delta_lo", "delta_hi"]:
             ctx.num[f"LOCO.{x.Scale}.{c}"] = getattr(x, c)
+    mp = pd.read_csv(t / "mapping_summary.csv")
+    for x in mp.itertuples():
+        k = f"MAP.{x.Mapping.replace(' ', '_')}.{x.Scale}"
+        ctx.num[k + ".rho"], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".delta"], ctx.num[k + ".p_holm"] = x.rho, x.lo, x.hi, x.delta, x.p_holm
     f6 = pd.read_csv(t / "figure6_counts.csv")
     for x in f6.itertuples():
         ctx.num["FIG6." + x.Panel.replace(" ", "_")] = x.Selected
