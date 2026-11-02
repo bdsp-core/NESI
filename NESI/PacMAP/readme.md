@@ -4,12 +4,13 @@ This folder contains scripts and data for visualizing the Neurological Evaluatio
 
 ## Files
 
-- `build_window_features_csv_NEW.py`: Extracts window-level MORGOTH features from EEG recordings.
-- `nesi_pacmap_Coordinate_estimation.py`: Computes two-dimensional PaCMAP embeddings using MORGOTH features and NESI scores.
-- `NESI_PACMAP_main.py`: Generates the PaCMAP visualization colored by continuous NESI scores and dominant EEG patterns.
-- `NESI_pacmap_coords.csv`: Precomputed PaCMAP coordinates, NESI scores, and EEG features.
+- `STEOP1_build_window_features_csv_NEW.py`: Extracts window-level MORGOTH features from EEG recordings.
+- `STEP2_nesi_pacmap_Coordinate_estimation.py`: Computes two-dimensional PaCMAP embeddings using MORGOTH features and NESI scores.
+- `STEP3A_NESI_PACMAP_Twoanel.py`: Generates the PaCMAP visualization colored by continuous NESI scores and dominant EEG patterns.
+- `STEP3B_NESI_pacmap_coords.csv`: Precomputed PaCMAP coordinates, NESI scores, and EEG features.
 - `UniversalBadnessModelResult_Full.csv`: NESI predictions and associated clinical metadata.
-- `NESI_pacmap.png`: Generated visualization.
+- `NESI_pacmap.png`: Two Panel PacMAP visualization.
+- `NESI_composite_pacmap.png`: Multi Panel PacMAP visualization.
 
 ## Visualization
 
