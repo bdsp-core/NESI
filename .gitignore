@@ -45,3 +45,14 @@ cohort_models/ExternalValidation/EDF_EEGS
 cohort_models/ExternalValidation/Products
 cohort_models/ExternalValidation/morgoth/checkpoints
 cohort_models/ExternalValidation/KIMCHI_FINAL_METADATA.xlsx
+
+# Patient- and segment-level data lives in credentialed storage (see docs/DATA_FILES.md)
+*.xlsx
+*.mat
+*.edf
+*.parquet
+*.npz
+**/Cohort/*.csv
+**/Results5Fld/*predictions*
+**/*_download_AWS.txt
+__pycache__/
