@@ -104,7 +104,6 @@ TORCH_SCRIPTS = {"sfig6", "sfig7_9"}
 S3_LINKS = {
     "cohort_models/GCS/Cohort/GCS_BIDMC_HarvardEEG_metadata.csv": "GCS_BIDMC_HarvardEEG_metadata.csv",
     "cohort_models/CAMS/Cohort/CAMS_cohort_metadata.csv": "CAMS_cohort_metadata.csv",
-    "NESI/Bespoke_models/Results/NESIscores_full_dataset_results.csv": "NESIscores_full_dataset_results.csv",
     "cohort_models/ICANS/Cohort/ICANS_cohort_metadata.csv": "ICANS_cohort_metadata.csv",
     "DiagnosisMetadtafiles/File1.xlsx": "File1.xlsx",
     "DiagnosisMetadtafiles/File2.xlsx": "File2.xlsx",

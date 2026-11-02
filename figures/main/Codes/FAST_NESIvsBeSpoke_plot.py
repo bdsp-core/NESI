@@ -63,7 +63,7 @@ if NESI_ROOT is None:
 Bespoke_Root = NESI_ROOT / "NESI" / "Bespoke_models" / "Results"
 
 
-NESI_result_path = Bespoke_Root / "NESIscores_full_dataset_results.csv"
+NESI_result_path = Bespoke_Root / "Final_NESIscores_full_dataset_result.csv"
 RASS_bespoke_result_path = Bespoke_Root / "RASSBespokescore_results.csv"
 GCS_bespoke_result_path = Bespoke_Root / "GCSBespokescore_results.csv"
 CAMS_bespoke_result_path = Bespoke_Root / "CAMSBespokescore_results.csv"
