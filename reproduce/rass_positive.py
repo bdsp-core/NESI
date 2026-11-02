@@ -23,7 +23,7 @@ ROOT = Path(os.environ["NESI_DATA_ROOT"])
 REPO = Path(__file__).resolve().parent.parent
 OUT = Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build")) / "output" / "tables"
 OUT.mkdir(parents=True, exist_ok=True)
-CACHE = ROOT.parent / "rass_positive_features.npz"
+CACHE = ROOT / "intermediates" / "rass_positive_features.npz"
 BUCKET, PREFIX = "bdsp-opendata-credentialed", "yama/cohort_models/RASS/MorgothActivations"
 HEADS = ["SLEEP", "NM", "BS", "FOCGEN", "SLOWING", "IIIC"]
 
