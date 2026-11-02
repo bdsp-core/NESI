@@ -10,7 +10,9 @@ cohort_models/{CAMS,GCS,ICANS}/model/Testing/Logitsof*Model_against_*.py:
 - held-out segments: a per-cohort 80/20 patient split, train_test_split(test_size=0.2,
   random_state=42) on the cohort's unique patients (not the NESI split);
 - outputs: CORN logits -> class probabilities -> class log-odds, probabilities clamped
-  to [1e-7, 1 - 1e-7] (so log-odds lie within +-16.1);
+  to [1e-7, 1 - 1e-7] (so log-odds lie within +-16.1). The published figures read the
+  CORN outputs as unconditional (see corn_class_logits); --exact draws the chained
+  version as SuppFigNN_exact.png. Trends are the same either way;
 - before plotting, a segment is dropped when any class log-odds lies more than 3 IQR
   outside the quartiles of its true-score group (clean_logit_outliers). --no-clean
   draws every segment.
@@ -158,10 +160,18 @@ def features(seg):
     return X
 
 
-def corn_class_logits(z):
-    """CORN outputs (N, K-1) -> clamped class probabilities and class log-odds (N, K)."""
+def corn_class_logits(z, exact=False):
+    """CORN outputs (N, K-1) -> clamped class probabilities and class log-odds (N, K).
+
+    As published (corn_to_class_probs in the Testing scripts), sigmoid(z_k) is taken as
+    P(y > k), the CORAL reading. CORN's outputs are conditional, P(y > k | y > k-1), so
+    exact=True chains them by a cumulative product. The published reading leaves the
+    first class unchanged, makes the last class P(y > K-2 | y > K-3), and lets middle
+    classes go negative before the clamp (the floor at -16.1 in the Moderate rows).
+    """
     p = 1 / (1 + np.exp(-z.astype("float64")))
-    p = np.cumprod(p, axis=1)  # P(y > k)
+    if exact:
+        p = np.cumprod(p, axis=1)  # P(y > k)
     k = z.shape[1] + 1
     cp = np.empty((len(z), k))
     cp[:, 0] = 1 - p[:, 0]
@@ -199,18 +209,28 @@ def compute():
             idx = np.where(seg.Dataset == ds)[0]
             with torch.no_grad():
                 z = np.concatenate([net(torch.from_numpy(X[idx[a : a + 512]])).numpy() for a in range(0, len(idx), 512)])
-            _, lo = corn_class_logits(z)
             t = seg.iloc[idx].reset_index(drop=True).assign(Model=model_ds)
-            for j in range(k):
-                t[f"logit{j}"] = lo[:, j]
             for j in range(k - 1):
                 t[f"corn{j}"] = z[:, j]
             rows.append(t)
             print(f"{model_ds} model on {ds}: {len(idx)} segments", flush=True)
     out = pd.concat(rows, ignore_index=True)
     CACHE.mkdir(parents=True, exist_ok=True)
-    out.to_csv(CACHE / "cross_score_logits.csv.gz", index=False)
+    out.to_csv(CACHE / "cross_score_corn_outputs.csv.gz", index=False)
     return out
+
+
+def with_logits(df, exact=False):
+    """Add class log-odds columns logit0.. from the cached CORN outputs corn0.."""
+    parts = []
+    for m, t in df.groupby("Model", sort=False):
+        k = NCLASS[m]
+        _, lo = corn_class_logits(t[[f"corn{j}" for j in range(k - 1)]].values, exact=exact)
+        t = t.copy()
+        for j in range(k):
+            t[f"logit{j}"] = lo[:, j]
+        parts.append(t)
+    return pd.concat(parts, ignore_index=True)
 
 
 def clean(t, k, mult=3.0):
@@ -248,7 +268,7 @@ def letter(ax, s, x=0.88, y=0.06):
     ax.text(x, y, f"({s})", transform=ax.transAxes, ha="right", va="bottom", fontsize=11)
 
 
-def draw(df, do_clean=True):
+def draw(df, do_clean=True, suffix=""):
     OUT.mkdir(parents=True, exist_ok=True)
     stats = []
     for num, (m, cols) in FIGS.items():
@@ -282,9 +302,9 @@ def draw(df, do_clean=True):
                     if r == 2:
                         ax.set_xlabel(f"True {LABEL[ds]} scale", fontsize=10, labelpad=6)
         fig.tight_layout()
-        fig.savefig(OUT / f"SuppFig{num}.png", dpi=300, bbox_inches="tight")
+        fig.savefig(OUT / f"SuppFig{num}{suffix}.png", dpi=300, bbox_inches="tight")
         plt.close(fig)
-        print("wrote", OUT / f"SuppFig{num}.png")
+        print("wrote", OUT / f"SuppFig{num}{suffix}.png")
     s = pd.DataFrame(stats)
     print(s.to_string(index=False))
     return s
@@ -308,9 +328,12 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--refresh", action="store_true", help="recompute the per-segment outputs")
     ap.add_argument("--no-clean", action="store_true", help="plot every segment (no 3-IQR outlier removal)")
+    ap.add_argument("--exact", action="store_true", help="chain CORN's conditional outputs (corn_class_logits); "
+                    "figures are written as SuppFigNN_exact.png")
     a = ap.parse_args()
-    f = CACHE / "cross_score_logits.csv.gz"
+    f = CACHE / "cross_score_corn_outputs.csv.gz"
     df = pd.read_csv(f) if f.exists() and not a.refresh else compute()
-    draw(df, do_clean=not a.no_clean)
-    med = medians(df, do_clean=not a.no_clean)
-    med.to_csv(CACHE / "cross_score_medians.csv", index=False)
+    df = with_logits(df, exact=a.exact)
+    tag = ("_exact" if a.exact else "") + ("_noclean" if a.no_clean else "")
+    draw(df, do_clean=not a.no_clean, suffix=tag)
+    medians(df, do_clean=not a.no_clean).to_csv(CACHE / f"cross_score_medians{tag}.csv", index=False)

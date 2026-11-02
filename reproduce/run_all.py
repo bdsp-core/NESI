@@ -228,6 +228,7 @@ REVISION = [
     ("figures_relabel", "figures_relabel.py", "torch"),
     ("figures_elapsed_time", "figures_elapsed_time.py", "torch"),
     ("graphical_abstract", "graphical_abstract.py", "torch"),
+    ("cross_score", "cross_score.py --exact", "torch"),
 ]
 
 
