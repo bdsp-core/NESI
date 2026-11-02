@@ -416,6 +416,21 @@ def revision_tables(ctx):
     for x in mp.itertuples():
         k = f"MAP.{x.Mapping.replace(' ', '_')}.{x.Scale}"
         ctx.num[k + ".rho"], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".delta"], ctx.num[k + ".p_holm"] = x.rho, x.lo, x.hi, x.delta, x.p_holm
+    ia = pd.read_csv(t / "icans_segment_ablation.csv")
+    for x in ia.itertuples():
+        ctx.num[f"ICSEG.{x.Set}.rho"], ctx.num[f"ICSEG.{x.Set}.lo"], ctx.num[f"ICSEG.{x.Set}.hi"] = x.rho, x.lo, x.hi
+    sub = pd.read_csv(t / "icans_subgroups.csv")
+    for i, x in enumerate(sub.itertuples()):
+        ctx.num[f"ICSUB.{i}.rho"], ctx.num[f"ICSUB.{i}.lo"], ctx.num[f"ICSUB.{i}.hi"] = x.rho, x.lo, x.hi
+    ind = t.parent / "indication"
+    short = lambda s: s.split(" / ")[0].replace(" ", "_")
+    for x in pd.read_csv(ind / "NESI_Indication_Spearman_Train_Test_Bootstrap1000.csv").itertuples():
+        k = f"IND.{x.Split}.{short(x.Indication)}.{x.Scale}"
+        ctx.num[k + ".rho"], ctx.num[k + ".lo"], ctx.num[k + ".hi"] = x.Rho, x.CI_Lower, x.CI_Upper
+    for x in pd.read_csv(ind / "NESI_Indication_UniquePatientCounts_Train_Test_All.csv").itertuples():
+        ctx.num[f"INDN.{short(x.Indication)}.{x.Scale}"] = x._5
+    for x in pd.read_csv(t / "supp_fig10_mae_by_dx.csv").itertuples():
+        ctx.num[f"SF10.{x.Dx.split('/')[0]}.median"] = x.median
     f6 = pd.read_csv(t / "figure6_counts.csv")
     for x in f6.itertuples():
         ctx.num["FIG6." + x.Panel.replace(" ", "_")] = x.Selected
