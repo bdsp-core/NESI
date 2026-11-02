@@ -100,10 +100,11 @@ SCRIPTS = {
     "table1_icans": "cohort_models/ICANS/Cohort/Table1_ICANS.py",
     "sfig6": "figures/supplementary_score_prediction/ResultsFig_4OrdinalModels/ScorePredResultsAll.py",
     "sfig7_9": "figures/supplementary_score_prediction/PacMAP_4OrdinalModels/AllPacMAPSConsolidated.py",
+    "sfig7": "figures/supplementary_score_prediction/PacMAPS_colored_byMorgoth_NESI_heads/FAST_MorgothNESI_FeatureColored_PacMAPs.py",
 }
 
 
-TORCH_SCRIPTS = {"sfig6", "sfig7_9"}
+TORCH_SCRIPTS = {"sfig6", "sfig7_9", "sfig7"}
 
 # Paths the scripts expect -> file name under NESI_DATA_ROOT/s3
 S3_LINKS = {
@@ -150,6 +151,8 @@ def build_workspace():
             linked += 1
     # Some scripts locate the project root by a pre-restructure RASS/ folder
     (work / "RASS").symlink_to(work / "cohort_models" / "RASS")
+    # and the supplementary PaCMAP scripts by its pre-restructure name
+    (work / "SupplementaryScorePredictionResults").symlink_to(work / "figures" / "supplementary_score_prediction")
     # Imported but unused by the figure scripts; not in every environment
     (BUILD / "stubs").mkdir(exist_ok=True)
     (BUILD / "stubs" / "torchsummary.py").write_text("def summary(*a, **k):\n    pass\n")
@@ -246,7 +249,7 @@ def freeze_intermediates(write):
     man = ROOT / "intermediates" / "MANIFEST.csv"
     files = [p for p in sorted((ROOT / "intermediates").rglob("*")) if p.is_file() and p != man]
     files += sorted((ROOT.parent / "retrain").glob("*/test_scores.csv"))
-    now = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+    now = {str(p.relative_to(ROOT.parent)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     if write:
         with open(man, "w", newline="") as f:
             w = csv.writer(f)
