@@ -1,7 +1,7 @@
 clc;
 close all;
 clear;
-addpath('/home/ayush/Desktop/NESI_review_material/MDC_analysis/Code/MatlabMDC_GCS')
+
 %% AUTO-DETECT PATHS
 THIS_FILE=matlab.desktop.editor.getActiveFilename;
 
@@ -15,7 +15,7 @@ NESI_REVIEW_ROOT='';
 while true
     [parent_dir,folder_name]=fileparts(current_dir);
 
-    if strcmpi(folder_name,'NESI_review_material')
+    if strcmpi(folder_name,'RevisionRelatedMaterials')
         NESI_REVIEW_ROOT=current_dir;
         break;
     end
@@ -31,7 +31,7 @@ if isempty(NESI_REVIEW_ROOT)
     error('Could not locate NESI_review_material above MATLAB script: %s',THIS_FILE);
 end
 
-EXTERNAL_VALIDATION_ROOT=fullfile(NESI_REVIEW_ROOT,'MDC_analysis');
+EXTERNAL_VALIDATION_ROOT=fullfile(NESI_REVIEW_ROOT,'LongEEG_NESI_Tracking');
 
 if ~isfolder(EXTERNAL_VALIDATION_ROOT)
     error('Could not find MDC_analysis: %s',EXTERNAL_VALIDATION_ROOT);
