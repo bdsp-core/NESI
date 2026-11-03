@@ -32,36 +32,20 @@ companion dataset `s3://bdsp-opendata-credentialed/icans/`.
    - bespoke per-scale models: `NESI/Bespoke_models/Training/{RASS,GCS,CAMS,ICANS}/`
 4. **Evaluation / analysis** → figures and tables below.
 
-## Figures
+## Figures, tables and numbers
 
-| Figure | What it shows | Script(s) |
-|--------|---------------|-----------|
-| Fig. 1 | Pipeline schematic | Conceptual diagram (method image in `NESI/README.md`) |
-| Fig. 2 | Universal vs. bespoke Spearman performance (boxplots + ρ, Wilcoxon) | `NESI/model/Testing/FAST_NESIvsBeSpoke_plot.py`; `NESI/Bespoke_models/Testing/TESTING_NESIvsBeSpokeBadness_Compare.py`; `NESI/Bespoke_models/Results/NESI_vs_Bespoke.py` |
-| Fig. 3 | Worm-model latent fits (NESI vs each scale) | `NESI/ScaleVsNESI/fit_nesi_curves.py` |
-| Fig. 4 | MORGOTH feature activations stratified by NESI | `NESI/MORGOTHActivationViz_GroupedbyNESI/NESI_grouped_morgoth_activation_visualization.py` (fast variant: `FAST_NESI_group_morgothactivation.py`) |
-| Fig. 5 | Longitudinal mortality AUROC, NESI vs GCS | train: `NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Train_Death_Prediction_with_NESI_vsGCS.py`; plot: `NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Test_results_plot_GCSvsNESI.py` |
-| Supp. Fig. 18 | Ablation: mean/median features vs contrastive encoder | `NESI/model/AblationStudy/` (Training/, Testing/, FiguresAblation/) |
+The fast route from saved intermediate results is `reproduce/run_all.py`; `python reproduce/run_all.py --list`
+maps every figure and table in the revised manuscript to the script that produces it, and
+`reproduce/README.md` documents the route from source data to each intermediate. The final figure images
+are in `figures/final/`.
 
-## Tables
-
-| Table | What it shows | Script(s) |
-|-------|---------------|-----------|
-| Table 1 | Patient characteristics per cohort | `cohort_models/RASS/Cohort/Table1_RASS.py`, `cohort_models/GCS/Cohort/Table1_GCS.py`, `cohort_models/CAMS/Cohort/Table1_CAMS.py`, `cohort_models/ICANS/Cohort/Table1_ICANS.py` |
-| Table 2 + Supp. Table 1 | Medication exposure (patient- and EEG-level) | `NESI/NESI-Medication-Analysis/medication-exposure/` (drivers `run_*_pipeline_meds.py`; assembled by `build_final_exposure_tables.py`) |
-| Table 3 | Propofol Cₑ variance decomposition (NESI vs RASS) | `NESI/NESI-Medication-Analysis/eleveld-pk-analysis/variance_decomposition_eleveld_ce_vs_p.py` |
-
-## Key in-text results
-
-| Result | Script(s) |
-|--------|-----------|
-| Propofol effect-site concentration (Cₑ) via Eleveld 2018 PK/PD | `NESI/NESI-Medication-Analysis/eleveld-pk-analysis/eleveld_propofol.py`, `eleveld_run_cohort.py` |
-| NESI-vs-RASS Cₑ correlation (paired cluster bootstrap) | `NESI/NESI-Medication-Analysis/eleveld-pk-analysis/nesi_vs_rass_correlation_comparison.py` |
+The published model was trained with learning rate 0.005 (`Train_TripletEncoder.py`, `Train_NESI.py`);
+the sensitivity retrains in `reproduce/retrain_split_fix.py` used 0.0005 (see its `--lr` option).
 
 ## Comparator models
 
-External baselines are kept under `comparators/` and are **not** part of the figure/table
-pipeline above; they are run separately and their outputs folded into the mortality comparison.
+External baselines are kept under `comparators/` and are **not** part of the manuscript's
+figures, tables or numbers; they are run separately.
 
 | Comparator | Code | Docs |
 |---|---|---|

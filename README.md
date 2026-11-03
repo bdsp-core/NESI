@@ -5,10 +5,9 @@
 **🔬 Live interactive demo: https://bdsp-core.github.io/NESI/** — click any point on the PaCMAP embedding to view its 10-minute EEG segment (color by NESI, dominant IIC pattern, or MORGOTH feature).
 
 This repository contains the code and trained model weights for NESI, a continuous
-electroencephalography (EEG)-derived measure of acute brain dysfunction. Instead of predicting each
-bedside scale separately, NESI treats the major consciousness/encephalopathy scales as noisy
-observations of a single shared latent construct and recovers that physiologic dimension directly
-from EEG, placing patients on one axis spanning alertness → delirium → sedation → coma.
+electroencephalography (EEG)-derived measure of encephalopathy severity along the delirium–coma
+continuum in non-agitated states. Instead of predicting each bedside scale separately, NESI is
+trained jointly on four scales and places patients on one severity axis.
 
 > **Where this fits.** **L5 — query & consume**, in the BDSP OMOP repo family. Medication
 > exposures are reproduced from `omop_prod.drug_exposure` rather than S3 parquet MARs. Reads the
@@ -34,9 +33,11 @@ The pipeline has three stages:
    trained with within-scale and cross-scale ordinal pairs (assembled into a unified dataset,
    SPECTRA) so severity is learned on one scale-agnostic axis.
 
-**Key results** (held-out test set; see the manuscript): NESI agrees strongly with all four scales
-(Spearman ρ ≈ 0.72–0.84), shows higher AUROC than GCS for longitudinal in-hospital mortality
-(≈0.82 vs 0.76 at 20 h), and tracks propofol effect-site concentration more closely than RASS.
+**Key results** (see the manuscript): on the held-out test set NESI agrees with all four scales
+(Spearman ρ 0.72 RASS, 0.72 GCS, 0.84 CAM-S, 0.83 ICANS; patient-level bootstrap CIs). In an
+independent Northwestern cohort (990 patients, no retraining) ρ was 0.60 for RASS and 0.65 for GCS.
+NESI rises with modeled propofol effect-site concentration and is associated with in-hospital
+mortality (AUROC 0.77 at 4 h; GCS 0.81), adding discrimination to clinical covariates but not to GCS.
 
 > **Project naming:** this repository was previously named *YAMA*; it is the codebase for the NESI
 > project described above. The per-cohort scale models (RASS/GCS/CAM-S/ICANS) are the building
@@ -54,7 +55,11 @@ assembled training/validation/test sets, per-cohort metadata, derived tables) ar
 - **Provenance:** `yama/segment_index.csv` (every segment → its continuous source EEG) and
   `yama/source_eeg_files.csv`.
 
-See **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)** for a figure/table → script map and the run order.
+**Fast reproduction:** `reproduce/run_all.py` regenerates the manuscript's numbers, tables and figures
+from saved intermediate results in minutes and checks every registered number against the manuscript
+(`reproduce/claims.csv`). See **[`reproduce/README.md`](reproduce/README.md)**; `python reproduce/run_all.py --list`
+shows how each figure and table is produced. [`docs/REPRODUCE.md`](docs/REPRODUCE.md) describes the full
+pipeline from raw EEG.
 
 **Medication data via OMOP.** The medication exposures (originally pulled from S3 parquet MARs) are
 now in the BDSP **OMOP Aurora** database and are far easier to query there
@@ -75,11 +80,14 @@ NESI/
 │                       #   (Eleveld PK), DeathPrediction (NESI vs GCS), requirements.txt
 ├── mortality_analysis/ # in-hospital mortality cohort assembly + NESI correlation
 ├── comparators/        # external baseline models kept for head-to-head comparison
-│   └── AIrhythm/       #   PhysioNet/CinC 2023 coma-prognostication entry (EEG+ECG features → boosted trees)
+│   └── AIrhythm/       #   PhysioNet/CinC 2023 coma-prognostication entry (not used in the manuscript)
+├── reproduce/          # run_all.py: fast reproduction from saved intermediates + revision analyses
+├── RevisionRelatedMaterials/  # revision analyses that start from raw EEG or MORGOTH activations
 ├── figures/
-│   ├── main/           # final main-text figures (PNG + PDF) + generators (Codes/)
+│   ├── final/          # every figure exactly as in the manuscript and supplement
+│   ├── main/Codes/     # original main-figure scripts (run by reproduce/run_all.py)
 │   └── supplementary_score_prediction/
-├── docs/               # REPRODUCE.md (figure/table → script map) + guides
+├── docs/               # REPRODUCE.md (pipeline from raw EEG) + DATA_FILES.md
 ├── requirements.txt
 ├── environment.yml
 └── README.md
@@ -123,9 +131,9 @@ python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
    Set `NESI_DATA_ROOT` to your local copy and run `python link_data.py`, which links the files in
    [`docs/DATA_FILES.md`](docs/DATA_FILES.md) into the paths the scripts read.
 2. Set up MORGOTH and this environment.
-3. Follow **[`docs/REPRODUCE.md`](docs/REPRODUCE.md)**, which maps each figure and table to the
-   script that produces it (training → evaluation → figures), and lists where the trained
-   checkpoints and result files live.
+3. Run `python reproduce/run_all.py` (see [`reproduce/README.md`](reproduce/README.md)) to regenerate
+   the results from the saved intermediates, or follow [`docs/REPRODUCE.md`](docs/REPRODUCE.md) to
+   rerun the pipeline from raw EEG.
 
 ## 🧪 Comparators
 
@@ -135,9 +143,8 @@ its own documentation and upstream license. Currently:
 - **[`comparators/AIrhythm/`](comparators/AIrhythm/)** — the AIrhythm entry (Morteza Zabihi) to the
   PhysioNet/CinC 2023 coma-prognostication challenge: 382 hand-engineered EEG/ECG features per
   3-minute window, pooled over multi-hour blocks, fed to an ensemble of 51 CatBoost / stacked
-  classifiers trained across three different cross-validation partitions. Serves as the
-  feature-engineered counterpoint to NESI's MORGOTH-embedding pipeline in the mortality analysis.
-  Note that it targets *poor neurological outcome (CPC 3–5)*, not death — see its README for what
+  classifiers trained across three different cross-validation partitions. It is not used in
+  the manuscript. Note that it targets *poor neurological outcome (CPC 3–5)*, not death — see its README for what
   a fair head-to-head requires.
 
 ## 📑 Citation

@@ -282,13 +282,12 @@ variant is the cleaner comparison against NESI.
 
 ### Comparison design
 
-Match the existing mortality analysis so the curves are plottable together:
+Match the manuscript's mortality analysis so the curves are plottable together: `reproduce/mortality.py`
+(sequential logistic regression over monitoring durations, five repeated 85/15 patient splits). The
+original scripts in `NESI/DeathPrediction_NESIvsGCS/model_SeqLR/` are kept for provenance, but their saved
+results files have the NESI and GCS labels swapped (see `reproduce/mortality_label_check.py`).
 
-- Train / evaluate: [`NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Train_Death_Prediction_with_NESI_vsGCS.py`](../../NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Train_Death_Prediction_with_NESI_vsGCS.py)
-- Plot: [`NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Test_results_plot_GCSvsNESI.py`](../../NESI/DeathPrediction_NESIvsGCS/model_SeqLR/Test_results_plot_GCSvsNESI.py)
-- Correlation-style analysis: [`mortality_analysis/NESI_Corelation_with_Death.py`](../../mortality_analysis/NESI_Corelation_with_Death.py)
-
-That figure currently reports longitudinal AUROC for NESI vs GCS (≈0.82 vs 0.76 at 20 h);
+In the manuscript, in-hospital mortality AUROC is about 0.77 for NESI and 0.81 for GCS at 4 h;
 AIrhythm slots in as a third curve. Report AUROC *and* the challenge-style TPR at FPR ≤ 0.05 —
 the second is where a feature-engineered ensemble and a foundation-model embedding tend to
 diverge most.

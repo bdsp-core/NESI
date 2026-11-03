@@ -160,7 +160,9 @@ Survival and mortality prediction experiments comparing NESI-based representatio
   - Sequential logistic regression models for NESI vs GCS survival prediction.
 
 - **Results/**
-  - Evaluation outputs, figures, and performance summaries.
+  - Evaluation outputs, figures, and performance summaries. Note: `results_NESI_Death.pkl` and
+    `results_GCS_Death.pkl` have their labels swapped (the "NESI" file fits GCS values and vice versa;
+    `reproduce/mortality_label_check.py`). The manuscript's mortality analysis is `reproduce/mortality.py`.
 
 ---
 
