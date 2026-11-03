@@ -428,14 +428,15 @@ def analyze():
 def plot_auroc(auc):
     import matplotlib.pyplot as plt
 
-    fig, ax = plt.subplots(figsize=(7, 4.5))
+    fig, ax = plt.subplots(figsize=(8.5, 4.5))
     for name in SETS:
         g = auc[auc.model == name].groupby("hour").auroc.agg(["mean", "min", "max"])
-        ax.plot(g.index, g["mean"], marker="o", ms=3, label=name)
-        ax.fill_between(g.index, g["min"], g["max"], alpha=0.12)
+        line, = ax.plot(g.index, g["mean"], marker="o", ms=3, lw=1.6, label=name)
+        ax.fill_between(g.index, g["min"], g["max"], color=line.get_color(), alpha=0.06, lw=0)
     ax.set(xlabel="Monitoring duration (hours)", ylabel="AUROC", xticks=HOURS)
     ax.grid(alpha=0.3)
-    ax.legend(frameon=False, fontsize=8)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.legend(frameon=False, fontsize=9, loc="center left", bbox_to_anchor=(1.01, 0.5))
     fig.tight_layout()
     fig.savefig(FIGS / "mortality_auroc_available_covariates.png", dpi=300)
     plt.close(fig)
