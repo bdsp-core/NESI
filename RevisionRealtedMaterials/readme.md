@@ -31,3 +31,4 @@ The following table provides the mapping between supplementary figures and their
 | **Table 1** | `RevisionRealtedMaterials/Scalewise_NESI_Range/NESI_Range_Scale_TestSet.py`|
 | **Table 2** | `RevisionRealtedMaterials/NESIScaleCalibration/NESI_calibration_analysis.py`|
 | **Table 3** | `RevisionRealtedMaterials/NESISeverityDetection/NESISeverityDetection.py`|
+| **Table 6** | `RevisionRealtedMaterials/SPECTRA_SeverityDefinition_Ablation/Supplementary Table for 24 models.py`|
