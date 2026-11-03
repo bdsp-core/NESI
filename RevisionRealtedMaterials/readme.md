@@ -10,7 +10,7 @@ The following table provides the mapping between supplementary figures and their
 | **Fig. 7, 8, 9** | `RevisionRealtedMaterials/Cohort_PacMAPS_colored_byMorgoth_NESI_heads/FAST_MorgothNESI_FeatureColored_PacMAPs.py` | |
 | **Fig. 18, 19, 20** | `RevisionRealtedMaterials/LongEEG_NESI_Tracking/Code/MatlabMDC_RASS/Implement_RASS_MDC.m` | 📦 Corresponding data required to execute the code are available on AWS |
 | **Fig. 21, 22, 23** | `RevisionRealtedMaterials/LongEEG_NESI_Tracking/Code/MatlabMDC_GCS/Implement_GCS_MDC.m` | 📦 Corresponding data required to execute the code are available on AWS |
-| **Fig. 24** | — | |
+| **Fig. 24** | `RevisionRealtedMaterials/NESIScaleCalibration/NESI_calibration_analysis.py` | |
 | **Fig. 25** | `RevisionRealtedMaterials/NESISeverityDetection/NESISeverityDetection.py` | |
 | **Fig. 26** | `RevisionRealtedMaterials/NESI_EvaluationOther_PerformanceMetrics/Evalyate_Other_metrics.py` | |
 | **Fig. 27** | `RevisionRealtedMaterials/EEGIndication_Analysis/NeuroIndication_Datasetwise/EEG_Indication_Stratified_Analysis.py` | 📦 Corresponding data required to execute the code are available on AWS |
