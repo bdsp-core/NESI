@@ -477,5 +477,5 @@ plot_nesi_roc(
     fontsize=5,
     spine_width=1.4
 )
-print(severe_results_df)
+print(severe_results_df.to_string(index=False))
 
