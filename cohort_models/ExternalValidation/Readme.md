@@ -5,7 +5,7 @@ This guide provides step-by-step instructions for reproducing the external valid
 
 The pipeline consists of three main stages:
 
-**📊 Raw EEG (EDF) → Preprocessed EEG (MAT) → MORGOTH Features (591 × 17) → NESI Predictions**
+**📊 Raw EEG (EDF) → Preprocessed EEG (MAT) → MORGOTH Features (10 min window 591 × 17) → NESI Predictions**
 
 ---
 
@@ -190,17 +190,19 @@ python NESI/cohort_models/ExternalValidation/CodesForExternalVal/STEP3__Extract_
                            |
                            v
                  📊 EEG Features
-                     (591 × 17)
+                10 min window (591 × 17)
                            |
                            v
              ┌─────────────────────────┐
-             │ STEP 3: NESI Prediction  │
-             │ Environment: torchenv    │
+             │ STEP 3: NESI Prediction |
+             │(with 1 sample stride on |
+             |       MORGOTH features) |
+             │ Environment: torchenv   │
              └─────────────────────────┘
                            |
                            v
              🧠 NESI + RASS + GCS + CAM-S
-                       Predictions
+                Continuous Predictions
 ```
 
 ---
