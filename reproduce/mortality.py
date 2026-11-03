@@ -428,17 +428,27 @@ def analyze():
 def plot_auroc(auc):
     import matplotlib.pyplot as plt
 
-    fig, ax = plt.subplots(figsize=(8.5, 4.5))
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    ends = []
     for name in SETS:
         g = auc[auc.model == name].groupby("hour").auroc.agg(["mean", "min", "max"])
-        line, = ax.plot(g.index, g["mean"], marker="o", ms=3, lw=1.6, label=name)
+        line, = ax.plot(g.index, g["mean"], marker="o", ms=3, lw=1.6)
         ax.fill_between(g.index, g["min"], g["max"], color=line.get_color(), alpha=0.06, lw=0)
+        ends.append([g["mean"].iloc[-1], name, line.get_color()])
+    # label each line just right of its last point, nudged apart where lines end close together
+    ends.sort()
+    gap = 0.011
+    for i in range(1, len(ends)):
+        ends[i][0] = max(ends[i][0], ends[i - 1][0] + gap)
+    x_end = max(HOURS)
+    for y, name, color in ends:
+        ax.annotate(name, (x_end, y), xytext=(8, 0), textcoords="offset points", va="center", fontsize=9, color=color, annotation_clip=False)
     ax.set(xlabel="Monitoring duration (hours)", ylabel="AUROC", xticks=HOURS)
     ax.grid(alpha=0.3)
     ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(frameon=False, fontsize=9, loc="center left", bbox_to_anchor=(1.01, 0.5))
     fig.tight_layout()
-    fig.savefig(FIGS / "mortality_auroc_available_covariates.png", dpi=300)
+    fig.subplots_adjust(right=0.78)
+    fig.savefig(FIGS / "mortality_auroc_available_covariates.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
 
 
