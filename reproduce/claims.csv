@@ -368,12 +368,6 @@ id,doc,location,description,expected,key,tolerance
 367,Main,External validation,GCS inside segment,129,EXT.gcs.inside,0
 368,Main,External validation,GCS before,469,EXT.gcs.before,0
 369,Main,External validation,GCS after,392,EXT.gcs.after,0
-370,Main,External validation,CAM positive vs negative AUROC,0.52,EXT.cam.auc,0.0051
-371,Main,External validation,CAM AUROC low,0.48,EXT.cam.auc_lo,0.0051
-372,Main,External validation,CAM AUROC high,0.56,EXT.cam.auc_hi,0.0051
-373,Main,External validation,CAM positive,347,EXT.cam.Positive.n,0
-374,Main,External validation,CAM negative,452,EXT.cam.Negative.n,0
-375,Main,External validation,CAM unable to assess,191,EXT.cam.UTA.n,0
 376,Main,External validation,Recordings analyzed,990,EXT.recordings,0
 377,Main,External validation,Recordings with artifact rejection,356,EXT.autoreject_recordings,0
 378,Main,Main Results,Mortality patients,5397,MORT2.patients,0

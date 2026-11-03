@@ -5,7 +5,8 @@ The first run builds intermediates/external/recordings.csv from Erika's files in
 NESI_EXTERNAL_ROOT: one row per recording, with its mean and median NESI, clinical
 scores and hours to each assessment, and no calendar dates. Later runs read
 only that file. NESI is computed in 10-minute windows advanced by 1 s, then averaged
-over each recording.
+over each recording. The clinical CAM-ICU screens in this cohort are not analyzed:
+chart review found negative screens charted for comatose patients (Methods).
 """
 import json
 import os
@@ -19,7 +20,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
-from sklearn.metrics import roc_auc_score
 
 ROOT = Path(os.environ["NESI_DATA_ROOT"])
 BUILD = Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build")) / "output"
@@ -90,21 +90,6 @@ def main():
             key = lab.split()[0]
             num[f"EXT.{scale}.{key}.n"], num[f"EXT.{scale}.{key}.rho"], num[f"EXT.{scale}.{key}.lo"], num[f"EXT.{scale}.{key}.hi"] = len(s), r, lo, hi
             rows.append(dict(Scale=scale.upper(), Window=lab, n=len(s), rho=r, lo=lo, hi=hi, rho_if_median_summary=rm))
-    # CAM: positive vs negative, among those assessable; UTA means RASS -4 or -5
-    c = d[d.cam.isin(["Positive", "Negative"])]
-    y, x = (c.cam == "Positive").astype(int).values, c.nesi_mean.values
-    auc = roc_auc_score(y, x)
-    draws = []
-    for _ in range(BOOT):
-        i = rng.integers(0, len(c), len(c))
-        draws.append(roc_auc_score(y[i], x[i]))
-    num["EXT.cam.auc"], (num["EXT.cam.auc_lo"], num["EXT.cam.auc_hi"]) = auc, np.percentile(draws, [2.5, 97.5])
-    for lab, g in d.groupby("cam"):
-        k = lab.split(",")[0]
-        num[f"EXT.cam.{k}.n"], num[f"EXT.cam.{k}.median"] = len(g), g.nesi_mean.median()
-    near = c[c.cam_gap_h <= 1]
-    yn, xn = (near.cam == "Positive").astype(int).values, near.nesi_mean.values
-    num["EXT.cam.auc_60min"], num["EXT.cam.n_60min"] = roc_auc_score(yn, xn), len(near)
     (BUILD / "tables").mkdir(parents=True, exist_ok=True)
     pd.DataFrame(rows).to_csv(BUILD / "tables" / "external_validation.csv", index=False)
     json.dump({k: float(v) for k, v in num.items()}, open(INTER / "numbers.json", "w"), indent=1)
@@ -130,7 +115,7 @@ def main():
     fig.tight_layout()
     fig.savefig(out / "SuppFig38.png", dpi=250)
     print(pd.DataFrame(rows).round(3).to_string(index=False))
-    print(json.dumps({k: round(float(v), 3) for k, v in num.items() if "cam" in k or k.startswith(("EXT.rec", "EXT.dur", "EXT.auto", "EXT.win")) or k.endswith(("before", "after", "inside"))}, indent=0))
+    print(json.dumps({k: round(float(v), 3) for k, v in num.items() if k.startswith(("EXT.rec", "EXT.dur", "EXT.auto", "EXT.win")) or k.endswith(("before", "after", "inside"))}, indent=0))
 
 
 if __name__ == "__main__":

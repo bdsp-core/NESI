@@ -1,647 +1,279 @@
+
 # 🧠 NESI External Validation Pipeline
 
-This directory contains the complete pipeline for **external validation of NESI-derived EEG models** on independent EEG recordings.
+This guide provides step-by-step instructions for reproducing the external validation pipeline of the **Neurophysiologic Encephalopathy Severity Index (NESI)** using EEG recordings.
 
-The pipeline processes raw EDF EEG recordings, extracts continuous EEG representations using **MORGOTH**, and generates continuous predictions for:
+The pipeline consists of three main stages:
 
-- **RASS** — Richmond Agitation-Sedation Scale
-- **GCS** — Glasgow Coma Scale severity
-- **CAMS** — Confusion Assessment Method severity
-- **NESI** — Neurophysiologic Encephalopathy Severity Index
-
-For EEG segments longer than 10 minutes, predictions are generated continuously using overlapping 10-minute windows. Segment-level predictions can subsequently be summarized using the **mode / majority vote** to obtain one final prediction for each EEG segment.
+**📊 Raw EEG (EDF) → Preprocessed EEG (MAT) → MORGOTH Features (10 min window 591 × 17) → NESI Predictions**
 
 ---
 
-## 🔄 Pipeline Overview
+## 📦 Prerequisites: Environment Setup
 
-```text
-Raw EDF EEG
-     │
-     ▼
-EEG Preprocessing
-0.5–70 Hz filtering
-50/60 Hz notch filtering
-200 Hz resampling
-Common average reference
-     │
-     ▼
-MORGOTH
-     │
-     ├── Sleep
-     ├── Normal / Abnormal
-     ├── Burst Suppression
-     ├── Spikes
-     ├── Slowing
-     └── IIIC
-     │
-     ▼
-Continuous MORGOTH Feature Matrix
-17 EEG features
-10-s windows / 1-s stride
-     │
-     ▼
-┌──────────────────────────────────────┐
-│      Continuous 10-min Models        │
-├──────────────────────────────────────┤
-│ RASS ordinal model                   │
-│ GCS ordinal model                    │
-│ CAMS ordinal model                   │
-│ NESI continuous severity model       │
-└──────────────────────────────────────┘
-     │
-     ▼
-Continuous Predictions
-     │
-     ▼
-Mode / Majority Vote
-     │
-     ▼
-Final Segment-Level Prediction
-     │
-     ▼
-External Validation
-Confusion matrices / Accuracy / MAE
+Two separate Conda environments are required to execute the complete pipeline:
+
+| Environment | Purpose |
+|-------------|---------|
+| 🧠 `morgoth` | EEG-based feature extraction using the MORGOTH foundation model |
+| 🔬 `torchenv` | EEG preprocessing and NESI prediction from MORGOTH features |
+
+### 1️⃣ Set Up the MORGOTH Environment
+
+NESI uses **MORGOTH** as its EEG feature-extraction foundation model.
+
+MORGOTH converts preprocessed EEG recordings into feature representations consisting of **591 × 17 matrices**, which are subsequently used for NESI prediction.
+
+📌 **Installation guide:**
+
+🔗 **[MORGOTH GitHub Repository](https://github.com/bdsp-core/morgoth)**
+
+Follow the installation instructions provided in the MORGOTH repository and ensure that the `morgoth` environment is correctly configured before proceeding.
+
+> ⚠️ **Important:** MORGOTH is a required dependency for extracting EEG features from raw recordings. Ensure that the MORGOTH environment is functional before running Step 2.
+
+### 2️⃣ Set Up the NESI Environment (`torchenv`)
+
+The `torchenv` environment is used for EEG preprocessing and generating NESI predictions from MORGOTH-extracted features.
+
+**📥 Create and activate the Conda environment:**
+
+```bash
+conda env create -f environment.yml
+conda activate torchenv
 ```
 
----
+**🚀 Install GPU-enabled PyTorch (CUDA 12.4):**
 
-# 📂 Directory Structure
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
 
-```text
-ExternalValidation/
-│
-├── Continious_RASS_GCS_CAMS_NESI_Prediction.py
-│
-├── RASS_GCS_CAMS_Prediction_Results_MajorityVote_All.py
-│
-├── KIMCHI_FINAL_METADATA.xlsx
-│
-├── environment.yml
-├── requirements.txt
-├── Readme.md
-│
-├── EDF_EEGS/
-│   └── readme.md
-│
-├── DeliriumScoreModel/
-│   ├── RESNETGAP_Best_RASS.pth
-│   ├── RESNETGAP_Best_GCS.pth
-│   ├── RESNETGAP_Best_CAMS.pth
-│   └── readme.md
-│
-├── NESImodel/
-│   ├── ResNetGAP_BestModel.pth
-│   └── NESI_best_model.pth
-│
-├── morgoth/
-│   ├── finetune_classification.py
-│   ├── task_model.py
-│   ├── tokenizer.py
-│   ├── utils.py
-│   ├── EEG_level_head.py
-│   ├── segment_long_eeg.py
-│   ├── requirements.txt
-│   ├── ...
-│   └── checkpoints/
-│
-├── MATLABPlotCodesFor_ContiniousPrediction/
-│   ├── RASS_GCS_CAMS_NESI_EEG_Prediction_viz.m
-│   ├── EEG_Spectrum_WithAll_NESI_Results.m
-│   └── readme.md
-│
-└── EEG_viewing_codes/
-    ├── main_visuals.m
-    ├── fcn_bipolar.m
-    ├── sample_EEG_10min.mat
-    └── Callbacks/
+> 💡 **Note:** The CUDA 12.4 command is an example. Install the PyTorch build compatible with your GPU, CUDA drivers, and operating system.
+
+**📚 Install the remaining dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
+
+Alternatively, if running from the parent directory containing `NESI`:
+
+```bash
+pip install -r NESI/cohort_models/ExternalValidation/requirements.txt
 ```
 
 ---
 
-# 📁 Main Components
+## ⚙️ External Validation: Step-by-Step Execution
 
-## 🧠 `Continious_RASS_GCS_CAMS_NESI_Prediction.py`
+### 🔹 STEP 1: Preprocess EDF Recordings into MAT Files
 
-This is the main inference pipeline.
+**🎯 Objective:** Convert raw EEG recordings stored in European Data Format (`.edf`) into MATLAB-compatible (`.mat`) files for MORGOTH feature extraction.
 
-For each EDF recording, the script:
+**Activate the NESI environment:**
 
-1. Loads the raw EDF EEG.
-2. Standardizes EEG channel names.
-3. Selects the required 19-channel EEG montage.
-4. Resamples EEG to **200 Hz**.
-5. Applies **0.5–70 Hz band-pass filtering**.
-6. Applies **50 Hz and 60 Hz notch filtering**.
-7. Applies common average referencing.
-8. Runs the six MORGOTH EEG heads.
-9. Combines MORGOTH outputs into a **17-dimensional feature representation**.
-10. Applies continuous 10-minute prediction windows.
-11. Generates:
-   - RASS predictions
-   - GCS predictions
-   - CAMS predictions
-   - NESI scores
-12. Saves continuous predictions as CSV files.
-
-The MORGOTH feature sequence is generated using approximately:
-
-```text
-10-second EEG window
-1-second sliding step
-17 MORGOTH features
+```bash
+conda activate torchenv
 ```
 
-A 10-minute EEG interval therefore produces a feature matrix of approximately:
+**Run the preprocessing script:**
 
-```text
-591 × 17
+```bash
+python NESI/cohort_models/ExternalValidation/CodesForExternalVal/STEP1_Preprocessing_EDF_EEGs.py
 ```
+
+**📤 Output:** Preprocessed EEG recordings saved as `.mat` files in the `NESI/cohort_models/ExternalValidation/ProductsV2/ErikaSegmentEEG/` directory.
+
+> 📢 **Important Note for Reproducibility**
+>
+> The original EDF recordings are not included in this repository because of their large file sizes.
+>
+> However, the corresponding preprocessed **MAT files are provided through our AWS S3 data repository**.
+>
+> ✅ **Researchers reproducing our reported external validation results can skip Step 1 and directly use the provided MAT files to begin Step 2.**
+>
+> Researchers applying NESI to their own raw EDF recordings should complete Step 1.
 
 ---
 
-# 🧠 Clinical Prediction Models
+### 🔹 STEP 2: Extract MORGOTH Features from EEG MAT Files
 
-## RASS
+**🎯 Objective:** Use the pretrained MORGOTH foundation model to extract EEG representations from the preprocessed MAT recordings.
 
-RASS is modeled as an **ordinal classification problem**.
+**Activate the MORGOTH environment:**
 
-Predicted model classes are mapped to:
-
-```text
-0 → -5
-1 → -4
-2 → -3
-3 → -2
-4 → -1
-5 →  0
+```bash
+conda activate morgoth
 ```
 
-The model weights are stored in:
+**Navigate to the external validation MORGOTH directory:**
+
+```bash
+cd NESI/cohort_models/ExternalValidation/morgoth
+```
+
+**🚀 Execute the GPU-based feature extraction script:**
+
+```bash
+bash STEP2_MORGOTH_Continous_Feature_Extraction_GPU.sh
+```
+
+
+**📤 Output:** MORGOTH-derived EEG feature matrices for downstream continuous NESI prediction. The extracted features are organized into six subdirectories under:
+
+`NESI/cohort_models/ExternalValidation/ProductsV2/MorgothAcivtaions_Segments/`
+
+**📂 Output directory structure:**
 
 ```text
-DeliriumScoreModel/RESNETGAP_Best_RASS.pth
+MorgothAcivtaions_Segments/
+├── BS/
+├── NM/
+├── IIIC/
+├── SLOWING/
+├── SLEEP/
+└── FOCGEN/
 ```
+
+> ⚠️ **CAUTION: Configure Paths Before Execution**
+>
+> Before running the shell script, open and review:
+>
+> `STEP2_MORGOTH_Continous_Feature_Extraction_GPU.sh`
+>
+> Ensure that the following paths are configured correctly:
+>
+> - 📂 **Input directory (`eval_sub_dir`):** Location of the preprocessed EEG MAT files.
+> - 📁 **Output directory (`eval_results_dir`):** Destination where the extracted MORGOTH feature matrices will be stored.
+>
+> Incorrect input or output paths may cause feature extraction to fail.
+>
+> 💡 **GPU Recommendation:** A compatible NVIDIA GPU is recommended for efficient MORGOTH feature extraction.
 
 ---
 
-## GCS
+### 🔹 STEP 3: Generate NESI and Clinical Scale Predictions
 
-GCS severity is modeled as an **ordinal classification problem** with three categories:
+**🎯 Objective:** Use the extracted MORGOTH features to generate NESI scores and corresponding neurological clinical scale predictions.
 
-```text
-Severe
-Moderate
-Mild
+**Activate the NESI environment:**
+
+```bash
+conda activate torchenv
 ```
 
-Clinical GCS values are grouped as:
+**Run the NESI prediction script:**
 
-```text
-3–8   → Severe
-9–12  → Moderate
-13–15 → Mild
+```bash
+python NESI/cohort_models/ExternalValidation/CodesForExternalVal/STEP3__Extract_NESI_and_RASS_GCS_CAMS_prediction.py
 ```
 
-The model weights are stored in:
+
+**📤 Output:** Model-generated predictions for NESI and three neurological clinical assessment scales, including:
+
+- 🧠 **NESI:** Continuous Neurophysiologic Encephalopathy Severity Index.
+- 📊 **RASS:** Richmond Agitation-Sedation Scale.
+- 🏥 **GCS:** Glasgow Coma Scale.
+- 🔬 **CAM-S:** Confusion Assessment Method Severity.
+
+The predictions are stored in separate subdirectories under:
+
+`NESI/cohort_models/ExternalValidation/ProductsV2/`
+
+**📂 Output directory structure:**
 
 ```text
-DeliriumScoreModel/RESNETGAP_Best_GCS.pth
-```
-
----
-
-## CAMS
-
-CAMS severity is modeled as an **ordinal classification problem** with three categories:
-
-```text
-Mild
-Moderate
-Severe
-```
-
-The model weights are stored in:
-
-```text
-DeliriumScoreModel/RESNETGAP_Best_CAMS.pth
-```
-
----
-
-## NESI
-
-NESI provides a continuous EEG-derived neurological severity score.
-
-The NESI pipeline uses:
-
-```text
-NESImodel/ResNetGAP_BestModel.pth
-```
-
-for EEG representation extraction and:
-
-```text
-NESImodel/NESI_best_model.pth
-```
-
-for NESI score generation.
-
----
-
-# 🧬 MORGOTH Feature Extraction
-
-The `morgoth/` directory contains the MORGOTH inference framework used to generate EEG representations.
-
-The external-validation pipeline runs the following EEG heads:
-
-| Head | Representation |
-|---|---|
-| Sleep | Awake / N1 / N2 |
-| Normality | Normal / Abnormal |
-| Burst Suppression | Burst / No Burst |
-| Spikes | No / Focal / Generalized |
-| Slowing | No / Focal / Generalized |
-| IIIC | Other / Seizure / LPD / GPD / LRDA / GRDA |
-
-These outputs form the **17-dimensional MORGOTH representation** used by the downstream RASS, GCS, CAMS, and NESI models.
-
----
-
-# 📈 Continuous Prediction
-
-For recordings longer than 10 minutes, predictions are generated continuously.
-
-The downstream models operate on:
-
-```text
-591 × 17
-```
-
-MORGOTH feature matrices representing approximately **10 minutes of EEG**.
-
-The 10-minute prediction window is moved through the recording to produce a sequence of predictions:
-
-```text
-EEG
-│
-├── 10-min window 1 → Prediction 1
-├── 10-min window 2 → Prediction 2
-├── 10-min window 3 → Prediction 3
-├── ...
-└── 10-min window N → Prediction N
-```
-
-This allows RASS, GCS, CAMS, and NESI to be followed continuously across longer EEG segments.
-
----
-
-# 🗳️ Final Segment-Level Prediction
-
-`RASS_GCS_CAMS_Prediction_Results_MajorityVote_All.py` converts continuous predictions into a single prediction for each EEG segment.
-
-For RASS, GCS, and CAMS, the **mode of the continuous predictions** is used:
-
-```text
-Continuous predictions
-        │
-        ▼
-      Mode
-        │
-        ▼
-Final segment-level prediction
-```
-
-For example:
-
-```text
-Continuous GCS predictions:
-
-Mild
-Mild
-Moderate
-Mild
-Mild
-Moderate
-Mild
-
-                 ↓
-
-Final GCS prediction = Mild
-```
-
-The script also matches predictions to the clinical metadata contained in:
-
-```text
-KIMCHI_FINAL_METADATA.xlsx
-```
-
-using both:
-
-```text
-SubjectID
-seg_start_rel_s
-```
-
----
-
-# 📊 External Validation Metrics
-
-The cohort-level evaluation script currently calculates:
-
-### RASS
-
-- Exact accuracy
-- ±1-level accuracy
-- Mean Absolute Error (MAE)
-- Confusion matrix
-
-### GCS
-
-- Exact classification accuracy
-- Confusion matrix
-
-The final combined results are saved as:
-
-```text
-Final_Results_Prediction_RASS_GCS_CAMS_Cohort_Model.csv
-```
-
----
-
-# 📦 Generated Output Structure
-
-Running the continuous prediction pipeline generates a `Products/` directory similar to:
-
-```text
-Products/
-│
-├── MorgothActivations/
-│   └── <EDF_ID>/
-│       ├── IIIC/
-│       ├── FOCGEN/
-│       ├── BS/
-│       ├── NM/
-│       ├── SLEEP/
-│       └── SLOWING/
-│
+ProductsV2/
+├── NESIPredictions/
 ├── RASSPredictions/
-│   └── *_predictions.csv
-│
-├── GCSPredictions/
-│   └── *_predictions.csv
-│
 ├── CAMSPredictions/
-│   └── *_predictions.csv
-│
-└── NESIPredictions/
-    └── *_predictions.csv
+└── GCSPrediction/
+```
+
+Each subdirectory contains the corresponding model-generated predictions for downstream analysis and external validation.
+
+
+> ✅ **Interpretation:** Higher NESI scores indicate greater neurological dysfunction or encephalopathy severity.
+
+---
+
+## 🔄 Complete Pipeline Overview
+
+```text
+                 🧠 RAW EEG RECORDINGS
+                         (.edf)
+                           |
+                           v
+             ┌─────────────────────────┐
+             │ STEP 1: EEG Preprocessing│
+             │ Environment: torchenv    │
+             └─────────────────────────┘
+                           |
+                           v
+                📂 Preprocessed EEG
+                       (.mat)
+                           |
+                           v
+             ┌─────────────────────────┐
+             │ STEP 2: MORGOTH Features │
+             │ Environment: morgoth     │
+             │ GPU-based extraction     │
+             └─────────────────────────┘
+                           |
+                           v
+                 📊 EEG Features
+                10 min window (591 × 17)
+                           |
+                           v
+             ┌─────────────────────────┐
+             │ STEP 3: NESI Prediction |
+             │(with 1 sample stride on |
+             |       MORGOTH features) |
+             │ Environment: torchenv   │
+             └─────────────────────────┘
+                           |
+                           v
+             🧠 NESI + RASS + GCS + CAM-S
+                Continuous Predictions
 ```
 
 ---
 
-# 📊 MATLAB Visualization
+## ✅ Reproducing Our External Validation Results
 
-The folder:
+For researchers interested in reproducing the external validation results reported in our study:
 
-```text
-MATLABPlotCodesFor_ContiniousPrediction/
-```
+1. ✅ Install and configure both Conda environments (`morgoth` and `torchenv`).
+2. ✅ Download the preprocessed EEG MAT files from the accompanying AWS S3 data repository.
+3. ✅ **Skip Step 1**, because the preprocessed MAT files are already available.
+4. ✅ Execute **Step 2** to extract MORGOTH features.
+5. ✅ Execute **Step 3** to generate NESI and clinical scale predictions.
 
-contains MATLAB scripts for visualization of continuous predictions.
-
-### `RASS_GCS_CAMS_NESI_EEG_Prediction_viz.m`
-
-Visualizes continuous:
-
-- RASS
-- GCS
-- CAMS
-- NESI
-
-predictions together with the EEG.
-
-### `EEG_Spectrum_WithAll_NESI_Results.m`
-
-Generates EEG spectral / spectrogram visualization together with model outputs.
-
-These plots are useful for visually comparing changes in EEG background activity with changes in the predicted neurological state.
+> 📌 **Reproducibility Note:** The supplied preprocessed EEG files eliminate the need to repeat EDF preprocessing, allowing researchers to reproduce the feature-extraction and prediction stages directly.
 
 ---
 
-# 👁️ EEG Visualization Utilities
+## 📌 Summary of Scripts
 
-The folder:
-
-```text
-EEG_viewing_codes/
-```
-
-contains MATLAB utilities for inspecting EEG recordings.
-
-Important files include:
-
-```text
-main_visuals.m
-fcn_bipolar.m
-sample_EEG_10min.mat
-Callbacks/
-```
-
-A sample 10-minute EEG segment is included for testing the visualization workflow.
+| Step | Script | Environment | Purpose |
+|------|--------|-------------|---------|
+| **1** | `STEP1_Preprocessing_EDF_EEGs.py` | `torchenv` | Convert EDF EEG files to MAT files |
+| **2** | `STEP2_MORGOTH_Continous_Feature_Extraction_GPU.sh` | `morgoth` | Extract MORGOTH EEG features |
+| **3** | `STEP3__Extract_NESI_and_RASS_GCS_CAMS_prediction.py` | `torchenv` | Generate NESI and clinical scale predictions |
 
 ---
 
-# 📥 Input EEG
+### 📚 Reference
 
-Place external-validation EDF files inside:
-
-```text
-EDF_EEGS/
-```
-
-The preprocessing code expects a standard 19-channel EEG montage.
-
-Two common channel naming conventions are supported, including:
-
-```text
-FP1 F3 C3 P3 F7 T3 T5 O1
-FZ CZ PZ
-FP2 F4 C4 P4 F8 T4 T6 O2
-```
-
-and the equivalent modern temporal-channel nomenclature:
-
-```text
-T7 / P7
-T8 / P8
-```
-
-Channel names are standardized automatically where possible.
-
----
-
-# 🐍 Environment Setup
-
-Two environments are used because MORGOTH and the downstream NESI models have different dependency requirements.
-
-## 1. MORGOTH Environment (morgoth)
-
-NESI uses **MORGOTH** as the EEG feature-extraction foundation model. **Set up MORGOTH first:**
+**MORGOTH Foundation Model**
 
 🔗 https://github.com/bdsp-core/morgoth
 
-Follow its installation instructions and ensure its environment is functional before installing
-NESI; the pipeline depends on MORGOTH to turn raw EEG into the 591×17 feature matrices.
-
-The external-validation pipeline calls MORGOTH from this environment automatically.
+For details about MORGOTH installation, dependencies, and EEG feature extraction, please refer to the official MORGOTH repository.
 
 ---
 
-## 2. NESI / Prediction Environment (torchenv)
+**🧠 NESI — Neurophysiologic Encephalopathy Severity Index**
 
-## ⚙️ Installation
-
-```bash
-# 1. Clone
-git clone https://github.com/bdsp-core/NESI.git
-cd NESI
-
-# 2. Create the environment (recommended)
-conda env create -f environment.yml
-conda activate torchenv
-
-# 3. (GPU) install the matching PyTorch build
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-
-# 4. Install remaining dependencies
-pip install -r requirements.txt          # or: pip install -r NESI/requirements.txt
-
-# 5. Verify
-python -c "import torch, numpy, statsmodels, mne; print('Environment OK')"
-```
-
-# 🚀 Running External Validation
-
-From the `ExternalValidation` directory:
-
-## Step 1 — Place EDF files
-
-```text
-ExternalValidation/EDF_EEGS/
-```
-
-## Step 2 — Confirm metadata
-
-Ensure that:
-
-```text
-KIMCHI_FINAL_METADATA.xlsx
-```
-
-contains the required subject and EEG-segment information.
-
-## Step 3 — Run continuous inference
-
-```bash
-conda activate torchenv
-```
-
-```bash
-python Continious_RASS_GCS_CAMS_NESI_Prediction.py
-```
-
-This performs:
-
-```text
-EDF
- ↓
-Preprocessing
- ↓
-MORGOTH
- ↓
-17-D EEG representation
- ↓
-RASS / GCS / CAMS / NESI
- ↓
-Continuous prediction CSVs
-```
-
-## Step 4 — Generate segment-level predictions
-
-```bash
-python RASS_GCS_CAMS_Prediction_Results_MajorityVote_All.py
-```
-
-This performs:
-
-```text
-Continuous predictions
-        ↓
-Mode / majority vote
-        ↓
-Single prediction per EEG segment
-        ↓
-Match clinical annotation
-        ↓
-External-validation metrics
-```
-
-## Step 5 — Recreate Fig 2 on External Results
-
-Use the scripts under:
-
-```text
-Figure2_Recreate_using_NESI/
-```
-
-## Step 6 — Visualize
-
-Use the scripts under:
-
-```text
-MATLABPlotCodesFor_ContiniousPrediction/
-```
-
-to visualize EEG, spectrograms, and continuous neurological predictions.
-
----
-
-# ⚠️ Notes
-
-- External EEG recordings must contain the required EEG channels.
-- EEG is internally resampled to **200 Hz**.
-- Model weights should remain in their existing directories because the inference code resolves model paths relative to `ExternalValidation`.
-- MORGOTH and the prediction environment should both be tested before processing a large external cohort.
-- Continuous predictions are intentionally retained before majority voting so that temporal changes in neurological state can also be analyzed.
-- Missing or incompatible EEG channels may cause a recording to be skipped.
-
----
-
-# 🧠 End-to-End Summary
-
-```text
-EDF EEG
-  ↓
-Preprocessing
-  ↓
-MORGOTH
-  ↓
-17-D continuous EEG representation
-  ↓
-┌────────┬────────┬────────┬────────┐
-│  RASS  │  GCS   │  CAMS  │  NESI  │
-└────────┴────────┴────────┴────────┘
-  ↓
-Continuous neurological predictions
-  ↓
-Mode / Majority Vote
-  ↓
-Segment-level prediction
-  ↓
-Clinical annotation matching
-  ↓
-External validation
-```
-
-This directory therefore provides an end-to-end workflow for evaluating **EEG-derived neurological state and severity models on independent external EEG datasets**.
+*An EEG-derived framework for quantifying neurological dysfunction and encephalopathy severity.*
