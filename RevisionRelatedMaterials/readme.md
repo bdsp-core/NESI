@@ -7,7 +7,8 @@ intermediates in minutes (see `reproduce/README.md`).
 | Folder | What it does | Fast route in `reproduce/` |
 |---|---|---|
 | `ICANS_Awake_Segment_Ablation/` | Selects random-awake and all-day ICANS segments and scores them with the published model (Supp Fig 32) | `icans_segment_ablation.py` (saved segment scores) |
-| `TraditionalFeaturevsNESI/` | MATLAB qEEG features and NESI heads trained on them (Supp Fig 30) | none yet: needs per-channel qEEG features for the test set |
+| `TraditionalFeaturevsNESI/` | MATLAB qEEG features and NESI heads trained on them (Supp Fig 30) | none: the per-channel qEEG features for the test set were not saved, so Supp Fig 30 is reported as published and not reproduced |
+| `NESIScaleCalibration/` | Arka Roy's cohort-wise logistic calibration of NESI for severe impairment (2×2 figure) | `supp_figures_fast.py` regenerates Supp Fig 24 |
 | `LongEEG_NESI_Tracking/` | Continuous NESI on full-length recordings and the trajectory plots (Supp Figs 18–23) | none yet: needs per-recording NESI series |
 
 Analyses from this folder that were redone on the corrected split (leave-one-cohort-out, the 24 SPECTRA
