@@ -83,7 +83,7 @@ conda activate torchenv
 python NESI/cohort_models/ExternalValidation/CodesForExternalVal/STEP1_Preprocessing_EDF_EEGs.py
 ```
 
-**📤 Output:** Preprocessed EEG recordings saved as `.mat` files.
+**📤 Output:** Preprocessed EEG recordings saved as `.mat` files in the `NESI/cohort_models/ExternalValidation/ProductsV2/ErikaSegmentEEG/` directory.
 
 > 📢 **Important Note for Reproducibility**
 >
@@ -119,7 +119,22 @@ cd NESI/cohort_models/ExternalValidation/morgoth
 bash STEP2_MORGOTH_Continous_Feature_Extraction_GPU.sh
 ```
 
-**📤 Output:** MORGOTH-derived EEG feature matrices (`591 × 17`) for downstream NESI prediction.
+
+**📤 Output:** MORGOTH-derived EEG feature matrices for downstream continuous NESI prediction. The extracted features are organized into six subdirectories under:
+
+`NESI/cohort_models/ExternalValidation/ProductsV2/MorgothAcivtaions_Segments/`
+
+**📂 Output directory structure:**
+
+```text
+MorgothAcivtaions_Segments/
+├── BS/
+├── NM/
+├── IIIC/
+├── SLOWING/
+├── SLEEP/
+└── FOCGEN/
+```
 
 > ⚠️ **CAUTION: Configure Paths Before Execution**
 >
@@ -129,8 +144,8 @@ bash STEP2_MORGOTH_Continous_Feature_Extraction_GPU.sh
 >
 > Ensure that the following paths are configured correctly:
 >
-> - 📂 **Input directory:** Location of the preprocessed EEG MAT files.
-> - 📁 **Output directory:** Destination where the extracted MORGOTH feature matrices will be stored.
+> - 📂 **Input directory (`eval_sub_dir`):** Location of the preprocessed EEG MAT files.
+> - 📁 **Output directory (`eval_results_dir`):** Destination where the extracted MORGOTH feature matrices will be stored.
 >
 > Incorrect input or output paths may cause feature extraction to fail.
 >
@@ -154,12 +169,30 @@ conda activate torchenv
 python NESI/cohort_models/ExternalValidation/CodesForExternalVal/STEP3__Extract_NESI_and_RASS_GCS_CAMS_prediction.py
 ```
 
-**📤 Output:** Model-generated predictions, including:
+
+**📤 Output:** Model-generated predictions for NESI and three neurological clinical assessment scales, including:
 
 - 🧠 **NESI:** Continuous Neurophysiologic Encephalopathy Severity Index.
 - 📊 **RASS:** Richmond Agitation-Sedation Scale.
 - 🏥 **GCS:** Glasgow Coma Scale.
 - 🔬 **CAM-S:** Confusion Assessment Method Severity.
+
+The predictions are stored in separate subdirectories under:
+
+`NESI/cohort_models/ExternalValidation/ProductsV2/`
+
+**📂 Output directory structure:**
+
+```text
+ProductsV2/
+├── NESIPredictions/
+├── RASSPredictions/
+├── CAMSPredictions/
+└── GCSPrediction/
+```
+
+Each subdirectory contains the corresponding model-generated predictions for downstream analysis and external validation.
+
 
 > ✅ **Interpretation:** Higher NESI scores indicate greater neurological dysfunction or encephalopathy severity.
 
