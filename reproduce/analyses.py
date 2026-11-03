@@ -4,6 +4,8 @@ Each public function fills ``ctx.num`` with key -> value pairs and may write a
 table to ``ctx.out``. ``run_all.py`` then compares those values with
 ``claims.csv``. Nothing here prints or writes patient-level rows.
 """
+import json
+import re
 from pathlib import Path
 
 import numpy as np
@@ -101,7 +103,12 @@ def cohorts_and_splits(ctx):
         n[f"{ds}.obs"] = len(t)
         n[f"{ds}.test_obs"] = (t.Split == "Test").sum()
         n[f"{ds}.test_patients"] = t[t.Split == "Test"].BDSPPatientID.nunique()
-    n["all.unique_patients"] = f.BDSPPatientID.nunique()
+    # ICANS study IDs mapped to BDSP IDs where known, so patients in several cohorts count once
+    idx = pd.read_csv(ctx.s3 / "segment_index.csv", low_memory=False, dtype={"subject_id": str, "resolved_BDSPPatientID": str})
+    ic = idx[idx.cohort == "ICANS"].dropna(subset=["resolved_BDSPPatientID"]).drop_duplicates("subject_id")
+    ic_map = dict(zip(ic.subject_id, ic.resolved_BDSPPatientID.str.replace(r"\.0$", "", regex=True)))
+    pid = f.BDSPPatientID.astype(str).where(f.Dataset != "ICANS", f.BDSPPatientID.astype(str).map(lambda x: ic_map.get(x, "ICANS_" + x)))
+    n["all.unique_patients"] = pid.nunique()
     n["all.test_patients"] = f[f.Split == "Test"].BDSPPatientID.nunique()
     n["all.unique_segments"] = f.MorgothOutputFilename.nunique()
     n["all.segments_multi_cohort"] = (f.groupby("MorgothOutputFilename").Dataset.nunique() > 1).sum()
@@ -109,7 +116,17 @@ def cohorts_and_splits(ctx):
     n["overlap.RASS_GCS"] = len(pts["RASS"] & pts["GCS"])
     n["split.patients_multi_repo_labels"] = (f.groupby("BDSPPatientID").Split.nunique() > 1).sum()
     m = ctx.model_sets()
-    n["split.patients_multi_model_sets"] = (m.groupby("BDSPPatientID").WhichSet.nunique() > 1).sum()
+    # IDs harmonized as above. Within a cohort no patient crosses sets; across cohorts they do.
+    m_pid = m.merge(pd.DataFrame({"Dataset": f.Dataset, "MorgothOutputFilename": f.MorgothOutputFilename, "pid": pid}), on=["Dataset", "MorgothOutputFilename"], how="left")
+    n["split.patients_multi_model_sets"] = (m_pid.groupby("pid").WhichSet.nunique() > 1).sum()
+    n["split.patients_multi_within_cohort"] = (m_pid.groupby(["Dataset", "pid"]).WhichSet.nunique() > 1).sum()
+    te = m_pid[m_pid.MorgothOutputFilename.isin(f[f.Split == "Test"].MorgothOutputFilename) & (m_pid.WhichSet == "Test")]
+    tv = m_pid[m_pid.WhichSet != "Test"]
+    n["split.test_patients"] = te.pid.nunique()
+    n["split.test_patients_with_train_val"] = len(set(te.pid) & set(tv.pid))
+    n["split.train_val_rows_of_test_patients"] = tv.pid.isin(set(te.pid)).sum()
+    for ds in ["CAMS", "ICANS"]:
+        n[f"split.{ds}.test_patients_with_train_val"] = len(set(te[te.Dataset == ds].pid) & set(tv.pid))
     n["split.segments_multi_model_sets"] = (m.groupby("MorgothOutputFilename").WhichSet.nunique() > 1).sum()
     n["split.model_test_rows"] = (m.WhichSet == "Test").sum()
 
@@ -202,7 +219,7 @@ def threshold_aurocs(ctx):
 
 
 def ordinal_agreement(ctx):
-    """Cutoffs are midpoints of training-set group medians; the manuscript does not state its rule."""
+    """Cutoffs are midpoints of the median NESI of adjacent classes in training and validation data."""
     f = ctx.scores()
     for ds in SCALES:
         t = f[f.Dataset == ds]
@@ -330,9 +347,10 @@ def propofol(ctx):
     import statsmodels.formula.api as smf
 
     n = ctx.num
-    w = pd.read_csv(ctx.s3 / "wt_ht_per_hosp_FULL_with_eleveld.csv", low_memory=False)
+    # Corrected Eleveld V2 age coefficient (Christine Eckhardt's revision file)
+    w = pd.read_csv(ctx.root / "sedation_repo/eleveld-pk-analysis/data/wt_ht_per_hosp_FULL_with_eleveld_expanded.csv", low_memory=False)
     w["NE"], w["r"] = pd.to_numeric(w.PredictedNESI, errors="coerce"), pd.to_numeric(w["R PHS IP RASS"], errors="coerce")
-    q = w[(w.propofol_only == True) & (w.PropofolSimStatus == "simulated") & w.Ce_ug_per_mL.notna() & w.NE.notna() & w.r.between(-5, 0)].rename(columns={"Ce_ug_per_mL": "CE"})  # noqa: E712
+    q = w[(w.propofol_only_recomputed == True) & (w.PropofolSimStatus == "simulated") & w.Ce_ug_per_mL.notna() & w.NE.notna() & w.r.between(-5, 0)].rename(columns={"Ce_ug_per_mL": "CE"})  # noqa: E712
     n["PROP.obs"], n["PROP.patients"] = len(q), q.BDSPPatientID.nunique()
     n["PROP.rho_nesi"], n["PROP.rho_rass"] = stats.spearmanr(q.CE, q.NE)[0], stats.spearmanr(q.CE, q.r)[0]
     Q = q[q.groupby("BDSPPatientID").NE.transform("size") >= 5].copy()
@@ -350,6 +368,74 @@ def propofol(ctx):
         n[f"WB.{tag}.median_rho"], n[f"WB.{tag}.n"] = per.median(), len(per)
 
 
+def sedation_strata(ctx):
+    """Point estimates from Christine Eckhardt's pipeline, read from its output when present."""
+    f = ctx.root / "sedation_repo/medication-exposure/data/stratified_feasibility/model/results_main_stratum_full.csv"
+    d = pd.read_csv(f)
+    for r in d.itertuples():
+        k = re.sub(r"[^A-Za-z]+", "", r.agent.split("(")[0])
+        ctx.num[f"T5.{k}.obs"], ctx.num[f"T5.{k}.patients"], ctx.num[f"T5.{k}.offset"] = r.n_obs, r.n_patients, r.add_offset
+
+
+def revision_tables(ctx):
+    """Values from reproduce/by_diagnosis.py and reproduce/rass_positive.py, when run."""
+    t = ctx.out / "tables"
+    d = pd.read_csv(t / "performance_by_diagnosis.csv").dropna(subset=["rho"])
+    for ds in ["RASS", "GCS"]:
+        v = d[d.Scale == ds]
+        ctx.num[f"DX.{ds}.min"], ctx.num[f"DX.{ds}.max"] = v.rho.min(), v.rho.max()
+    r = pd.read_csv(t / "rass_positive_by_level.csv").set_index("RASS").Median
+    for lvl in [0, 1, 2]:
+        ctx.num[f"RASSPOS.median.{lvl}"] = r.loc[lvl]
+    a = pd.read_csv(t / "ablation_summary.csv")
+    a = a[a.Seed == 2026]
+    for x in a.itertuples():
+        ctx.num[f"ABL.{x.Head}.{x.Scale}.rho"], ctx.num[f"ABL.{x.Head}.{x.Scale}.delta"] = x.rho, x.delta
+    ctx.num.update(json.load(open(ctx.root / "intermediates/external/numbers.json")))
+    m = pd.read_csv(t / "mortality_summary.csv", header=None, index_col=0)[1]
+    for k, v in m.items():
+        ctx.num[f"MORT2.{k}"] = v
+    d = pd.read_csv(t / "mortality_delong.csv")
+    for x in d.itertuples():
+        k = f"MORT2.delta.{x.a}|{x.b}|{x.hour}"
+        ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".p_holm"] = x.delta, x.lo, x.hi, x.p_holm
+    a = pd.read_csv(t / "artifact_tolerance.csv")
+    for x in a.itertuples():
+        ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi
+    r = pd.read_csv(t / "retrain_summary.csv")
+    for x in r.itertuples():
+        ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.rho"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.lo"], ctx.num[f"RETRAIN.{x.Run}.{x.Scale}.hi"] = x.rho_new, x.lo, x.hi
+    q = pd.read_csv(t / "qeeg_supp_fig31.csv")
+    for x in q.itertuples():
+        ctx.num[f"QEEG.{x.Scale}.{x.Feature}.rho"], ctx.num[f"QEEG.{x.Scale}.{x.Feature}.lo"], ctx.num[f"QEEG.{x.Scale}.{x.Feature}.hi"] = x.rho, x.lo, x.hi
+    lo = pd.read_csv(t / "loco_summary.csv")
+    for x in lo.itertuples():
+        for c in ["full_rho", "full_lo", "full_hi", "loco_rho", "loco_lo", "loco_hi", "uni_rho", "uni_lo", "uni_hi", "delta", "delta_lo", "delta_hi"]:
+            ctx.num[f"LOCO.{x.Scale}.{c}"] = getattr(x, c)
+    mp = pd.read_csv(t / "mapping_summary.csv")
+    for x in mp.itertuples():
+        k = f"MAP.{x.Mapping.replace(' ', '_')}.{x.Scale}"
+        ctx.num[k + ".rho"], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".delta"], ctx.num[k + ".p_holm"] = x.rho, x.lo, x.hi, x.delta, x.p_holm
+    ia = pd.read_csv(t / "icans_segment_ablation.csv")
+    for x in ia.itertuples():
+        ctx.num[f"ICSEG.{x.Set}.rho"], ctx.num[f"ICSEG.{x.Set}.lo"], ctx.num[f"ICSEG.{x.Set}.hi"] = x.rho, x.lo, x.hi
+    sub = pd.read_csv(t / "icans_subgroups.csv")
+    for i, x in enumerate(sub.itertuples()):
+        ctx.num[f"ICSUB.{i}.rho"], ctx.num[f"ICSUB.{i}.lo"], ctx.num[f"ICSUB.{i}.hi"] = x.rho, x.lo, x.hi
+    ind = t.parent / "indication"
+    short = lambda s: s.split(" / ")[0].replace(" ", "_")
+    for x in pd.read_csv(ind / "NESI_Indication_Spearman_Train_Test_Bootstrap1000.csv").itertuples():
+        k = f"IND.{x.Split}.{short(x.Indication)}.{x.Scale}"
+        ctx.num[k + ".rho"], ctx.num[k + ".lo"], ctx.num[k + ".hi"] = x.Rho, x.CI_Lower, x.CI_Upper
+    for x in pd.read_csv(ind / "NESI_Indication_UniquePatientCounts_Train_Test_All.csv").itertuples():
+        ctx.num[f"INDN.{short(x.Indication)}.{x.Scale}"] = x._5
+    for x in pd.read_csv(t / "supp_fig10_mae_by_dx.csv").itertuples():
+        ctx.num[f"SF10.{x.Dx.split('/')[0]}.median"] = x.median
+    f6 = pd.read_csv(t / "figure6_counts.csv")
+    for x in f6.itertuples():
+        ctx.num["FIG6." + x.Panel.replace(" ", "_")] = x.Selected
+
+
 ALL = [
     cohorts_and_splits,
     correlations,
@@ -364,4 +450,6 @@ ALL = [
     retest,
     supp_table11,
     propofol,
+    sedation_strata,
+    revision_tables,
 ]

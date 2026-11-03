@@ -460,7 +460,7 @@ def compute_all_models_subjectwise(dicts_RASS_SubjectResult, model_names):
 dicts_RASS_Subjectwise_predictions_diag = process_model_results_with_diagnosis(
     all_models_results,
     model_names,
-    '/home/ayush/Desktop/MGB_RASS_EEGs/combined_rass_unique_bdsp_with_diagnoses.csv'
+    os.path.join(os.environ['NESI_DATA_ROOT'], 'github_moved/cohort_models/RASS/combined_rass_unique_bdsp_with_diagnoses.csv')
 )
 
 # --------- compute subject wise metrics for all models ----------------

@@ -10,7 +10,7 @@ id,doc,location,description,expected,key,tolerance
 9,Main,Table 1,CAM-S patients before filtering,629,CAMS.raw_patients,0
 10,Main,Results,ICANS filtered patients,237,ICANS.patients,0
 11,Main,Results,ICANS observations,784,ICANS.obs,0
-12,Main,"Abstract, Results",Overall unique patients,8861,all.unique_patients,0
+12,Main,"Abstract, Results",Overall unique patients,8274,all.unique_patients,0
 13,Main,Methods,Unique test patients,838,all.test_patients,0
 14,Main,Methods,Patients in both RASS and GCS,5512,overlap.RASS_GCS,0
 15,Main,Methods,Unique segments,159704,all.unique_segments,0
@@ -23,290 +23,895 @@ id,doc,location,description,expected,key,tolerance
 22,Supp,Supp Table 2,CAM-S test observations,105,CAMS.test_obs,0
 23,Main,Methods; Supp Table 2,ICANS test patients,47,ICANS.test_patients,0
 24,Supp,Supp Table 2,ICANS test observations,145,ICANS.test_obs,0
-25,Main,"Methods, R3.14","Patients in more than one split (""no patient"")",0,split.patients_multi_model_sets,0
+25,Main,"Methods, R3.14","Patients in more than one model set, IDs harmonized",94,split.patients_multi_model_sets,0
 26,Main,Methods,Segments in more than one split,0,split.segments_multi_model_sets,0
 27,Main,"Abstract, Results",RASS universal rho (bootstrap mean),0.72,RASS.rho_mean_boot,0.0051
-28,Main,"Abstract, Results",RASS rho CI low,0.7,RASS.rho_seg_lo,0.0051
-29,Main,"Abstract, Results",RASS rho CI high,0.73,RASS.rho_seg_hi,0.0051
+28,Main,"Abstract, Results",RASS rho CI low,0.66,RASS.rho_pt_lo,0.0151
+29,Main,"Abstract, Results",RASS rho CI high,0.76,RASS.rho_pt_hi,0.0151
 30,Main,Results,RASS bespoke rho,0.66,RASS.bespoke,0.0071
-31,Main,Results,RASS bespoke CI low,0.65,RASS.bespoke_seg_lo,0.0071
-32,Main,Results,RASS bespoke CI high,0.68,RASS.bespoke_seg_hi,0.0071
-33,Main,"Abstract, Results",GCS universal rho (bootstrap mean),0.72,GCS.rho_mean_boot,0.0051
-34,Main,"Abstract, Results",GCS rho CI low,0.71,GCS.rho_seg_lo,0.0051
-35,Main,"Abstract, Results",GCS rho CI high,0.74,GCS.rho_seg_hi,0.0051
-36,Main,Results,GCS bespoke rho,0.68,GCS.bespoke,0.0071
-37,Main,Results,GCS bespoke CI low,0.66,GCS.bespoke_seg_lo,0.0071
-38,Main,Results,GCS bespoke CI high,0.69,GCS.bespoke_seg_hi,0.0071
-39,Main,"Abstract, Results",CAM-S universal rho (bootstrap mean),0.84,CAMS.rho_mean_boot,0.0051
-40,Main,"Abstract, Results",CAM-S rho CI low,0.8,CAMS.rho_seg_lo,0.0051
-41,Main,"Abstract, Results",CAM-S rho CI high,0.88,CAMS.rho_seg_hi,0.0051
-42,Main,Results,CAM-S bespoke rho,0.78,CAMS.bespoke,0.0071
-43,Main,Results,CAM-S bespoke CI low,0.71,CAMS.bespoke_seg_lo,0.0071
-44,Main,Results,CAM-S bespoke CI high,0.84,CAMS.bespoke_seg_hi,0.0071
-45,Main,"Abstract, Results",ICANS universal rho (bootstrap mean),0.83,ICANS.rho_mean_boot,0.0051
-46,Main,"Abstract, Results",ICANS rho CI low,0.76,ICANS.rho_seg_lo,0.0051
-47,Main,"Abstract, Results",ICANS rho CI high,0.88,ICANS.rho_seg_hi,0.0051
-48,Main,Results,ICANS bespoke rho,0.76,ICANS.bespoke,0.0071
-49,Main,Results,ICANS bespoke CI low,0.68,ICANS.bespoke_seg_lo,0.0071
-50,Main,Results,ICANS bespoke CI high,0.83,ICANS.bespoke_seg_hi,0.0071
-51,Main,Results,RASS delta rho,0.056,RASS.delta,0.0011
-52,Main,Results,RASS delta CI low,0.034,RASS.delta_lo,0.01
-53,Main,Results,RASS delta CI high,0.08,RASS.delta_hi,0.015
-54,Main,Results,GCS delta rho,0.049,GCS.delta,0.0011
-55,Main,Results,GCS delta CI low,0.033,GCS.delta_lo,0.01
-56,Main,Results,GCS delta CI high,0.067,GCS.delta_hi,0.015
-57,Main,Results,CAM-S delta rho,0.063,CAMS.delta,0.0011
-58,Main,Results,CAM-S delta CI low,0.007,CAMS.delta_lo,0.01
-59,Main,Results,CAM-S delta CI high,0.122,CAMS.delta_hi,0.015
-60,Main,Results,ICANS delta rho,0.068,ICANS.delta,0.0011
-61,Main,Results,ICANS delta CI low,0.012,ICANS.delta_lo,0.01
-62,Main,Results,ICANS delta CI high,0.142,ICANS.delta_hi,0.015
-63,Main,"Results, Supp Table 12",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0151
-64,Main,"Results, Supp Table 12",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0151
-65,Main,"Results, Supp Table 12",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0151
-66,Main,"Results, Supp Table 12",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0151
-67,Main,"Results, Supp Table 12",GCS.BIDMC rho,0.38,SITE.GCS.BIDMC.rho,0.0151
-68,Supp,Supp Table 12,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0151
-69,Supp,Supp Table 12,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0151
-70,Supp,Supp Table 12,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0151
-71,Supp,Supp Table 12,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0151
-72,Main,Results,RETEST.sem,0.45,RETEST.sem,0.0051
-73,Main,Results,RETEST.mdc,1.24,RETEST.mdc,0.0051
-74,Main,Results,RETEST.icc,0.86,RETEST.icc,0.0051
-75,Main,Results,Retest pairs,51004,RETEST.pairs,20
-76,Main,Results,Retest patients,3757,RETEST.patients,5
-77,Main,Introduction,DUR.RASS.median_h,17.0,DUR.RASS.median_h,0.051
-78,Main,Introduction,DUR.GCS.median_h,16.3,DUR.GCS.median_h,0.051
-79,Main,Introduction,DUR.RASS.pct_le1h,5.3,DUR.RASS.pct_le1h,0.051
-80,Main,Introduction,DUR.GCS.pct_le1h,4.3,DUR.GCS.pct_le1h,0.051
-81,Supp,Performance evaluation,RASS +1 excluded,7687,RASSpos.1,0
-82,Supp,Performance evaluation,RASS +2 excluded,3192,RASSpos.2,0
-83,Supp,Performance evaluation,RASS +3 excluded,1010,RASSpos.3,0
-84,Supp,Performance evaluation,RASS +4 excluded,167,RASSpos.4,0
-85,Main,Table 1,T1.RASS.male,3776,T1.RASS.male,0
-86,Main,Table 1,T1.RASS.female,3017,T1.RASS.female,0
-87,Main,Table 1,T1.RASS.no_death,2609,T1.RASS.no_death,0
-88,Main,Table 1,T1.RASS.inhosp,2137,T1.RASS.inhosp,0
-89,Main,Table 1,T1.RASS.other_death,2047,T1.RASS.other_death,0
-90,Main,Table 1,T1.GCS.no_death,2990,T1.GCS.no_death,0
-91,Main,Table 1,T1.GCS.inhosp,2024,T1.GCS.inhosp,0
-92,Main,Table 1,T1.GCS.other_death,2637,T1.GCS.other_death,0
-93,Main,Table 1,T1.CAMS.male,331,T1.CAMS.male,0
-94,Main,Table 1,T1.CAMS.female,281,T1.CAMS.female,0
-95,Main,Table 1,T1.CAMS.any_death,216,T1.CAMS.any_death,0
-96,Main,Table 1,RASS median age,65,T1.RASS.age_med,0
-97,Main,Table 1,CAM-S median age,60,T1.CAMS.age_med,0
-98,Main,Abstract,Mortality AUROC NESI 20 h,0.82,MORT.NESI.20h,0.0051
-99,Main,Abstract,Mortality AUROC GCS 20 h,0.76,MORT.GCS.20h,0.0051
-100,Main,Results (old),NESI 4 h,0.812,MORT.NESI.4h,0.00051
-101,Main,Results (old),GCS 4 h,0.778,MORT.GCS.4h,0.00051
-102,Main,Abstract,p-value (test unnamed),4.7e-05,MORT.p_paired_t_one_sided,5e-07
-103,Main,"Results, propofol",PROP.obs,15620,PROP.obs,0
-104,Main,"Results, propofol",PROP.patients,1575,PROP.patients,0
-105,Main,"Results, propofol",VAR.obs,14153,VAR.obs,0
-106,Main,"Results, propofol",VAR.patients,911,VAR.patients,0
-107,Main,"Results, propofol",WB.nesi.n,903,WB.nesi.n,0
-108,Main,"Results, propofol",WB.rass.n,662,WB.rass.n,0
-109,Main,"Results, propofol",PROP.rho_nesi,0.31,PROP.rho_nesi,0.0051
-110,Main,"Results, propofol",PROP.rho_rass,-0.27,PROP.rho_rass,0.0051
-111,Main,"Results, propofol",VAR.nesi.pct_ce,9.9,VAR.nesi.pct_ce,0.051
-112,Main,"Results, propofol",VAR.rass.pct_ce,6.3,VAR.rass.pct_ce,0.051
-113,Main,"Results, propofol",VAR.nesi.pct_patient,53.8,VAR.nesi.pct_patient,0.051
-114,Main,"Results, propofol",VAR.rass.pct_patient,68.7,VAR.rass.pct_patient,0.051
-115,Main,"Results, propofol",VAR.nesi.pct_resid,36.3,VAR.nesi.pct_resid,0.051
-116,Main,"Results, propofol",VAR.rass.pct_resid,24.9,VAR.rass.pct_resid,0.051
-117,Main,"Results, propofol",WB.nesi.within,0.4,WB.nesi.within,0.0051
-118,Main,"Results, propofol",WB.nesi.between,0.29,WB.nesi.between,0.0051
-119,Main,"Results, propofol",WB.rass.within,-0.38,WB.rass.within,0.0051
-120,Main,"Results, propofol",WB.rass.between,-0.35,WB.rass.between,0.0051
-121,Main,"Results, propofol",WB.nesi.median_rho,0.2,WB.nesi.median_rho,0.0051
-122,Main,"Results, propofol",WB.rass.median_rho,-0.31,WB.rass.median_rho,0.0051
-123,Main,Abstract,NESI slope per ug/mL (primary-cohort model),0.35,VAR.nesi.slope,0.0051
-124,Supp,Supp Table 11,Reference observations,33306,T11.Reference.obs,1
-125,Supp,Supp Table 11,Reference patients,4399,T11.Reference.patients,0
-126,Supp,Supp Table 11; Results,Reference rho,0.49,T11.Reference.rho,0.0101
-127,Supp,Supp Table 11,Reference AUROC RASS<=-3,0.78,T11.Reference.auc3,0.0101
-128,Supp,Supp Table 11,Reference AUROC RASS<=-4,0.8,T11.Reference.auc4,0.0101
-129,Supp,Supp Table 11,Propofol observations,31172,T11.Propofol.obs,1
-130,Supp,Supp Table 11,Propofol patients,2305,T11.Propofol.patients,0
-131,Supp,Supp Table 11; Results,Propofol rho,0.52,T11.Propofol.rho,0.0101
-132,Supp,Supp Table 11,Propofol AUROC RASS<=-3,0.78,T11.Propofol.auc3,0.0101
-133,Supp,Supp Table 11,Propofol AUROC RASS<=-4,0.78,T11.Propofol.auc4,0.0101
-134,Supp,Supp Table 11,Dexmedetomidine observations,8651,T11.Dexmedetomidine.obs,1
-135,Supp,Supp Table 11,Dexmedetomidine patients,1038,T11.Dexmedetomidine.patients,0
-136,Supp,Supp Table 11; Results,Dexmedetomidine rho,0.38,T11.Dexmedetomidine.rho,0.0101
-137,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-3,0.68,T11.Dexmedetomidine.auc3,0.0101
-138,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-4,0.71,T11.Dexmedetomidine.auc4,0.0101
-139,Supp,Supp Table 11,Midazolam observations,3212,T11.Midazolam.obs,1
-140,Supp,Supp Table 11,Midazolam patients,247,T11.Midazolam.patients,0
-141,Supp,Supp Table 11; Results,Midazolam rho,0.48,T11.Midazolam.rho,0.0101
-142,Supp,Supp Table 11,Midazolam AUROC RASS<=-3,0.81,T11.Midazolam.auc3,0.0101
-143,Supp,Supp Table 11,Midazolam AUROC RASS<=-4,0.81,T11.Midazolam.auc4,0.0101
-144,Supp,Supp Table 11,MidazolamPropofol observations,5914,T11.MidazolamPropofol.obs,1
-145,Supp,Supp Table 11,MidazolamPropofol patients,325,T11.MidazolamPropofol.patients,0
-146,Supp,Supp Table 11; Results,MidazolamPropofol rho,0.35,T11.MidazolamPropofol.rho,0.0101
-147,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-3,0.82,T11.MidazolamPropofol.auc3,0.0101
-148,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-4,0.85,T11.MidazolamPropofol.auc4,0.0101
-149,Supp,Supp Table 11,Ketamine observations,2200,T11.Ketamine.obs,1
-150,Supp,Supp Table 11,Ketamine patients,94,T11.Ketamine.patients,0
-151,Supp,Supp Table 11; Results,Ketamine rho,0.6,T11.Ketamine.rho,0.0101
-152,Supp,Supp Table 11,Ketamine AUROC RASS<=-3,0.94,T11.Ketamine.auc3,0.0101
-153,Supp,Supp Table 11,Ketamine AUROC RASS<=-4,0.94,T11.Ketamine.auc4,0.0101
-154,Supp,Supp Table 11,OpioidOnly observations,3672,T11.OpioidOnly.obs,1
-155,Supp,Supp Table 11,OpioidOnly patients,520,T11.OpioidOnly.patients,0
-156,Supp,Supp Table 11; Results,OpioidOnly rho,0.52,T11.OpioidOnly.rho,0.0101
-157,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-3,0.76,T11.OpioidOnly.auc3,0.0101
-158,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-4,0.78,T11.OpioidOnly.auc4,0.0101
-159,Supp,Supp Table 11,All observations,97620,T11.All.obs,1
-160,Supp,Supp Table 11,All patients,6191,T11.All.patients,0
-161,Supp,Supp Table 11; Results,All rho,0.66,T11.All.rho,0.0101
-162,Supp,Supp Table 11,All AUROC RASS<=-3,0.83,T11.All.auc3,0.0101
-163,Supp,Supp Table 11,All AUROC RASS<=-4,0.84,T11.All.auc4,0.0101
-164,Supp,Supp Table 11,NoInfusion24h observations,23754,T11.NoInfusion24h.obs,1
-165,Supp,Supp Table 11,NoInfusion24h patients,3349,T11.NoInfusion24h.patients,0
-166,Supp,Supp Table 11; Results,NoInfusion24h rho,0.36,T11.NoInfusion24h.rho,0.0101
-167,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-3,0.74,T11.NoInfusion24h.auc3,0.0101
-168,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-4,0.77,T11.NoInfusion24h.auc4,0.0101
-169,Supp,Supp Table 11,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,1
-170,Supp,Supp Table 11,NoInfusion24hNoASM patients,1119,T11.NoInfusion24hNoASM.patients,0
-171,Supp,Supp Table 11; Results,NoInfusion24hNoASM rho,0.47,T11.NoInfusion24hNoASM.rho,0.0101
-172,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-3,0.76,T11.NoInfusion24hNoASM.auc3,0.0101
-173,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-4,0.8,T11.NoInfusion24hNoASM.auc4,0.0101
-174,Supp,Supp Tables 2-3,RASS cut,0.584,T3.RASS.cut,0.00051
-175,Supp,Supp Tables 2-3,RASS sens,0.772,T3.RASS.sens,0.00051
-176,Supp,Supp Tables 2-3,RASS spec,0.8,T3.RASS.spec,0.00051
-177,Supp,Supp Tables 2-3,RASS ppv,0.811,T3.RASS.ppv,0.00051
-178,Supp,Supp Tables 2-3,RASS npv,0.76,T3.RASS.npv,0.00051
-179,Supp,Supp Tables 2-3,RASS auc,0.868,T3.RASS.auc,0.00051
-180,Supp,Supp Tables 2-3,RASS brier,0.148,T3.RASS.brier,0.00051
-181,Supp,Supp Tables 2-3,GCS cut,0.046,T3.GCS.cut,0.00051
-182,Supp,Supp Tables 2-3,GCS sens,0.759,T3.GCS.sens,0.00051
-183,Supp,Supp Tables 2-3,GCS spec,0.78,T3.GCS.spec,0.00051
-184,Supp,Supp Tables 2-3,GCS ppv,0.698,T3.GCS.ppv,0.00051
-185,Supp,Supp Tables 2-3,GCS npv,0.829,T3.GCS.npv,0.00051
-186,Supp,Supp Tables 2-3,GCS auc,0.863,T3.GCS.auc,0.00051
-187,Supp,Supp Tables 2-3,GCS brier,0.147,T3.GCS.brier,0.00051
-188,Supp,Supp Tables 2-3,CAMS cut,-0.629,T3.CAMS.cut,0.00051
-189,Supp,Supp Tables 2-3,CAMS sens,0.857,T3.CAMS.sens,0.00051
-190,Supp,Supp Tables 2-3,CAMS spec,0.911,T3.CAMS.spec,0.00051
-191,Supp,Supp Tables 2-3,CAMS ppv,0.894,T3.CAMS.ppv,0.00051
-192,Supp,Supp Tables 2-3,CAMS npv,0.879,T3.CAMS.npv,0.00051
-193,Supp,Supp Tables 2-3,CAMS auc,0.966,T3.CAMS.auc,0.00051
-194,Supp,Supp Tables 2-3,CAMS brier,0.073,T3.CAMS.brier,0.00051
-195,Supp,Supp Tables 2-3,ICANS cut,-0.096,T3.ICANS.cut,0.00051
-196,Supp,Supp Tables 2-3,ICANS sens,0.765,T3.ICANS.sens,0.00051
-197,Supp,Supp Tables 2-3,ICANS spec,0.811,T3.ICANS.spec,0.00051
-198,Supp,Supp Tables 2-3,ICANS ppv,0.553,T3.ICANS.ppv,0.00051
-199,Supp,Supp Tables 2-3,ICANS npv,0.918,T3.ICANS.npv,0.00051
-200,Supp,Supp Tables 2-3,ICANS auc,0.861,T3.ICANS.auc,0.00051
-201,Supp,Supp Tables 2-3,ICANS brier,0.131,T3.ICANS.brier,0.00051
-202,Supp,Threshold-specific discrimination,RASS lowest,0.85,AUC.RASS.min,0.0051
-203,Supp,Threshold-specific discrimination,RASS highest,0.91,AUC.RASS.max,0.0051
-204,Supp,Threshold-specific discrimination,GCS lowest,0.85,AUC.GCS.min,0.0051
-205,Supp,Threshold-specific discrimination,GCS highest,0.89,AUC.GCS.max,0.0051
-206,Supp,Threshold-specific discrimination,CAMS lowest,0.87,AUC.CAMS.min,0.0051
-207,Supp,Threshold-specific discrimination,CAMS highest,0.97,AUC.CAMS.max,0.0051
-208,Supp,Threshold-specific discrimination,ICANS lowest,0.86,AUC.ICANS.min,0.0051
-209,Supp,Threshold-specific discrimination,ICANS highest,0.98,AUC.ICANS.max,0.0051
-210,Supp,Ordinal agreement,RASS MAOE,0.391,ORD.RASS.maoe,0.0051
-211,Supp,Ordinal agreement,RASS QWK,0.652,ORD.RASS.qwk,0.0051
-212,Supp,Ordinal agreement,GCS MAOE,0.432,ORD.GCS.maoe,0.0051
-213,Supp,Ordinal agreement,GCS QWK,0.633,ORD.GCS.qwk,0.0051
-214,Supp,Ordinal agreement,CAMS MAOE,0.238,ORD.CAMS.maoe,0.0051
-215,Supp,Ordinal agreement,CAMS QWK,0.85,ORD.CAMS.qwk,0.0051
-216,Supp,Ordinal agreement,ICANS MAOE,0.303,ORD.ICANS.maoe,0.0051
-217,Supp,Ordinal agreement,ICANS QWK,0.768,ORD.ICANS.qwk,0.0051
-218,Supp,Fig 33; Main Results,"ICANS rho, median-feature head (figure value)",0.58,ABL.Median.ICANS,0.0051
-219,Supp,Supp Table 1,RASS score -5 med,1.75,T1.RASS.-5.med,0.00051
-220,Supp,Supp Table 1,RASS score -5 q1,1.02,T1.RASS.-5.q1,0.00051
-221,Supp,Supp Table 1,RASS score -5 q3,2.382,T1.RASS.-5.q3,0.00051
-222,Supp,Supp Table 1,RASS score -4 med,0.932,T1.RASS.-4.med,0.00051
-223,Supp,Supp Table 1,RASS score -4 q1,0.245,T1.RASS.-4.q1,0.00051
-224,Supp,Supp Table 1,RASS score -4 q3,1.516,T1.RASS.-4.q3,0.00051
-225,Supp,Supp Table 1,RASS score -3 med,0.329,T1.RASS.-3.med,0.00051
-226,Supp,Supp Table 1,RASS score -3 q1,-0.182,T1.RASS.-3.q1,0.00051
-227,Supp,Supp Table 1,RASS score -3 q3,0.954,T1.RASS.-3.q3,0.00051
-228,Supp,Supp Table 1,RASS score -2 med,0.156,T1.RASS.-2.med,0.00051
-229,Supp,Supp Table 1,RASS score -2 q1,-0.48,T1.RASS.-2.q1,0.00051
-230,Supp,Supp Table 1,RASS score -2 q3,0.616,T1.RASS.-2.q3,0.00051
-231,Supp,Supp Table 1,RASS score -1 med,-0.247,T1.RASS.-1.med,0.00051
-232,Supp,Supp Table 1,RASS score -1 q1,-1.069,T1.RASS.-1.q1,0.00051
-233,Supp,Supp Table 1,RASS score -1 q3,0.299,T1.RASS.-1.q3,0.00051
-234,Supp,Supp Table 1,RASS score 0 med,-1.295,T1.RASS.0.med,0.00051
-235,Supp,Supp Table 1,RASS score 0 q1,-2.072,T1.RASS.0.q1,0.00051
-236,Supp,Supp Table 1,RASS score 0 q3,-0.53,T1.RASS.0.q3,0.00051
-237,Supp,Supp Table 1,GCS score 3 med,1.488,T1.GCS.3.med,0.00051
-238,Supp,Supp Table 1,GCS score 3 q1,0.885,T1.GCS.3.q1,0.00051
-239,Supp,Supp Table 1,GCS score 3 q3,2.315,T1.GCS.3.q3,0.00051
-240,Supp,Supp Table 1,GCS score 4 med,0.849,T1.GCS.4.med,0.00051
-241,Supp,Supp Table 1,GCS score 4 q1,0.224,T1.GCS.4.q1,0.00051
-242,Supp,Supp Table 1,GCS score 4 q3,1.447,T1.GCS.4.q3,0.00051
-243,Supp,Supp Table 1,GCS score 5 med,0.78,T1.GCS.5.med,0.00051
-244,Supp,Supp Table 1,GCS score 5 q1,0.257,T1.GCS.5.q1,0.00051
-245,Supp,Supp Table 1,GCS score 5 q3,1.524,T1.GCS.5.q3,0.00051
-246,Supp,Supp Table 1,GCS score 6 med,0.408,T1.GCS.6.med,0.00051
-247,Supp,Supp Table 1,GCS score 6 q1,-0.103,T1.GCS.6.q1,0.00051
-248,Supp,Supp Table 1,GCS score 6 q3,1.29,T1.GCS.6.q3,0.00051
-249,Supp,Supp Table 1,GCS score 7 med,0.237,T1.GCS.7.med,0.00051
-250,Supp,Supp Table 1,GCS score 7 q1,-0.287,T1.GCS.7.q1,0.00051
-251,Supp,Supp Table 1,GCS score 7 q3,1.096,T1.GCS.7.q3,0.00051
-252,Supp,Supp Table 1,GCS score 8 med,0.296,T1.GCS.8.med,0.00051
-253,Supp,Supp Table 1,GCS score 8 q1,-0.226,T1.GCS.8.q1,0.00051
-254,Supp,Supp Table 1,GCS score 8 q3,0.918,T1.GCS.8.q3,0.00051
-255,Supp,Supp Table 1,GCS score 9 med,0.081,T1.GCS.9.med,0.00051
-256,Supp,Supp Table 1,GCS score 9 q1,-0.486,T1.GCS.9.q1,0.00051
-257,Supp,Supp Table 1,GCS score 9 q3,0.528,T1.GCS.9.q3,0.00051
-258,Supp,Supp Table 1,GCS score 10 med,-0.025,T1.GCS.10.med,0.00051
-259,Supp,Supp Table 1,GCS score 10 q1,-0.667,T1.GCS.10.q1,0.00051
-260,Supp,Supp Table 1,GCS score 10 q3,0.376,T1.GCS.10.q3,0.00051
-261,Supp,Supp Table 1,GCS score 11 med,-0.383,T1.GCS.11.med,0.00051
-262,Supp,Supp Table 1,GCS score 11 q1,-1.139,T1.GCS.11.q1,0.00051
-263,Supp,Supp Table 1,GCS score 11 q3,0.065,T1.GCS.11.q3,0.00051
-264,Supp,Supp Table 1,GCS score 12 med,-0.609,T1.GCS.12.med,0.00051
-265,Supp,Supp Table 1,GCS score 12 q1,-1.316,T1.GCS.12.q1,0.00051
-266,Supp,Supp Table 1,GCS score 12 q3,-0.102,T1.GCS.12.q3,0.00051
-267,Supp,Supp Table 1,GCS score 13 med,-0.682,T1.GCS.13.med,0.00051
-268,Supp,Supp Table 1,GCS score 13 q1,-1.252,T1.GCS.13.q1,0.00051
-269,Supp,Supp Table 1,GCS score 13 q3,-0.004,T1.GCS.13.q3,0.00051
-270,Supp,Supp Table 1,GCS score 14 med,-1.047,T1.GCS.14.med,0.00051
-271,Supp,Supp Table 1,GCS score 14 q1,-1.746,T1.GCS.14.q1,0.00051
-272,Supp,Supp Table 1,GCS score 14 q3,-0.407,T1.GCS.14.q3,0.00051
-273,Supp,Supp Table 1,GCS score 15 med,-1.811,T1.GCS.15.med,0.00051
-274,Supp,Supp Table 1,GCS score 15 q1,-2.399,T1.GCS.15.q1,0.00051
-275,Supp,Supp Table 1,GCS score 15 q3,-1.038,T1.GCS.15.q3,0.00051
-276,Supp,Supp Table 1,CAMS score 0 med,-2.693,T1.CAMS.0.med,0.00051
-277,Supp,Supp Table 1,CAMS score 0 q1,-2.822,T1.CAMS.0.q1,0.00051
-278,Supp,Supp Table 1,CAMS score 0 q3,-2.545,T1.CAMS.0.q3,0.00051
-279,Supp,Supp Table 1,CAMS score 1 med,-2.582,T1.CAMS.1.med,0.00051
-280,Supp,Supp Table 1,CAMS score 1 q1,-2.787,T1.CAMS.1.q1,0.00051
-281,Supp,Supp Table 1,CAMS score 1 q3,-2.257,T1.CAMS.1.q3,0.00051
-282,Supp,Supp Table 1,CAMS score 2 med,-2.186,T1.CAMS.2.med,0.00051
-283,Supp,Supp Table 1,CAMS score 2 q1,-2.654,T1.CAMS.2.q1,0.00051
-284,Supp,Supp Table 1,CAMS score 2 q3,-1.891,T1.CAMS.2.q3,0.00051
-285,Supp,Supp Table 1,CAMS score 3 med,-1.575,T1.CAMS.3.med,0.00051
-286,Supp,Supp Table 1,CAMS score 3 q1,-2.483,T1.CAMS.3.q1,0.00051
-287,Supp,Supp Table 1,CAMS score 3 q3,-0.649,T1.CAMS.3.q3,0.00051
-288,Supp,Supp Table 1,CAMS score 4 med,-1.917,T1.CAMS.4.med,0.00051
-289,Supp,Supp Table 1,CAMS score 4 q1,-2.148,T1.CAMS.4.q1,0.00051
-290,Supp,Supp Table 1,CAMS score 4 q3,-1.547,T1.CAMS.4.q3,0.00051
-291,Supp,Supp Table 1,CAMS score 5 med,-1.928,T1.CAMS.5.med,0.00051
-292,Supp,Supp Table 1,CAMS score 5 q1,-2.326,T1.CAMS.5.q1,0.00051
-293,Supp,Supp Table 1,CAMS score 5 q3,-1.197,T1.CAMS.5.q3,0.00051
-294,Supp,Supp Table 1,CAMS score 6 med,-0.169,T1.CAMS.6.med,0.00051
-295,Supp,Supp Table 1,CAMS score 6 q1,-0.996,T1.CAMS.6.q1,0.00051
-296,Supp,Supp Table 1,CAMS score 6 q3,0.312,T1.CAMS.6.q3,0.00051
-297,Supp,Supp Table 1,CAMS score 7 med,1.226,T1.CAMS.7.med,0.00051
-298,Supp,Supp Table 1,CAMS score 7 q1,0.508,T1.CAMS.7.q1,0.00051
-299,Supp,Supp Table 1,CAMS score 7 q3,1.565,T1.CAMS.7.q3,0.00051
-300,Supp,Supp Table 1,ICANS score 0 med,-2.786,T1.ICANS.0.med,0.00051
-301,Supp,Supp Table 1,ICANS score 0 q1,-2.876,T1.ICANS.0.q1,0.00051
-302,Supp,Supp Table 1,ICANS score 0 q3,-2.458,T1.ICANS.0.q3,0.00051
-303,Supp,Supp Table 1,ICANS score 1 med,-0.912,T1.ICANS.1.med,0.00051
-304,Supp,Supp Table 1,ICANS score 1 q1,-1.609,T1.ICANS.1.q1,0.00051
-305,Supp,Supp Table 1,ICANS score 1 q3,-0.392,T1.ICANS.1.q3,0.00051
-306,Supp,Supp Table 1,ICANS score 2 med,0.008,T1.ICANS.2.med,0.00051
-307,Supp,Supp Table 1,ICANS score 2 q1,-0.48,T1.ICANS.2.q1,0.00051
-308,Supp,Supp Table 1,ICANS score 2 q3,0.385,T1.ICANS.2.q3,0.00051
-309,Supp,Supp Table 1,ICANS score 3 med,0.233,T1.ICANS.3.med,0.00051
-310,Supp,Supp Table 1,ICANS score 3 q1,-0.034,T1.ICANS.3.q1,0.00051
-311,Supp,Supp Table 1,ICANS score 3 q3,1.18,T1.ICANS.3.q3,0.00051
+31,Main,"Abstract, Results",GCS universal rho (bootstrap mean),0.72,GCS.rho_mean_boot,0.0051
+32,Main,"Abstract, Results",GCS rho CI low,0.68,GCS.rho_pt_lo,0.0151
+33,Main,"Abstract, Results",GCS rho CI high,0.76,GCS.rho_pt_hi,0.0151
+34,Main,Results,GCS bespoke rho,0.68,GCS.bespoke,0.0071
+35,Main,"Abstract, Results",CAM-S universal rho (bootstrap mean),0.84,CAMS.rho_mean_boot,0.0051
+36,Main,"Abstract, Results",CAM-S rho CI low,0.79,CAMS.rho_pt_lo,0.0151
+37,Main,"Abstract, Results",CAM-S rho CI high,0.88,CAMS.rho_pt_hi,0.0151
+38,Main,Results,CAM-S bespoke rho,0.78,CAMS.bespoke,0.0071
+39,Main,"Abstract, Results",ICANS universal rho (bootstrap mean),0.83,ICANS.rho_mean_boot,0.0051
+40,Main,"Abstract, Results",ICANS rho CI low,0.72,ICANS.rho_pt_lo,0.0151
+41,Main,"Abstract, Results",ICANS rho CI high,0.9,ICANS.rho_pt_hi,0.0151
+42,Main,Results,ICANS bespoke rho,0.76,ICANS.bespoke,0.0071
+43,Main,Results,RASS delta rho,0.056,RASS.delta,0.0011
+44,Main,Results,RASS delta CI low,0.034,RASS.delta_lo,0.01
+45,Main,Results,RASS delta CI high,0.08,RASS.delta_hi,0.015
+46,Main,Results,GCS delta rho,0.049,GCS.delta,0.0011
+47,Main,Results,GCS delta CI low,0.033,GCS.delta_lo,0.01
+48,Main,Results,GCS delta CI high,0.067,GCS.delta_hi,0.015
+49,Main,Results,CAM-S delta rho,0.063,CAMS.delta,0.0011
+50,Main,Results,CAM-S delta CI low,0.007,CAMS.delta_lo,0.01
+51,Main,Results,CAM-S delta CI high,0.122,CAMS.delta_hi,0.015
+52,Main,Results,ICANS delta rho,0.068,ICANS.delta,0.0011
+53,Main,Results,ICANS delta CI low,0.012,ICANS.delta_lo,0.01
+54,Main,Results,ICANS delta CI high,0.142,ICANS.delta_hi,0.015
+55,Main,"Results, Supp Table 12",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0151
+56,Main,"Results, Supp Table 12",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0151
+57,Main,"Results, Supp Table 12",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0151
+58,Main,"Results, Supp Table 12",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0151
+59,Main,"Results, Supp Table 12",GCS.BIDMC rho,0.38,SITE.GCS.BIDMC.rho,0.0151
+60,Supp,Supp Table 12,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0151
+61,Supp,Supp Table 12,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0151
+62,Supp,Supp Table 12,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0151
+63,Supp,Supp Table 12,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0151
+64,Main,Results,RETEST.sem,0.45,RETEST.sem,0.0051
+65,Main,Results,RETEST.mdc,1.24,RETEST.mdc,0.0051
+66,Main,Results,RETEST.icc,0.86,RETEST.icc,0.0051
+67,Main,Results,Retest pairs,51004,RETEST.pairs,20
+68,Main,Results,Retest patients,3757,RETEST.patients,5
+69,Main,Introduction,DUR.RASS.median_h,17.0,DUR.RASS.median_h,0.051
+70,Main,Introduction,DUR.GCS.median_h,16.3,DUR.GCS.median_h,0.051
+71,Main,Introduction,DUR.RASS.pct_le1h,5.3,DUR.RASS.pct_le1h,0.051
+72,Main,Introduction,DUR.GCS.pct_le1h,4.3,DUR.GCS.pct_le1h,0.051
+73,Supp,Performance evaluation,RASS +1 excluded,7687,RASSpos.1,0
+74,Supp,Performance evaluation,RASS +2 excluded,3192,RASSpos.2,0
+75,Supp,Performance evaluation,RASS +3 excluded,1010,RASSpos.3,0
+76,Supp,Performance evaluation,RASS +4 excluded,167,RASSpos.4,0
+77,Main,Table 1,T1.RASS.male,3776,T1.RASS.male,0
+78,Main,Table 1,T1.RASS.female,3017,T1.RASS.female,0
+79,Main,Table 1,T1.RASS.no_death,2609,T1.RASS.no_death,0
+80,Main,Table 1,T1.RASS.inhosp,2137,T1.RASS.inhosp,0
+81,Main,Table 1,T1.RASS.other_death,2047,T1.RASS.other_death,0
+82,Main,Table 1,T1.GCS.no_death,3092,T1.GCS.no_death,0
+83,Main,Table 1,T1.GCS.inhosp,2024,T1.GCS.inhosp,0
+84,Main,Table 1,T1.GCS.other_death,2535,T1.GCS.other_death,0
+85,Main,Table 1,T1.CAMS.male,331,T1.CAMS.male,0
+86,Main,Table 1,T1.CAMS.female,281,T1.CAMS.female,0
+87,Main,Table 1,T1.CAMS.any_death,216,T1.CAMS.any_death,0
+88,Main,Table 1,RASS median age,65,T1.RASS.age_med,0
+89,Main,Table 1,CAM-S median age,60,T1.CAMS.age_med,0
+90,Main,"Results, propofol",PROP.obs,15550,PROP.obs,0
+91,Main,"Results, propofol",PROP.patients,1564,PROP.patients,0
+92,Main,"Results, propofol",VAR.obs,14105,VAR.obs,0
+93,Main,"Results, propofol",VAR.patients,909,VAR.patients,0
+94,Main,"Results, propofol",WB.nesi.n,903,WB.nesi.n,0
+95,Main,"Results, propofol",WB.rass.n,658,WB.rass.n,0
+96,Main,"Results, propofol",PROP.rho_nesi,0.31,PROP.rho_nesi,0.0051
+97,Main,"Results, propofol",PROP.rho_rass,-0.27,PROP.rho_rass,0.0051
+98,Main,"Results, propofol",VAR.nesi.pct_ce,10.0,VAR.nesi.pct_ce,0.051
+99,Main,"Results, propofol",VAR.rass.pct_ce,6.4,VAR.rass.pct_ce,0.051
+100,Main,"Results, propofol",VAR.nesi.pct_patient,53.6,VAR.nesi.pct_patient,0.051
+101,Main,"Results, propofol",VAR.rass.pct_patient,68.4,VAR.rass.pct_patient,0.051
+102,Main,"Results, propofol",VAR.nesi.pct_resid,36.4,VAR.nesi.pct_resid,0.051
+103,Main,"Results, propofol",VAR.rass.pct_resid,25.2,VAR.rass.pct_resid,0.051
+104,Main,"Results, propofol",WB.nesi.within,0.4,WB.nesi.within,0.0051
+105,Main,"Results, propofol",WB.nesi.between,0.28,WB.nesi.between,0.0051
+106,Main,"Results, propofol",WB.rass.within,-0.38,WB.rass.within,0.0051
+107,Main,"Results, propofol",WB.rass.between,-0.34,WB.rass.between,0.0051
+108,Main,"Results, propofol",WB.nesi.median_rho,0.2,WB.nesi.median_rho,0.0051
+109,Main,"Results, propofol",WB.rass.median_rho,-0.31,WB.rass.median_rho,0.0051
+110,Main,Abstract,NESI slope per ug/mL (primary-cohort model),0.39,VAR.nesi.slope,0.0051
+111,Supp,Supp Table 11,Reference observations,33306,T11.Reference.obs,1
+112,Supp,Supp Table 11,Reference patients,4399,T11.Reference.patients,0
+113,Supp,Supp Table 11; Results,Reference rho,0.71,T11.Reference.rho,0.0051
+114,Supp,Supp Table 11,Reference AUROC RASS<=-3,0.87,T11.Reference.auc3,0.0051
+115,Supp,Supp Table 11,Reference AUROC RASS<=-4,0.86,T11.Reference.auc4,0.0051
+116,Supp,Supp Table 11,Propofol observations,31172,T11.Propofol.obs,1
+117,Supp,Supp Table 11,Propofol patients,2305,T11.Propofol.patients,0
+118,Supp,Supp Table 11; Results,Propofol rho,0.53,T11.Propofol.rho,0.0051
+119,Supp,Supp Table 11,Propofol AUROC RASS<=-3,0.78,T11.Propofol.auc3,0.0051
+120,Supp,Supp Table 11,Propofol AUROC RASS<=-4,0.79,T11.Propofol.auc4,0.0051
+121,Supp,Supp Table 11,Dexmedetomidine observations,8651,T11.Dexmedetomidine.obs,1
+122,Supp,Supp Table 11,Dexmedetomidine patients,1038,T11.Dexmedetomidine.patients,0
+123,Supp,Supp Table 11; Results,Dexmedetomidine rho,0.43,T11.Dexmedetomidine.rho,0.0051
+124,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-3,0.71,T11.Dexmedetomidine.auc3,0.0051
+125,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-4,0.73,T11.Dexmedetomidine.auc4,0.0051
+126,Supp,Supp Table 11,Midazolam observations,3212,T11.Midazolam.obs,1
+127,Supp,Supp Table 11,Midazolam patients,247,T11.Midazolam.patients,0
+128,Supp,Supp Table 11; Results,Midazolam rho,0.49,T11.Midazolam.rho,0.0051
+129,Supp,Supp Table 11,Midazolam AUROC RASS<=-3,0.84,T11.Midazolam.auc3,0.0051
+130,Supp,Supp Table 11,Midazolam AUROC RASS<=-4,0.82,T11.Midazolam.auc4,0.0051
+131,Supp,Supp Table 11,MidazolamPropofol observations,5914,T11.MidazolamPropofol.obs,1
+132,Supp,Supp Table 11,MidazolamPropofol patients,325,T11.MidazolamPropofol.patients,0
+133,Supp,Supp Table 11; Results,MidazolamPropofol rho,0.35,T11.MidazolamPropofol.rho,0.0051
+134,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-3,0.82,T11.MidazolamPropofol.auc3,0.0051
+135,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-4,0.85,T11.MidazolamPropofol.auc4,0.0051
+136,Supp,Supp Table 11,Ketamine observations,2200,T11.Ketamine.obs,1
+137,Supp,Supp Table 11,Ketamine patients,94,T11.Ketamine.patients,0
+138,Supp,Supp Table 11; Results,Ketamine rho,0.61,T11.Ketamine.rho,0.0051
+139,Supp,Supp Table 11,Ketamine AUROC RASS<=-3,0.95,T11.Ketamine.auc3,0.0051
+140,Supp,Supp Table 11,Ketamine AUROC RASS<=-4,0.95,T11.Ketamine.auc4,0.0051
+141,Supp,Supp Table 11,OpioidOnly observations,3672,T11.OpioidOnly.obs,1
+142,Supp,Supp Table 11,OpioidOnly patients,520,T11.OpioidOnly.patients,0
+143,Supp,Supp Table 11; Results,OpioidOnly rho,0.53,T11.OpioidOnly.rho,0.0051
+144,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-3,0.78,T11.OpioidOnly.auc3,0.0051
+145,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-4,0.79,T11.OpioidOnly.auc4,0.0051
+146,Supp,Supp Table 11,All observations,97620,T11.All.obs,1
+147,Supp,Supp Table 11,All patients,6191,T11.All.patients,0
+148,Supp,Supp Table 11; Results,All rho,0.72,T11.All.rho,0.0051
+149,Supp,Supp Table 11,All AUROC RASS<=-3,0.87,T11.All.auc3,0.0051
+150,Supp,Supp Table 11,All AUROC RASS<=-4,0.86,T11.All.auc4,0.0051
+151,Supp,Supp Table 11,NoInfusion24h observations,23754,T11.NoInfusion24h.obs,1
+152,Supp,Supp Table 11,NoInfusion24h patients,3349,T11.NoInfusion24h.patients,0
+153,Supp,Supp Table 11; Results,NoInfusion24h rho,0.67,T11.NoInfusion24h.rho,0.0051
+154,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-3,0.85,T11.NoInfusion24h.auc3,0.0051
+155,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-4,0.86,T11.NoInfusion24h.auc4,0.0051
+156,Supp,Supp Table 11,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,1
+157,Supp,Supp Table 11,NoInfusion24hNoASM patients,1119,T11.NoInfusion24hNoASM.patients,0
+158,Supp,Supp Table 11; Results,NoInfusion24hNoASM rho,0.73,T11.NoInfusion24hNoASM.rho,0.0051
+159,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-3,0.87,T11.NoInfusion24hNoASM.auc3,0.0051
+160,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-4,0.88,T11.NoInfusion24hNoASM.auc4,0.0051
+161,Supp,Supp Tables 2-3,RASS cut,0.584,T3.RASS.cut,0.00051
+162,Supp,Supp Tables 2-3,RASS sens,0.772,T3.RASS.sens,0.00051
+163,Supp,Supp Tables 2-3,RASS spec,0.8,T3.RASS.spec,0.00051
+164,Supp,Supp Tables 2-3,RASS ppv,0.811,T3.RASS.ppv,0.00051
+165,Supp,Supp Tables 2-3,RASS npv,0.76,T3.RASS.npv,0.00051
+166,Supp,Supp Tables 2-3,RASS auc,0.868,T3.RASS.auc,0.00051
+167,Supp,Supp Tables 2-3,RASS brier,0.148,T3.RASS.brier,0.00051
+168,Supp,Supp Tables 2-3,GCS cut,0.046,T3.GCS.cut,0.00051
+169,Supp,Supp Tables 2-3,GCS sens,0.759,T3.GCS.sens,0.00051
+170,Supp,Supp Tables 2-3,GCS spec,0.78,T3.GCS.spec,0.00051
+171,Supp,Supp Tables 2-3,GCS ppv,0.698,T3.GCS.ppv,0.00051
+172,Supp,Supp Tables 2-3,GCS npv,0.829,T3.GCS.npv,0.00051
+173,Supp,Supp Tables 2-3,GCS auc,0.863,T3.GCS.auc,0.00051
+174,Supp,Supp Tables 2-3,GCS brier,0.147,T3.GCS.brier,0.00051
+175,Supp,Supp Tables 2-3,CAMS cut,-0.629,T3.CAMS.cut,0.00051
+176,Supp,Supp Tables 2-3,CAMS sens,0.857,T3.CAMS.sens,0.00051
+177,Supp,Supp Tables 2-3,CAMS spec,0.911,T3.CAMS.spec,0.00051
+178,Supp,Supp Tables 2-3,CAMS ppv,0.894,T3.CAMS.ppv,0.00051
+179,Supp,Supp Tables 2-3,CAMS npv,0.879,T3.CAMS.npv,0.00051
+180,Supp,Supp Tables 2-3,CAMS auc,0.966,T3.CAMS.auc,0.00051
+181,Supp,Supp Tables 2-3,CAMS brier,0.073,T3.CAMS.brier,0.00051
+182,Supp,Supp Tables 2-3,ICANS cut,-0.096,T3.ICANS.cut,0.00051
+183,Supp,Supp Tables 2-3,ICANS sens,0.765,T3.ICANS.sens,0.00051
+184,Supp,Supp Tables 2-3,ICANS spec,0.811,T3.ICANS.spec,0.00051
+185,Supp,Supp Tables 2-3,ICANS ppv,0.553,T3.ICANS.ppv,0.00051
+186,Supp,Supp Tables 2-3,ICANS npv,0.918,T3.ICANS.npv,0.00051
+187,Supp,Supp Tables 2-3,ICANS auc,0.861,T3.ICANS.auc,0.00051
+188,Supp,Supp Tables 2-3,ICANS brier,0.131,T3.ICANS.brier,0.00051
+189,Supp,Threshold-specific discrimination,RASS lowest,0.85,AUC.RASS.min,0.0051
+190,Supp,Threshold-specific discrimination,RASS highest,0.91,AUC.RASS.max,0.0051
+191,Supp,Threshold-specific discrimination,GCS lowest,0.85,AUC.GCS.min,0.0051
+192,Supp,Threshold-specific discrimination,GCS highest,0.89,AUC.GCS.max,0.0051
+193,Supp,Threshold-specific discrimination,CAMS lowest,0.87,AUC.CAMS.min,0.0051
+194,Supp,Threshold-specific discrimination,CAMS highest,0.97,AUC.CAMS.max,0.0051
+195,Supp,Threshold-specific discrimination,ICANS lowest,0.86,AUC.ICANS.min,0.0051
+196,Supp,Threshold-specific discrimination,ICANS highest,0.98,AUC.ICANS.max,0.0051
+197,Supp,Ordinal agreement,RASS MAOE,0.393,ORD.RASS.maoe,0.0051
+198,Supp,Ordinal agreement,RASS QWK,0.65,ORD.RASS.qwk,0.0051
+199,Supp,Ordinal agreement,GCS MAOE,0.432,ORD.GCS.maoe,0.0051
+200,Supp,Ordinal agreement,GCS QWK,0.633,ORD.GCS.qwk,0.0051
+201,Supp,Ordinal agreement,CAMS MAOE,0.257,ORD.CAMS.maoe,0.0051
+202,Supp,Ordinal agreement,CAMS QWK,0.832,ORD.CAMS.qwk,0.0051
+203,Supp,Ordinal agreement,ICANS MAOE,0.297,ORD.ICANS.maoe,0.0051
+204,Supp,Ordinal agreement,ICANS QWK,0.772,ORD.ICANS.qwk,0.0051
+205,Supp,Supp Table 1,RASS score -5 med,1.75,T1.RASS.-5.med,0.00051
+206,Supp,Supp Table 1,RASS score -5 q1,1.02,T1.RASS.-5.q1,0.00051
+207,Supp,Supp Table 1,RASS score -5 q3,2.382,T1.RASS.-5.q3,0.00051
+208,Supp,Supp Table 1,RASS score -4 med,0.932,T1.RASS.-4.med,0.00051
+209,Supp,Supp Table 1,RASS score -4 q1,0.245,T1.RASS.-4.q1,0.00051
+210,Supp,Supp Table 1,RASS score -4 q3,1.516,T1.RASS.-4.q3,0.00051
+211,Supp,Supp Table 1,RASS score -3 med,0.329,T1.RASS.-3.med,0.00051
+212,Supp,Supp Table 1,RASS score -3 q1,-0.182,T1.RASS.-3.q1,0.00051
+213,Supp,Supp Table 1,RASS score -3 q3,0.954,T1.RASS.-3.q3,0.00051
+214,Supp,Supp Table 1,RASS score -2 med,0.156,T1.RASS.-2.med,0.00051
+215,Supp,Supp Table 1,RASS score -2 q1,-0.48,T1.RASS.-2.q1,0.00051
+216,Supp,Supp Table 1,RASS score -2 q3,0.616,T1.RASS.-2.q3,0.00051
+217,Supp,Supp Table 1,RASS score -1 med,-0.247,T1.RASS.-1.med,0.00051
+218,Supp,Supp Table 1,RASS score -1 q1,-1.069,T1.RASS.-1.q1,0.00051
+219,Supp,Supp Table 1,RASS score -1 q3,0.299,T1.RASS.-1.q3,0.00051
+220,Supp,Supp Table 1,RASS score 0 med,-1.295,T1.RASS.0.med,0.00051
+221,Supp,Supp Table 1,RASS score 0 q1,-2.072,T1.RASS.0.q1,0.00051
+222,Supp,Supp Table 1,RASS score 0 q3,-0.53,T1.RASS.0.q3,0.00051
+223,Supp,Supp Table 1,GCS score 3 med,1.488,T1.GCS.3.med,0.00051
+224,Supp,Supp Table 1,GCS score 3 q1,0.885,T1.GCS.3.q1,0.00051
+225,Supp,Supp Table 1,GCS score 3 q3,2.315,T1.GCS.3.q3,0.00051
+226,Supp,Supp Table 1,GCS score 4 med,0.849,T1.GCS.4.med,0.00051
+227,Supp,Supp Table 1,GCS score 4 q1,0.224,T1.GCS.4.q1,0.00051
+228,Supp,Supp Table 1,GCS score 4 q3,1.447,T1.GCS.4.q3,0.00051
+229,Supp,Supp Table 1,GCS score 5 med,0.78,T1.GCS.5.med,0.00051
+230,Supp,Supp Table 1,GCS score 5 q1,0.257,T1.GCS.5.q1,0.00051
+231,Supp,Supp Table 1,GCS score 5 q3,1.524,T1.GCS.5.q3,0.00051
+232,Supp,Supp Table 1,GCS score 6 med,0.408,T1.GCS.6.med,0.00051
+233,Supp,Supp Table 1,GCS score 6 q1,-0.103,T1.GCS.6.q1,0.00051
+234,Supp,Supp Table 1,GCS score 6 q3,1.29,T1.GCS.6.q3,0.00051
+235,Supp,Supp Table 1,GCS score 7 med,0.237,T1.GCS.7.med,0.00051
+236,Supp,Supp Table 1,GCS score 7 q1,-0.287,T1.GCS.7.q1,0.00051
+237,Supp,Supp Table 1,GCS score 7 q3,1.096,T1.GCS.7.q3,0.00051
+238,Supp,Supp Table 1,GCS score 8 med,0.296,T1.GCS.8.med,0.00051
+239,Supp,Supp Table 1,GCS score 8 q1,-0.226,T1.GCS.8.q1,0.00051
+240,Supp,Supp Table 1,GCS score 8 q3,0.918,T1.GCS.8.q3,0.00051
+241,Supp,Supp Table 1,GCS score 9 med,0.081,T1.GCS.9.med,0.00051
+242,Supp,Supp Table 1,GCS score 9 q1,-0.486,T1.GCS.9.q1,0.00051
+243,Supp,Supp Table 1,GCS score 9 q3,0.528,T1.GCS.9.q3,0.00051
+244,Supp,Supp Table 1,GCS score 10 med,-0.025,T1.GCS.10.med,0.00051
+245,Supp,Supp Table 1,GCS score 10 q1,-0.667,T1.GCS.10.q1,0.00051
+246,Supp,Supp Table 1,GCS score 10 q3,0.376,T1.GCS.10.q3,0.00051
+247,Supp,Supp Table 1,GCS score 11 med,-0.383,T1.GCS.11.med,0.00051
+248,Supp,Supp Table 1,GCS score 11 q1,-1.139,T1.GCS.11.q1,0.00051
+249,Supp,Supp Table 1,GCS score 11 q3,0.065,T1.GCS.11.q3,0.00051
+250,Supp,Supp Table 1,GCS score 12 med,-0.609,T1.GCS.12.med,0.00051
+251,Supp,Supp Table 1,GCS score 12 q1,-1.316,T1.GCS.12.q1,0.00051
+252,Supp,Supp Table 1,GCS score 12 q3,-0.102,T1.GCS.12.q3,0.00051
+253,Supp,Supp Table 1,GCS score 13 med,-0.682,T1.GCS.13.med,0.00051
+254,Supp,Supp Table 1,GCS score 13 q1,-1.252,T1.GCS.13.q1,0.00051
+255,Supp,Supp Table 1,GCS score 13 q3,-0.004,T1.GCS.13.q3,0.00051
+256,Supp,Supp Table 1,GCS score 14 med,-1.047,T1.GCS.14.med,0.00051
+257,Supp,Supp Table 1,GCS score 14 q1,-1.746,T1.GCS.14.q1,0.00051
+258,Supp,Supp Table 1,GCS score 14 q3,-0.407,T1.GCS.14.q3,0.00051
+259,Supp,Supp Table 1,GCS score 15 med,-1.811,T1.GCS.15.med,0.00051
+260,Supp,Supp Table 1,GCS score 15 q1,-2.399,T1.GCS.15.q1,0.00051
+261,Supp,Supp Table 1,GCS score 15 q3,-1.038,T1.GCS.15.q3,0.00051
+262,Supp,Supp Table 1,CAMS score 0 med,-2.693,T1.CAMS.0.med,0.00051
+263,Supp,Supp Table 1,CAMS score 0 q1,-2.822,T1.CAMS.0.q1,0.00051
+264,Supp,Supp Table 1,CAMS score 0 q3,-2.545,T1.CAMS.0.q3,0.00051
+265,Supp,Supp Table 1,CAMS score 1 med,-2.582,T1.CAMS.1.med,0.00051
+266,Supp,Supp Table 1,CAMS score 1 q1,-2.787,T1.CAMS.1.q1,0.00051
+267,Supp,Supp Table 1,CAMS score 1 q3,-2.257,T1.CAMS.1.q3,0.00051
+268,Supp,Supp Table 1,CAMS score 2 med,-2.186,T1.CAMS.2.med,0.00051
+269,Supp,Supp Table 1,CAMS score 2 q1,-2.654,T1.CAMS.2.q1,0.00051
+270,Supp,Supp Table 1,CAMS score 2 q3,-1.891,T1.CAMS.2.q3,0.00051
+271,Supp,Supp Table 1,CAMS score 3 med,-1.575,T1.CAMS.3.med,0.00051
+272,Supp,Supp Table 1,CAMS score 3 q1,-2.483,T1.CAMS.3.q1,0.00051
+273,Supp,Supp Table 1,CAMS score 3 q3,-0.649,T1.CAMS.3.q3,0.00051
+274,Supp,Supp Table 1,CAMS score 4 med,-1.917,T1.CAMS.4.med,0.00051
+275,Supp,Supp Table 1,CAMS score 4 q1,-2.148,T1.CAMS.4.q1,0.00051
+276,Supp,Supp Table 1,CAMS score 4 q3,-1.547,T1.CAMS.4.q3,0.00051
+277,Supp,Supp Table 1,CAMS score 5 med,-1.928,T1.CAMS.5.med,0.00051
+278,Supp,Supp Table 1,CAMS score 5 q1,-2.326,T1.CAMS.5.q1,0.00051
+279,Supp,Supp Table 1,CAMS score 5 q3,-1.197,T1.CAMS.5.q3,0.00051
+280,Supp,Supp Table 1,CAMS score 6 med,-0.169,T1.CAMS.6.med,0.00051
+281,Supp,Supp Table 1,CAMS score 6 q1,-0.996,T1.CAMS.6.q1,0.00051
+282,Supp,Supp Table 1,CAMS score 6 q3,0.312,T1.CAMS.6.q3,0.00051
+283,Supp,Supp Table 1,CAMS score 7 med,1.226,T1.CAMS.7.med,0.00051
+284,Supp,Supp Table 1,CAMS score 7 q1,0.508,T1.CAMS.7.q1,0.00051
+285,Supp,Supp Table 1,CAMS score 7 q3,1.565,T1.CAMS.7.q3,0.00051
+286,Supp,Supp Table 1,ICANS score 0 med,-2.786,T1.ICANS.0.med,0.00051
+287,Supp,Supp Table 1,ICANS score 0 q1,-2.876,T1.ICANS.0.q1,0.00051
+288,Supp,Supp Table 1,ICANS score 0 q3,-2.458,T1.ICANS.0.q3,0.00051
+289,Supp,Supp Table 1,ICANS score 1 med,-0.912,T1.ICANS.1.med,0.00051
+290,Supp,Supp Table 1,ICANS score 1 q1,-1.609,T1.ICANS.1.q1,0.00051
+291,Supp,Supp Table 1,ICANS score 1 q3,-0.392,T1.ICANS.1.q3,0.00051
+292,Supp,Supp Table 1,ICANS score 2 med,0.008,T1.ICANS.2.med,0.00051
+293,Supp,Supp Table 1,ICANS score 2 q1,-0.48,T1.ICANS.2.q1,0.00051
+294,Supp,Supp Table 1,ICANS score 2 q3,0.385,T1.ICANS.2.q3,0.00051
+295,Supp,Supp Table 1,ICANS score 3 med,0.233,T1.ICANS.3.med,0.00051
+296,Supp,Supp Table 1,ICANS score 3 q1,-0.034,T1.ICANS.3.q1,0.00051
+297,Supp,Supp Table 1,ICANS score 3 q3,1.18,T1.ICANS.3.q3,0.00051
+298,Main,"Results, Table 5",Propofol observations,30090,T5.Propofol.obs,0
+299,Main,Table 5,Propofol patients,2278,T5.Propofol.patients,0
+300,Main,Table 5,Propofol offset,0.55,T5.Propofol.offset,0.0051
+301,Main,Table 5,Midazolam offset,0.41,T5.Midazolam.offset,0.0051
+302,Main,Table 5,Dexmedetomidine offset,0.28,T5.Dexmedetomidine.offset,0.0051
+303,Main,Table 5,Midazolam + propofol offset,0.84,T5.Midazolampropofol.offset,0.0051
+304,Main,Table 5,Ketamine offset,0.62,T5.Ketamine.offset,0.0051
+305,Main,Table 5,Opioid only offset,0.26,T5.Opioidonly.offset,0.0051
+306,Main,Table 5,Vasopressor control offset,0.31,T5.Vasopressor.offset,0.0051
+307,Main,Results,RASS by diagnosis lowest,0.54,DX.RASS.min,0.0051
+308,Main,Results,RASS by diagnosis highest,0.75,DX.RASS.max,0.0051
+309,Main,Results,GCS by diagnosis lowest,0.68,DX.GCS.min,0.0051
+310,Main,Results,GCS by diagnosis highest,0.76,DX.GCS.max,0.0051
+311,Main,Limitations,Median NESI at RASS 0,-1.3,RASSPOS.median.0,0.0051
+312,Main,Limitations,Median NESI at RASS +1,-0.36,RASSPOS.median.1,0.0051
+313,Main,Limitations,Median NESI at RASS +2,-0.03,RASSPOS.median.2,0.0051
+314,Main,"Methods, R3.14",No patient crosses sets within a cohort,0,split.patients_multi_within_cohort,0
+315,Main,"Methods, R3.14",Test patients,836,split.test_patients,0
+316,Main,"Methods, R3.14",Test patients with data in training or validation,47,split.test_patients_with_train_val,0
+317,Main,"Methods, R3.14",Train and val segments from test patients,1807,split.train_val_rows_of_test_patients,0
+318,Main,"Methods, R3.14",CAM-S test patients affected,37,split.CAMS.test_patients_with_train_val,0
+319,Main,"Methods, R3.14",ICANS test patients affected,8,split.ICANS.test_patients_with_train_val,0
+320,Supp,Supp Fig 33,"RASS rho, median-feature head",0.668,ABL.Median.RASS.rho,0.0051
+321,Supp,Supp Fig 33,"GCS rho, median-feature head",0.642,ABL.Median.GCS.rho,0.0051
+322,Supp,Supp Fig 33,"CAMS rho, median-feature head",0.819,ABL.Median.CAMS.rho,0.0051
+323,Supp,Supp Fig 33,"ICANS rho, median-feature head",0.637,ABL.Median.ICANS.rho,0.0051
+324,Supp,Supp Fig 33,"RASS rho, mean-feature head",0.701,ABL.Mean.RASS.rho,0.0051
+325,Supp,Supp Fig 33,"GCS rho, mean-feature head",0.68,ABL.Mean.GCS.rho,0.0051
+326,Supp,Supp Fig 33,"CAMS rho, mean-feature head",0.835,ABL.Mean.CAMS.rho,0.0051
+327,Supp,Supp Fig 33,"ICANS rho, mean-feature head",0.683,ABL.Mean.ICANS.rho,0.0051
+328,Main,Main Results,Median.RASS delta rho,-0.048,ABL.Median.RASS.delta,0.0051
+329,Main,Main Results,Median.ICANS delta rho,-0.195,ABL.Median.ICANS.delta,0.0051
+330,Main,Main Results,Mean.GCS delta rho,-0.045,ABL.Mean.GCS.delta,0.0051
+331,Main,Main Results,Mean.ICANS delta rho,-0.149,ABL.Mean.ICANS.delta,0.0051
+332,Main,External validation,RASS 30 n,484,EXT.rass.30.n,0
+333,Main,External validation,RASS 30 rho,0.65,EXT.rass.30.rho,0.0051
+334,Main,External validation,RASS 30 CI low,0.59,EXT.rass.30.lo,0.0151
+335,Main,External validation,RASS 30 CI high,0.7,EXT.rass.30.hi,0.0151
+336,Main,External validation,RASS 60 n,674,EXT.rass.60.n,0
+337,Main,External validation,RASS 60 rho,0.64,EXT.rass.60.rho,0.0051
+338,Main,External validation,RASS 60 CI low,0.59,EXT.rass.60.lo,0.0151
+339,Main,External validation,RASS 60 CI high,0.69,EXT.rass.60.hi,0.0151
+340,Main,External validation,RASS 120 n,874,EXT.rass.120.n,0
+341,Main,External validation,RASS 120 rho,0.61,EXT.rass.120.rho,0.0051
+342,Main,External validation,RASS 120 CI low,0.57,EXT.rass.120.lo,0.0151
+343,Main,External validation,RASS 120 CI high,0.66,EXT.rass.120.hi,0.0151
+344,Main,External validation,RASS All n,990,EXT.rass.All.n,0
+345,Main,External validation,RASS All rho,0.6,EXT.rass.All.rho,0.0051
+346,Main,External validation,RASS All CI low,0.55,EXT.rass.All.lo,0.0151
+347,Main,External validation,RASS All CI high,0.64,EXT.rass.All.hi,0.0151
+348,Main,External validation,GCS 30 n,381,EXT.gcs.30.n,0
+349,Main,External validation,GCS 30 rho,0.7,EXT.gcs.30.rho,0.0051
+350,Main,External validation,GCS 30 CI low,0.63,EXT.gcs.30.lo,0.0151
+351,Main,External validation,GCS 30 CI high,0.74,EXT.gcs.30.hi,0.0151
+352,Main,External validation,GCS 60 n,565,EXT.gcs.60.n,0
+353,Main,External validation,GCS 60 rho,0.68,EXT.gcs.60.rho,0.0051
+354,Main,External validation,GCS 60 CI low,0.62,EXT.gcs.60.lo,0.0151
+355,Main,External validation,GCS 60 CI high,0.72,EXT.gcs.60.hi,0.0151
+356,Main,External validation,GCS 120 n,812,EXT.gcs.120.n,0
+357,Main,External validation,GCS 120 rho,0.65,EXT.gcs.120.rho,0.0051
+358,Main,External validation,GCS 120 CI low,0.6,EXT.gcs.120.lo,0.0151
+359,Main,External validation,GCS 120 CI high,0.69,EXT.gcs.120.hi,0.0151
+360,Main,External validation,GCS All n,990,EXT.gcs.All.n,0
+361,Main,External validation,GCS All rho,0.65,EXT.gcs.All.rho,0.0051
+362,Main,External validation,GCS All CI low,0.62,EXT.gcs.All.lo,0.0151
+363,Main,External validation,GCS All CI high,0.69,EXT.gcs.All.hi,0.0151
+364,Main,External validation,RASS inside segment,175,EXT.rass.inside,0
+365,Main,External validation,RASS before,485,EXT.rass.before,0
+366,Main,External validation,RASS after,330,EXT.rass.after,0
+367,Main,External validation,GCS inside segment,129,EXT.gcs.inside,0
+368,Main,External validation,GCS before,469,EXT.gcs.before,0
+369,Main,External validation,GCS after,392,EXT.gcs.after,0
+376,Main,External validation,Recordings analyzed,990,EXT.recordings,0
+377,Main,External validation,Recordings with artifact rejection,356,EXT.autoreject_recordings,0
+378,Main,Main Results,Mortality patients,5397,MORT2.patients,0
+379,Main,Main Results,Mortality deaths,1263,MORT2.deaths,0
+380,Main,"Main Abstract, Results",NESI AUROC 4 h,0.77,MORT2.auroc_4h_NESI,0.0051
+381,Main,Main Results,GCS AUROC 4 h,0.81,MORT2.auroc_4h_GCS,0.0051
+382,Main,Main Results,NESI AUROC 20 h,0.76,MORT2.auroc_20h_NESI,0.0051
+383,Main,Main Results,GCS AUROC 20 h,0.83,MORT2.auroc_20h_GCS,0.0051
+384,Main,Main Results,Clinical*+NESI vs Clinical* 4 h,0.06,MORT2.delta.Clinical* + NESI|Clinical*|4,0.0051
+385,Main,Main Results,  CI low,0.03,MORT2.delta.Clinical* + NESI|Clinical*|4.lo,0.0051
+386,Main,Main Results,  CI high,0.1,MORT2.delta.Clinical* + NESI|Clinical*|4.hi,0.0051
+387,Main,Main Results,  Holm p,0.005,MORT2.delta.Clinical* + NESI|Clinical*|4.p_holm,0.0006
+388,Main,Main Results,Clinical*+GCS vs Clinical* 4 h,0.09,MORT2.delta.Clinical* + GCS|Clinical*|4,0.0051
+389,Main,Main Results,"Adding NESI to Clinical*+GCS, 4 h",0.003,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4,0.0006
+390,Main,Main Results,  CI low,-0.004,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.0006
+391,Main,Main Results,  CI high,0.01,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4.hi,0.0006
+392,Main,Main Results,"Adding NESI to Clinical*+GCS, 20 h",-0.015,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|20,0.0006
+393,Main,"Main Discussion, R3.17",Artifact RASS 0% rho,0.73,ART.RASS.0%.rho,0.0051
+394,Main,"Main Discussion, R3.17",Artifact RASS >0% rho,0.66,ART.RASS.>0% to <40%.rho,0.0051
+395,Main,Main Discussion,  CI low,0.39,ART.RASS.>0% to <40%.lo,0.0051
+396,Main,Main Discussion,  CI high,0.83,ART.RASS.>0% to <40%.hi,0.0051
+397,Main,"Main Discussion, R3.17",Artifact GCS 0% rho,0.71,ART.GCS.0%.rho,0.0051
+398,Main,"Main Discussion, R3.17",Artifact GCS >0% rho,0.72,ART.GCS.>0% to <40%.rho,0.0051
+399,Main,"Main Methods, R3.14",Withheld retrain seed 2026 CAM-S,0.85,RETRAIN.withhold_overlap_seed2026.CAMS.rho,0.0051
+400,Main,"Main Methods, R3.14",Withheld retrain seed 2027 CAM-S,0.83,RETRAIN.withhold_overlap_seed2027.CAMS.rho,0.0051
+401,Main,"Main Methods, R3.14",Unchanged-data retrain CAM-S,0.84,RETRAIN.keep_overlap_seed2026.CAMS.rho,0.0051
+402,Supp,Supp Table 19,withhold_overlap_seed2026 RASS rho,0.69,RETRAIN.withhold_overlap_seed2026.RASS.rho,0.0051
+403,Supp,Supp Table 19,  CI low,0.63,RETRAIN.withhold_overlap_seed2026.RASS.lo,0.0051
+404,Supp,Supp Table 19,  CI high,0.73,RETRAIN.withhold_overlap_seed2026.RASS.hi,0.0051
+405,Supp,Supp Table 19,withhold_overlap_seed2026 GCS rho,0.7,RETRAIN.withhold_overlap_seed2026.GCS.rho,0.0051
+406,Supp,Supp Table 19,  CI low,0.65,RETRAIN.withhold_overlap_seed2026.GCS.lo,0.0051
+407,Supp,Supp Table 19,  CI high,0.74,RETRAIN.withhold_overlap_seed2026.GCS.hi,0.0051
+408,Supp,Supp Table 19,withhold_overlap_seed2026 CAMS rho,0.85,RETRAIN.withhold_overlap_seed2026.CAMS.rho,0.0051
+409,Supp,Supp Table 19,  CI low,0.8,RETRAIN.withhold_overlap_seed2026.CAMS.lo,0.0051
+410,Supp,Supp Table 19,  CI high,0.89,RETRAIN.withhold_overlap_seed2026.CAMS.hi,0.0051
+411,Supp,Supp Table 19,withhold_overlap_seed2026 ICANS rho,0.79,RETRAIN.withhold_overlap_seed2026.ICANS.rho,0.0051
+412,Supp,Supp Table 19,  CI low,0.66,RETRAIN.withhold_overlap_seed2026.ICANS.lo,0.0051
+413,Supp,Supp Table 19,  CI high,0.87,RETRAIN.withhold_overlap_seed2026.ICANS.hi,0.0051
+414,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 RASS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.RASS.rho,0.0051
+415,Supp,Supp Table 19,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.RASS.lo,0.0051
+416,Supp,Supp Table 19,  CI high,0.71,RETRAIN.downsample_withhold_overlap_seed2026.RASS.hi,0.0051
+417,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.GCS.rho,0.0051
+418,Supp,Supp Table 19,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.GCS.lo,0.0051
+419,Supp,Supp Table 19,  CI high,0.7,RETRAIN.downsample_withhold_overlap_seed2026.GCS.hi,0.0051
+420,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.rho,0.0051
+421,Supp,Supp Table 19,  CI low,0.77,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.lo,0.0051
+422,Supp,Supp Table 19,  CI high,0.88,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.hi,0.0051
+423,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 ICANS rho,0.73,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.rho,0.0051
+424,Supp,Supp Table 19,  CI low,0.57,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.lo,0.0051
+425,Supp,Supp Table 19,  CI high,0.83,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.hi,0.0051
+426,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 RASS rho,0.68,RETRAIN.upweight_withhold_overlap_seed2026.RASS.rho,0.0051
+427,Supp,Supp Table 19,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.RASS.lo,0.0051
+428,Supp,Supp Table 19,  CI high,0.73,RETRAIN.upweight_withhold_overlap_seed2026.RASS.hi,0.0051
+429,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.upweight_withhold_overlap_seed2026.GCS.rho,0.0051
+430,Supp,Supp Table 19,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.GCS.lo,0.0051
+431,Supp,Supp Table 19,  CI high,0.71,RETRAIN.upweight_withhold_overlap_seed2026.GCS.hi,0.0051
+432,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.rho,0.0051
+433,Supp,Supp Table 19,  CI low,0.76,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.lo,0.0051
+434,Supp,Supp Table 19,  CI high,0.88,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.hi,0.0051
+435,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 ICANS rho,0.71,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.rho,0.0051
+436,Supp,Supp Table 19,  CI low,0.55,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.lo,0.0051
+437,Supp,Supp Table 19,  CI high,0.82,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.hi,0.0051
+438,Supp,Supp Fig 31 text,"RASS rho, delta/alpha (test-set sample)",-0.15,QEEG.RASS.delta_alpha.rho,0.0051
+439,Supp,Supp Fig 31 text,  CI low,-0.27,QEEG.RASS.delta_alpha.lo,0.0051
+440,Supp,Supp Fig 31 text,  CI high,-0.01,QEEG.RASS.delta_alpha.hi,0.0051
+441,Supp,Supp Fig 31 text,"RASS rho, relative delta (test-set sample)",-0.12,QEEG.RASS.rel_delta.rho,0.0051
+442,Supp,Supp Fig 31 text,  CI low,-0.23,QEEG.RASS.rel_delta.lo,0.0051
+443,Supp,Supp Fig 31 text,  CI high,0.02,QEEG.RASS.rel_delta.hi,0.0051
+444,Supp,Supp Fig 31 text,"RASS rho, SEF95 (test-set sample)",0.09,QEEG.RASS.sef95.rho,0.0051
+445,Supp,Supp Fig 31 text,  CI low,-0.03,QEEG.RASS.sef95.lo,0.0051
+446,Supp,Supp Fig 31 text,  CI high,0.20,QEEG.RASS.sef95.hi,0.0051
+447,Supp,Supp Fig 31 text,"RASS rho, NESI (test-set sample)",0.72,QEEG.RASS.NESI.rho,0.0051
+448,Supp,Supp Fig 31 text,  CI low,0.66,QEEG.RASS.NESI.lo,0.0051
+449,Supp,Supp Fig 31 text,  CI high,0.76,QEEG.RASS.NESI.hi,0.0051
+450,Supp,Supp Fig 31 text,"GCS rho, delta/alpha (test-set sample)",0.06,QEEG.GCS.delta_alpha.rho,0.0051
+451,Supp,Supp Fig 31 text,  CI low,-0.03,QEEG.GCS.delta_alpha.lo,0.0051
+452,Supp,Supp Fig 31 text,  CI high,0.16,QEEG.GCS.delta_alpha.hi,0.0051
+453,Supp,Supp Fig 31 text,"GCS rho, relative delta (test-set sample)",0.01,QEEG.GCS.rel_delta.rho,0.0051
+454,Supp,Supp Fig 31 text,  CI low,-0.06,QEEG.GCS.rel_delta.lo,0.0051
+455,Supp,Supp Fig 31 text,  CI high,0.10,QEEG.GCS.rel_delta.hi,0.0051
+456,Supp,Supp Fig 31 text,"GCS rho, SEF95 (test-set sample)",-0.07,QEEG.GCS.sef95.rho,0.0051
+457,Supp,Supp Fig 31 text,  CI low,-0.17,QEEG.GCS.sef95.lo,0.0051
+458,Supp,Supp Fig 31 text,  CI high,0.01,QEEG.GCS.sef95.hi,0.0051
+459,Supp,Supp Fig 31 text,"GCS rho, NESI (test-set sample)",0.72,QEEG.GCS.NESI.rho,0.0051
+460,Supp,Supp Fig 31 text,  CI low,0.66,QEEG.GCS.NESI.lo,0.0051
+461,Supp,Supp Fig 31 text,  CI high,0.76,QEEG.GCS.NESI.hi,0.0051
+462,Supp,Supp Fig 31 text,"CAM-S rho, delta/alpha (test-set sample)",0.34,QEEG.CAMS.delta_alpha.rho,0.0051
+463,Supp,Supp Fig 31 text,  CI low,0.18,QEEG.CAMS.delta_alpha.lo,0.0051
+464,Supp,Supp Fig 31 text,  CI high,0.51,QEEG.CAMS.delta_alpha.hi,0.0051
+465,Supp,Supp Fig 31 text,"CAM-S rho, relative delta (test-set sample)",0.30,QEEG.CAMS.rel_delta.rho,0.0051
+466,Supp,Supp Fig 31 text,  CI low,0.13,QEEG.CAMS.rel_delta.lo,0.0051
+467,Supp,Supp Fig 31 text,  CI high,0.48,QEEG.CAMS.rel_delta.hi,0.0051
+468,Supp,Supp Fig 31 text,"CAM-S rho, SEF95 (test-set sample)",-0.46,QEEG.CAMS.sef95.rho,0.0051
+469,Supp,Supp Fig 31 text,  CI low,-0.61,QEEG.CAMS.sef95.lo,0.0051
+470,Supp,Supp Fig 31 text,  CI high,-0.29,QEEG.CAMS.sef95.hi,0.0051
+471,Supp,Supp Fig 31 text,"CAM-S rho, NESI (test-set sample)",0.85,QEEG.CAMS.NESI.rho,0.0051
+472,Supp,Supp Fig 31 text,  CI low,0.80,QEEG.CAMS.NESI.lo,0.0051
+473,Supp,Supp Fig 31 text,  CI high,0.89,QEEG.CAMS.NESI.hi,0.0051
+474,Supp,Supp Fig 31 text,"ICANS rho, delta/alpha (test-set sample)",0.66,QEEG.ICANS.delta_alpha.rho,0.0051
+475,Supp,Supp Fig 31 text,  CI low,0.50,QEEG.ICANS.delta_alpha.lo,0.0051
+476,Supp,Supp Fig 31 text,  CI high,0.78,QEEG.ICANS.delta_alpha.hi,0.0051
+477,Supp,Supp Fig 31 text,"ICANS rho, relative delta (test-set sample)",0.43,QEEG.ICANS.rel_delta.rho,0.0051
+478,Supp,Supp Fig 31 text,  CI low,0.19,QEEG.ICANS.rel_delta.lo,0.0051
+479,Supp,Supp Fig 31 text,  CI high,0.62,QEEG.ICANS.rel_delta.hi,0.0051
+480,Supp,Supp Fig 31 text,"ICANS rho, SEF95 (test-set sample)",-0.35,QEEG.ICANS.sef95.rho,0.0051
+481,Supp,Supp Fig 31 text,  CI low,-0.63,QEEG.ICANS.sef95.lo,0.0051
+482,Supp,Supp Fig 31 text,  CI high,-0.15,QEEG.ICANS.sef95.hi,0.0051
+483,Supp,Supp Fig 31 text,"ICANS rho, NESI (test-set sample)",0.83,QEEG.ICANS.NESI.rho,0.0051
+484,Supp,Supp Fig 31 text,  CI low,0.72,QEEG.ICANS.NESI.lo,0.0051
+485,Supp,Supp Fig 31 text,  CI high,0.90,QEEG.ICANS.NESI.hi,0.0051
+486,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, full excluded cohort",0.68,LOCO.RASS.full_rho,0.0051
+487,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.67,LOCO.RASS.full_lo,0.0051
+488,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.7,LOCO.RASS.full_hi,0.0051
+489,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, test set, model trained without it",0.66,LOCO.RASS.loco_rho,0.0051
+490,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.59,LOCO.RASS.loco_lo,0.0051
+491,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.72,LOCO.RASS.loco_hi,0.0051
+492,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, test set, universal retrain",0.69,LOCO.RASS.uni_rho,0.0051
+493,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.63,LOCO.RASS.uni_lo,0.0051
+494,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.73,LOCO.RASS.uni_hi,0.0051
+495,Supp,"Leave-one-cohort-out text, Supp Fig 33","RASS rho, universal minus leave-one-out",0.029,LOCO.RASS.delta,0.00051
+496,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.009,LOCO.RASS.delta_lo,0.00051
+497,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.052,LOCO.RASS.delta_hi,0.00051
+498,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, full excluded cohort",0.65,LOCO.GCS.full_rho,0.0051
+499,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.64,LOCO.GCS.full_lo,0.0051
+500,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.67,LOCO.GCS.full_hi,0.0051
+501,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, test set, model trained without it",0.66,LOCO.GCS.loco_rho,0.0051
+502,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.59,LOCO.GCS.loco_lo,0.0051
+503,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.7,LOCO.GCS.loco_hi,0.0051
+504,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, test set, universal retrain",0.7,LOCO.GCS.uni_rho,0.0051
+505,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.65,LOCO.GCS.uni_lo,0.0051
+506,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.74,LOCO.GCS.uni_hi,0.0051
+507,Supp,"Leave-one-cohort-out text, Supp Fig 33","GCS rho, universal minus leave-one-out",0.045,LOCO.GCS.delta,0.00051
+508,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.022,LOCO.GCS.delta_lo,0.00051
+509,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.071,LOCO.GCS.delta_hi,0.00051
+510,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, full excluded cohort",0.78,LOCO.CAMS.full_rho,0.0051
+511,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.75,LOCO.CAMS.full_lo,0.0051
+512,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.82,LOCO.CAMS.full_hi,0.0051
+513,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, test set, model trained without it",0.86,LOCO.CAMS.loco_rho,0.0051
+514,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.8,LOCO.CAMS.loco_lo,0.0051
+515,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.89,LOCO.CAMS.loco_hi,0.0051
+516,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, test set, universal retrain",0.85,LOCO.CAMS.uni_rho,0.0051
+517,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.8,LOCO.CAMS.uni_lo,0.0051
+518,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.89,LOCO.CAMS.uni_hi,0.0051
+519,Supp,"Leave-one-cohort-out text, Supp Fig 33","CAMS rho, universal minus leave-one-out",-0.005,LOCO.CAMS.delta,0.00051
+520,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,-0.037,LOCO.CAMS.delta_lo,0.00051
+521,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.025,LOCO.CAMS.delta_hi,0.00051
+522,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, full excluded cohort",0.72,LOCO.ICANS.full_rho,0.0051
+523,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.66,LOCO.ICANS.full_lo,0.0051
+524,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.77,LOCO.ICANS.full_hi,0.0051
+525,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, test set, model trained without it",0.75,LOCO.ICANS.loco_rho,0.0051
+526,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.62,LOCO.ICANS.loco_lo,0.0051
+527,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.85,LOCO.ICANS.loco_hi,0.0051
+528,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, test set, universal retrain",0.79,LOCO.ICANS.uni_rho,0.0051
+529,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,0.66,LOCO.ICANS.uni_lo,0.0051
+530,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.87,LOCO.ICANS.uni_hi,0.0051
+531,Supp,"Leave-one-cohort-out text, Supp Fig 33","ICANS rho, universal minus leave-one-out",0.036,LOCO.ICANS.delta,0.00051
+532,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI low,-0.02,LOCO.ICANS.delta_lo,0.00051
+533,Supp,"Leave-one-cohort-out text, Supp Fig 33",  CI high,0.091,LOCO.ICANS.delta_hi,0.00051
+534,Main,"Discussion, limitations","RASS rho, scale withheld from training",0.68,LOCO.RASS.full_rho,0.0051
+535,Main,"Discussion, limitations","GCS rho, scale withheld from training",0.65,LOCO.GCS.full_rho,0.0051
+536,Main,"Discussion, limitations","CAMS rho, scale withheld from training",0.78,LOCO.CAMS.full_rho,0.0051
+537,Main,"Discussion, limitations","ICANS rho, scale withheld from training",0.72,LOCO.ICANS.full_rho,0.0051
+538,Main,Fig 6 panel B legend,Burst windows,6897,FIG6.B._Burst,0
+539,Main,Fig 6 panel B legend,Seizure windows,2297,FIG6.B._Seizure,0
+540,Main,Fig 6 panel B legend,LPD windows,2898,FIG6.B._LPD,0
+541,Main,Fig 6 panel B legend,GPD windows,3191,FIG6.B._GPD,0
+542,Main,Fig 6 panel B legend,LRDA windows,1669,FIG6.B._LRDA,0
+543,Main,Fig 6 panel B legend,GRDA windows,5681,FIG6.B._GRDA,0
+544,Main,Fig 6 panel B legend,Other windows,21197,FIG6.B._Other,0
+545,Main,Fig 6 panel C legend,RASS windows,3626,FIG6.C._RASS,0
+546,Main,Fig 6 panel C legend,GCS windows,1361,FIG6.C._GCS,0
+547,Main,Fig 6 panel C legend,CAMS windows,310,FIG6.C._CAMS,0
+548,Main,Fig 6 panel C legend,ICANS windows,78,FIG6.C._ICANS,0
+549,Main,Fig 6 panel C legend,Other windows,38455,FIG6.C._Other,0
+550,Main,ICANS segment selection (Results),"ICANS rho, maximum-awake",0.83,ICSEG.max_awake.rho,0.0051
+551,Main,ICANS segment selection (Results),  CI low,0.72,ICSEG.max_awake.lo,0.0051
+552,Main,ICANS segment selection (Results),  CI high,0.9,ICSEG.max_awake.hi,0.0051
+553,Main,ICANS segment selection (Results),"ICANS rho, random awake",0.75,ICSEG.random_awake.rho,0.0051
+554,Main,ICANS segment selection (Results),  CI low,0.59,ICSEG.random_awake.lo,0.0051
+555,Main,ICANS segment selection (Results),  CI high,0.87,ICSEG.random_awake.hi,0.0051
+556,Main,ICANS segment selection (Results),"ICANS rho, all segments",0.38,ICSEG.all_segments.rho,0.0051
+557,Main,ICANS segment selection (Results),  CI low,0.12,ICSEG.all_segments.lo,0.0051
+558,Main,ICANS segment selection (Results),  CI high,0.71,ICSEG.all_segments.hi,0.0051
+559,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, maximum-awake",0.83,ICSEG.max_awake.rho,0.0051
+560,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.72,ICSEG.max_awake.lo,0.0051
+561,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.9,ICSEG.max_awake.hi,0.0051
+562,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, random awake",0.75,ICSEG.random_awake.rho,0.0051
+563,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.59,ICSEG.random_awake.lo,0.0051
+564,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.87,ICSEG.random_awake.hi,0.0051
+565,Supp,ICANS segment selection text and Supp Fig 32,"ICANS rho, all segments",0.38,ICSEG.all_segments.rho,0.0051
+566,Supp,ICANS segment selection text and Supp Fig 32,  CI low,0.12,ICSEG.all_segments.lo,0.0051
+567,Supp,ICANS segment selection text and Supp Fig 32,  CI high,0.71,ICSEG.all_segments.hi,0.0051
+568,Main,ICANS excluding controls (Results),"ICANS rho, patients with any grade above 0",0.55,ICSUB.1.rho,0.0051
+569,Main,ICANS excluding controls (Results),  CI low,0.31,ICSUB.1.lo,0.0051
+570,Main,ICANS excluding controls (Results),  CI high,0.77,ICSUB.1.hi,0.0051
+571,Supp,"Indication-stratified text, ICANS excluding controls","ICANS rho, patients with any grade above 0",0.55,ICSUB.1.rho,0.0051
+572,Supp,"Indication-stratified text, ICANS excluding controls",  CI low,0.31,ICSUB.1.lo,0.0051
+573,Supp,"Indication-stratified text, ICANS excluding controls",  CI high,0.77,ICSUB.1.hi,0.0051
+574,Main,Fig 6 panels D-F legend,Post-cardiac arrest with burst windows,3353,FIG6.D._Post-Cardiac_Arrest_with_Burst,0
+575,Main,Fig 6 panels D-F legend,Stroke with LPD windows,525,FIG6.E._Stroke_with_LPD,0
+576,Main,Fig 6 panels D-F legend,Post-cardiac arrest with GPD windows,1021,FIG6.F._Post-Cardiac_Arrest_with_GPD,0
+577,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status RASS test rho,0.72,IND.Testing.Altered_Mental_Status.RASS.rho,0.0051
+578,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Altered_Mental_Status.RASS.lo,0.0051
+579,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.RASS.hi,0.0051
+580,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status GCS test rho,0.73,IND.Testing.Altered_Mental_Status.GCS.rho,0.0051
+581,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.68,IND.Testing.Altered_Mental_Status.GCS.lo,0.0051
+582,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.GCS.hi,0.0051
+583,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status CAMS test rho,0.76,IND.Testing.Altered_Mental_Status.CAMS.rho,0.0051
+584,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.61,IND.Testing.Altered_Mental_Status.CAMS.lo,0.0051
+585,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.86,IND.Testing.Altered_Mental_Status.CAMS.hi,0.0051
+586,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures RASS test rho,0.75,IND.Testing.Suspected_Seizures.RASS.rho,0.0051
+587,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.69,IND.Testing.Suspected_Seizures.RASS.lo,0.0051
+588,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.79,IND.Testing.Suspected_Seizures.RASS.hi,0.0051
+589,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures GCS test rho,0.74,IND.Testing.Suspected_Seizures.GCS.rho,0.0051
+590,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.69,IND.Testing.Suspected_Seizures.GCS.lo,0.0051
+591,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.78,IND.Testing.Suspected_Seizures.GCS.hi,0.0051
+592,Supp,Indication-stratified text (Supp Fig 27),Suspected_Seizures CAMS test rho,0.82,IND.Testing.Suspected_Seizures.CAMS.rho,0.0051
+593,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Suspected_Seizures.CAMS.lo,0.0051
+594,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.9,IND.Testing.Suspected_Seizures.CAMS.hi,0.0051
+595,Supp,Indication-stratified text (Supp Fig 27),Stroke RASS test rho,0.65,IND.Testing.Stroke.RASS.rho,0.0051
+596,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.52,IND.Testing.Stroke.RASS.lo,0.0051
+597,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.73,IND.Testing.Stroke.RASS.hi,0.0051
+598,Supp,Indication-stratified text (Supp Fig 27),Stroke GCS test rho,0.67,IND.Testing.Stroke.GCS.rho,0.0051
+599,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.58,IND.Testing.Stroke.GCS.lo,0.0051
+600,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.74,IND.Testing.Stroke.GCS.hi,0.0051
+601,Supp,Indication-stratified text (Supp Fig 27),Stroke CAMS test rho,0.78,IND.Testing.Stroke.CAMS.rho,0.0051
+602,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.5,IND.Testing.Stroke.CAMS.lo,0.0051
+603,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.91,IND.Testing.Stroke.CAMS.hi,0.0051
+604,Main,Table 1 indication counts,Altered_Mental_Status RASS patients,5551,INDN.Altered_Mental_Status.RASS,0
+605,Main,Table 1 indication counts,Altered_Mental_Status GCS patients,6204,INDN.Altered_Mental_Status.GCS,0
+606,Main,Table 1 indication counts,Altered_Mental_Status CAMS patients,290,INDN.Altered_Mental_Status.CAMS,0
+607,Main,Table 1 indication counts,Altered_Mental_Status ICANS patients,106,INDN.Altered_Mental_Status.ICANS,0
+608,Main,Table 1 indication counts,Suspected_Seizures RASS patients,4280,INDN.Suspected_Seizures.RASS,0
+609,Main,Table 1 indication counts,Suspected_Seizures GCS patients,4859,INDN.Suspected_Seizures.GCS,0
+610,Main,Table 1 indication counts,Suspected_Seizures CAMS patients,186,INDN.Suspected_Seizures.CAMS,0
+611,Main,Table 1 indication counts,Suspected_Seizures ICANS patients,93,INDN.Suspected_Seizures.ICANS,0
+612,Main,Table 1 indication counts,Post-Cardiac_Arrest RASS patients,1035,INDN.Post-Cardiac_Arrest.RASS,0
+613,Main,Table 1 indication counts,Post-Cardiac_Arrest GCS patients,843,INDN.Post-Cardiac_Arrest.GCS,0
+614,Main,Table 1 indication counts,Post-Cardiac_Arrest CAMS patients,46,INDN.Post-Cardiac_Arrest.CAMS,0
+615,Main,Table 1 indication counts,Post-Cardiac_Arrest ICANS patients,0,INDN.Post-Cardiac_Arrest.ICANS,0
+616,Main,Table 1 indication counts,Known_Epilepsy RASS patients,761,INDN.Known_Epilepsy.RASS,0
+617,Main,Table 1 indication counts,Known_Epilepsy GCS patients,969,INDN.Known_Epilepsy.GCS,0
+618,Main,Table 1 indication counts,Known_Epilepsy CAMS patients,39,INDN.Known_Epilepsy.CAMS,0
+619,Main,Table 1 indication counts,Known_Epilepsy ICANS patients,1,INDN.Known_Epilepsy.ICANS,0
+620,Main,Table 1 indication counts,Stroke RASS patients,2221,INDN.Stroke.RASS,0
+621,Main,Table 1 indication counts,Stroke GCS patients,2708,INDN.Stroke.GCS,0
+622,Main,Table 1 indication counts,Stroke CAMS patients,85,INDN.Stroke.CAMS,0
+623,Main,Table 1 indication counts,Stroke ICANS patients,1,INDN.Stroke.ICANS,0
+624,Main,Table 1 indication counts,Other RASS patients,76,INDN.Other.RASS,0
+625,Main,Table 1 indication counts,Other GCS patients,154,INDN.Other.GCS,0
+626,Main,Table 1 indication counts,Other CAMS patients,137,INDN.Other.CAMS,0
+627,Main,Table 1 indication counts,Other ICANS patients,109,INDN.Other.ICANS,0
+628,Supp,Supp Fig 10 text,"Median MAE, cardiac/circulatory",0.63,SF10.Cardiac.median,0.0051
+629,Supp,Supp Fig 10 text,"Median MAE, neurological",0.83,SF10.Neurological.median,0.0051
+630,Supp,Supp Table 6,M1 RASS rho,0.68,MAP.M1.RASS.rho,0.0051
+631,Supp,Supp Table 6,  CI low,0.62,MAP.M1.RASS.lo,0.0051
+632,Supp,Supp Table 6,  CI high,0.73,MAP.M1.RASS.hi,0.0051
+633,Supp,Supp Table 6,M1 GCS rho,0.7,MAP.M1.GCS.rho,0.0051
+634,Supp,Supp Table 6,  CI low,0.65,MAP.M1.GCS.lo,0.0051
+635,Supp,Supp Table 6,  CI high,0.74,MAP.M1.GCS.hi,0.0051
+636,Supp,Supp Table 6,M1 CAM-S rho,0.85,MAP.M1.CAMS.rho,0.0051
+637,Supp,Supp Table 6,  CI low,0.79,MAP.M1.CAMS.lo,0.0051
+638,Supp,Supp Table 6,  CI high,0.88,MAP.M1.CAMS.hi,0.0051
+639,Supp,Supp Table 6,M1 ICANS rho,0.75,MAP.M1.ICANS.rho,0.0051
+640,Supp,Supp Table 6,  CI low,0.61,MAP.M1.ICANS.lo,0.0051
+641,Supp,Supp Table 6,  CI high,0.85,MAP.M1.ICANS.hi,0.0051
+642,Supp,Supp Table 6,M2 RASS rho,0.68,MAP.M2.RASS.rho,0.0051
+643,Supp,Supp Table 6,  CI low,0.62,MAP.M2.RASS.lo,0.0051
+644,Supp,Supp Table 6,  CI high,0.73,MAP.M2.RASS.hi,0.0051
+645,Supp,Supp Table 6,M2 GCS rho,0.7,MAP.M2.GCS.rho,0.0051
+646,Supp,Supp Table 6,  CI low,0.65,MAP.M2.GCS.lo,0.0051
+647,Supp,Supp Table 6,  CI high,0.74,MAP.M2.GCS.hi,0.0051
+648,Supp,Supp Table 6,M2 CAM-S rho,0.84,MAP.M2.CAMS.rho,0.0051
+649,Supp,Supp Table 6,  CI low,0.78,MAP.M2.CAMS.lo,0.0051
+650,Supp,Supp Table 6,  CI high,0.88,MAP.M2.CAMS.hi,0.0051
+651,Supp,Supp Table 6,M2 ICANS rho,0.65,MAP.M2.ICANS.rho,0.0051
+652,Supp,Supp Table 6,  CI low,0.49,MAP.M2.ICANS.lo,0.0051
+653,Supp,Supp Table 6,  CI high,0.83,MAP.M2.ICANS.hi,0.0051
+654,Supp,Supp Table 6,M3 RASS rho,0.69,MAP.M3.RASS.rho,0.0051
+655,Supp,Supp Table 6,  CI low,0.63,MAP.M3.RASS.lo,0.0051
+656,Supp,Supp Table 6,  CI high,0.74,MAP.M3.RASS.hi,0.0051
+657,Supp,Supp Table 6,M3 GCS rho,0.69,MAP.M3.GCS.rho,0.0051
+658,Supp,Supp Table 6,  CI low,0.64,MAP.M3.GCS.lo,0.0051
+659,Supp,Supp Table 6,  CI high,0.73,MAP.M3.GCS.hi,0.0051
+660,Supp,Supp Table 6,M3 CAM-S rho,0.84,MAP.M3.CAMS.rho,0.0051
+661,Supp,Supp Table 6,  CI low,0.79,MAP.M3.CAMS.lo,0.0051
+662,Supp,Supp Table 6,  CI high,0.88,MAP.M3.CAMS.hi,0.0051
+663,Supp,Supp Table 6,M3 ICANS rho,0.68,MAP.M3.ICANS.rho,0.0051
+664,Supp,Supp Table 6,  CI low,0.53,MAP.M3.ICANS.lo,0.0051
+665,Supp,Supp Table 6,  CI high,0.81,MAP.M3.ICANS.hi,0.0051
+666,Supp,Supp Table 6,M4 RASS rho,0.71,MAP.M4.RASS.rho,0.0051
+667,Supp,Supp Table 6,  CI low,0.65,MAP.M4.RASS.lo,0.0051
+668,Supp,Supp Table 6,  CI high,0.75,MAP.M4.RASS.hi,0.0051
+669,Supp,Supp Table 6,M4 GCS rho,0.7,MAP.M4.GCS.rho,0.0051
+670,Supp,Supp Table 6,  CI low,0.66,MAP.M4.GCS.lo,0.0051
+671,Supp,Supp Table 6,  CI high,0.74,MAP.M4.GCS.hi,0.0051
+672,Supp,Supp Table 6,M4 CAM-S rho,0.84,MAP.M4.CAMS.rho,0.0051
+673,Supp,Supp Table 6,  CI low,0.78,MAP.M4.CAMS.lo,0.0051
+674,Supp,Supp Table 6,  CI high,0.88,MAP.M4.CAMS.hi,0.0051
+675,Supp,Supp Table 6,M4 ICANS rho,0.72,MAP.M4.ICANS.rho,0.0051
+676,Supp,Supp Table 6,  CI low,0.58,MAP.M4.ICANS.lo,0.0051
+677,Supp,Supp Table 6,  CI high,0.84,MAP.M4.ICANS.hi,0.0051
+678,Supp,Supp Table 6,M5 RASS rho,0.68,MAP.M5.RASS.rho,0.0051
+679,Supp,Supp Table 6,  CI low,0.62,MAP.M5.RASS.lo,0.0051
+680,Supp,Supp Table 6,  CI high,0.72,MAP.M5.RASS.hi,0.0051
+681,Supp,Supp Table 6,M5 GCS rho,0.69,MAP.M5.GCS.rho,0.0051
+682,Supp,Supp Table 6,  CI low,0.64,MAP.M5.GCS.lo,0.0051
+683,Supp,Supp Table 6,  CI high,0.73,MAP.M5.GCS.hi,0.0051
+684,Supp,Supp Table 6,M5 CAM-S rho,0.85,MAP.M5.CAMS.rho,0.0051
+685,Supp,Supp Table 6,  CI low,0.79,MAP.M5.CAMS.lo,0.0051
+686,Supp,Supp Table 6,  CI high,0.88,MAP.M5.CAMS.hi,0.0051
+687,Supp,Supp Table 6,M5 ICANS rho,0.72,MAP.M5.ICANS.rho,0.0051
+688,Supp,Supp Table 6,  CI low,0.58,MAP.M5.ICANS.lo,0.0051
+689,Supp,Supp Table 6,  CI high,0.82,MAP.M5.ICANS.hi,0.0051
+690,Supp,Supp Table 6,M6 RASS rho,0.7,MAP.M6.RASS.rho,0.0051
+691,Supp,Supp Table 6,  CI low,0.65,MAP.M6.RASS.lo,0.0051
+692,Supp,Supp Table 6,  CI high,0.75,MAP.M6.RASS.hi,0.0051
+693,Supp,Supp Table 6,M6 GCS rho,0.69,MAP.M6.GCS.rho,0.0051
+694,Supp,Supp Table 6,  CI low,0.65,MAP.M6.GCS.lo,0.0051
+695,Supp,Supp Table 6,  CI high,0.73,MAP.M6.GCS.hi,0.0051
+696,Supp,Supp Table 6,M6 CAM-S rho,0.84,MAP.M6.CAMS.rho,0.0051
+697,Supp,Supp Table 6,  CI low,0.78,MAP.M6.CAMS.lo,0.0051
+698,Supp,Supp Table 6,  CI high,0.88,MAP.M6.CAMS.hi,0.0051
+699,Supp,Supp Table 6,M6 ICANS rho,0.69,MAP.M6.ICANS.rho,0.0051
+700,Supp,Supp Table 6,  CI low,0.54,MAP.M6.ICANS.lo,0.0051
+701,Supp,Supp Table 6,  CI high,0.81,MAP.M6.ICANS.hi,0.0051
+702,Supp,Supp Table 6,M7 RASS rho,0.7,MAP.M7.RASS.rho,0.0051
+703,Supp,Supp Table 6,  CI low,0.65,MAP.M7.RASS.lo,0.0051
+704,Supp,Supp Table 6,  CI high,0.75,MAP.M7.RASS.hi,0.0051
+705,Supp,Supp Table 6,M7 GCS rho,0.7,MAP.M7.GCS.rho,0.0051
+706,Supp,Supp Table 6,  CI low,0.65,MAP.M7.GCS.lo,0.0051
+707,Supp,Supp Table 6,  CI high,0.73,MAP.M7.GCS.hi,0.0051
+708,Supp,Supp Table 6,M7 CAM-S rho,0.84,MAP.M7.CAMS.rho,0.0051
+709,Supp,Supp Table 6,  CI low,0.78,MAP.M7.CAMS.lo,0.0051
+710,Supp,Supp Table 6,  CI high,0.88,MAP.M7.CAMS.hi,0.0051
+711,Supp,Supp Table 6,M7 ICANS rho,0.76,MAP.M7.ICANS.rho,0.0051
+712,Supp,Supp Table 6,  CI low,0.6,MAP.M7.ICANS.lo,0.0051
+713,Supp,Supp Table 6,  CI high,0.85,MAP.M7.ICANS.hi,0.0051
+714,Supp,Supp Table 6,M8 RASS rho,0.71,MAP.M8.RASS.rho,0.0051
+715,Supp,Supp Table 6,  CI low,0.66,MAP.M8.RASS.lo,0.0051
+716,Supp,Supp Table 6,  CI high,0.75,MAP.M8.RASS.hi,0.0051
+717,Supp,Supp Table 6,M8 GCS rho,0.72,MAP.M8.GCS.rho,0.0051
+718,Supp,Supp Table 6,  CI low,0.67,MAP.M8.GCS.lo,0.0051
+719,Supp,Supp Table 6,  CI high,0.75,MAP.M8.GCS.hi,0.0051
+720,Supp,Supp Table 6,M8 CAM-S rho,0.84,MAP.M8.CAMS.rho,0.0051
+721,Supp,Supp Table 6,  CI low,0.78,MAP.M8.CAMS.lo,0.0051
+722,Supp,Supp Table 6,  CI high,0.88,MAP.M8.CAMS.hi,0.0051
+723,Supp,Supp Table 6,M8 ICANS rho,0.78,MAP.M8.ICANS.rho,0.0051
+724,Supp,Supp Table 6,  CI low,0.66,MAP.M8.ICANS.lo,0.0051
+725,Supp,Supp Table 6,  CI high,0.84,MAP.M8.ICANS.hi,0.0051
+726,Supp,Supp Table 6,M9 RASS rho,0.68,MAP.M9.RASS.rho,0.0051
+727,Supp,Supp Table 6,  CI low,0.63,MAP.M9.RASS.lo,0.0051
+728,Supp,Supp Table 6,  CI high,0.73,MAP.M9.RASS.hi,0.0051
+729,Supp,Supp Table 6,M9 GCS rho,0.69,MAP.M9.GCS.rho,0.0051
+730,Supp,Supp Table 6,  CI low,0.64,MAP.M9.GCS.lo,0.0051
+731,Supp,Supp Table 6,  CI high,0.73,MAP.M9.GCS.hi,0.0051
+732,Supp,Supp Table 6,M9 CAM-S rho,0.84,MAP.M9.CAMS.rho,0.0051
+733,Supp,Supp Table 6,  CI low,0.78,MAP.M9.CAMS.lo,0.0051
+734,Supp,Supp Table 6,  CI high,0.88,MAP.M9.CAMS.hi,0.0051
+735,Supp,Supp Table 6,M9 ICANS rho,0.79,MAP.M9.ICANS.rho,0.0051
+736,Supp,Supp Table 6,  CI low,0.66,MAP.M9.ICANS.lo,0.0051
+737,Supp,Supp Table 6,  CI high,0.87,MAP.M9.ICANS.hi,0.0051
+738,Supp,Supp Table 6,M10 RASS rho,0.68,MAP.M10.RASS.rho,0.0051
+739,Supp,Supp Table 6,  CI low,0.62,MAP.M10.RASS.lo,0.0051
+740,Supp,Supp Table 6,  CI high,0.73,MAP.M10.RASS.hi,0.0051
+741,Supp,Supp Table 6,M10 GCS rho,0.69,MAP.M10.GCS.rho,0.0051
+742,Supp,Supp Table 6,  CI low,0.64,MAP.M10.GCS.lo,0.0051
+743,Supp,Supp Table 6,  CI high,0.74,MAP.M10.GCS.hi,0.0051
+744,Supp,Supp Table 6,M10 CAM-S rho,0.85,MAP.M10.CAMS.rho,0.0051
+745,Supp,Supp Table 6,  CI low,0.8,MAP.M10.CAMS.lo,0.0051
+746,Supp,Supp Table 6,  CI high,0.89,MAP.M10.CAMS.hi,0.0051
+747,Supp,Supp Table 6,M10 ICANS rho,0.74,MAP.M10.ICANS.rho,0.0051
+748,Supp,Supp Table 6,  CI low,0.58,MAP.M10.ICANS.lo,0.0051
+749,Supp,Supp Table 6,  CI high,0.85,MAP.M10.ICANS.hi,0.0051
+750,Supp,Supp Table 6,M11 RASS rho,0.69,MAP.M11.RASS.rho,0.0051
+751,Supp,Supp Table 6,  CI low,0.64,MAP.M11.RASS.lo,0.0051
+752,Supp,Supp Table 6,  CI high,0.73,MAP.M11.RASS.hi,0.0051
+753,Supp,Supp Table 6,M11 GCS rho,0.69,MAP.M11.GCS.rho,0.0051
+754,Supp,Supp Table 6,  CI low,0.64,MAP.M11.GCS.lo,0.0051
+755,Supp,Supp Table 6,  CI high,0.73,MAP.M11.GCS.hi,0.0051
+756,Supp,Supp Table 6,M11 CAM-S rho,0.85,MAP.M11.CAMS.rho,0.0051
+757,Supp,Supp Table 6,  CI low,0.79,MAP.M11.CAMS.lo,0.0051
+758,Supp,Supp Table 6,  CI high,0.89,MAP.M11.CAMS.hi,0.0051
+759,Supp,Supp Table 6,M11 ICANS rho,0.71,MAP.M11.ICANS.rho,0.0051
+760,Supp,Supp Table 6,  CI low,0.56,MAP.M11.ICANS.lo,0.0051
+761,Supp,Supp Table 6,  CI high,0.83,MAP.M11.ICANS.hi,0.0051
+762,Supp,Supp Table 6,M12 RASS rho,0.69,MAP.M12.RASS.rho,0.0051
+763,Supp,Supp Table 6,  CI low,0.64,MAP.M12.RASS.lo,0.0051
+764,Supp,Supp Table 6,  CI high,0.73,MAP.M12.RASS.hi,0.0051
+765,Supp,Supp Table 6,M12 GCS rho,0.69,MAP.M12.GCS.rho,0.0051
+766,Supp,Supp Table 6,  CI low,0.64,MAP.M12.GCS.lo,0.0051
+767,Supp,Supp Table 6,  CI high,0.73,MAP.M12.GCS.hi,0.0051
+768,Supp,Supp Table 6,M12 CAM-S rho,0.85,MAP.M12.CAMS.rho,0.0051
+769,Supp,Supp Table 6,  CI low,0.79,MAP.M12.CAMS.lo,0.0051
+770,Supp,Supp Table 6,  CI high,0.89,MAP.M12.CAMS.hi,0.0051
+771,Supp,Supp Table 6,M12 ICANS rho,0.7,MAP.M12.ICANS.rho,0.0051
+772,Supp,Supp Table 6,  CI low,0.55,MAP.M12.ICANS.lo,0.0051
+773,Supp,Supp Table 6,  CI high,0.84,MAP.M12.ICANS.hi,0.0051
+774,Supp,Supp Table 6,M13 RASS rho,0.7,MAP.M13.RASS.rho,0.0051
+775,Supp,Supp Table 6,  CI low,0.65,MAP.M13.RASS.lo,0.0051
+776,Supp,Supp Table 6,  CI high,0.75,MAP.M13.RASS.hi,0.0051
+777,Supp,Supp Table 6,M13 GCS rho,0.7,MAP.M13.GCS.rho,0.0051
+778,Supp,Supp Table 6,  CI low,0.65,MAP.M13.GCS.lo,0.0051
+779,Supp,Supp Table 6,  CI high,0.74,MAP.M13.GCS.hi,0.0051
+780,Supp,Supp Table 6,M13 CAM-S rho,0.85,MAP.M13.CAMS.rho,0.0051
+781,Supp,Supp Table 6,  CI low,0.79,MAP.M13.CAMS.lo,0.0051
+782,Supp,Supp Table 6,  CI high,0.89,MAP.M13.CAMS.hi,0.0051
+783,Supp,Supp Table 6,M13 ICANS rho,0.78,MAP.M13.ICANS.rho,0.0051
+784,Supp,Supp Table 6,  CI low,0.67,MAP.M13.ICANS.lo,0.0051
+785,Supp,Supp Table 6,  CI high,0.86,MAP.M13.ICANS.hi,0.0051
+786,Supp,Supp Table 6,M14 RASS rho,0.7,MAP.M14.RASS.rho,0.0051
+787,Supp,Supp Table 6,  CI low,0.64,MAP.M14.RASS.lo,0.0051
+788,Supp,Supp Table 6,  CI high,0.74,MAP.M14.RASS.hi,0.0051
+789,Supp,Supp Table 6,M14 GCS rho,0.7,MAP.M14.GCS.rho,0.0051
+790,Supp,Supp Table 6,  CI low,0.65,MAP.M14.GCS.lo,0.0051
+791,Supp,Supp Table 6,  CI high,0.74,MAP.M14.GCS.hi,0.0051
+792,Supp,Supp Table 6,M14 CAM-S rho,0.84,MAP.M14.CAMS.rho,0.0051
+793,Supp,Supp Table 6,  CI low,0.77,MAP.M14.CAMS.lo,0.0051
+794,Supp,Supp Table 6,  CI high,0.88,MAP.M14.CAMS.hi,0.0051
+795,Supp,Supp Table 6,M14 ICANS rho,0.76,MAP.M14.ICANS.rho,0.0051
+796,Supp,Supp Table 6,  CI low,0.62,MAP.M14.ICANS.lo,0.0051
+797,Supp,Supp Table 6,  CI high,0.85,MAP.M14.ICANS.hi,0.0051
+798,Supp,Supp Table 6,M15 RASS rho,0.68,MAP.M15.RASS.rho,0.0051
+799,Supp,Supp Table 6,  CI low,0.62,MAP.M15.RASS.lo,0.0051
+800,Supp,Supp Table 6,  CI high,0.73,MAP.M15.RASS.hi,0.0051
+801,Supp,Supp Table 6,M15 GCS rho,0.68,MAP.M15.GCS.rho,0.0051
+802,Supp,Supp Table 6,  CI low,0.63,MAP.M15.GCS.lo,0.0051
+803,Supp,Supp Table 6,  CI high,0.72,MAP.M15.GCS.hi,0.0051
+804,Supp,Supp Table 6,M15 CAM-S rho,0.82,MAP.M15.CAMS.rho,0.0051
+805,Supp,Supp Table 6,  CI low,0.76,MAP.M15.CAMS.lo,0.0051
+806,Supp,Supp Table 6,  CI high,0.87,MAP.M15.CAMS.hi,0.0051
+807,Supp,Supp Table 6,M15 ICANS rho,0.73,MAP.M15.ICANS.rho,0.0051
+808,Supp,Supp Table 6,  CI low,0.59,MAP.M15.ICANS.lo,0.0051
+809,Supp,Supp Table 6,  CI high,0.83,MAP.M15.ICANS.hi,0.0051
+810,Supp,Supp Table 6,M16 RASS rho,0.69,MAP.M16.RASS.rho,0.0051
+811,Supp,Supp Table 6,  CI low,0.63,MAP.M16.RASS.lo,0.0051
+812,Supp,Supp Table 6,  CI high,0.74,MAP.M16.RASS.hi,0.0051
+813,Supp,Supp Table 6,M16 GCS rho,0.69,MAP.M16.GCS.rho,0.0051
+814,Supp,Supp Table 6,  CI low,0.65,MAP.M16.GCS.lo,0.0051
+815,Supp,Supp Table 6,  CI high,0.73,MAP.M16.GCS.hi,0.0051
+816,Supp,Supp Table 6,M16 CAM-S rho,0.84,MAP.M16.CAMS.rho,0.0051
+817,Supp,Supp Table 6,  CI low,0.78,MAP.M16.CAMS.lo,0.0051
+818,Supp,Supp Table 6,  CI high,0.88,MAP.M16.CAMS.hi,0.0051
+819,Supp,Supp Table 6,M16 ICANS rho,0.76,MAP.M16.ICANS.rho,0.0051
+820,Supp,Supp Table 6,  CI low,0.61,MAP.M16.ICANS.lo,0.0051
+821,Supp,Supp Table 6,  CI high,0.86,MAP.M16.ICANS.hi,0.0051
+822,Supp,Supp Table 6,M17 RASS rho,0.69,MAP.M17.RASS.rho,0.0051
+823,Supp,Supp Table 6,  CI low,0.63,MAP.M17.RASS.lo,0.0051
+824,Supp,Supp Table 6,  CI high,0.73,MAP.M17.RASS.hi,0.0051
+825,Supp,Supp Table 6,M17 GCS rho,0.69,MAP.M17.GCS.rho,0.0051
+826,Supp,Supp Table 6,  CI low,0.64,MAP.M17.GCS.lo,0.0051
+827,Supp,Supp Table 6,  CI high,0.73,MAP.M17.GCS.hi,0.0051
+828,Supp,Supp Table 6,M17 CAM-S rho,0.85,MAP.M17.CAMS.rho,0.0051
+829,Supp,Supp Table 6,  CI low,0.79,MAP.M17.CAMS.lo,0.0051
+830,Supp,Supp Table 6,  CI high,0.9,MAP.M17.CAMS.hi,0.0051
+831,Supp,Supp Table 6,M17 ICANS rho,0.75,MAP.M17.ICANS.rho,0.0051
+832,Supp,Supp Table 6,  CI low,0.63,MAP.M17.ICANS.lo,0.0051
+833,Supp,Supp Table 6,  CI high,0.83,MAP.M17.ICANS.hi,0.0051
+834,Supp,Supp Table 6,M18 RASS rho,0.69,MAP.M18.RASS.rho,0.0051
+835,Supp,Supp Table 6,  CI low,0.63,MAP.M18.RASS.lo,0.0051
+836,Supp,Supp Table 6,  CI high,0.74,MAP.M18.RASS.hi,0.0051
+837,Supp,Supp Table 6,M18 GCS rho,0.7,MAP.M18.GCS.rho,0.0051
+838,Supp,Supp Table 6,  CI low,0.65,MAP.M18.GCS.lo,0.0051
+839,Supp,Supp Table 6,  CI high,0.74,MAP.M18.GCS.hi,0.0051
+840,Supp,Supp Table 6,M18 CAM-S rho,0.83,MAP.M18.CAMS.rho,0.0051
+841,Supp,Supp Table 6,  CI low,0.76,MAP.M18.CAMS.lo,0.0051
+842,Supp,Supp Table 6,  CI high,0.88,MAP.M18.CAMS.hi,0.0051
+843,Supp,Supp Table 6,M18 ICANS rho,0.76,MAP.M18.ICANS.rho,0.0051
+844,Supp,Supp Table 6,  CI low,0.63,MAP.M18.ICANS.lo,0.0051
+845,Supp,Supp Table 6,  CI high,0.85,MAP.M18.ICANS.hi,0.0051
+846,Supp,Supp Table 6,M19 RASS rho,0.69,MAP.M19.RASS.rho,0.0051
+847,Supp,Supp Table 6,  CI low,0.63,MAP.M19.RASS.lo,0.0051
+848,Supp,Supp Table 6,  CI high,0.73,MAP.M19.RASS.hi,0.0051
+849,Supp,Supp Table 6,M19 GCS rho,0.69,MAP.M19.GCS.rho,0.0051
+850,Supp,Supp Table 6,  CI low,0.64,MAP.M19.GCS.lo,0.0051
+851,Supp,Supp Table 6,  CI high,0.73,MAP.M19.GCS.hi,0.0051
+852,Supp,Supp Table 6,M19 CAM-S rho,0.84,MAP.M19.CAMS.rho,0.0051
+853,Supp,Supp Table 6,  CI low,0.78,MAP.M19.CAMS.lo,0.0051
+854,Supp,Supp Table 6,  CI high,0.88,MAP.M19.CAMS.hi,0.0051
+855,Supp,Supp Table 6,M19 ICANS rho,0.74,MAP.M19.ICANS.rho,0.0051
+856,Supp,Supp Table 6,  CI low,0.59,MAP.M19.ICANS.lo,0.0051
+857,Supp,Supp Table 6,  CI high,0.85,MAP.M19.ICANS.hi,0.0051
+858,Supp,Supp Table 6,M20 RASS rho,0.67,MAP.M20.RASS.rho,0.0051
+859,Supp,Supp Table 6,  CI low,0.61,MAP.M20.RASS.lo,0.0051
+860,Supp,Supp Table 6,  CI high,0.72,MAP.M20.RASS.hi,0.0051
+861,Supp,Supp Table 6,M20 GCS rho,0.69,MAP.M20.GCS.rho,0.0051
+862,Supp,Supp Table 6,  CI low,0.65,MAP.M20.GCS.lo,0.0051
+863,Supp,Supp Table 6,  CI high,0.73,MAP.M20.GCS.hi,0.0051
+864,Supp,Supp Table 6,M20 CAM-S rho,0.85,MAP.M20.CAMS.rho,0.0051
+865,Supp,Supp Table 6,  CI low,0.79,MAP.M20.CAMS.lo,0.0051
+866,Supp,Supp Table 6,  CI high,0.89,MAP.M20.CAMS.hi,0.0051
+867,Supp,Supp Table 6,M20 ICANS rho,0.77,MAP.M20.ICANS.rho,0.0051
+868,Supp,Supp Table 6,  CI low,0.64,MAP.M20.ICANS.lo,0.0051
+869,Supp,Supp Table 6,  CI high,0.86,MAP.M20.ICANS.hi,0.0051
+870,Supp,Supp Table 6,M21 RASS rho,0.68,MAP.M21.RASS.rho,0.0051
+871,Supp,Supp Table 6,  CI low,0.62,MAP.M21.RASS.lo,0.0051
+872,Supp,Supp Table 6,  CI high,0.73,MAP.M21.RASS.hi,0.0051
+873,Supp,Supp Table 6,M21 GCS rho,0.69,MAP.M21.GCS.rho,0.0051
+874,Supp,Supp Table 6,  CI low,0.64,MAP.M21.GCS.lo,0.0051
+875,Supp,Supp Table 6,  CI high,0.73,MAP.M21.GCS.hi,0.0051
+876,Supp,Supp Table 6,M21 CAM-S rho,0.83,MAP.M21.CAMS.rho,0.0051
+877,Supp,Supp Table 6,  CI low,0.76,MAP.M21.CAMS.lo,0.0051
+878,Supp,Supp Table 6,  CI high,0.87,MAP.M21.CAMS.hi,0.0051
+879,Supp,Supp Table 6,M21 ICANS rho,0.78,MAP.M21.ICANS.rho,0.0051
+880,Supp,Supp Table 6,  CI low,0.66,MAP.M21.ICANS.lo,0.0051
+881,Supp,Supp Table 6,  CI high,0.87,MAP.M21.ICANS.hi,0.0051
+882,Supp,Supp Table 6,M22 RASS rho,0.7,MAP.M22.RASS.rho,0.0051
+883,Supp,Supp Table 6,  CI low,0.65,MAP.M22.RASS.lo,0.0051
+884,Supp,Supp Table 6,  CI high,0.75,MAP.M22.RASS.hi,0.0051
+885,Supp,Supp Table 6,M22 GCS rho,0.7,MAP.M22.GCS.rho,0.0051
+886,Supp,Supp Table 6,  CI low,0.65,MAP.M22.GCS.lo,0.0051
+887,Supp,Supp Table 6,  CI high,0.74,MAP.M22.GCS.hi,0.0051
+888,Supp,Supp Table 6,M22 CAM-S rho,0.83,MAP.M22.CAMS.rho,0.0051
+889,Supp,Supp Table 6,  CI low,0.76,MAP.M22.CAMS.lo,0.0051
+890,Supp,Supp Table 6,  CI high,0.88,MAP.M22.CAMS.hi,0.0051
+891,Supp,Supp Table 6,M22 ICANS rho,0.76,MAP.M22.ICANS.rho,0.0051
+892,Supp,Supp Table 6,  CI low,0.62,MAP.M22.ICANS.lo,0.0051
+893,Supp,Supp Table 6,  CI high,0.84,MAP.M22.ICANS.hi,0.0051
+894,Supp,Supp Table 6,M23 RASS rho,0.7,MAP.M23.RASS.rho,0.0051
+895,Supp,Supp Table 6,  CI low,0.64,MAP.M23.RASS.lo,0.0051
+896,Supp,Supp Table 6,  CI high,0.74,MAP.M23.RASS.hi,0.0051
+897,Supp,Supp Table 6,M23 GCS rho,0.69,MAP.M23.GCS.rho,0.0051
+898,Supp,Supp Table 6,  CI low,0.64,MAP.M23.GCS.lo,0.0051
+899,Supp,Supp Table 6,  CI high,0.73,MAP.M23.GCS.hi,0.0051
+900,Supp,Supp Table 6,M23 CAM-S rho,0.85,MAP.M23.CAMS.rho,0.0051
+901,Supp,Supp Table 6,  CI low,0.79,MAP.M23.CAMS.lo,0.0051
+902,Supp,Supp Table 6,  CI high,0.89,MAP.M23.CAMS.hi,0.0051
+903,Supp,Supp Table 6,M23 ICANS rho,0.75,MAP.M23.ICANS.rho,0.0051
+904,Supp,Supp Table 6,  CI low,0.6,MAP.M23.ICANS.lo,0.0051
+905,Supp,Supp Table 6,  CI high,0.85,MAP.M23.ICANS.hi,0.0051
+906,Supp,Supp Table 6,M24 RASS rho,0.7,MAP.M24.RASS.rho,0.0051
+907,Supp,Supp Table 6,  CI low,0.64,MAP.M24.RASS.lo,0.0051
+908,Supp,Supp Table 6,  CI high,0.74,MAP.M24.RASS.hi,0.0051
+909,Supp,Supp Table 6,M24 GCS rho,0.7,MAP.M24.GCS.rho,0.0051
+910,Supp,Supp Table 6,  CI low,0.66,MAP.M24.GCS.lo,0.0051
+911,Supp,Supp Table 6,  CI high,0.74,MAP.M24.GCS.hi,0.0051
+912,Supp,Supp Table 6,M24 CAM-S rho,0.85,MAP.M24.CAMS.rho,0.0051
+913,Supp,Supp Table 6,  CI low,0.79,MAP.M24.CAMS.lo,0.0051
+914,Supp,Supp Table 6,  CI high,0.89,MAP.M24.CAMS.hi,0.0051
+915,Supp,Supp Table 6,M24 ICANS rho,0.73,MAP.M24.ICANS.rho,0.0051
+916,Supp,Supp Table 6,  CI low,0.58,MAP.M24.ICANS.lo,0.0051
+917,Supp,Supp Table 6,  CI high,0.83,MAP.M24.ICANS.hi,0.0051
+918,Supp,"SPECTRA mapping text, Supp Table 7, R3.4","M7 minus M1, RASS rho",0.02,MAP.M7.RASS.delta,0.0051
+919,Supp,"SPECTRA mapping text, Supp Table 7, R3.4","M8 minus M1, RASS rho",0.03,MAP.M8.RASS.delta,0.0051
+920,Supp,"SPECTRA mapping text, Supp Table 7, R3.4","M22 minus M1, RASS rho",0.02,MAP.M22.RASS.delta,0.0051
+921,Supp,"SPECTRA mapping text, Supp Table 7 footnote","Repeat of M1 minus M1, RASS rho",0.01,MAP.M1_repeat.RASS.delta,0.0051
+922,Supp,"SPECTRA mapping text, Supp Table 7 footnote","Repeat of M1 minus M1, ICANS rho",0.04,MAP.M1_repeat.ICANS.delta,0.0051

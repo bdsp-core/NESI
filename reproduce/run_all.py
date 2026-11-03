@@ -10,7 +10,11 @@ It does four things, in order:
      the paths the existing scripts expect (see docs/DATA_FILES.md).
   2. Recomputes manuscript numbers (analyses.py, torch_checks.py).
   3. Runs the existing figure and table scripts.
-  4. Compares every number with claims.csv and writes output/REPORT.md.
+  4. Runs the revision analyses and figures from saved intermediates.
+  5. Compares every number with claims.csv and writes output/REPORT.md.
+
+Nothing here retrains a model or reads raw EEG unless an intermediate is missing.
+See reproduce/README.md for the route from source data to each intermediate.
 
 Items in MANIFEST with no script are reported as MISSING, so the report always
 shows what still cannot be reproduced.
@@ -22,6 +26,7 @@ Environment:
 """
 import argparse
 import csv
+import hashlib
 import json
 import os
 import shutil
@@ -95,10 +100,11 @@ SCRIPTS = {
     "table1_icans": "cohort_models/ICANS/Cohort/Table1_ICANS.py",
     "sfig6": "figures/supplementary_score_prediction/ResultsFig_4OrdinalModels/ScorePredResultsAll.py",
     "sfig7_9": "figures/supplementary_score_prediction/PacMAP_4OrdinalModels/AllPacMAPSConsolidated.py",
+    "sfig7": "figures/supplementary_score_prediction/PacMAPS_colored_byMorgoth_NESI_heads/FAST_MorgothNESI_FeatureColored_PacMAPs.py",
 }
 
 
-TORCH_SCRIPTS = {"sfig6", "sfig7_9"}
+TORCH_SCRIPTS = {"sfig6", "sfig7_9", "sfig7"}
 
 # Paths the scripts expect -> file name under NESI_DATA_ROOT/s3
 S3_LINKS = {
@@ -145,6 +151,8 @@ def build_workspace():
             linked += 1
     # Some scripts locate the project root by a pre-restructure RASS/ folder
     (work / "RASS").symlink_to(work / "cohort_models" / "RASS")
+    # and the supplementary PaCMAP scripts by its pre-restructure name
+    (work / "SupplementaryScorePredictionResults").symlink_to(work / "figures" / "supplementary_score_prediction")
     # Imported but unused by the figure scripts; not in every environment
     (BUILD / "stubs").mkdir(exist_ok=True)
     (BUILD / "stubs" / "torchsummary.py").write_text("def summary(*a, **k):\n    pass\n")
@@ -198,6 +206,76 @@ def run_scripts(work, timeout=900):
     return res
 
 
+# Revision analyses and figures. Each reads saved intermediates under NESI_DATA_ROOT/intermediates
+# and runs in seconds to minutes; slow steps rebuild an intermediate only if it is missing.
+REVISION = [
+    ("by_diagnosis", "by_diagnosis.py", "plain"),
+    ("rass_positive", "rass_positive.py", "torch"),
+    ("artifact_tolerance", "artifact_tolerance.py", "torch"),
+    ("retrain_summary", "retrain_summary.py", "torch"),
+    ("sedation", "sedation.py", "plain"),
+    ("external_validation", "external_validation.py", "torch"),
+    ("ordinal_agreement", "ordinal_agreement.py", "torch"),
+    ("ablation_figure", "ablation_figure.py", "torch"),
+    ("mortality", "mortality.py analyze", "torch"),
+    ("fivefold_wilcoxon", "fivefold_wilcoxon.py", "torch"),
+    ("icans_subgroups", "icans_subgroups.py", "torch"),
+    ("morgoth_overlap", "morgoth_overlap.py", "torch"),
+    ("eeg_type", "eeg_type.py", "torch"),
+    ("supp_figures_fast", "supp_figures_fast.py", "torch"),
+    ("run_cohort_figures", "run_cohort_figures.py", "torch"),
+    ("figures_final", "figures_final.py", "plain"),
+    ("figures_relabel", "figures_relabel.py", "torch"),
+    ("figures_elapsed_time", "figures_elapsed_time.py", "torch"),
+    ("graphical_abstract", "graphical_abstract.py", "torch"),
+    ("cross_score", "cross_score.py --exact", "torch"),
+    ("qeeg_supp_fig31", "qeeg_supp_fig31.py", "plain"),
+    ("loco_summary", "loco_summary.py", "plain"),
+    ("mapping_summary", "mapping_summary.py", "plain"),
+    ("icans_segment_ablation", "icans_segment_ablation.py", "plain"),
+    ("indication_stratified", "indication_stratified.py", "plain"),
+    ("supp_fig10_diagnosis", "supp_fig10_diagnosis.py", "plain"),
+    ("figure6_composite", "figure6_composite.py", "plain"),
+]
+
+
+def run_revision():
+    res, logs = {}, OUT / "logs"
+    logs.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, MPLBACKEND="Agg", PYTHONWARNINGS="ignore")
+    for key, script, kind in REVISION:
+        script, *args = script.split()
+        if not (HERE / script).exists():
+            res[key] = "script not in this checkout"
+            continue
+        t = time.time()
+        r = subprocess.run([TORCH_PY if kind == "torch" else sys.executable, str(HERE / script), *args], capture_output=True, text=True, env=env)
+        (logs / f"{key}.log").write_text(r.stdout[-200000:] + "\n--STDERR--\n" + r.stderr[-20000:])
+        last = r.stderr.strip().splitlines()[-1][:160] if r.stderr.strip() else ""
+        res[key] = f"ok {time.time() - t:.0f}s" if r.returncode == 0 else f"FAILED {last}"
+        print(f"  {key}: {res[key]}", flush=True)
+    return res
+
+
+def freeze_intermediates(write):
+    """Record or check a checksum for every saved intermediate."""
+    man = ROOT / "intermediates" / "MANIFEST.csv"
+    files = [p for p in sorted((ROOT / "intermediates").rglob("*")) if p.is_file() and p != man]
+    files += sorted((ROOT.parent / "retrain").glob("*/test_scores.csv"))
+    now = {str(p.relative_to(ROOT.parent)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+    if write:
+        with open(man, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["path", "sha256"])
+            w.writerows(now.items())
+        return f"manifest written for {len(now)} files"
+    if not man.exists():
+        return "no manifest; run with --freeze"
+    old = {r["path"]: r["sha256"] for r in csv.DictReader(open(man))}
+    changed = [p for p in old if now.get(p) != old[p]]
+    return f"{len(old) - len(changed)} of {len(old)} intermediates unchanged" + (f"; changed: {changed[:5]}" if changed else "")
+
+
 def check_claims(num):
     rows = []
     with open(HERE / "claims.csv", newline="") as f:
@@ -240,7 +318,8 @@ def report(rows, log, torch_log, scripts):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--only", choices=["numbers", "torch", "scripts"])
+    ap.add_argument("--only", choices=["numbers", "torch", "scripts", "revision"])
+    ap.add_argument("--freeze", action="store_true", help="record checksums of the saved intermediates")
     ap.add_argument("--boot", type=int, default=1000)
     ap.add_argument("--list", action="store_true")
     a = ap.parse_args()
@@ -249,9 +328,11 @@ def main():
             print(f"{kind:8} {item:38} {detail}")
         return
     OUT.mkdir(parents=True, exist_ok=True)
-    num, log, torch_log, scripts = {}, {}, "not run", {}
+    num, log, torch_log, scripts, revision = {}, {}, "not run", {}, {}
     if a.only in (None, "scripts"):
         scripts = run_scripts(build_workspace())
+    if a.only in (None, "revision"):
+        revision = run_revision()
     if a.only in (None, "numbers"):
         num, log = run_numbers(a.boot)
     if a.only in (None, "torch"):
@@ -259,6 +340,8 @@ def main():
         print("  torch_checks:", torch_log)
         num.update(extra)
     json.dump(num, open(OUT / "numbers.json", "w"), indent=1)
+    log.update(revision)
+    log["intermediates"] = freeze_intermediates(a.freeze)
     report(check_claims(num), log, torch_log, scripts)
 
 
