@@ -22,7 +22,12 @@ The following table provides the mapping between supplementary figures and their
 | **Fig. 34** | `RevisionRealtedMaterials/NESIThresholded_AUROC/NESI_based_Thrslhd_AUROC.py` | |
 | **Fig. 35** | `RevisionRealtedMaterials/Morgoth_vs_NESI_datasplit_Realted/NESI_vs_MORGOTH_Split.py` | |
 | **Fig. 36** | `cohort_models/ExternalValidation/ResultVisualization/GenerateExternalValPlot_temporalAllignement.py` | |
-| **Fig. 37** | Christine | |
+
 
 > **📌 Note:** All script paths are preserved exactly as specified. For analyses requiring additional datasets, the corresponding input files have been uploaded to AWS for reproducibility.
 
+| Supplementary Table | Corresponding Code / Script |
+|---|---|
+| **Table 1** | `RevisionRealtedMaterials/Scalewise_NESI_Range/NESI_Range_Scale_TestSet.py`|
+| **Table 2** | `RevisionRealtedMaterials/NESIScaleCalibration/NESI_calibration_analysis.py`|
+| **Table 3** | `RevisionRealtedMaterials/NESISeverityDetection/NESISeverityDetection.py`|
