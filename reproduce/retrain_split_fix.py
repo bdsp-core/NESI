@@ -5,7 +5,9 @@ Keeps the model's original train/validation/test assignment and the full test
 set, and withholds from training and validation every segment belonging to a
 patient who is in the test set. Patients are matched across cohorts using one
 ID, which the original split did not do. Procedure and hyperparameters come
-from Train_TripletEncoder.py and Train_NESI.py.
+from Train_TripletEncoder.py and Train_NESI.py, except the learning rate: every
+retrain reported in the revision used 0.0005, the value those scripts held at the
+time, while the published model was trained with 0.005. Use --lr 0.005 to match it.
 
     python reproduce/retrain_split_fix.py                 # withhold overlapping patients
     python reproduce/retrain_split_fix.py --keep-overlap  # same data as the original, new seed
@@ -109,6 +111,7 @@ def main():
     ap.add_argument("--leave-out", choices=["RASS", "GCS", "CAMS", "ICANS"])
     ap.add_argument("--mapping", type=int, choices=range(1, 25), metavar="1-24")
     ap.add_argument("--seed", type=int, default=2026)
+    ap.add_argument("--lr", type=float, default=0.0005, help="0.0005 reproduces the reported retrains; the published model used 0.005")
     ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
 
@@ -174,7 +177,7 @@ def main():
     tr_dl = DataLoader(triplets("train"), batch_size=128, shuffle=True)
     va_dl = DataLoader(triplets("val"), batch_size=128, shuffle=False)
     ns["Training_triplet_function"](
-        model=enc, lr=0.0005, n_epochs=1 if a.smoke else 200, train_dl=tr_dl, valid_dl=va_dl,
+        model=enc, lr=a.lr, n_epochs=1 if a.smoke else 200, train_dl=tr_dl, valid_dl=va_dl,
         save_loc=str(out), model_prefix="ResNetGAP", margin=0.2, device=device,
     )
     print(f"encoder done in {(time.time() - t) / 3600:.2f} h", flush=True)
@@ -196,7 +199,7 @@ def main():
         model=head,
         train_loader=DataLoader(ns["PairDataset"](pairs["train"]), batch_size=128, shuffle=True, drop_last=True),
         val_loader=DataLoader(ns["PairDataset"](pairs["val"]), batch_size=128, shuffle=False),
-        optimizer=torch.optim.Adam(head.parameters(), lr=0.0005),
+        optimizer=torch.optim.Adam(head.parameters(), lr=a.lr),
         device=device, epochs=2 if a.smoke else 100, save_path=str(out / "NESI_best_model.pth"), patience=20,
     )
     print(f"head done in {(time.time() - t) / 60:.1f} min", flush=True)

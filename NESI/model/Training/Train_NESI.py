@@ -914,7 +914,7 @@ val_loader = DataLoader(
 device = "cuda" if torch.cuda.is_available() else "cpu"
 saving_path = NESI_ROOT / "model" / "ModelCheckpointsNew" / "NESI_best_model.pth"
 model = EEGScoringModel()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.0005)
+optimizer = torch.optim.Adam(model.parameters(), lr=0.005)  # learning rate of the published model (this script said 0.0005 until Nov 2026)
 
 train_model(
     model=model,
