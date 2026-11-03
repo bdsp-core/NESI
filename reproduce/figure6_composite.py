@@ -34,8 +34,8 @@ EXTREME = {"RASS": ([-5], 1.5, "#E13238"), "GCS": ([3], 1.5, "#000000"),
            "CAMS": ([7, 6], 0.0, "#1F77B4"), "ICANS": ([4, 3], -0.05, "green")}
 # Indication panels, in published grid order: (title, indication flag, label, pattern, threshold, NESI min)
 PANELS = [("D. Post-Cardiac Arrest with Burst", "Arrest", "Post-Cardiac Arrest", "Burst", 0.7, 0.0),
-          ("F. Post-Cardiac Arrest with GPD", "Arrest", "Post-Cardiac Arrest", "GPD", 0.7, 0.0),
-          ("E. Stroke with LPD", "Stroke", "Stroke", "LPD", 0.7, 0.25)]
+          ("E. Post-Cardiac Arrest with GPD", "Arrest", "Post-Cardiac Arrest", "GPD", 0.7, 0.0),
+          ("F. Stroke with LPD", "Stroke", "Stroke", "LPD", 0.7, 0.25)]
 
 
 def indications(df):

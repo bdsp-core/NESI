@@ -40,6 +40,6 @@ Medication steps use `NESI_SEDATION_PYTHON`, a Python with `pandas<3` and the pa
 
 `github_moved/` mirrors the paths in [`docs/DATA_FILES.md`](../docs/DATA_FILES.md). `s3/` holds files from `s3://bdsp-opendata-credentialed/yama/`. `drive/` holds `i0001_RASS_Meds_NESI.csv`, which is also in the S3 release at `yama/NESI/NESI-Medication-Analysis/sedation-strata/data/`.
 
-## Current coverage
+## Coverage
 
-This is a work in progress. Some manuscript analyses have no code in this repository yet; `--list` shows them as `missing`, and the report shows them on every run. Two figure sets have source code (`RevisionRelatedMaterials/`) but no saved intermediate yet, so they are not regenerated: Supplementary Figs 18–23 (needs per-recording NESI series from full-length EEG) and Supplementary Fig 30 (the per-channel qEEG features for the test set were not saved; reported as published, not reproduced). `claims.csv` registers only part of the numbers in the manuscript. A `DIFF` in the report means a recomputed value differs from the manuscript and needs review.
+`python reproduce/run_all.py --list` shows how every figure and table is produced. Three items cannot be regenerated because their inputs were not saved, and are reported as published: Supplementary Figs 18–23 (per-recording NESI series from full-length EEG), Supplementary Fig 30 (per-channel qEEG features for the test set) and Supplementary Table 18 (the external cohort's characteristics, from Northwestern's records). `claims.csv` registers the manuscript's numbers; a `DIFF` in the report means a recomputed value differs from the manuscript. The final figure images are in `figures/final/`.

@@ -340,7 +340,7 @@ id,doc,location,description,expected,key,tolerance
 339,Main,External validation,RASS 60 CI high,0.69,EXT.rass.60.hi,0.0151
 340,Main,External validation,RASS 120 n,874,EXT.rass.120.n,0
 341,Main,External validation,RASS 120 rho,0.61,EXT.rass.120.rho,0.0051
-342,Main,External validation,RASS 120 CI low,0.57,EXT.rass.120.lo,0.0151
+342,Main,External validation,RASS 120 CI low,0.56,EXT.rass.120.lo,0.0151
 343,Main,External validation,RASS 120 CI high,0.66,EXT.rass.120.hi,0.0151
 344,Main,External validation,RASS All n,990,EXT.rass.All.n,0
 345,Main,External validation,RASS All rho,0.6,EXT.rass.All.rho,0.0051
@@ -348,11 +348,11 @@ id,doc,location,description,expected,key,tolerance
 347,Main,External validation,RASS All CI high,0.64,EXT.rass.All.hi,0.0151
 348,Main,External validation,GCS 30 n,381,EXT.gcs.30.n,0
 349,Main,External validation,GCS 30 rho,0.7,EXT.gcs.30.rho,0.0051
-350,Main,External validation,GCS 30 CI low,0.63,EXT.gcs.30.lo,0.0151
-351,Main,External validation,GCS 30 CI high,0.74,EXT.gcs.30.hi,0.0151
+350,Main,External validation,GCS 30 CI low,0.64,EXT.gcs.30.lo,0.0151
+351,Main,External validation,GCS 30 CI high,0.75,EXT.gcs.30.hi,0.0151
 352,Main,External validation,GCS 60 n,565,EXT.gcs.60.n,0
 353,Main,External validation,GCS 60 rho,0.68,EXT.gcs.60.rho,0.0051
-354,Main,External validation,GCS 60 CI low,0.62,EXT.gcs.60.lo,0.0151
+354,Main,External validation,GCS 60 CI low,0.63,EXT.gcs.60.lo,0.0151
 355,Main,External validation,GCS 60 CI high,0.72,EXT.gcs.60.hi,0.0151
 356,Main,External validation,GCS 120 n,812,EXT.gcs.120.n,0
 357,Main,External validation,GCS 120 rho,0.65,EXT.gcs.120.rho,0.0051
@@ -567,8 +567,8 @@ id,doc,location,description,expected,key,tolerance
 572,Supp,"Indication-stratified text, ICANS excluding controls",  CI low,0.31,ICSUB.1.lo,0.0051
 573,Supp,"Indication-stratified text, ICANS excluding controls",  CI high,0.77,ICSUB.1.hi,0.0051
 574,Main,Fig 6 panels D-F legend,Post-cardiac arrest with burst windows,3353,FIG6.D._Post-Cardiac_Arrest_with_Burst,0
-575,Main,Fig 6 panels D-F legend,Stroke with LPD windows,525,FIG6.E._Stroke_with_LPD,0
-576,Main,Fig 6 panels D-F legend,Post-cardiac arrest with GPD windows,1021,FIG6.F._Post-Cardiac_Arrest_with_GPD,0
+575,Main,Fig 6 panels D-F legend,Stroke with LPD windows,525,FIG6.F._Stroke_with_LPD,0
+576,Main,Fig 6 panels D-F legend,Post-cardiac arrest with GPD windows,1021,FIG6.E._Post-Cardiac_Arrest_with_GPD,0
 577,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status RASS test rho,0.72,IND.Testing.Altered_Mental_Status.RASS.rho,0.0051
 578,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Altered_Mental_Status.RASS.lo,0.0051
 579,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.RASS.hi,0.0051

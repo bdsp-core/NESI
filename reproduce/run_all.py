@@ -16,8 +16,8 @@ It does four things, in order:
 Nothing here retrains a model or reads raw EEG unless an intermediate is missing.
 See reproduce/README.md for the route from source data to each intermediate.
 
-Items in MANIFEST with no script are reported as MISSING, so the report always
-shows what still cannot be reproduced.
+MANIFEST lists every figure and table; items whose inputs were not saved are
+reported as not reproduced.
 
 Environment:
   NESI_DATA_ROOT    folder holding github_moved/, s3/ and drive/
@@ -45,46 +45,58 @@ BUILD = Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build"))
 TORCH_PY = os.environ.get("NESI_TORCH_PYTHON", sys.executable)
 OUT = BUILD / "output"
 
-# (item, how it is produced, owner of anything missing)
-MISSING_ARKA = "Arka"
-MISSING_CE = "Christine"
-SCRIPT, NUMBERS, DRAWN, MISSING = "script", "numbers", "drawn", "missing"
+# Every figure and table in the manuscript (current numbering), and how it is produced.
+# script: an original repository script run by this file (status comes from that run)
+# reproduce: a script in reproduce/ run from saved intermediates
+# drawn: a schematic with no data; the final image is in figures/final/
+# not reproduced: the inputs were not saved; reported as published
+SCRIPT, REPRO, DRAWN, MISSING = "script", "reproduce", "drawn", "not reproduced"
 MANIFEST = [
-    ("Fig 1", DRAWN, "figures/main/Figure1.drawio.png (needs CAM-S and estimation-head relabel)"),
+    ("Fig 1", DRAWN, "pipeline schematic; labels updated by figures_relabel.py"),
     ("Fig 2", SCRIPT, "fig2"),
     ("Fig 3", SCRIPT, "fig3"),
     ("Fig 4", SCRIPT, "fig4"),
-    ("Fig 5 (six adjusted models)", MISSING, MISSING_ARKA),
-    ("Fig 6 (revised panels)", SCRIPT, "fig6"),
-    ("Fig 7 (external validation)", MISSING, MISSING_ARKA + "/Erika"),
-    ("Fig 8 (agent groups)", MISSING, MISSING_CE),
+    ("Fig 5", REPRO, "mortality.py (rebuilt; the original results files had NESI and GCS swapped)"),
+    ("Fig 6", REPRO, "figure6_composite.py (saved PaCMAP coordinates and Qwen3-14B indication labels)"),
+    ("Fig 7", REPRO, "external_validation.py"),
+    ("Fig 8", REPRO, "sedation.py (Christine Eckhardt's sedation code)"),
     ("Table 1", SCRIPT, "table1_rass,table1_gcs,table1_cams,table1_icans"),
-    ("Table 2", NUMBERS, "RASS column partly; medication-exposure pipeline needs raw MAR"),
-    ("Table 3", NUMBERS, "propofol"),
-    ("Table 4", MISSING, MISSING_ARKA + "/" + MISSING_CE),
-    ("Table 5", MISSING, MISSING_CE),
-    ("Supp Fig 1 (consort)", MISSING, MISSING_ARKA),
-    ("Supp Figs 2-3", MISSING, MISSING_ARKA),
-    ("Supp Fig 4-5 (schematics)", DRAWN, "not in repo"),
+    ("Table 2", REPRO, "analyses.py, partly: the full table needs the raw medication administration records"),
+    ("Table 3", REPRO, "sedation.py (propofol variance decomposition)"),
+    ("Table 4", REPRO, "analyses.py, partly: the full table needs the raw medication administration records"),
+    ("Table 5", REPRO, "sedation.py"),
+    ("Supp Fig 1", DRAWN, "cohort flow diagram"),
+    ("Supp Fig 2", REPRO, "supp_figures_fast.py"),
+    ("Supp Fig 3", REPRO, "run_cohort_figures.py"),
+    ("Supp Figs 4-5", DRAWN, "schematics"),
     ("Supp Fig 6", SCRIPT, "sfig6"),
-    ("Supp Figs 7-9", SCRIPT, "sfig7_9"),
-    ("Supp Figs 10-17", MISSING, MISSING_ARKA),
-    ("Supp Figs 18-23 (trajectories)", MISSING, MISSING_ARKA),
-    ("Supp Figs 24-27", MISSING, MISSING_ARKA),
-    ("Supp Figs 28-30 (mortality)", MISSING, MISSING_ARKA),
-    ("Supp Figs 31-32 (qEEG)", MISSING, MISSING_ARKA),
-    ("Supp Fig 33 (ablation)", NUMBERS, "torch; figure itself not regenerated"),
-    ("Supp Figs 34-37", MISSING, MISSING_ARKA),
-    ("Supp Fig 38 (external timing)", MISSING, MISSING_ARKA + "/Erika"),
-    ("Supp Fig 39 (agent offsets)", MISSING, MISSING_CE),
-    ("Supp Table 1", NUMBERS, "supp_table1"),
-    ("Supp Table 2", NUMBERS, "supp_tables_2_3; ECE binning unspecified"),
-    ("Supp Table 3", NUMBERS, "supp_tables_2_3"),
-    ("Supp Table 4-5 (definitions)", DRAWN, "no computation"),
-    ("Supp Tables 6-7 (24 mappings)", MISSING, MISSING_ARKA),
-    ("Supp Tables 8-10 (agent offsets)", MISSING, MISSING_CE),
-    ("Supp Table 11", NUMBERS, "supp_table11"),
-    ("Supp Table 12", NUMBERS, "institutions_age_duration; CAM-S rows missing"),
+    ("Supp Figs 7-9", SCRIPT, "sfig7_9,sfig7"),
+    ("Supp Fig 10", REPRO, "supp_fig10_diagnosis.py"),
+    ("Supp Figs 11-13", REPRO, "run_cohort_figures.py"),
+    ("Supp Figs 14-17", REPRO, "cross_score.py --exact"),
+    ("Supp Figs 18-23", MISSING, "example trajectories; the per-recording NESI series were not saved (figures_relabel.py and figures_elapsed_time.py only relabel the published images)"),
+    ("Supp Figs 24-25", REPRO, "supp_figures_fast.py"),
+    ("Supp Fig 26", REPRO, "ordinal_agreement.py"),
+    ("Supp Fig 27", REPRO, "indication_stratified.py"),
+    ("Supp Fig 28", REPRO, "mortality.py"),
+    ("Supp Fig 29", REPRO, "qeeg_supp_fig31.py"),
+    ("Supp Fig 30", MISSING, "qEEG-trained heads; the per-channel qEEG features for the test set were not saved (qeeg_baseline_check.py compares single features)"),
+    ("Supp Fig 31", REPRO, "ablation_figure.py"),
+    ("Supp Fig 32", REPRO, "icans_segment_ablation.py (numbers; panels are the published ones)"),
+    ("Supp Fig 33", REPRO, "loco_summary.py"),
+    ("Supp Fig 34", REPRO, "supp_figures_fast.py"),
+    ("Supp Fig 35", REPRO, "morgoth_overlap.py"),
+    ("Supp Fig 36", REPRO, "external_validation.py"),
+    ("Supp Fig 37", REPRO, "sedation.py"),
+    ("Supp Table 1", REPRO, "analyses.py (supp_table1)"),
+    ("Supp Tables 2-3", REPRO, "analyses.py (supp_tables_2_3)"),
+    ("Supp Tables 4-5", DRAWN, "definitions, no computation"),
+    ("Supp Tables 6-7", REPRO, "mapping_summary.py (24 retrained mappings)"),
+    ("Supp Tables 8-11", REPRO, "sedation.py"),
+    ("Supp Table 12", REPRO, "by_diagnosis.py"),
+    ("Supp Tables 13-17", REPRO, "sedation.py"),
+    ("Supp Table 18", MISSING, "external cohort characteristics, from Northwestern's records"),
+    ("Supp Table 19", REPRO, "retrain_summary.py (downsample and upweight retrains)"),
 ]
 
 # Existing scripts, run unchanged from the working copy
@@ -92,7 +104,6 @@ SCRIPTS = {
     "fig2": "figures/main/Codes/FAST_NESIvsBeSpoke_plot.py",
     "fig3": "NESI/ScaleVsNESI/fit_nesi_curves.py",
     "fig4": "figures/main/Codes/FAST_NESI_group_morgothactivation.py",
-    "fig5_old": "figures/main/Codes/Test_results_plot_GCSvsNESI.py",
     "fig6": "figures/main/Codes/Figure6_pacmap_embedding.py",
     "table1_rass": "cohort_models/RASS/Cohort/Table1_RASS.py",
     "table1_gcs": "cohort_models/GCS/Cohort/Table1_GCS.py",
@@ -325,7 +336,7 @@ def main():
     a = ap.parse_args()
     if a.list:
         for item, kind, detail in MANIFEST:
-            print(f"{kind:8} {item:38} {detail}")
+            print(f"{kind:15} {item:16} {detail}")
         return
     OUT.mkdir(parents=True, exist_ok=True)
     num, log, torch_log, scripts, revision = {}, {}, "not run", {}, {}
