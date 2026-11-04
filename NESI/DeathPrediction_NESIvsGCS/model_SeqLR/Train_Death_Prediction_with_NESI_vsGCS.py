@@ -703,7 +703,7 @@ df_SeqGCS_curation_final = df_SeqGCS_curation_final.copy()
 # -------------------------------------------------
 def clean_id(x):
     try:
-        return str(int(float(x)))  # fixes REDACTED_ID.0 -> REDACTED_ID
+        return str(int(float(x)))  # fixes 123456789.0 -> 123456789
     except:
         return str(x).strip()
 
