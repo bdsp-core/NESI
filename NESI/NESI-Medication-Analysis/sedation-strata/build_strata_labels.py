@@ -5,10 +5,10 @@ analysis. No NESI needed: the output is a label file to join to NESI/performance
 patient ID + assessment time.
 
 Same rules as build_strata.py (locked Oct 29):
-  - flags at the assessment time: infusion running now; benzo/opioid "on board"
+  - flags at the assessment time: infusion running now or stopped within 6 h; benzo/opioid "on board"
   - primary rule: opioids by infusion only; intermittent benzo doses -> "intermittent dose involved"
   - strict rule: intermittent benzo OR opioid doses -> excluded
-  - mutually exclusive strata; ketamine = "ketamine (+/- others)"
+  - mutually exclusive strata; ketamine only / ketamine + opioid (ketamine with another sedative = other combinations)
 
 Each row of the windows file is one assessment. Its time is GCSRecordedDTS or RASSRecordedDTS.
 Rows with BOTH times are ambiguous (flags were anchored to the GCS time) and are counted and
@@ -54,15 +54,18 @@ CAMS_SCORE = None    # e.g. "R CAM-S SHORT FORM SCORE"; None = leave score blank
 PATIENT = "BDSPPatientID"
 TIMES = {"gcs": "GCSRecordedDTS", "rass": "RASSRecordedDTS"}
 SCORES = {"gcs": "R CPN GLASGOW COMA SCALE SCORE", "rass": "R PHS IP RASS"}
-FLAGS = {"prop": "propofol_inf_now", "dex": "dexmedetomidine_inf_now", "ket": "ketamine_inf_now",
-         "midaz": "midazolam_inf_now", "benzo": "benzo_on_board",
-         "op_inf": "opioid_inf_now", "op": "opioid_on_board"}
+# Infusions count if running at the assessment OR stopped within the prior 6 h (same rule as
+# build_strata.py). Intermittent doses: benzo/opioid on board (fast-acting 6 h, slow-acting 12 h).
+INFUSION_LOOKBACK = "6h"
+FLAGS = {"prop": f"propofol_inf_{INFUSION_LOOKBACK}", "dex": f"dexmedetomidine_inf_{INFUSION_LOOKBACK}",
+         "ket": f"ketamine_inf_{INFUSION_LOOKBACK}", "midaz": f"midazolam_inf_{INFUSION_LOOKBACK}",
+         "benzo": "benzo_on_board", "op_inf": f"opioid_inf_{INFUSION_LOOKBACK}", "op": "opioid_on_board"}
 VASO = "any_vasopressor_inf_now"
 MIN_OBS, MIN_PATIENTS = 100, 20
 
 # analysis groups (match the main table)
 GROUP = {
-    "no sedative or opioid": "Reference (no sedative or opioid)",
+    "no sedative or opioid": "Reference (no sedative or opioid infusion)",
     "propofol only": "Propofol only",
     "propofol + opioid": "Propofol + opioid",
     "midazolam only": "Midazolam only",
@@ -71,13 +74,14 @@ GROUP = {
     "dexmedetomidine + opioid": "Dexmedetomidine + opioid",
     "midazolam + propofol": "Midazolam + propofol (± opioid)",
     "midazolam + propofol + opioid": "Midazolam + propofol (± opioid)",
-    "ketamine (+/- others)": "Ketamine (± other sedatives)",
+    "ketamine only": "Ketamine (± opioid)",
+    "ketamine + opioid": "Ketamine (± opioid)",
     "opioid only": "Opioid only",
 }
 # simpler groups for the performance-by-subgroup table (each sedative pooled with/without
 # opioid). Midazolam + propofol, ketamine and midazolam + dex are left out (blank).
 GROUP_PERF = {
-    "no sedative or opioid": "Reference (no sedative or opioid)",
+    "no sedative or opioid": "Reference (no sedative or opioid infusion)",
     "propofol only": "Propofol (± opioid)",
     "propofol + opioid": "Propofol (± opioid)",
     "dexmedetomidine only": "Dexmedetomidine (± opioid)",
@@ -89,7 +93,7 @@ GROUP_PERF = {
 # 0/1 indicator columns, named by group. The 5 performance groups first, then the
 # split groups from the main table (Reference and Opioid only are not repeated: same rows).
 INDICATORS = {
-    "Reference (no sedative or opioid)": ("group_performance", "Reference (no sedative or opioid)"),
+    "Reference (no sedative or opioid infusion)": ("group_performance", "Reference (no sedative or opioid infusion)"),
     "Propofol (+/- opioid)": ("group_performance", "Propofol (± opioid)"),
     "Dexmedetomidine (+/- opioid)": ("group_performance", "Dexmedetomidine (± opioid)"),
     "Midazolam (+/- opioid)": ("group_performance", "Midazolam (± opioid)"),
@@ -101,9 +105,9 @@ INDICATORS = {
     "Dexmedetomidine only": ("group", "Dexmedetomidine only"),
     "Dexmedetomidine + opioid": ("group", "Dexmedetomidine + opioid"),
     "Midazolam + propofol (+/- opioid)": ("group", "Midazolam + propofol (± opioid)"),
-    "Ketamine (+/- other sedatives)": ("group", "Ketamine (± other sedatives)"),
+    "Ketamine (+/- opioid)": ("group", "Ketamine (± opioid)"),
 }
-NAMES = {"prop": "propofol", "dex": "dexmedetomidine", "midaz": "midazolam"}
+NAMES = {"prop": "propofol", "dex": "dexmedetomidine", "midaz": "midazolam", "ket": "ketamine"}
 
 print("INPUTS")
 print(f"  GCS + RASS: {WINDOWS_CSV.resolve()}")
@@ -180,8 +184,6 @@ def label(df):
         op = x["op_inf"] == 1
         if not on and not op:
             return "no sedative or opioid"
-        if "ket" in on:
-            return "ketamine (+/- others)"
         if not on:
             return "opioid only"
         if len(on) == 1:

@@ -6,6 +6,8 @@ Propofol exposure-response analyses for the revision, in order.
   2. Sensitivity: excluding intermittent benzodiazepine or opioid doses on board
   3. Within- vs between-patient Ce slopes (propofol-only cohort)
   4. Expanded cohort, propofol with or without opioids (Ce only, + opioid, + Ce x opioid)
+  5. Spearman rho of Ce with NESI and RASS, propofol-only cohort (same rows as step 1)
+  6. Spearman rho of Ce with NESI and RASS, cohort with opioid infusions allowed (same rows as step 4)
 
 Each step is the same script with a flag; no settings are edited. Outputs are the
 markdown reports written by each script (paths printed as they run).
@@ -28,11 +30,13 @@ STEPS = [
     ("Excluding intermittent doses",           "variance_decomposition_eleveld_ce_vs_pump.py", ["--exclude-intermittent"]),
     ("Within- vs between-patient Ce",          "variance_decomposition_eleveld_ce_vs_pump.py", ["--within-between"]),
     ("Expanded cohort with opioids",           "variance_decomposition_expanded_opioid.py",    []),
+    ("Rank correlation: propofol only",        "variance_decomposition_eleveld_ce_vs_pump.py", ["--correlations"]),
+    ("Rank correlation: opioids allowed",      "variance_decomposition_expanded_opioid.py",    ["--correlations"]),
 ]
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--n-boot", type=int, default=None, help="bootstrap resamples per step (default 1000)")
-ap.add_argument("--only", type=int, nargs="*", help="step numbers to run (1-4); default all")
+ap.add_argument("--only", type=int, nargs="*", help="step numbers to run (1-6); default all")
 args = ap.parse_args()
 
 for i, (name, script, flags) in enumerate(STEPS, start=1):

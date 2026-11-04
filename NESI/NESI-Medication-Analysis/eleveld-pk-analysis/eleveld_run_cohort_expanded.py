@@ -47,10 +47,15 @@ from med_config import OUTPUT_CSV, OUTPUT_PARQUET
 from eleveld_propofol import eleveld_params, simulate, T2
 assert T2[10] < 0, "Stale eleveld_propofol.py: theta10 must be -0.0156 (Eleveld 2018 Table 2)"
 
+import sys
+from pathlib import Path
+_MC = Path(__file__).resolve().parent.parent / "medication-exposure"
+if _MC.is_dir() and str(_MC) not in sys.path:
+    sys.path.insert(0, str(_MC))
 
 # ============ PATHS ============
-INTERVALS_CSV = r'C:\Users\chris\Desktop\BDSP\sedative_exposures\propofol_intervals.csv'
-BOLUSES_CSV   = r'C:\Users\chris\Desktop\BDSP\sedative_exposures\propofol_boluses.csv'
+INTERVALS_CSV = os.path.join(mc.PROPOFOL_EXPOSURE_DIR, "propofol_intervals.csv")
+BOLUSES_CSV   = os.path.join(mc.PROPOFOL_EXPOSURE_DIR, "propofol_boluses.csv")
 WTHT_CSV      = os.path.join(OUTPUT_CSV, 'wt_ht_per_hosp_FULL.csv')
 SED_DIR       = str(mc.SEDATIVE_EXPOSURE_DIR)    # midazolam/ketamine/dexmedetomidine_intervals.csv
 OPI_DIR       = str(mc.OPIATE_EXPOSURE_DIR)      # fentanyl/morphine/hydromorphone_intervals.csv

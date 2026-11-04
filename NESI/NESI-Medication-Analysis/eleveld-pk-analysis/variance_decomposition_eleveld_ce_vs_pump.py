@@ -24,12 +24,7 @@ rows. Rate is a cruder exposure than Ce (ignores dosing history, accumulation,
 washout), so absolute % values are expected to be smaller; the comparison is
 what matters.
 
-Methods sentence (suggested):
-  "We repeated the variance decomposition using weight-normalized pump
-  infusion rate (mg/kg/h) in place of Eleveld-predicted Ce, which requires no
-  pharmacokinetic model. Both exposures were analyzed on the same
-  observations, with NESI and RASS models fit on the same cluster-bootstrap
-  resamples (1000 iterations)."
+
 
 NOTE: RASS_CSV and TS_PARQUET are the _v2 outputs of eleveld_run_cohort.py,
 which uses the corrected Eleveld implementation (theta10 = -0.0156) and
@@ -66,6 +61,8 @@ import argparse as _argparse
 _ap = _argparse.ArgumentParser(add_help=True)
 _ap.add_argument("--exclude-intermittent", action="store_true")
 _ap.add_argument("--within-between", action="store_true")
+_ap.add_argument("--correlations", action="store_true",
+                 help="Spearman rho of Ce with NESI and RASS on the same rows (rank_correlation.py)")
 _ap.add_argument("--n-boot", type=int, default=None, help="bootstrap resamples (default 1000)")
 ARGS, _ = _ap.parse_known_args()
 EXCLUDE_INTERMITTENT = EXCLUDE_INTERMITTENT or ARGS.exclude_intermittent
@@ -92,6 +89,8 @@ OUT_REPORT_MD = os.path.join(OUTPUT_PARQUET, 'variance_decomposition_eleveld_ce_
 
 # ============ CONFIG ============
 N_BOOTSTRAP         = ARGS.n_boot or 1000   # smoke test: --n-boot 2
+if N_BOOTSTRAP < 100:   # smoke test: never overwrite the real report
+    OUT_REPORT_MD = OUT_REPORT_MD.replace('.md', '_smoke.md')
 RNG_SEED            = 42
 MIN_OBS_PER_PATIENT = 5
 RASS_COL            = 'R PHS IP RASS'
@@ -265,6 +264,14 @@ def fmt_with_ci(point, samples, fmt='{:.3f}'):
     return f"{fmt.format(point)} ({fmt.format(lo)} – {fmt.format(hi)})"
 
 
+FLOW = []   # cohort flow: (step, rows, patients), printed and written to the report
+
+
+def flow(label, df):
+    FLOW.append((label, len(df), df['BDSPPatientID'].nunique()))
+    print(f"  FLOW  {label}: {len(df):,} observations, {df['BDSPPatientID'].nunique():,} patients")
+
+
 def main():
     # ============ LOAD ============
     print(f"Mode: {'SENSITIVITY (no intermittent doses)' if EXCLUDE_INTERMITTENT else 'primary'}"
@@ -279,11 +286,16 @@ def main():
         raise KeyError(f"WEIGHT_COL '{WEIGHT_COL}' not in {os.path.basename(RASS_CSV)}. "
                        f"Candidates: {cands}")
 
+    flow("Propofol-only window (±12 h), any RASS row", rass[rass['propofol_only_recomputed'] == True])
     cohort = rass[
         (rass['propofol_only_recomputed'] == True) &
         (rass['PropofolSimStatus'] == 'simulated') &
         rass['Ce_ug_per_mL'].notna()
     ].copy()
+    flow("+ Ce simulated", cohort)
+    _r = pd.to_numeric(cohort[RASS_COL], errors='coerce')
+    flow("+ RASS −5 to 0", cohort[_r.between(-5, 0)])
+    flow("+ NESI available", cohort[_r.between(-5, 0) & pd.to_numeric(cohort['PredictedNESI'], errors='coerce').notna()])
     cohort['_RASS_numeric'] = pd.to_numeric(cohort[RASS_COL], errors='coerce')
     cohort['PredictedNESI'] = pd.to_numeric(cohort['PredictedNESI'], errors='coerce')
     cohort[WEIGHT_COL]      = pd.to_numeric(cohort[WEIGHT_COL], errors='coerce')
@@ -328,6 +340,7 @@ def main():
         cohort['pump_rate_mg_kg_h'].notna() &
         (cohort[WEIGHT_COL] > 0)
     ].copy()
+    flow("+ pump rate and weight available (all variables)", cohort)
     n_excluded_intermittent = 0
     if EXCLUDE_INTERMITTENT:
         print(f"Loading {WINDOWS_CSV} (intermittent-dose flags) ...")
@@ -348,10 +361,12 @@ def main():
         print(f"  Intermittent benzo/opioid dose on board: {n_excluded_intermittent:,} of {len(cohort):,} rows "
               f"excluded; {n_unmatched:,} rows had no exposure flags (kept)")
         cohort = cohort[~intermittent.values].drop(columns=['_pid', '_t'] + flags).copy()
+        flow("− intermittent benzodiazepine or opioid dose on board (sensitivity)", cohort)
 
     n_per_pt = cohort.groupby('BDSPPatientID').size()
     cohort = cohort[cohort['BDSPPatientID'].isin(
         n_per_pt[n_per_pt >= MIN_OBS_PER_PATIENT].index)].copy()
+    flow(f"+ ≥{MIN_OBS_PER_PATIENT} observations per patient (analysis cohort)", cohort)
     n_rows, n_pts = len(cohort), cohort['BDSPPatientID'].nunique()
     pct_rate0 = 100 * (cohort['pump_rate_mg_kg_h'] == 0).mean()
     pct_capped = 100 * (cohort['infusion_rate_mg_per_min'] > RATE_CAP).mean()
@@ -362,6 +377,14 @@ def main():
 
     if WITHIN_BETWEEN:
         return run_within_between(cohort, n_rows, n_pts, n_excluded_intermittent)
+
+    if ARGS.correlations:
+        from rank_correlation import run_correlations
+        out = os.path.join(OUTPUT_PARQUET, 'rank_correlation_ce_propofol_only'
+                           + ('_no_intermittent' if EXCLUDE_INTERMITTENT else '')
+                           + ('_smoke' if N_BOOTSTRAP < 100 else '') + '.md')
+        return run_correlations(cohort, out, f'propofol only, ≥{MIN_OBS_PER_PATIENT} obs/patient',
+                                n_boot=N_BOOTSTRAP, seed=RNG_SEED)
 
     # ============ POINT ESTIMATES ============
     point = {}
@@ -419,6 +442,12 @@ def main():
        f'all available; ≥{MIN_OBS_PER_PATIENT} obs/patient: '
        f'**{n_rows:,} rows** across **{n_pts:,} patients**')
     md('- Every model (NESI/RASS × Ce/rate) uses exactly these rows.')
+    md('\n### Cohort flow\n')
+    md('| Step | Observations | Patients |')
+    md('|---|---|---|')
+    for lbl, n_o, n_p in FLOW:
+        md(f'| {lbl} | {n_o:,} | {n_p:,} |')
+    md('')
     if EXCLUDE_INTERMITTENT:
         md(f'- **Sensitivity analysis:** {n_excluded_intermittent:,} observations with an intermittent '
            'benzodiazepine or opioid dose on board (fast-acting in prior 6 h, slow-acting in prior 12 h) '

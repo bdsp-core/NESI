@@ -8,8 +8,9 @@ Sedation-stratified analyses for the revision, in order.
   3. agent_stratified_model.py primary (uncapped, primary strata): models, report, all figures
   4.   ... --cap p95           sensitivity: at most K obs per patient per stratum (K = p95 in reference)
   5.   ... --strata strict     sensitivity: intermittent opioid doses also exclude
-  6. build_tables.py           main-text propofol table + Supplementary Tables S1-S6 (Word + CSV)
-  7. md_to_html.py             HTML copies of the model reports
+  6.   ... --strata no_washout sensitivity: infusions count only if running at the assessment
+  7. build_tables.py           main-text propofol table + Supplementary Tables S1-S6 (Word + CSV)
+  8. md_to_html.py             HTML copies of the model reports
 
 Run eleveld-pk-analysis/run_variance_all.py first: build_tables.py reads its reports.
 Each step is the same script with a flag; no settings are edited.
@@ -17,7 +18,7 @@ Each step is the same script with a flag; no settings are edited.
 Usage (from sedation-strata/):
     python run_stratified_all.py               # full run, 1000 resamples per model run (hours)
     python run_stratified_all.py --n-boot 2    # smoke test
-    python run_stratified_all.py --only 6 7    # e.g. rebuild tables and HTML only
+    python run_stratified_all.py --only 7 8    # e.g. rebuild tables and HTML only
 """
 
 import argparse
@@ -34,13 +35,14 @@ STEPS = [
     ("Stratified model: primary",            "agent_stratified_model.py", [BOOT]),
     ("Stratified model: cap p95",            "agent_stratified_model.py", ["--cap", "p95", BOOT]),
     ("Stratified model: strict rule",        "agent_stratified_model.py", ["--strata", "strict", BOOT]),
+    ("Stratified model: no infusion washout", "agent_stratified_model.py", ["--strata", "no_washout", BOOT]),
     ("Tables (main text + supplement)",      "build_tables.py",           []),
     ("HTML reports",                         "md_to_html.py",             []),
 ]
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--n-boot", type=int, default=None, help="bootstrap resamples per model run (default 1000)")
-ap.add_argument("--only", type=int, nargs="*", help="step numbers to run (1-7); default all")
+ap.add_argument("--only", type=int, nargs="*", help="step numbers to run (1-8); default all")
 args = ap.parse_args()
 
 for i, (name, script, flags) in enumerate(STEPS, start=1):

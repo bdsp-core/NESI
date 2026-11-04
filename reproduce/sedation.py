@@ -61,6 +61,9 @@ def workspace():
         s, n = re.subn(rf'(?m)^{key}\s*=\s*Path\(r"[^"]*"\)', f'{key} = Path(r"{val}")', s)
         if n != 1:
             sys.exit(f"{key} not found in med_config_template.py")
+    s, n = re.subn(r'(?m)^PROPOFOL_EXPOSURE_DIR\s*=\s*r"[^"]*"', f'PROPOFOL_EXPOSURE_DIR = r"{e}"', s)
+    if n != 1:
+        sys.exit("PROPOFOL_EXPOSURE_DIR not found in med_config_template.py")
     (work / "medication-exposure/med_config.py").write_text(s)
     return work
 

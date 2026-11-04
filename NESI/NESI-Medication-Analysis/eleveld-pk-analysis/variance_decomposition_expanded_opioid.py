@@ -2,7 +2,7 @@
 """
 Expanded-cohort analysis: propofol with or without concurrent opioids.
 
-Answers the reviewer's opioid comment directly: in a cohort where opioid
+In a cohort where opioid
 exposure is common (infusions allowed), does NESI still carry more propofol /
 sedation signal than RASS, and do opioids shift the outcome or modify the
 Ce-outcome relationship?
@@ -57,9 +57,9 @@ from med_config import OUTPUT_CSV, OUTPUT_PARQUET, I0001_ASM_ANTIPSYCH_DIR
 RASS_CSV      = os.path.join(OUTPUT_CSV, 'wt_ht_per_hosp_FULL_with_eleveld_expanded.csv')
 WINDOWS_CSV   = os.path.join(I0001_ASM_ANTIPSYCH_DIR,
                              'i0001_per_eeg_master_exposure_windows_opiates.csv')
-# _v2: adds every model's slope/opioid/interaction terms and % patient / % residual with CIs.
+# _v3 (Nov 2): opioid infusion look-back 6 h. _v2 added every model's slope/opioid/interaction terms and % patient / % residual with CIs.
 # The original report is not overwritten.
-OUT_REPORT_MD = os.path.join(OUTPUT_PARQUET, 'variance_decomposition_expanded_opioid_v2.md')
+OUT_REPORT_MD = os.path.join(OUTPUT_PARQUET, 'variance_decomposition_expanded_opioid_v3.md')
 
 
 # ============ CONFIG ============
@@ -70,13 +70,21 @@ import argparse as _argparse
 _ap = _argparse.ArgumentParser(add_help=True)
 _ap.add_argument("--n-boot", type=int, default=None, help="bootstrap resamples (default 1000)")
 _ap.add_argument("--n-jobs", type=int, default=None)
+_ap.add_argument("--correlations", action="store_true",
+                 help="Spearman rho of Ce with NESI and RASS on the same rows (rank_correlation.py)")
 ARGS, _ = _ap.parse_known_args()
 N_BOOTSTRAP = ARGS.n_boot or N_BOOTSTRAP
 N_JOBS      = ARGS.n_jobs or N_JOBS
+if N_BOOTSTRAP < 100:   # smoke test: never overwrite the real report
+    OUT_REPORT_MD = OUT_REPORT_MD.replace('.md', '_smoke.md')
 RNG_SEED            = 42
 MIN_OBS_PER_PATIENT = 5
 RASS_COL            = 'R PHS IP RASS'
 OPIOID_COL          = 'opioid_on_board'
+# Infusion look-back (Nov 2, same rule as the sedation strata): an opioid infusion counts as on
+# board if running at the assessment OR stopped within the prior 6 h. opioid_on_board alone counts
+# an infusion only while running (plus intermittent doses: fast 6 h, slow 12 h).
+OPIOID_INF_LOOKBACK = 'opioid_inf_6h'
 FIT_METHODS         = ['lbfgs', 'bfgs', 'powell']
 
 MODELS = {
@@ -183,7 +191,7 @@ def main():
 
     # ============ JOIN OPIOID COVARIATE ============
     w = pd.read_csv(WINDOWS_CSV, usecols=['BDSPPatientID', 'RASSRecordedDTS', OPIOID_COL,
-                                          'opioid_inf_now'], low_memory=False)
+                                          'opioid_inf_now', OPIOID_INF_LOOKBACK], low_memory=False)
     w = w.dropna(subset=['RASSRecordedDTS'])
     w['BDSPPatientID'] = norm_id(w['BDSPPatientID'])
     w['RASSRecordedDTS'] = pd.to_datetime(w['RASSRecordedDTS'], errors='coerce')
@@ -191,7 +199,12 @@ def main():
     n_pre = len(c)
     c = c.merge(w, on=['BDSPPatientID', 'RASSRecordedDTS'], how='left')
     print(f"  opioid_on_board matched for {c[OPIOID_COL].notna().sum():,} of {n_pre:,} rows")
-    c['opioid'] = pd.to_numeric(c[OPIOID_COL], errors='coerce')
+    obb = pd.to_numeric(c[OPIOID_COL], errors='coerce')
+    inf_lb = pd.to_numeric(c[OPIOID_INF_LOOKBACK], errors='coerce')
+    c['opioid'] = pd.concat([obb, inf_lb], axis=1).max(axis=1, skipna=False)
+    added = int(((inf_lb == 1) & (obb == 0)).sum())
+    print(f"  opioid on board: {added:,} rows added by the 6 h infusion look-back "
+          f"(infusion stopped within 6 h, nothing else on board)")
 
     # ============ INTERSECTION COHORT ============
     c = c[c['PredictedNESI'].notna() & c['_RASS_numeric'].between(-5, 0) & c['opioid'].notna()].copy()
@@ -205,6 +218,13 @@ def main():
     print(f"  Expanded cohort: {n_rows:,} rows, {n_pts:,} patients; "
           f"opioid on board {pct_opi:.1f}% of rows (infusion running {pct_inf:.1f}%); "
           f"{pts_both:,} patients with both exposed and unexposed rows")
+
+    if ARGS.correlations:
+        from rank_correlation import run_correlations
+        out = os.path.join(OUTPUT_PARQUET, 'rank_correlation_ce_expanded'
+                           + ('_smoke' if N_BOOTSTRAP < 100 else '') + '.md')
+        return run_correlations(c, out, f'opioid infusions allowed, ≥{MIN_OBS_PER_PATIENT} obs/patient',
+                                n_boot=N_BOOTSTRAP, seed=RNG_SEED)
 
     # ============ POINT ESTIMATES ============
     point = fit_all(c)
@@ -250,7 +270,7 @@ def main():
     # ============ REPORT ============
     md = ['# Expanded cohort: propofol with or without opioids\n',
           f'_Generated from `{os.path.basename(RASS_CSV)}`, opioid covariate from '
-          f'`{os.path.basename(WINDOWS_CSV)}` ({OPIOID_COL})._\n',
+          f'`{os.path.basename(WINDOWS_CSV)}` ({OPIOID_COL} or {OPIOID_INF_LOOKBACK})._\n',
           '## Cohort\n',
           f'- {COHORT_FLAG}=True, simulated; Ce, NESI, RASS in [−5, 0] and opioid status available; '
           f'≥{MIN_OBS_PER_PATIENT} obs/patient: **{n_rows:,} rows, {n_pts:,} patients**',

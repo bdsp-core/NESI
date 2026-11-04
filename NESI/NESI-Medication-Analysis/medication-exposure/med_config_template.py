@@ -58,7 +58,7 @@ BOLUS_EXPOSURE_DIR      = Path(r"TODO_path/i0001/bolus_exposure")
 SEDATIVE_EXPOSURE_DIR   = Path(r"TODO_path/i0001/sedative_exposure")
 OPIATE_EXPOSURE_DIR     = Path(r"TODO_path/i0001/opiate_exposure")
 I0001_ASM_ANTIPSYCH_DIR = Path(r"TODO_path/i0001/asm_antipsych_exposure")
-
+PROPOFOL_EXPOSURE_DIR = r"TODO: folder containing propofol_intervals.csv and propofol_boluses.csv"
 
 # ─── I0001 CAMS sub-cohort ───────────────────────────────────────────────────
 

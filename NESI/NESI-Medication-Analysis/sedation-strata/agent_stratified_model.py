@@ -63,8 +63,9 @@ DROP_OVERLAP_PATIENTS = False
 import argparse as _argparse
 _ap = _argparse.ArgumentParser(add_help=True)
 _ap.add_argument("--cap", default=None, help='per-patient cap: "p95" or an integer')
-_ap.add_argument("--strata", choices=["primary", "strict"], default=None,
-                 help="primary = stratum; strict = stratum_strict (intermittent opioid doses also exclude)")
+_ap.add_argument("--strata", choices=["primary", "strict", "no_washout"], default=None,
+                 help="primary = stratum; strict = stratum_strict (intermittent opioid doses also exclude); "
+                      "no_washout = stratum_no_washout (infusions count only if running at the assessment)")
 _ap.add_argument("--plots-only", action="store_true", help="redraw figures from saved results; no models")
 _ap.add_argument("--slopes-only", action="store_true", help="bootstrap only the pooled-group slopes")
 _ap.add_argument("--n-boot", type=int, default=None, help="bootstrap resamples (default 1000)")
@@ -84,25 +85,29 @@ if ARGS.cap:
     CAP_PER_PATIENT = int(ARGS.cap) if ARGS.cap.isdigit() else ARGS.cap
 _sub = ("no_overlap_patients" if DROP_OVERLAP_PATIENTS else "") + \
        (("_" if DROP_OVERLAP_PATIENTS else "") + f"cap_{CAP_PER_PATIENT}" if CAP_PER_PATIENT else "")
+# Smoke tests (--n-boot under 100) write to model/smoke/ so they never overwrite real results
+if ARGS.n_boot is not None and ARGS.n_boot < 100:
+    _sub = str(Path("smoke") / _sub) if _sub else "smoke"
 OUT_DIR = IN_DIR / "model" / _sub
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ============ CONFIG ============
 STRATUM_COL   = "stratum"            # "stratum_strict" for the strict sensitivity analysis
 if ARGS.strata:
-    STRATUM_COL = {"primary": "stratum", "strict": "stratum_strict"}[ARGS.strata]
+    STRATUM_COL = {"primary": "stratum", "strict": "stratum_strict",
+                   "no_washout": "stratum_no_washout"}[ARGS.strata]
 REFERENCE     = "no sedative or opioid"                  # stratum value in the data
-REF_LABEL     = "Reference (no sedative or opioid)"      # how it is labeled in output
+REF_LABEL     = "Reference (no sedative or opioid infusion)"      # how it is labeled in output
 VASO_LABEL    = "Vasopressor (within reference)"
 OLD_VASO_LABELS = ["Vasopressor, within reference (negative control)"]   # renamed in saved results
 # Strata shown in the forest and slopes figures, top to bottom (tables keep every stratum).
 # Combination strata (midazolam + propofol/dex) are left out: wide CIs, not interpreted.
 FIGURE_STRATA = ["propofol only", "propofol + opioid", "midazolam only", "midazolam + opioid",
-                 "dexmedetomidine only", "dexmedetomidine + opioid", "ketamine (+/- others)",
+                 "dexmedetomidine only", "dexmedetomidine + opioid", "ketamine only", "ketamine + opioid",
                  "opioid only"]
 # Groups shown in the slopes figure and the combined main figure, top to bottom: the performance-metric groups (pooled, main-text model)
 SLOPE_FIGURE_GROUPS = ["Propofol (± opioid)", "Dexmedetomidine (± opioid)", "Midazolam (± opioid)",
-                       "Opioid only"]
+                       "Ketamine (± opioid)", "Midazolam + propofol (± opioid)", "Opioid only"]   # a group appears only if it meets the inclusion rule
 EXCLUDE       = {"intermittent dose involved", "unknown medication status",
                  "other combinations"}   # dropped Oct 29 after seeing output: mixed combinations, not interpretable
 # Pooled groups for analysis C and the descriptive figures (fixed in advance, not data-driven).
@@ -112,19 +117,18 @@ POOLED = {
     "Midazolam (± opioid)":       ["midazolam only", "midazolam + opioid"],
     "Dexmedetomidine (± opioid)": ["dexmedetomidine only", "dexmedetomidine + opioid"],
     "Midazolam + propofol (± opioid)": ["midazolam + propofol", "midazolam + propofol + opioid"],
-    "Ketamine (± others)":        ["ketamine (+/- others)"],   # one stratum: ketamine with anything
+    "Ketamine (± opioid)":        ["ketamine only", "ketamine + opioid"],
     "Opioid only":                ["opioid only"],             # opioid infusion, no sedative
 }
 OPIOID_ONLY   = "opioid only"         # shown as its own row in the main-text model
 POOL_OF       = {s: p for p, members in POOLED.items() for s in members}
-# no ketamine pair: ketamine is a single stratum, "ketamine (+/- others)"
 MIN_OBS, MIN_PATIENTS = 100, 20      # pre-specified, applied within each RASS range
 MIN_CELL_OBS, MIN_CELL_PAT = 30, 10  # per RASS level, for analysis C
 RANGES        = {"full": (-5, 0), "light": (-2, 0)}
 RASS_CENTER   = -2                   # centering point for model A offsets
 RASS_REPORT   = {"full": [0, -1, -2, -3, -4, -5], "light": [0, -1, -2]}
 LEVELS        = [0, -1, -2, -3, -4, -5]
-LEVEL_PLOT_SKIP = {"Midazolam + propofol (± opioid)"}   # left off ALL plots (still in the tables)
+LEVEL_PLOT_SKIP = set()   # groups left off ALL plots (still in the tables); none since Nov 2
 PLOTS_ONLY      = False   # True = redraw plots (diagnostic, deep-RASS, forest from saved results) and stop; no models
 SLOPES_ONLY     = False   # True = bootstrap ONLY the pooled-group slope model; offsets read from saved
                           # results_main_*.csv; writes results_main_slopes_*.csv (nothing overwritten)
@@ -145,7 +149,7 @@ GROUP_COLORS = {
     "Dexmedetomidine (± opioid)":      "#0BA37B",
     "Midazolam (± opioid)":            "#DB7627",
     "Opioid only":                     "#9E75B4",
-    "Ketamine (± others)":             "#CA75A4",
+    "Ketamine (± opioid)":             "#CA75A4",
     "Midazolam + propofol (± opioid)": "#EDBD51",
     VASO_LABEL:                        GRAY,
 }
@@ -610,7 +614,7 @@ def level_plot(lvd):
         # combined, points dodged so CIs don't overlap
         fig, ax = plt.subplots(figsize=(8, 5.5))
         dodge = np.linspace(-0.25, 0.25, n) if n > 1 else [0]
-        ax.axhline(0, color="black", lw=1.6, label="Reference (no sedative or opioid)")
+        ax.axhline(0, color="black", lw=1.6, label="Reference (no sedative or opioid infusion)")
         for i, (_, r) in enumerate(lvd.iterrows()):
             y, err, ok = series(r)
             ax.errorbar(x[ok] + dodge[i], y[ok], yerr=[err[0][ok], err[1][ok]], marker="o", ms=4,
@@ -655,6 +659,11 @@ def forest_main(main, label):
         print(f"Main forest plot skipped: {e}")
 
 
+def fig_name(g):
+    """Figure label: '(± opioid)' dropped to keep labels short (stated once in the figure legend)."""
+    return g.replace(" (± opioid)", "")
+
+
 def draw_offsets_slopes(a1, a2, main, ref, ref_lo, ref_hi, letters):
     """Offsets (a1) and within-group slopes (a2) for the performance groups, shared y-axis."""
     keep = [g for g in SLOPE_FIGURE_GROUPS if g in set(main["agent"])] + \
@@ -683,7 +692,7 @@ def draw_offsets_slopes(a1, a2, main, ref, ref_lo, ref_hi, letters):
     a2.set_title(letters[1], loc="left", fontsize=12, fontweight="bold")
     a2.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(nbins=5, steps=[1, 2, 2.5, 5, 10]))
     a1.set_yticks(y)
-    a1.set_yticklabels([f"{a}\n($\\it{{n}}$ = {p:,})" for a, p in zip(order["agent"], order["n_patients"])])
+    a1.set_yticklabels([f"{fig_name(a)}\n($\\it{{n}}$ = {p:,})" for a, p in zip(order["agent"], order["n_patients"])])
     a2.tick_params(labelleft=False)
 
 
@@ -832,11 +841,14 @@ def draw_diagnostic(ax, tab_ax, summ, total_pat, shown, title=None):
     colors = {g: color_of(g) for g in shown}
     TABLE_FONT = SMALL_FONT
     for g in shown:
-        s = summ[(summ["grp"] == g) & (summ["count"] >= MIN_CELL_PAT)].sort_values("rass")
+        s = summ[(summ["grp"] == g) & (summ["count"] >= MIN_CELL_PAT)].set_index("rass")
+        # every RASS level, NaN where a cell is too small: the line breaks there instead of
+        # joining across missing levels
+        s = s.reindex(sorted(LEVELS)).reset_index()
         name = REF_LABEL if g == REFERENCE else g
         ax.errorbar(s["rass"], s["mean"], yerr=1.96 * s["se"], marker="o", ms=4, capsize=2,
                     lw=2.2 if g == REFERENCE else 1.2, color=colors[g],
-                    label=f"{'Reference' if g == REFERENCE else name} ($\\it{{n}}$ = {int(total_pat.get(g, 0)):,})")
+                    label=f"{'Reference' if g == REFERENCE else fig_name(name)} ($\\it{{n}}$ = {int(total_pat.get(g, 0)):,})")
     ax.set_xlim(min(LEVELS) - 0.5, max(LEVELS) + 0.5)
     ax.set_xticks(sorted(LEVELS))
     ax.tick_params(labelbottom=False)

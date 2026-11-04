@@ -1,0 +1,12 @@
+# Python 3.10.20 (Windows)
+pandas==2.2.2
+numpy==2.2.6
+scipy==1.15.2
+statsmodels==0.14.6
+duckdb==1.5.2
+matplotlib==3.10.8
+python-docx==1.2.0
+pyarrow==23.0.1
+joblib==1.5.3
+control==0.10.2
+python-anesthesia-simulator==1.0.0

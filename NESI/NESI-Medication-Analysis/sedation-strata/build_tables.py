@@ -33,6 +33,7 @@ from pathlib import Path as _Path
 _MC = _Path(__file__).resolve().parent.parent / "medication-exposure"
 if _MC.is_dir() and str(_MC) not in _sys.path:
     _sys.path.insert(0, str(_MC))
+import med_config as _mc
 from med_config import I0001_ASM_ANTIPSYCH_DIR, OUTPUT_PARQUET
 
 # ============ PATHS ============
@@ -41,19 +42,22 @@ CAP_DIR   = MODEL_DIR / "cap_p95"                       # cap sensitivity run
 VD_DIR    = Path(OUTPUT_PARQUET)                        # variance decomposition reports
 VD_STEM   = "variance_decomposition_eleveld_ce_vs_pump_v3"
 OUT_DOCX  = MODEL_DIR.parent / "tables" / "nesi_tables.docx"
+# Eleveld implementation verification (validate_eleveld_vs_pas.py output)
+PAS_AGREEMENT = Path(getattr(_mc, "ELEVELD_VALIDATION_DIR", ".")) / "eleveld_vs_pas_agreement.csv"
 
 # Expanded cohort (propofol with or without opioids): report from variance_decomposition_expanded_opioid.py
-EXPANDED_REPORT = VD_DIR / "variance_decomposition_expanded_opioid_v2.md"
+EXPANDED_REPORT = VD_DIR / "variance_decomposition_expanded_opioid_v3.md"   # v3: opioid infusion look-back 6 h
 PRIMARY_LABEL = "Propofol only"
+EXPANDED_LABEL = "Opioid infusions allowed"
 
 # ============ CONFIG ============
-REF_LABEL  = "Reference (no sedative or opioid)"
+REF_LABEL  = "Reference (no sedative or opioid infusion)"
 VASO_LABEL = "Vasopressor (within reference)"
 OLD_VASO   = ["Vasopressor, within reference (negative control)"]
 POOLED_ORDER = ["Propofol (± opioid)", "Dexmedetomidine (± opioid)", "Midazolam (± opioid)",
-                "Ketamine (± others)", "Midazolam + propofol (± opioid)", "Opioid only"]
+                "Ketamine (± opioid)", "Midazolam + propofol (± opioid)", "Opioid only"]
 STRATA_ORDER = ["propofol only", "propofol + opioid", "dexmedetomidine only", "dexmedetomidine + opioid",
-                "midazolam only", "midazolam + opioid", "ketamine (+/- others)",
+                "midazolam only", "midazolam + opioid", "ketamine only", "ketamine + opioid",
                 "midazolam + propofol", "midazolam + propofol + opioid",
                 "midazolam + dexmedetomidine", "midazolam + dexmedetomidine + opioid", "opioid only"]
 LEVELS   = [-5, -4, -3, -2, -1, 0]           # -5 to 0, matching the figures
@@ -68,10 +72,20 @@ NOTES = {
     "Table S1": "*Pre-specified inclusion rule: ≥100 observations from ≥20 patients within the "
                 "RASS range analyzed. Strata not meeting it were not modeled.",
     "Table S4": "— = fewer than 30 observations or 10 patients at that RASS level (pre-specified).",
-    "Table X": "Cohort n = observations / patients. Mixed models with a patient random intercept; "
-               "Ce centered at the cohort mean. Opioid = opioid on board (0/1). In the model with the "
-               "interaction, the Ce slope is the slope with no opioid on board. % sedation = variance "
-               "explained by all fixed effects. 1000-resample cluster bootstrap over patients.",
+    "Table S7": "96 scenarios: age 20/50/80/90 years × sex × three body sizes × opioid off/on × two "
+                "dosing schedules (infusion steps; 1 mg/kg bolus + infusion with a second 0.5 mg/kg bolus), "
+                "sampled every 6 s for 300 min. Performance error = 100 × (ours / reference − 1), "
+                "concentrations < 0.05 µg/mL excluded. MDPE = median performance error (bias); "
+                "MDAPE = median absolute performance error (Varvel 1992).",
+    "Table X": "Cohort: observations / patients; median RASS [IQR] across observations. Spearman ρ pooled across observations, same rows as the models; CI from the cluster "
+               "bootstrap. Ce-only mixed models with a patient random intercept. % Ce = variance explained by Ce "
+               "(marginal R²); % between-patient = random-intercept variance; % residual = remaining "
+               "within-patient variance. 1,000-resample cluster bootstrap over patients. Models adding "
+               "opioid exposure: Supplementary Table S6c.",
+    "Table S6c": "Ce expressed as the deviation from the cohort mean; opioid = opioid on board (0/1), as "
+                 "defined in Methods. The opioid shift is at average Ce; in the interaction model, the Ce "
+                 "slope is the slope with no opioid on board. % exposure = variance explained by the Ce and "
+                 "opioid terms together (marginal R²). 95% CIs from a 1,000-resample cluster bootstrap over patients.",
 }
 
 
@@ -168,36 +182,96 @@ def vd_n(text):
 
 
 # ============ TABLE BUILDERS (each returns title, header, rows) ============
+def _expanded():
+    """(text, rows of the 'All models' table, 'obs / patients') for the expanded cohort report."""
+    txt = read_md(EXPANDED_REPORT)
+    m = re.search(r"\*\*([\d,]+) rows, ([\d,]+) patients\*\*", txt or "")
+    return txt, md_section_rows(txt, "All models"), (f"{m.group(1)} / {m.group(2)}" if m else "")
+
+
+def _ci_or_dash(x, d):
+    return est_ci(*parse_ci(x), d) if x.strip() not in ("—", "") else "—"
+
+
+EXP_MODEL_NAMES = {"Ce only": "Ce", "Ce + opioid (no interaction)": "Ce + opioid",
+                   "Sedation block (Ce + opioid + Ce×opioid)": "Ce + opioid + Ce × opioid"}
+
+
+RHO_REPORTS = {"primary": VD_DIR / "rank_correlation_ce_propofol_only.md",
+               "expanded": VD_DIR / "rank_correlation_ce_expanded.md"}
+
+
+def _rho(cohort, outcome):
+    """Spearman rho (95% CI) from the 'All' row of a rank_correlation report; '—' if not run."""
+    txt = read_md(RHO_REPORTS[cohort]) or ""
+    for line in txt.splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) == 5 and cells[0] == "All":
+            return cells[3] if outcome == "NESI" else cells[4]
+    return "—"
+
+
+RASS_MEDIAN_FROM = "observations"   # "observations" or "patients" (median of patient medians)
+
+
+def _median_rass(cohort):
+    """'median RASS −3 (IQR −4 to −2)' from the rank_correlation report's descriptives; '' if absent."""
+    txt = read_md(RHO_REPORTS[cohort]) or ""
+    for line in txt.splitlines():
+        cells = [c.strip() for c in line.strip().strip("|").split("|")]
+        if len(cells) == 3 and cells[0] == "RASS":
+            v = cells[1] if RASS_MEDIAN_FROM == "observations" else cells[2]
+            m = re.match(r"(\S+) \((.+)\)", v)
+            return f"; median RASS {m.group(1)} [{m.group(2)}]" if m else ""
+    return ""
+
+
 def t_main():
-    """Propofol-only cohort (Ce) and expanded cohort (Ce; + opioid; + Ce x opioid), NESI then RASS."""
+    """Ce-only model in both cohorts, NESI then RASS: slope and variance components."""
     txt = read_md(VD_DIR / f"{VD_STEM}.md")
     prim = vd_components(txt, "Variance components: Eleveld Ce")
-    exp_txt = read_md(EXPANDED_REPORT)
-    exp_rows = md_section_rows(exp_txt, "All models")
-    n_prim = vd_n(txt)
-    m = re.search(r"\*\*([\d,]+) rows, ([\d,]+) patients\*\*", exp_txt or "")
-    n_exp = f"{m.group(1)} / {m.group(2)}" if m else ""
-    model_names = {"Ce only": "Ce", "Ce + opioid (no interaction)": "Ce + opioid",
-                   "Sedation block (Ce + opioid + Ce×opioid)": "Ce + opioid + Ce × opioid"}
-    header = ["Outcome", "Cohort", "Model", "Ce slope per µg/mL (95% CI)", "Opioid shift (95% CI)",
-              "Ce × opioid (95% CI)", "% sedation (95% CI)", "% between-patient (95% CI)",
+    _, exp_rows, n_exp = _expanded()
+    header = ["Outcome", "Cohort (observations / patients)", "Spearman ρ with Ce (95% CI)",
+              "Ce slope per µg/mL (95% CI)", "% Ce (95% CI)", "% between-patient (95% CI)",
               "% residual (95% CI)"]
     rows = []
     for o in ("NESI", "RASS"):
         c = prim.get(o, {})
-        rows.append([o, f"{PRIMARY_LABEL} ({n_prim})", "Ce", c.get("slope", ""), "—", "—",
-                     c.get("pct_exposure", ""), c.get("pct_patient", ""), c.get("pct_residual", "")])
-        first = True
-        for cells in exp_rows:
-            if len(cells) < 8 or cells[0] != o:
-                continue
-            ci_or_dash = lambda x, d: est_ci(*parse_ci(x), d) if x.strip() != "—" else "—"
-            rows.append(["", f"Including opioid co-infusion ({n_exp})" if first else "",
-                         model_names.get(cells[1], cells[1]),
-                         ci_or_dash(cells[2], DEC), ci_or_dash(cells[3], DEC), ci_or_dash(cells[4], DEC),
-                         ci_or_dash(cells[5], 1), ci_or_dash(cells[6], 1), ci_or_dash(cells[7], 1)])
-            first = False
+        rows.append([o, f"{PRIMARY_LABEL} ({vd_n(txt)}{_median_rass('primary')})", _rho("primary", o), c.get("slope", ""),
+                     c.get("pct_exposure", ""),
+                     c.get("pct_patient", ""), c.get("pct_residual", "")])
+        ce = next((r for r in exp_rows if len(r) >= 8 and r[0] == o and r[1] == "Ce only"), None)
+        if ce:
+            rows.append(["", f"{EXPANDED_LABEL} ({n_exp}{_median_rass('expanded')})", _rho("expanded", o), _ci_or_dash(ce[2], DEC),
+                         _ci_or_dash(ce[5], 1),
+                         _ci_or_dash(ce[6], 1), _ci_or_dash(ce[7], 1)])
     return "Table X. Propofol exposure–response and variance decomposition", header, rows
+
+
+def t_s6c():
+    _, exp_rows, n_exp = _expanded()
+    if not exp_rows:
+        return None
+    header = ["Outcome", "Model", "Ce slope per µg/mL (95% CI)", "Opioid shift (95% CI)",
+              "Ce × opioid (95% CI)", "% exposure (95% CI)", "% between-patient (95% CI)",
+              "% residual (95% CI)"]
+    rows, last = [], None
+    for r in exp_rows:
+        if len(r) < 8:
+            continue
+        rows.append([r[0] if r[0] != last else "", EXP_MODEL_NAMES.get(r[1], r[1]),
+                     _ci_or_dash(r[2], DEC), _ci_or_dash(r[3], DEC), _ci_or_dash(r[4], DEC),
+                     _ci_or_dash(r[5], 1), _ci_or_dash(r[6], 1), _ci_or_dash(r[7], 1)])
+        last = r[0]
+    obs, pts = (n_exp.split(" / ") + ["", ""])[:2]
+    return (f"Table S6c. Opioid exposure in the cohort with opioid infusions allowed "
+            f"({obs} observations, {pts} patients)", header, rows)
+
+
+def ref_patients(rpt):
+    """Reference-group patients, from the report line 'n = X obs, Y patients' (same as S1)."""
+    m = re.search(r"n = ([\d,]+) obs, ([\d,]+) patients", rpt or "")
+    return m.group(2) if m else ""
 
 
 def t_s1():
@@ -253,9 +327,9 @@ def t_s2():
     if res is None:
         return None
     inter = interaction_rows(rpt)
-    header = ["Stratum", "Patients", "Offset vs reference (95% CI)", "Slope, NESI per RASS point (95% CI)",
-              "Slope difference from reference (95% CI)"]
-    rows = [[REF_LABEL, "", "0", inter.get(REF_LABEL, ("—", ""))[0], "0"]]
+    header = ["Stratum", "Patients", "Offset vs reference, NESI units (95% CI)", "Slope, NESI per RASS point (95% CI)",
+              "Slope difference from reference, NESI per RASS point (95% CI)"]
+    rows = [[REF_LABEL, ref_patients(rpt), "0", inter.get(REF_LABEL, ("—", ""))[0], "0"]]
     order = [s for s in STRATA_ORDER if s in set(res["agent"])] + \
             [s for s in res["agent"] if s not in STRATA_ORDER and s != VASO_LABEL] + [VASO_LABEL]
     for g in order:
@@ -274,12 +348,13 @@ def t_s3():
     ref = read_csv(MODEL_DIR / "ref_slope_main_stratum_full.csv")
     if m is None:
         return None
-    header = ["Group", "Patients", "Offset vs reference (95% CI)", "Slope, NESI per RASS point (95% CI)",
-              "Slope difference from reference (95% CI)"]
+    header = ["Group", "Patients", "Offset vs reference, NESI units (95% CI)", "Slope, NESI per RASS point (95% CI)",
+              "Slope difference from reference, NESI per RASS point (95% CI)"]
     rows = []
     if ref is not None:
         r = ref.iloc[0]
-        rows.append([REF_LABEL, "", "0", est_ci(r["ref_slope"], r["ref_slope_lo"], r["ref_slope_hi"]), "0"])
+        rows.append([REF_LABEL, ref_patients(read_md(MODEL_DIR / "report_stratum_full.md")), "0",
+                     est_ci(r["ref_slope"], r["ref_slope_lo"], r["ref_slope_hi"]), "0"])
     order = [g for g in POOLED_ORDER if g in set(m["agent"])] + [VASO_LABEL]
     for g in order:
         if g not in set(m["agent"]):
@@ -299,13 +374,14 @@ def t_s4():
     for g in [g for g in POOLED_ORDER if g in set(lv["group"])]:
         r = lv[lv["group"] == g].iloc[0]
         rows.append([g] + [col_ci(r, f"level{l}") for l in LEVELS])
-    return "Table S4. Offset vs reference at each RASS level, pooled groups (95% CI)", header, rows
+    return "Table S4. Offset vs reference (NESI units) at each RASS level, pooled groups (95% CI)", header, rows
 
 
 def t_s5(kind):
     runs = [("Primary", MODEL_DIR / "results_stratum_full.csv"),
             ("Capped (p95)", CAP_DIR / "results_stratum_full.csv"),
             ("Strict rule", MODEL_DIR / "results_stratum_strict_full.csv"),
+            ("Running infusions only", MODEL_DIR / "results_stratum_no_washout_full.csv"),
             ("Light sedation (RASS −2 to 0)", MODEL_DIR / "results_stratum_light.csv")]
     data = [(n, read_csv(p)) for n, p in runs]
     data = [(n, d) for n, d in data if d is not None]
@@ -325,7 +401,7 @@ def t_s5(kind):
             row.append(col_ci(r.iloc[0], key) if len(r) else "—")
         rows.append(row)
     if kind == "offset":
-        return "Table S5. Robustness: offset vs reference (95% CI) across analyses", header, rows
+        return "Table S5. Robustness: offset vs reference, NESI units (95% CI), across analyses", header, rows
     return "Table S5b. Robustness: slope, NESI per RASS point (95% CI) across analyses", header, rows
 
 
@@ -351,7 +427,7 @@ def t_s6():
 
 def t_s6b():
     rows = []
-    for label, f in (("Primary", VD_DIR / f"{VD_STEM}_within_between.md"),):
+    for label, f in ((PRIMARY_LABEL, VD_DIR / f"{VD_STEM}_within_between.md"),):
         txt = read_md(f)
         if txt is None:
             continue
@@ -363,6 +439,33 @@ def t_s6b():
     header = ["Cohort", "Outcome", "Within-patient slope per µg/mL (95% CI)",
               "Between-patient slope per µg/mL (95% CI)", "Between − within (95% CI)"]
     return "Table S6b. Within- and between-patient propofol Ce slopes", header, rows
+
+
+def t_s7():
+    a = read_csv(PAS_AGREEMENT)
+    if a is None:
+        return None
+    label = {"all": "All samples", "infusion": "Infusion only", "bolus_infusion": "Bolus + infusion",
+             "opioid=False": "Opioid off", "opioid=True": "Opioid on"}
+    # Effect-site concentration (Ce) only: it is the exposure used in every analysis. Plasma (Cp)
+    # agreement is summarized in the note, from the all-samples row.
+    header = ["Subset", "MDPE (%)", "MDAPE (%)", "95th percentile |error| (%)", "Maximum |error| (%)",
+              "Maximum |error| (µg/mL)", "Samples"]
+    pct = lambda x: f"{x:.3f}".replace("-", MINUS)
+    rows = []
+    for _, r in a.iterrows():
+        rows.append([label.get(str(r["subset"]), str(r["subset"])),
+                     pct(r["ce_MDPE_%"]), pct(r["ce_MDAPE_%"]), pct(r["ce_P95_abs_%"]), pct(r["ce_max_abs_%"]),
+                     f"{r['ce_max_abs_ugml']:.4f}", f"{int(r['ce_n']):,}"])
+    allr = a[a["subset"].astype(str) == "all"]
+    if len(allr) and "cp_MDAPE_%" in a.columns:
+        r = allr.iloc[0]
+        NOTES["Table S7"] = NOTES["Table S7"].split(" Plasma")[0] + (
+            f" Plasma concentration (Cp) agreed similarly (MDAPE {pct(r['cp_MDAPE_%'])}%, "
+            f"maximum |error| {pct(r['cp_max_abs_%'])}%).")
+    return ("Table S7. Eleveld implementation verification against python-anesthesia-simulator: "
+            "effect-site concentration",
+            header, rows)
 
 
 # ============ WORD OUTPUT ============
@@ -405,7 +508,8 @@ def write_docx(tables, path):
 
 
 def main():
-    builders = [t_main, t_s1, t_s2, t_s3, t_s4, lambda: t_s5("offset"), lambda: t_s5("slope"), t_s6, t_s6b]
+    builders = [t_main, t_s1, t_s2, t_s3, t_s4, lambda: t_s5("offset"), lambda: t_s5("slope"), t_s6, t_s6b,
+                t_s6c, t_s7]
     tables = []
     for b in builders:
         t = b()

@@ -15,11 +15,13 @@ Exposure rule (same "on board" logic for every class, at the RASS time):
   Vasopressors are ignored for strata; used only as a negative control in the reference group.
 
 Strata (one per observation):
-  no sedative or opioid           nothing on board from any class (reference)
+  no sedative or opioid           no sedative or opioid infusion, no intermittent benzo dose (reference;
+                                  intermittent opioid doses allowed under the primary rule)
   <agent> only / <agent> + opioid infusion-based combinations
   midazolam + propofol (+/- opioid), midazolam + dexmedetomidine (+/- opioid)
-  ketamine (+/- others)           any ketamine infusion
-  other combinations              any other mix of infusions
+  ketamine only / ketamine + opioid   ketamine infusion with no other sedative infusion
+  other combinations              any other mix of sedative infusions (incl. ketamine with another
+                                  sedative) -> excluded
   intermittent dose involved      primary: a benzo dose on board without a midazolam infusion -> excluded
                                   (intermittent opioid doses ignored; opioids classified by infusion)
                                   strict sensitivity: a benzo or opioid dose without its infusion
@@ -90,6 +92,15 @@ RECON = {
                   "inf_now": "ketamine_inf_now"},
 }
 
+# Infusion look-back (decided Nov 2): an infusion counts if running at the assessment OR stopped
+# within the prior 6 h, so residual drug effect is treated like an intermittent fast-acting dose
+# (6 h). "now" = running at the assessment only (the original rule, kept as a sensitivity analysis:
+# column stratum_no_washout). Requires <drug>_inf_6h columns from add_sedation_windows_opiates.py.
+INFUSION_LOOKBACK = "6h"
+INF_KEYS = {"prop": "propofol", "dex": "dexmedetomidine", "ket": "ketamine",
+            "midaz": "midazolam", "op_inf": "opioid"}
+INF_COLS = {lb: {k: f"{d}_inf_{lb}" for k, d in INF_KEYS.items()} for lb in ("now", INFUSION_LOOKBACK)}
+
 MIN_OBS = 100        # pre-specified
 MIN_PATIENTS = 20
 
@@ -150,7 +161,13 @@ nesi_use = list(NESI_COLS.values()) + [SESSION_COL] + \
 nesi = read_table(NESI_CSV, usecols=nesi_use, low_memory=False)
 win_head = read_table(WINDOWS_CSV, nrows=0).columns.tolist()
 recon_cols = [c for drug in RECON.values() for c in drug.values() if c in win_head]
-win = read_table(WINDOWS_CSV, usecols=list(dict.fromkeys(list(WIN_COLS.values()) + recon_cols)),
+lookback_cols = [c for lb in INF_COLS.values() for c in lb.values()]
+missing_lb = [c for c in lookback_cols if c not in win_head]
+if missing_lb:
+    sys.exit(f"Windows file is missing infusion look-back columns: {missing_lb}\n"
+             "(rerun add_sedation_windows_opiates.py)")
+win = read_table(WINDOWS_CSV, usecols=list(dict.fromkeys(list(WIN_COLS.values()) + recon_cols
+                                                          + lookback_cols)),
                  low_memory=False)
 
 for d, c in [(nesi, NESI_COLS), (win, WIN_COLS)]:
@@ -221,35 +238,40 @@ print(f"Rows without a propofol infusion: {pct_no_prop:.1f}%"
 # ----------------------------------------------------------------------
 # 3. Strata
 # ----------------------------------------------------------------------
-flag_cols = [WIN_COLS[k] for k in ["propofol", "dex", "ketamine", "midaz_inf",
-                                   "benzo_obb", "opioid_inf", "opioid_obb"]]
-unknown = df[flag_cols].isna().any(axis=1)
-f = df[flag_cols].fillna(0).astype(int)
-f.columns = ["prop", "dex", "ket", "midaz", "benzo", "op_inf", "op"]
+def flags(lookback):
+    """0/1 flags per assessment. Infusions use the given look-back ("now" or e.g. "6h");
+    benzo/opioid on board (intermittent doses: fast-acting 6 h, slow-acting 12 h) unchanged."""
+    cols = INF_COLS[lookback]
+    use = [cols["prop"], cols["dex"], cols["ket"], cols["midaz"], WIN_COLS["benzo_obb"],
+           cols["op_inf"], WIN_COLS["opioid_obb"]]
+    unk = df[use].isna().any(axis=1)
+    fl = df[use].fillna(0).astype(int)
+    fl.columns = ["prop", "dex", "ket", "midaz", "benzo", "op_inf", "op"]
+    # an infusion within the look-back is not an intermittent dose
+    fl["benzo"] = fl["benzo"] | fl["midaz"]
+    fl["op"] = fl["op"] | fl["op_inf"]
+    return fl, unk
+
 
 # PRIMARY rule: opioids by infusion only (intermittent opioid doses ignored, as in the
 #   propofol cohort; expanded-cohort analysis showed opioids add little).
 #   Intermittent BENZO doses still exclude (they would contaminate the reference group).
 # SENSITIVITY rule ("strict"): intermittent benzo OR opioid doses exclude.
-benzo_intermittent = (f["benzo"] == 1) & (f["midaz"] == 0)
-opioid_intermittent = (f["op"] == 1) & (f["op_inf"] == 0)
-INTERMITTENT = {"primary": benzo_intermittent,
-                "strict": benzo_intermittent | opioid_intermittent}
-
-NAMES = {"prop": "propofol", "dex": "dexmedetomidine", "midaz": "midazolam"}
+# Infusions: running now or stopped within INFUSION_LOOKBACK (primary); "now" only = sensitivity.
+NAMES = {"prop": "propofol", "dex": "dexmedetomidine", "midaz": "midazolam", "ket": "ketamine"}
 
 
-def assign(i, rule="primary"):
+def assign(i, f, unknown, rule="primary"):
+    benzo_intermittent = (f["benzo"].iat[i] == 1) and (f["midaz"].iat[i] == 0)
+    opioid_intermittent = (f["op"].iat[i] == 1) and (f["op_inf"].iat[i] == 0)
     if unknown.iat[i]:
         return "unknown medication status"
-    if INTERMITTENT[rule].iat[i]:
+    if benzo_intermittent or (rule == "strict" and opioid_intermittent):
         return "intermittent dose involved"
     on = [k for k in ["prop", "dex", "midaz", "ket"] if f[k].iat[i] == 1]
     op = f["op_inf"].iat[i] == 1
     if not on and not op:
         return "no sedative or opioid"
-    if "ket" in on:
-        return "ketamine (+/- others)"
     if not on and op:
         return "opioid only"
     if len(on) == 1:
@@ -261,15 +283,22 @@ def assign(i, rule="primary"):
     return "other combinations"
 
 
-df["stratum"] = [assign(i, "primary") for i in range(len(df))]
-df["stratum_strict"] = [assign(i, "strict") for i in range(len(df))]
+f_lb, unk_lb = flags(INFUSION_LOOKBACK)
+f_now, unk_now = flags("now")
+df["stratum"] = [assign(i, f_lb, unk_lb, "primary") for i in range(len(df))]
+df["stratum_strict"] = [assign(i, f_lb, unk_lb, "strict") for i in range(len(df))]
+df["stratum_no_washout"] = [assign(i, f_now, unk_now, "primary") for i in range(len(df))]
+moved = (df["stratum"] != df["stratum_no_washout"])
+print(f"\nInfusion look-back {INFUSION_LOOKBACK}: {int(moved.sum()):,} of {len(df):,} assessments "
+      f"({100 * moved.mean():.1f}%) change stratum vs infusion-running-now only")
+print(pd.crosstab(df.loc[moved, "stratum_no_washout"], df.loc[moved, "stratum"]).to_string())
 
 ORDER = ["no sedative or opioid", "propofol only", "dexmedetomidine only",
          "midazolam only", "opioid only", "propofol + opioid",
          "dexmedetomidine + opioid", "midazolam + opioid",
          "midazolam + propofol", "midazolam + propofol + opioid",
          "midazolam + dexmedetomidine", "midazolam + dexmedetomidine + opioid",
-         "ketamine (+/- others)", "other combinations",
+         "ketamine only", "ketamine + opioid", "other combinations",
          "intermittent dose involved", "unknown medication status"]
 EXCLUDED = {"intermittent dose involved", "unknown medication status"}
 
@@ -301,6 +330,7 @@ def count_table(col):
 
 counts = count_table("stratum")
 counts_strict = count_table("stratum_strict")
+counts_no_washout = count_table("stratum_no_washout")
 
 dist = (pd.crosstab(df["stratum"], df[rass], normalize="index") * 100).round(1)
 dist = dist.reindex([s for s in ORDER if s in dist.index])
@@ -369,14 +399,15 @@ ANALYSIS_ROWS = OUT_DIR / "strata_analysis_rows.csv"
 df["dup_patient"] = df["_pid"].isin(dup_pids).astype(int)
 print(f"Rows from patients with overlapping EEG files: {int(df['dup_patient'].sum()):,} "
       f"of {len(df):,}")
-df[["_pid", "_t", NESI_COLS["nesi"], rass, "stratum", "stratum_strict", WIN_COLS["vaso"],
-    "dup_patient"]].rename(
+df[["_pid", "_t", NESI_COLS["nesi"], rass, "stratum", "stratum_strict", "stratum_no_washout",
+    WIN_COLS["vaso"], "dup_patient"]].rename(
     columns={NESI_COLS["nesi"]: "nesi", rass: "rass", WIN_COLS["vaso"]: "vaso"}
 ).to_csv(ANALYSIS_ROWS, index=False)
 print(f"\nAnalysis rows saved for the model script:\n  {ANALYSIS_ROWS.resolve()}")
 
 counts.to_csv(OUT_DIR / "strata_counts_rass.csv", index=False)
 counts_strict.to_csv(OUT_DIR / "strata_counts_rass_strict.csv", index=False)
+counts_no_washout.to_csv(OUT_DIR / "strata_counts_rass_no_washout.csv", index=False)
 dist.to_csv(OUT_DIR / "strata_rass_distribution_pct.csv")
 lvl_obs.to_csv(OUT_DIR / "strata_rass_level_obs.csv")
 lvl_pat.to_csv(OUT_DIR / "strata_rass_level_patients.csv")
@@ -390,10 +421,13 @@ with open(OUT_DIR / "stratified_feasibility_report.md", "w") as fh:
         fh.write("Reasons NESI could not be calculated:\n\n"
                  + reasons.rename("n").to_frame().to_markdown() + "\n\n")
     fh.write(f"Rule (pre-specified): >= {MIN_OBS} observations and >= {MIN_PATIENTS} patients.\n\n")
+    fh.write(f"Infusions count if running at the assessment or stopped within {INFUSION_LOOKBACK}.\n\n")
     fh.write("## Primary rule: opioids by infusion only; intermittent benzo doses exclude\n\n")
     fh.write(counts.to_markdown(index=False) + "\n\n")
     fh.write("## Sensitivity (strict): intermittent benzo or opioid doses exclude\n\n")
     fh.write(counts_strict.to_markdown(index=False) + "\n\n")
+    fh.write("## Sensitivity (no washout): infusions count only if running at the assessment\n\n")
+    fh.write(counts_no_washout.to_markdown(index=False) + "\n\n")
     fh.write("## RASS distribution within stratum (% of obs)\n\n" + dist.to_markdown() + "\n\n")
     fh.write("## Observations at each RASS level\n\n" + lvl_obs.to_markdown() + "\n\n")
     fh.write("## Distinct patients at each RASS level\n\n" + lvl_pat.to_markdown() + "\n\n")

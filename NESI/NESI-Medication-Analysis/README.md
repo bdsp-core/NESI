@@ -9,46 +9,82 @@ This repository contains the analysis code for the medication analysis. It is or
 2. **Medication exposure summary** — extracts, classifies, and summarizes
    medication exposure across the four BDSP cohorts (I0001 GCS, I0001
    RASS, I0001 CAMS, I0002 GCS), producing Table 1 of the manuscript.
-3. **Data in eleveld-pk-analysis and medication-exposure** - Data is uploaded in AWS. Please download using terminal via the command:
-
-   Example:
-   aws s3 cp \
-   s3://bdsp-opendata-credentialed/yama/NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/ \
-   /home/ayush/Desktop/GitHub-YAMA/NESI/NESI-Medication-Analysis/eleveld-pk-analysis/data/ \
-   --recursive
-
-   aws s3 cp \
-   s3://bdsp-opendata-credentialed/yama/NESI/NESI-Medication-Analysis/medication-exposure/data/ \
-   /home/ayush/Desktop/GitHub-YAMA/NESI/NESI-Medication-Analysis/medication-exposure/data/ \
-   --recursive
 
 The two pipelines are independent and share no runtime state, but both
 analyze patients drawn from the same source cohorts.
+
+3. **Sedation-stratified analysis** (added in revision) — relates NESI to RASS
+   within sedation strata (agent and opioid co-infusion), and builds the
+   sedation labels used for the performance and mortality analyses.
+
+## Revision analyses: run order
+
+The revision added analyses to Pipelines 1 and 2 and a new Pipeline 3.
+Each runner calls the same scripts with command-line flags, so no settings
+are edited by hand; running a script with no flags gives the primary
+analysis. Add `--n-boot 2` to any runner for a quick smoke test.
+
+| Step | Run (from the folder shown) | Produces |
+|---|---|---|
+| 1 | `eleveld-pk-analysis/validate_eleveld_vs_pas.py` | Eleveld implementation verification vs PAS (supplement) |
+| 2 | `eleveld-pk-analysis/eleveld_run_cohort_expanded.py` | Expanded propofol cohort (opioids allowed) with Ce |
+| 3 | `medication-exposure/add_sedation_windows_opiates.py` | Sedative, opioid and vasopressor exposure flags per assessment |
+| 4 | `eleveld-pk-analysis/run_variance_all.py` | Propofol exposure–response: primary, sensitivity, within/between, cohort with opioid infusions allowed, Spearman ρ and cohort descriptives |
+| 5 | `sedation-strata/run_stratified_all.py` | Strata, sedation labels, stratified models and sensitivities, all tables and figures |
+
+Step 5 reads the reports written by step 4, so run them in this order.
+Approximate run times at 1000 bootstrap resamples: step 4, several hours;
+step 5, several hours (three model runs). Steps 1–3 take minutes.
 
 ## Repository structure
 
     NESI-Medication_Analysis/
     ├── README.md                                 (this file)
-    ├── eleveld-pk-analysis/                      (Pipeline 1)
-    │   ├── path_configs.py
+    ├── CHANGES_since_Nov1.md                     (what changed in the Nov 3 update)
+    ├── requirements.txt                          (exact package versions; from write_requirements.py)
+    ├── write_requirements.py
+    ├── eleveld-pk-analysis/                      (Pipeline 1; paths from medication-exposure/med_config.py)
     │   ├── (analysis scripts at top level)
     │   ├── data/
     │   └── outputs/
-    └── medication-exposure/                      (Pipeline 2)
-        ├── med_config.py
-        ├── (analysis scripts at top level)
-        └── data/
+    ├── medication-exposure/                      (Pipeline 2)
+    │   ├── med_config.py
+    │   ├── (analysis scripts at top level)
+    │   └── data/
+    └── sedation-strata/                          (Pipeline 3, revision)
+        ├── (analysis scripts; paths from medication-exposure/med_config.py)
+        └── data/                                 (full-cohort NESI file, from BDSP)
+
+## Configuration
+
+All three pipelines read paths from one file, `medication-exposure/med_config.py`
+(copy `med_config_template.py`, fill in the TODOs, and save it as
+`med_config.py`). Scripts in `eleveld-pk-analysis/` and `sedation-strata/`
+find it automatically.
 
 ## Requirements
 
-Python 3.10+ recommended.
+Python 3.10+ recommended. Exact package versions used for the paper are in
+`requirements.txt` (`pip install -r requirements.txt`); mixed-model fits can
+differ in the last decimal across statsmodels/scipy versions, so use these
+versions to reproduce the reported numbers exactly. `write_requirements.py`
+regenerates the file from the installed packages.
 
 Common packages: `pandas`, `numpy`, `scipy`, `statsmodels`, `duckdb`,
-`matplotlib`, `python-docx`, `pyarrow`.
+`matplotlib`, `python-docx`, `pyarrow`, `joblib`.
 
 Install with:
 
-    pip install pandas numpy scipy statsmodels duckdb matplotlib python-docx pyarrow
+    pip install pandas numpy scipy statsmodels duckdb matplotlib python-docx pyarrow joblib
+
+For the Eleveld verification (`validate_eleveld_vs_pas.py`) only:
+
+    pip install control
+    pip install python-anesthesia-simulator --no-deps
+
+Figures use the DejaVu Sans font (bundled with matplotlib). To edit the SVG
+figures in Illustrator, install DejaVuSans.ttf and DejaVuSans-Oblique.ttf
+from matplotlib's `mpl-data/fonts/ttf` folder.
 
 The `python-docx` package is imported as `docx` — do NOT install the
 unrelated `docx` package (Python 2 only).
@@ -70,20 +106,15 @@ concentration (Ce) and two measures of sedation depth:
 - **RASS** (Richmond Agitation-Sedation Scale) — clinical assessment
 - **NESI** — EEG-derived encephalopathy/sedation index
 
-Uses Spearman correlations with paired patient-clustered bootstrap, and
-mixed-effects models with patient as a random intercept for variance
-decomposition.
+Uses mixed-effects models with patient as a random intercept for variance
+decomposition, with patient-clustered bootstrap confidence intervals.
 
 ## What's in `eleveld-pk-analysis/`
 
     eleveld-pk-analysis/
-    ├── path_configs.py                                (path resolution; no edits needed)
     ├── eleveld_propofol.py                            (Eleveld 2018 PK model implementation)
-    ├── eleveld_run_cohort.py                          (runs PK simulation across the cohort)
-    ├── eleveld_cohort_sanity_checks.py                (validates Cp/Ce values behave correctly)
-    ├── plot_eleveld_one_patient.py                    (per-patient overview plots)
-    ├── nesi_vs_rass_correlation_comparison.py         (headline correlation numbers)
-    ├── variance_decomposition_eleveld_ce_vs_pump.py   (headline variance components)
+    ├── eleveld_run_cohort_expanded.py                 (runs PK simulation across the cohort; both cohort flags)
+    ├── variance_decomposition_eleveld_ce_vs_pump.py   (variance components; see revision additions)
     ├── data/                                          (de-identified inputs)
     └── outputs/                                       (populated by running scripts)
 
@@ -93,30 +124,26 @@ All files in `eleveld-pk-analysis/data/` are de-identified. Patient
 identifiers (`BDSPPatientID`) and timestamps have been stripped of links
 to real individuals.
 
-- `wt_ht_per_hosp_FULL_with_eleveld.csv` — one row per RASS observation; includes demographics, propofol-only flag, NESI, RASS, Eleveld-predicted Cp/Ce columns
+- `wt_ht_per_hosp_FULL_with_eleveld_expanded.csv` — one row per RASS observation; includes demographics, cohort flags (`propofol_only_recomputed` for the propofol-only cohort, `propofol_no_other_sedative` for the expanded cohort with opioids allowed), NESI, RASS, Eleveld-predicted Cp/Ce columns
 - `sedative_exposures/propofol_intervals.csv` — propofol infusion intervals
-- `sedative_exposures/propofol_boluses.csv` — propofol bolus events
-- `eleveld_timeseries.parquet` — per-patient Cp/Ce time series (~1 GB; required for sanity checks and per-patient plots)
+- `sedative_exposures/propofol_boluses.csv` — propofol bolus events. Extracted in May 2026 with an earlier version of the bolus extraction (before boluses were split by route into `_iv` / `_non_iv` files in Pipeline 2); shipped as a fixed input, so Ce values reproduce exactly.
+- `eleveld_timeseries_expanded.parquet` — per-patient Cp/Ce and infusion-rate time series (~1 GB; required for the pump-rate analysis)
 
 ## How to run
 
-From `eleveld-pk-analysis/`:
+All scripts read paths from `medication-exposure/med_config.py`; fill it in
+first (see Pipeline 2, "Before you run anything"). Then, from
+`eleveld-pk-analysis/`:
 
-    python path_configs.py    # verify paths
+    python eleveld_run_cohort_expanded.py    # only to regenerate Cp/Ce
+    python run_variance_all.py               # variance analyses, primary and sensitivity
 
-Then run the headline-results scripts:
-
-    python nesi_vs_rass_correlation_comparison.py
-    python variance_decomposition_eleveld_ce_vs_pump.py
-
-The variance decomposition takes ~2 hours due to the paired bootstrap. The
-correlation comparison runs in a few minutes. Sanity checks and per-patient
-plots can be run separately and are fast.
+See "Revision additions to Pipeline 1" below for what each step produces.
 
 ## Key analytic choices
 
 - **Effect-site (Ce) vs plasma (Cp)**: All analyses use Ce. Cp doesn't account for the blood-brain equilibration delay that produces hysteresis between concentration and clinical effect.
-- **Intersection cohort for headline numbers**: The Spearman comparison and variance decomposition both restrict to rows where Ce, NESI, and RASS (in [−5, 0]) are all simultaneously available. This enables direct apples-to-apples comparison of the two outcomes.
+- **Intersection cohort**: The variance decomposition restricts to rows where Ce, NESI, and RASS (in [−5, 0]) are all simultaneously available, so NESI and RASS are analyzed on the same observations.
 - **Cohort restriction**: Rows flagged `propofol_only=True` (no concurrent sedatives or opioids within ±12h of the EEG) are used.
 - **Patient clustering**: All inferential statistics use patient-clustered bootstrap (1000 iterations).
 - **RASS restrictions**: Positive RASS values (agitation, +1 to +4) are excluded; agitation in this population is typically driven by delirium, withdrawal, or under-sedation rather than direct propofol response.
@@ -128,14 +155,87 @@ plots can be run separately and are fast.
 > *British Journal of Anaesthesia*. 2018;120(5):942-959.
 > https://doi.org/10.1016/j.bja.2018.01.018
 
-The implementation in `eleveld_propofol.py` is hand-rolled and was validated against the SimTIVA reference values.
+The implementation in `eleveld_propofol.py` is hand-rolled and was verified against an independent implementation (python-anesthesia-simulator) across 96 scenarios (`validate_eleveld_vs_pas.py`; see below).
 
 ## Reproducibility scope
 
-The shipped `wt_ht_per_hosp_FULL_with_eleveld.csv` is the canonical starting point. To regenerate it:
+The shipped `wt_ht_per_hosp_FULL_with_eleveld_expanded.csv` is the canonical starting point. To regenerate it:
 
-- `eleveld_run_cohort.py` reads the shipped wt_ht CSV (demographics/timestamp columns only), regenerates Cp/Ce, and writes a parallel `_REGENERATED` file. ~30 minutes.
+- `eleveld_run_cohort_expanded.py` regenerates Cp/Ce across the cohort and writes the expanded CSV (both cohort flags) and the time-series parquet.
 - Cohort assembly and de-identification from raw EHR data is described in the manuscript methods.
+
+
+## Revision additions to Pipeline 1
+
+Like the rest of Pipeline 1, these scripts read paths from
+`medication-exposure/med_config.py` (keys `OUTPUT_CSV`, `OUTPUT_PARQUET`,
+`I0001_ASM_ANTIPSYCH_DIR`, `ELEVELD_VALIDATION_DIR`).
+
+    eleveld-pk-analysis/
+    ├── validate_eleveld_vs_pas.py                     (implementation verification vs PAS)
+    ├── variance_decomposition_eleveld_ce_vs_pump.py   (updated: --exclude-intermittent, --within-between)
+    ├── variance_decomposition_expanded_opioid.py      (cohort with opioid infusions allowed, opioid terms)
+    ├── rank_correlation.py                            (Spearman ρ and cohort descriptives; called with --correlations)
+    ├── propofol_benzo_count.py                        (counts of intermittent doses in the propofol cohort)
+    └── run_variance_all.py                            (runs the six variance steps in order)
+
+**Eleveld verification.** `validate_eleveld_vs_pas.py` compares
+`eleveld_propofol.py` with an independent Eleveld 2018 implementation
+(python-anesthesia-simulator, PAS) across 96 scenarios: age (20, 50, 80, 90)
+× sex × three body sizes × opioid flag × two dosing schedules (infusion
+steps; bolus plus infusion with a second bolus). Cp and Ce are sampled every
+6 s. Agreement is summarized as median performance error (MDPE, bias) and
+median absolute performance error (MDAPE) with PAS as reference (Varvel
+1992), plus the 95th percentile and maximum absolute error. Outputs in
+`ELEVELD_VALIDATION_DIR`: `eleveld_vs_pas_report.md`,
+`eleveld_vs_pas_agreement.csv`, `eleveld_vs_pas_summary.csv`,
+`eleveld_vs_pas_timeseries.csv`, `eleveld_vs_pas_overlay.png`.
+
+**Variance analyses.** `run_variance_all.py` runs, in order:
+
+| Step | Command | Report (in `OUTPUT_PARQUET`) |
+|---|---|---|
+| 1 Primary (Ce and pump rate) | `variance_decomposition_eleveld_ce_vs_pump.py` | `variance_decomposition_eleveld_ce_vs_pump_v3.md` |
+| 2 Excluding intermittent benzodiazepine or opioid doses | `... --exclude-intermittent` | `..._v3_no_intermittent.md` |
+| 3 Within- vs between-patient Ce | `... --within-between` | `..._v3_within_between.md` |
+| 4 Cohort with opioid infusions allowed | `variance_decomposition_expanded_opioid.py` | `variance_decomposition_expanded_opioid_v3.md` |
+| 5 Spearman ρ and cohort descriptives, propofol only | `variance_decomposition_eleveld_ce_vs_pump.py --correlations` | `rank_correlation_ce_propofol_only.md` |
+| 6 Spearman ρ and cohort descriptives, opioid infusions allowed | `variance_decomposition_expanded_opioid.py --correlations` | `rank_correlation_ce_expanded.md` |
+
+Smoke tests (`--n-boot` below 100) write `_smoke` reports and never overwrite
+the real ones. The step 1 report includes a **cohort flow** table (observations
+and patients after each restriction: propofol-only window, Ce simulated, RASS
+−5 to 0, NESI available, pump rate and weight available, ≥5 observations per
+patient); comparing it between machines identifies any difference in input files.
+
+    python run_variance_all.py               # all six, 1000 resamples each
+    python run_variance_all.py --n-boot 2    # smoke test
+    python run_variance_all.py --only 3      # one step
+
+Key analytic choices (revision):
+
+- **Intermittent doses**: a dose is "on board" if a fast-acting route (IV,
+  PCA, IM, intranasal) was given within 6 h or a slow-acting route (PO, SL,
+  SQ, rectal, transdermal, buccal) within 12 h, looking backward only. Step 2
+  excludes observations with an intermittent benzodiazepine dose (no
+  midazolam infusion) or intermittent opioid dose (no opioid infusion) on
+  board, before the ≥5 observations/patient filter.
+- **Within/between decomposition**: outcome ~ Ce_within + Ce_between +
+  (1 | patient), where Ce_between is the patient's mean Ce and Ce_within the
+  deviation from it. Same rows and bootstrap seed as step 1.
+- **Expanded cohort**: propofol with no other sedative infusion, opioid
+  infusions allowed (`propofol_no_other_sedative`). Opioid covariate =
+  `opioid_on_board`. Models: Ce only; Ce + opioid; Ce + opioid + Ce × opioid,
+  with Ce centered at the cohort mean (in the interaction model the Ce slope
+  is the slope with no opioid on board). Opioid on board (`_v3`) = opioid
+  infusion running or stopped within the prior 6 h, or an intermittent dose
+  on board (6 h / 12 h rule). Bootstrap resamples run in parallel.
+- **Spearman ρ**: pooled across observations on the same rows as the variance
+  decomposition, with a cluster-bootstrap CI (same resample for NESI and
+  RASS); also reported for Ce > 0. Cohort descriptives: median (IQR) of RASS,
+  NESI and Ce across observations and across patient medians.
+- **Variance shares** are reported descriptively for NESI and RASS; no test
+  of the NESI − RASS difference is used in the paper.
 
 ---
 
@@ -319,6 +419,13 @@ that file to point at your local directories. Required keys:
     # Shared
     DUCKDB_TEMP_DIR
 
+    # Revision analyses (Pipelines 1 and 3, exposure windows)
+    OUTPUT_CSV                          # Eleveld outputs: wt_ht_..._expanded.csv
+    OUTPUT_PARQUET                      # eleveld_timeseries_expanded.parquet; variance reports
+    ELEVELD_VALIDATION_DIR              # outputs of validate_eleveld_vs_pas.py
+    VASOPRESSOR_EXPOSURE_DIR            # I0001 vasopressor intervals (add_sedation_windows_opiates.py)
+    I0001_CAMS_VASOPRESSOR_EXPOSURE_DIR # I0001 CAMS vasopressor intervals
+
 ## How to run
 
 ### Reproduce from S3 extraction (requires BDSP S3 access)
@@ -393,11 +500,153 @@ These numbers are intended to be pasted into the methods section.
 - **I0002 infusion data**: Reliable infusion rate data are not available in the I0002 cohort's medication records. Infusion-based exposure categories (sedative infusion, opiate infusion, and per-drug subcategories) are reported as "—" rather than as counts in the I0002 GCS column of Table 1.
 - **Table 1 denominators**: The header row of each Table 1 section shows `n_with_med / n_with_NESI (pct%)` — among patients with NESI values, the proportion with medication data. Subsequent category rows show `n_exposed (pct%)` where the denominator is `n_with_med`. This distinguishes "no exposure" from "no data available."
 
+
+## Revision addition to Pipeline 2: exposure windows
+
+`add_sedation_windows_opiates.py` adds time-windowed exposure flags to the
+per-EEG master exposure files (I0001 GCS+RASS and I0001 CAMS; I0002 is
+skipped because it has no reliable infusion data). Windows are anchored to
+the assessment time t and look backward only:
+
+- `now`: infusion running at t (zero-rate intervals not counted); `6h`, `12h`, `24h`: any exposure in [t − window, t]
+- Infusions: sedatives (propofol, midazolam, dexmedetomidine, ketamine), opioids (fentanyl, hydromorphone, morphine), vasopressors (phenylephrine; other vasopressors; any vasopressor)
+- Intermittent doses: opioid and benzodiazepine fast-acting (IV, PCA, IM, intranasal) and slow-acting (PO, SL, SQ, rectal, transdermal, buccal) doses, 6/12/24 h
+- `opioid_on_board`, `benzo_on_board`: infusion running at t, OR fast-acting dose in the prior 6 h, OR slow-acting dose in the prior 12 h
+
+Writes `<master>_windows_opiates.csv` next to each master file, e.g.
+`I0001_ASM_ANTIPSYCH_DIR/i0001_per_eeg_master_exposure_windows_opiates.csv`.
+The 24 h columns are checked against the existing 24 h exposure columns and
+the agreement is printed. Read-only on inputs; run after
+`run_all_pipelines_meds.py`.
+
+    python add_sedation_windows_opiates.py
+
 ## Limitations
 
 - **Missing MAR data**: A subset of patients in each cohort had no medication administration records. They receive NA (not 0) in exposure columns and are excluded from the denominators in Table 1.
 - **ICANS cohort excluded**: The ICANS cohort had >50% missing MAR records and was excluded from medication exposure analysis. ICANS is described elsewhere in the paper.
 - **I0002 infusion data**: As noted above, infusion-rate data are not extractable from I0002 medication records.
+
+
+---
+
+# Pipeline 3: Sedation-stratified analysis (revision)
+
+Relates NESI to RASS within sedation strata, to show how the NESI–RASS
+relationship behaves under each sedative and opioid combination, and
+writes the sedation labels used for the performance-by-sedation and
+mortality analyses.
+
+## What's in `sedation-strata/`
+
+    sedation-strata/
+    ├── build_strata.py              (NESI + exposure flags -> stratum for each RASS assessment)
+    ├── build_strata_labels.py       (sedation labels for every RASS, GCS and CAM-S assessment)
+    ├── agent_stratified_model.py    (mixed models, cluster bootstrap, reports and figures)
+    ├── obs_distribution.py          (observations per patient; used to set the cap K)
+    ├── build_tables.py              (main-text propofol table + Supplementary Tables S1–S6)
+    ├── md_to_html.py                (HTML copies of the model reports)
+    ├── run_stratified_all.py        (runs everything in order)
+    └── data/                        (full-cohort NESI file; download from BDSP)
+
+Paths come from `medication-exposure/med_config.py` (`OUTPUT_CSV`,
+`OUTPUT_PARQUET`, `I0001_ASM_ANTIPSYCH_DIR`). Before the first run, set
+`NESI_CSV` at the top of `build_strata.py` to the full-cohort NESI file.
+Outputs go to `I0001_ASM_ANTIPSYCH_DIR/stratified_feasibility/`.
+
+Inputs:
+
+- **Full-cohort NESI file** (`NESI_CSV`; place in `sedation-strata/data/`) — one row per RASS assessment per
+  EEG session, with `BDSPPatientID`, `RASSRecordedDTS`, `NESI` and
+  `SessionID`. Same NESI model output as `RASS_NESI_lookup.csv` (Pipeline 2),
+  but with one row per session, so RASS times covered by two overlapping EEG
+  files can be identified; `build_strata.py` drops those with discordant
+  values. `RASS_NESI_lookup.csv` is used only to filter Table 1.
+- **Exposure flags** — `i0001_per_eeg_master_exposure_windows_opiates.csv`
+  from `add_sedation_windows_opiates.py` (Pipeline 2).
+
+## How to run
+
+    python run_stratified_all.py               # everything, 1000 resamples per model run
+    python run_stratified_all.py --n-boot 2    # smoke test
+    python run_stratified_all.py --only 7 8    # rebuild tables and HTML only
+
+| Step | Command | Output |
+|---|---|---|
+| 1 | `build_strata.py` | `strata_analysis_rows.csv` (one row per RASS assessment, with stratum) |
+| 2 | `build_strata_labels.py` | `labels/strata_labels_{rass,gcs,cams}.csv`, label counts |
+| 3 | `agent_stratified_model.py` | primary models: `model/` (results, reports, figures) |
+| 4 | `agent_stratified_model.py --cap p95` | cap sensitivity: `model/cap_p95/` |
+| 5 | `agent_stratified_model.py --strata strict` | strict-rule sensitivity: `model/*_stratum_strict_*` |
+| 6 | `agent_stratified_model.py --strata no_washout` | running-infusions-only sensitivity: `model/*_stratum_no_washout_*` |
+| 7 | `build_tables.py` | `tables/nesi_tables.docx` and `tables/csv/` |
+| 8 | `md_to_html.py` | HTML copies of each `report_*.md` |
+
+Other flags for `agent_stratified_model.py`: `--plots-only` redraws all
+figures from saved results without fitting models. Smoke runs (`--n-boot`
+below 100) write to `model/smoke/`, so they never overwrite real results.
+
+## Strata definitions (set from counts only, before any NESI modeling)
+
+- **Exposure at the assessment time**: an infusion counts if running at t or
+  stopped within the prior 6 h (residual effect, treated like a fast-acting
+  dose; the "6-hour post-infusion window"); intermittent doses on board by
+  the 6 h / 12 h rule above. Vasopressors: running at t. Sensitivity analysis
+  ("running infusions only", column `stratum_no_washout`): infusions count
+  only if running at t.
+- **Benzodiazepines**: midazolam, lorazepam, diazepam and others; clonazepam
+  and clobazam excluded as antiseizure medications. **Opioids**: fentanyl,
+  hydromorphone, morphine.
+- **Primary rule**: opioids classified by infusion only; assessments with an
+  intermittent benzodiazepine dose on board (no midazolam infusion) are
+  excluded. **Strict rule**: intermittent benzodiazepine or opioid doses on
+  board exclude.
+- **Reference**: no sedative or opioid infusion and no intermittent
+  benzodiazepine dose.
+- **Strata** are mutually exclusive: each agent alone and with an opioid
+  infusion, midazolam + propofol, midazolam + dexmedetomidine (each ± opioid),
+  ketamine (± opioid), opioid only. Other combinations of concurrent sedative
+  infusions (mainly propofol with dexmedetomidine, and ketamine with another
+  sedative) are excluded.
+- **Inclusion rule** (pre-specified): ≥100 observations from ≥20 patients
+  within the RASS range analyzed. Per-RASS-level estimates: ≥30 observations
+  from ≥10 patients.
+- **Overlapping EEG files**: RASS assessments covered by two EEG files with
+  discordant NESI values are dropped.
+
+## Models
+
+- Mixed models with a patient random intercept; RASS centered at −2.
+  Additive model: offset of each stratum vs the reference at matched RASS.
+  Interaction model: within-stratum NESI–RASS slope and its difference from
+  the reference slope.
+- **Pooled groups** (main text): each agent pooled with and without an
+  opioid infusion — propofol, dexmedetomidine, midazolam, ketamine, and
+  midazolam + propofol (each ± opioid), plus opioid only; each is shown in
+  the main figure only if it meets the inclusion rule. The
+  performance-by-sedation analysis uses five groups: reference, propofol,
+  dexmedetomidine, midazolam (each ± opioid) and opioid only.
+- **Vasopressor control**: offset and slope of vasopressor-exposed vs
+  unexposed assessments within the reference group (additive and
+  interaction models, full range and light sedation; not in the per-level
+  analysis).
+- Offsets at each RASS level are fit separately within each level (no
+  linearity assumption).
+- Ranges: RASS −5 to 0 (primary) and −2 to 0 (light sedation).
+- 1000-resample cluster bootstrap over patients; 95% percentile CIs; fixed
+  seed (42).
+- **Cap sensitivity**: at most K observations per patient per stratum,
+  K = 95th percentile of observations per patient in the reference group,
+  sampled within RASS levels in proportion to the patient's RASS mix.
+
+## Sedation labels for other analyses
+
+`build_strata_labels.py` writes one file per assessment type (RASS, GCS,
+CAM-S) with patient ID, assessment time, score and one 0/1 column per
+group (the five performance groups first), plus "Included under strict
+rule" and "Vasopressor". These are joined to NESI and outcome data on
+patient ID + assessment time for the performance-by-sedation and
+mortality analyses.
 
 ---
 

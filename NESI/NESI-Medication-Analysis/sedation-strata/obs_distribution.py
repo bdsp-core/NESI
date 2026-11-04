@@ -97,7 +97,7 @@ try:
         ax.step(x, np.arange(1, len(x) + 1) / len(x), where="post",
                 color="black" if g == REFERENCE else cmap(i % 10),
                 lw=2.2 if g == REFERENCE else 1.2,
-                label=("Reference (no sedative or opioid)" if g == REFERENCE else g) + f" (n={len(x)})")
+                label=("Reference (no sedative or opioid infusion)" if g == REFERENCE else g) + f" (n={len(x)})")
     for k in CANDIDATE_K:
         ax.axvline(k, color="#C9CCD1", lw=0.8, ls=":")
     ax.set_xscale("log")

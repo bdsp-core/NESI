@@ -316,27 +316,37 @@ def retest(ctx):
 
 
 def supp_table11(ctx):
-    d, n = ctx.meds(), ctx.num
+    """NESI-RASS performance by sedative group. Groups are Christine Eckhardt's per-assessment labels
+    (build_strata_labels.py: infusion running or stopped within 6 h; each sedative pooled with or
+    without an opioid infusion), joined on patient and RASS time."""
+    d, n = ctx.meds().copy(), ctx.num
+    lab = pd.read_csv(ctx.root / "sedation_repo/medication-exposure/data/stratified_feasibility/labels/strata_labels_rass.csv")
+    lab["t"] = pd.to_datetime(lab.assessment_time)
+    d["t"] = pd.to_datetime(d.RASSRecordedDTS, errors="coerce")
+    d = d.merge(lab.drop(columns=["assessment_time", "score"]), on=["BDSPPatientID", "t"], how="left", validate="many_to_one")
     b = lambda c: d[c].fillna(0).astype(float) > 0
-    sed, op, pr, mi, de, ke = (b(f"{x}_inf_now") for x in ["sedative", "opioid", "propofol", "midazolam", "dexmedetomidine", "ketamine"])
     bz, asm = b("FastActing_Benzo_Exposure"), b("LongActingASM_Exposure")
     none24 = ~b("sedative_inf_24h") & ~b("opioid_inf_24h") & ~bz
     G = {
-        "Reference": ~sed & ~op & ~bz,
-        "Propofol": pr & ~mi & ~de & ~ke,
-        "Dexmedetomidine": de & ~pr & ~mi & ~ke,
-        "Midazolam": mi & ~pr & ~de & ~ke,
-        "MidazolamPropofol": mi & pr & ~de & ~ke,
-        "Ketamine": ke,
-        "OpioidOnly": op & ~sed,
+        "Reference": b("Reference (no sedative or opioid infusion)"),
+        "Propofol": b("Propofol (+/- opioid)"),
+        "Dexmedetomidine": b("Dexmedetomidine (+/- opioid)"),
+        "Midazolam": b("Midazolam (+/- opioid)"),
+        "MidazolamPropofol": b("Midazolam + propofol (+/- opioid)"),
+        "Ketamine": b("Ketamine (+/- opioid)"),
+        "OpioidOnly": b("Opioid only"),
         "All": pd.Series(True, index=d.index),
         "NoInfusion24h": none24,
         "NoInfusion24hNoASM": none24 & ~asm,
     }
+    metrics = {"rho": lambda x: rho(x.r, x.n), "auc3": lambda x: roc_auc_score(x.r <= -3, x.n), "auc4": lambda x: roc_auc_score(x.r <= -4, x.n)}
     rows = []
     for k, v in G.items():
-        x = d[v]
-        res = dict(obs=len(x), patients=x.BDSPPatientID.nunique(), rho=rho(x.r, x.n), auc3=roc_auc_score(x.r <= -3, x.n), auc4=roc_auc_score(x.r <= -4, x.n))
+        x = d[v].reset_index(drop=True)
+        res = dict(obs=len(x), patients=x.BDSPPatientID.nunique())
+        for name, fn in metrics.items():
+            res[name] = fn(x)
+            res[name + "_lo"], res[name + "_hi"] = np.percentile(_patient_boot(ctx, x, fn), [2.5, 97.5])
         for name, val in res.items():
             n[f"T11.{k}.{name}"] = val
         rows.append(dict(Group=k, **res))
