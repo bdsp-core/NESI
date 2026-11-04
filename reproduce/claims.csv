@@ -966,3 +966,19 @@ id,doc,location,description,expected,key,tolerance
 988,Supp,Supp Table 20,EEG length max,779,EXT20.minutes.max,0.51
 989,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, lowest",-0.11,MORT3.cal_int_corrected_min,0.0051
 990,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, highest",0.12,MORT3.cal_int_corrected_max,0.0051
+991,Supp,Supp Fig 30; R1/R4 letter,"qEEG head DeltaAlpha NESI, RASS: Spearman",0.42,QHEAD.RASS.DeltaAlpha NESI,0.0051
+992,Supp,Supp Fig 30; R1/R4 letter,"qEEG head DeltaAlpha NESI, GCS: Spearman",0.42,QHEAD.GCS.DeltaAlpha NESI,0.0051
+993,Supp,Supp Fig 30; R1/R4 letter,"qEEG head DeltaAlpha NESI, CAM-S: Spearman",0.58,QHEAD.CAM-S.DeltaAlpha NESI,0.0051
+994,Supp,Supp Fig 30; R1/R4 letter,"qEEG head DeltaAlpha NESI, ICANS: Spearman",0.02,QHEAD.ICANS.DeltaAlpha NESI,0.0051
+995,Supp,Supp Fig 30; R1/R4 letter,"qEEG head RelativeDelta NESI, RASS: Spearman",0.4,QHEAD.RASS.RelativeDelta NESI,0.0051
+996,Supp,Supp Fig 30; R1/R4 letter,"qEEG head RelativeDelta NESI, GCS: Spearman",0.37,QHEAD.GCS.RelativeDelta NESI,0.0051
+997,Supp,Supp Fig 30; R1/R4 letter,"qEEG head RelativeDelta NESI, CAM-S: Spearman",0.61,QHEAD.CAM-S.RelativeDelta NESI,0.0051
+998,Supp,Supp Fig 30; R1/R4 letter,"qEEG head RelativeDelta NESI, ICANS: Spearman",0.19,QHEAD.ICANS.RelativeDelta NESI,0.0051
+999,Supp,Supp Fig 30; R1/R4 letter,"qEEG head SEF95 NESI, RASS: Spearman",0.35,QHEAD.RASS.SEF95 NESI,0.0051
+1000,Supp,Supp Fig 30; R1/R4 letter,"qEEG head SEF95 NESI, GCS: Spearman",0.33,QHEAD.GCS.SEF95 NESI,0.0051
+1001,Supp,Supp Fig 30; R1/R4 letter,"qEEG head SEF95 NESI, CAM-S: Spearman",0.6,QHEAD.CAM-S.SEF95 NESI,0.0051
+1002,Supp,Supp Fig 30; R1/R4 letter,"qEEG head SEF95 NESI, ICANS: Spearman",-0.08,QHEAD.ICANS.SEF95 NESI,0.0051
+1003,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, RASS: Spearman",0.51,QHEAD.RASS.NESI allfea,0.0051
+1004,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, GCS: Spearman",0.43,QHEAD.GCS.NESI allfea,0.0051
+1005,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, CAM-S: Spearman",0.57,QHEAD.CAM-S.NESI allfea,0.0051
+1006,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, ICANS: Spearman",-0.1,QHEAD.ICANS.NESI allfea,0.0051

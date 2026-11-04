@@ -424,6 +424,10 @@ def revision_tables(ctx):
     for _, x in e.iterrows():
         for k in ["MDPE_%", "MDAPE_%", "P95_abs_%", "max_abs_%", "max_abs_ugml", "n"]:
             ctx.num[f"ELEV.{x['subset']}.{k}"] = float(x["ce_" + k])
+    # Supplementary Fig. 30: qEEG-trained heads (qeeg_heads.py)
+    for x in pd.read_csv(t / "qeeg_heads.csv").itertuples():
+        k = f"QHEAD.{x.Dataset}.{x.Feature}"
+        ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"] = x.Spearman, x.CI_Lower, x.CI_Upper
     # Supplementary Table 20, the rows computed from the analyzed recordings
     r = pd.read_csv(ctx.root / "intermediates/external/recordings.csv")
     ctx.num["EXT20.patients"] = len(r)

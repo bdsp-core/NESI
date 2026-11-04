@@ -98,16 +98,11 @@ function RASS_MDC_NESI_analysis4(input_eegfile,input_NESI_file,outDir,want_to_sa
     n_ticks=min(10,total_samples);
     x_ticks=round(linspace(x_start,x_end,n_ticks));
 
-    % ================================================================
-    % EVERY TICK: DATE FIRST LINE, TIME SECOND LINE
-    % ================================================================
-    x_tick_datetime=EEGStartDTS+seconds(x_ticks);
+    % tick labels: elapsed hours from the start of the recording (no dates in figures)
     x_tick_labels=cell(1,length(x_ticks));
 
     for k=1:length(x_ticks)
-        date_str=datestr(x_tick_datetime(k),'yyyy-mm-dd');
-        time_str=datestr(x_tick_datetime(k),'HH:MM:SS');
-        x_tick_labels{k}=sprintf('%s\\newline%s',date_str,time_str);
+        x_tick_labels{k}=sprintf('%.1f',x_ticks(k)/3600);
     end
 
     nn=size(sdata,1)/4;reg_tag={'LL','RL','LP','RP'};colormap('jet');
@@ -143,7 +138,7 @@ function RASS_MDC_NESI_analysis4(input_eegfile,input_NESI_file,outDir,want_to_sa
                 'TickLabelInterpreter','tex', ...
                 'FontSize',8);
 
-            xlabel(ax_spec{i},'Time','FontSize',9,'FontWeight','bold');
+            xlabel(ax_spec{i},'Elapsed time (hours)','FontSize',9,'FontWeight','bold');
         end
 
         set(ax_spec{i}, ...
@@ -231,8 +226,8 @@ function RASS_MDC_NESI_analysis4(input_eegfile,input_NESI_file,outDir,want_to_sa
         'YColor','k');
 
     ylabel(ax_rass,'True RASS','FontSize',10,'FontWeight','bold');
-    xlabel(ax_rass,'Time','FontSize',9,'FontWeight','bold');
-    title(ax_rass,'True RASS and NESI Prediction','FontSize',10,'FontWeight','bold');
+    xlabel(ax_rass,'Elapsed time (hours)','FontSize',9,'FontWeight','bold');
+    title(ax_rass,'True RASS and NESI Estimate','FontSize',10,'FontWeight','bold');
 
     % ---- NESI axis ----
     ax_nesi=axes('position',ax_rass.Position,'Parent',f);
@@ -280,16 +275,11 @@ function RASS_MDC_NESI_analysis4(input_eegfile,input_NESI_file,outDir,want_to_sa
     x_ticks_display=round( ...
         linspace(plot_start_sec,plot_end_sec,n_display_ticks));
 
-    % ================================================================
-    % EVERY DISPLAY TICK: DATE FIRST LINE, TIME SECOND LINE
-    % ================================================================
-    x_tick_datetime_display=EEGStartDTS+seconds(x_ticks_display);
+    % tick labels: elapsed hours from the start of the recording (no dates in figures)
     x_tick_labels_display=cell(1,length(x_ticks_display));
 
     for k=1:length(x_ticks_display)
-        date_str=datestr(x_tick_datetime_display(k),'yyyy-mm-dd');
-        time_str=datestr(x_tick_datetime_display(k),'HH:MM:SS');
-        x_tick_labels_display{k}=sprintf('%s\\newline%s',date_str,time_str);
+        x_tick_labels_display{k}=sprintf('%.1f',x_ticks_display(k)/3600);
     end
 
     % Spectrogram axis
