@@ -53,15 +53,15 @@ id,doc,location,description,expected,key,tolerance
 52,Main,Results,ICANS delta rho,0.068,ICANS.delta,0.0011
 53,Main,Results,ICANS delta CI low,0.012,ICANS.delta_lo,0.01
 54,Main,Results,ICANS delta CI high,0.142,ICANS.delta_hi,0.015
-55,Main,"Results, Supp Table 12",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0151
-56,Main,"Results, Supp Table 12",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0151
-57,Main,"Results, Supp Table 12",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0151
-58,Main,"Results, Supp Table 12",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0151
-59,Main,"Results, Supp Table 12",GCS.BIDMC rho,0.38,SITE.GCS.BIDMC.rho,0.0151
-60,Supp,Supp Table 12,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0151
-61,Supp,Supp Table 12,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0151
-62,Supp,Supp Table 12,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0151
-63,Supp,Supp Table 12,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0151
+55,Main,"Results, Supp Table 15",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0151
+56,Main,"Results, Supp Table 15",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0151
+57,Main,"Results, Supp Table 15",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0151
+58,Main,"Results, Supp Table 15",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0151
+59,Main,"Results, Supp Table 15",GCS.BIDMC rho,0.38,SITE.GCS.BIDMC.rho,0.0151
+60,Supp,Supp Table 15,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0151
+61,Supp,Supp Table 15,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0151
+62,Supp,Supp Table 15,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0151
+63,Supp,Supp Table 15,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0151
 64,Main,Results,RETEST.sem,0.45,RETEST.sem,0.0051
 65,Main,Results,RETEST.mdc,1.24,RETEST.mdc,0.0051
 66,Main,Results,RETEST.icc,0.86,RETEST.icc,0.0051
@@ -88,14 +88,10 @@ id,doc,location,description,expected,key,tolerance
 87,Main,Table 1,T1.CAMS.any_death,216,T1.CAMS.any_death,0
 88,Main,Table 1,RASS median age,65,T1.RASS.age_med,0
 89,Main,Table 1,CAM-S median age,60,T1.CAMS.age_med,0
-90,Main,"Results, propofol",PROP.obs,15550,PROP.obs,0
-91,Main,"Results, propofol",PROP.patients,1564,PROP.patients,0
 92,Main,"Results, propofol",VAR.obs,14105,VAR.obs,0
 93,Main,"Results, propofol",VAR.patients,909,VAR.patients,0
-94,Main,"Results, propofol",WB.nesi.n,903,WB.nesi.n,0
-95,Main,"Results, propofol",WB.rass.n,658,WB.rass.n,0
-96,Main,"Results, propofol",PROP.rho_nesi,0.31,PROP.rho_nesi,0.0051
-97,Main,"Results, propofol",PROP.rho_rass,-0.27,PROP.rho_rass,0.0051
+96,Main,"Results, propofol",PROP.rho_nesi,0.30,PROP.rho_nesi,0.0051
+97,Main,"Results, propofol",PROP.rho_rass,-0.26,PROP.rho_rass,0.0051
 98,Main,"Results, propofol",VAR.nesi.pct_ce,10.0,VAR.nesi.pct_ce,0.051
 99,Main,"Results, propofol",VAR.rass.pct_ce,6.4,VAR.rass.pct_ce,0.051
 100,Main,"Results, propofol",VAR.nesi.pct_patient,53.6,VAR.nesi.pct_patient,0.051
@@ -106,59 +102,56 @@ id,doc,location,description,expected,key,tolerance
 105,Main,"Results, propofol",WB.nesi.between,0.28,WB.nesi.between,0.0051
 106,Main,"Results, propofol",WB.rass.within,-0.38,WB.rass.within,0.0051
 107,Main,"Results, propofol",WB.rass.between,-0.34,WB.rass.between,0.0051
-108,Main,"Results, propofol",WB.nesi.median_rho,0.2,WB.nesi.median_rho,0.0051
-109,Main,"Results, propofol",WB.rass.median_rho,-0.31,WB.rass.median_rho,0.0051
-110,Main,Abstract,NESI slope per ug/mL (primary-cohort model),0.39,VAR.nesi.slope,0.0051
-111,Supp,Supp Table 11,Reference observations,33306,T11.Reference.obs,1
-112,Supp,Supp Table 11,Reference patients,4399,T11.Reference.patients,0
-113,Supp,Supp Table 11; Results,Reference rho,0.71,T11.Reference.rho,0.0051
-114,Supp,Supp Table 11,Reference AUROC RASS<=-3,0.87,T11.Reference.auc3,0.0051
-115,Supp,Supp Table 11,Reference AUROC RASS<=-4,0.86,T11.Reference.auc4,0.0051
-116,Supp,Supp Table 11,Propofol observations,31172,T11.Propofol.obs,1
-117,Supp,Supp Table 11,Propofol patients,2305,T11.Propofol.patients,0
-118,Supp,Supp Table 11; Results,Propofol rho,0.53,T11.Propofol.rho,0.0051
-119,Supp,Supp Table 11,Propofol AUROC RASS<=-3,0.78,T11.Propofol.auc3,0.0051
-120,Supp,Supp Table 11,Propofol AUROC RASS<=-4,0.79,T11.Propofol.auc4,0.0051
-121,Supp,Supp Table 11,Dexmedetomidine observations,8651,T11.Dexmedetomidine.obs,1
-122,Supp,Supp Table 11,Dexmedetomidine patients,1038,T11.Dexmedetomidine.patients,0
-123,Supp,Supp Table 11; Results,Dexmedetomidine rho,0.43,T11.Dexmedetomidine.rho,0.0051
-124,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-3,0.71,T11.Dexmedetomidine.auc3,0.0051
-125,Supp,Supp Table 11,Dexmedetomidine AUROC RASS<=-4,0.73,T11.Dexmedetomidine.auc4,0.0051
-126,Supp,Supp Table 11,Midazolam observations,3212,T11.Midazolam.obs,1
-127,Supp,Supp Table 11,Midazolam patients,247,T11.Midazolam.patients,0
-128,Supp,Supp Table 11; Results,Midazolam rho,0.49,T11.Midazolam.rho,0.0051
-129,Supp,Supp Table 11,Midazolam AUROC RASS<=-3,0.84,T11.Midazolam.auc3,0.0051
-130,Supp,Supp Table 11,Midazolam AUROC RASS<=-4,0.82,T11.Midazolam.auc4,0.0051
-131,Supp,Supp Table 11,MidazolamPropofol observations,5914,T11.MidazolamPropofol.obs,1
-132,Supp,Supp Table 11,MidazolamPropofol patients,325,T11.MidazolamPropofol.patients,0
-133,Supp,Supp Table 11; Results,MidazolamPropofol rho,0.35,T11.MidazolamPropofol.rho,0.0051
-134,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-3,0.82,T11.MidazolamPropofol.auc3,0.0051
-135,Supp,Supp Table 11,MidazolamPropofol AUROC RASS<=-4,0.85,T11.MidazolamPropofol.auc4,0.0051
-136,Supp,Supp Table 11,Ketamine observations,2200,T11.Ketamine.obs,1
-137,Supp,Supp Table 11,Ketamine patients,94,T11.Ketamine.patients,0
-138,Supp,Supp Table 11; Results,Ketamine rho,0.61,T11.Ketamine.rho,0.0051
-139,Supp,Supp Table 11,Ketamine AUROC RASS<=-3,0.95,T11.Ketamine.auc3,0.0051
-140,Supp,Supp Table 11,Ketamine AUROC RASS<=-4,0.95,T11.Ketamine.auc4,0.0051
-141,Supp,Supp Table 11,OpioidOnly observations,3672,T11.OpioidOnly.obs,1
-142,Supp,Supp Table 11,OpioidOnly patients,520,T11.OpioidOnly.patients,0
-143,Supp,Supp Table 11; Results,OpioidOnly rho,0.53,T11.OpioidOnly.rho,0.0051
-144,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-3,0.78,T11.OpioidOnly.auc3,0.0051
-145,Supp,Supp Table 11,OpioidOnly AUROC RASS<=-4,0.79,T11.OpioidOnly.auc4,0.0051
-146,Supp,Supp Table 11,All observations,97620,T11.All.obs,1
-147,Supp,Supp Table 11,All patients,6191,T11.All.patients,0
-148,Supp,Supp Table 11; Results,All rho,0.72,T11.All.rho,0.0051
-149,Supp,Supp Table 11,All AUROC RASS<=-3,0.87,T11.All.auc3,0.0051
-150,Supp,Supp Table 11,All AUROC RASS<=-4,0.86,T11.All.auc4,0.0051
-151,Supp,Supp Table 11,NoInfusion24h observations,23754,T11.NoInfusion24h.obs,1
-152,Supp,Supp Table 11,NoInfusion24h patients,3349,T11.NoInfusion24h.patients,0
-153,Supp,Supp Table 11; Results,NoInfusion24h rho,0.67,T11.NoInfusion24h.rho,0.0051
-154,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-3,0.85,T11.NoInfusion24h.auc3,0.0051
-155,Supp,Supp Table 11,NoInfusion24h AUROC RASS<=-4,0.86,T11.NoInfusion24h.auc4,0.0051
-156,Supp,Supp Table 11,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,1
-157,Supp,Supp Table 11,NoInfusion24hNoASM patients,1119,T11.NoInfusion24hNoASM.patients,0
-158,Supp,Supp Table 11; Results,NoInfusion24hNoASM rho,0.73,T11.NoInfusion24hNoASM.rho,0.0051
-159,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-3,0.87,T11.NoInfusion24hNoASM.auc3,0.0051
-160,Supp,Supp Table 11,NoInfusion24hNoASM AUROC RASS<=-4,0.88,T11.NoInfusion24hNoASM.auc4,0.0051
+111,Supp,Supp Table 14,Reference observations,32145,T11.Reference.obs,1
+112,Supp,Supp Table 14,Reference patients,4068,T11.Reference.patients,0
+113,Supp,Supp Table 14; Results,Reference rho,0.69,T11.Reference.rho,0.0051
+114,Supp,Supp Table 14,Reference AUROC RASS<=-3,0.86,T11.Reference.auc3,0.0051
+115,Supp,Supp Table 14,Reference AUROC RASS<=-4,0.86,T11.Reference.auc4,0.0051
+116,Supp,Supp Table 14,Propofol observations,32656,T11.Propofol.obs,1
+117,Supp,Supp Table 14,Propofol patients,2450,T11.Propofol.patients,0
+118,Supp,Supp Table 14; Results,Propofol rho,0.54,T11.Propofol.rho,0.0051
+119,Supp,Supp Table 14,Propofol AUROC RASS<=-3,0.80,T11.Propofol.auc3,0.0051
+120,Supp,Supp Table 14,Propofol AUROC RASS<=-4,0.79,T11.Propofol.auc4,0.0051
+121,Supp,Supp Table 14,Dexmedetomidine observations,7324,T11.Dexmedetomidine.obs,1
+122,Supp,Supp Table 14,Dexmedetomidine patients,924,T11.Dexmedetomidine.patients,0
+123,Supp,Supp Table 14; Results,Dexmedetomidine rho,0.44,T11.Dexmedetomidine.rho,0.0051
+124,Supp,Supp Table 14,Dexmedetomidine AUROC RASS<=-3,0.71,T11.Dexmedetomidine.auc3,0.0051
+125,Supp,Supp Table 14,Dexmedetomidine AUROC RASS<=-4,0.73,T11.Dexmedetomidine.auc4,0.0051
+126,Supp,Supp Table 14,Midazolam observations,3029,T11.Midazolam.obs,1
+127,Supp,Supp Table 14,Midazolam patients,218,T11.Midazolam.patients,0
+128,Supp,Supp Table 14; Results,Midazolam rho,0.49,T11.Midazolam.rho,0.0051
+129,Supp,Supp Table 14,Midazolam AUROC RASS<=-3,0.87,T11.Midazolam.auc3,0.0051
+130,Supp,Supp Table 14,Midazolam AUROC RASS<=-4,0.83,T11.Midazolam.auc4,0.0051
+131,Supp,Supp Table 14,MidazolamPropofol observations,6953,T11.MidazolamPropofol.obs,1
+132,Supp,Supp Table 14,MidazolamPropofol patients,419,T11.MidazolamPropofol.patients,0
+133,Supp,Supp Table 14; Results,MidazolamPropofol rho,0.39,T11.MidazolamPropofol.rho,0.0051
+134,Supp,Supp Table 14,MidazolamPropofol AUROC RASS<=-3,0.86,T11.MidazolamPropofol.auc3,0.0051
+135,Supp,Supp Table 14,MidazolamPropofol AUROC RASS<=-4,0.87,T11.MidazolamPropofol.auc4,0.0051
+136,Supp,Supp Table 14,Ketamine observations,571,T11.Ketamine.obs,1
+137,Supp,Supp Table 14,Ketamine patients,44,T11.Ketamine.patients,0
+138,Supp,Supp Table 14; Results,Ketamine rho,0.74,T11.Ketamine.rho,0.0051
+139,Supp,Supp Table 14,Ketamine AUROC RASS<=-3,0.91,T11.Ketamine.auc3,0.0051
+140,Supp,Supp Table 14,Ketamine AUROC RASS<=-4,0.92,T11.Ketamine.auc4,0.0051
+141,Supp,Supp Table 14,OpioidOnly observations,2806,T11.OpioidOnly.obs,1
+142,Supp,Supp Table 14,OpioidOnly patients,366,T11.OpioidOnly.patients,0
+143,Supp,Supp Table 14; Results,OpioidOnly rho,0.54,T11.OpioidOnly.rho,0.0051
+144,Supp,Supp Table 14,OpioidOnly AUROC RASS<=-3,0.79,T11.OpioidOnly.auc3,0.0051
+145,Supp,Supp Table 14,OpioidOnly AUROC RASS<=-4,0.79,T11.OpioidOnly.auc4,0.0051
+146,Supp,Supp Table 14,All observations,97620,T11.All.obs,1
+147,Supp,Supp Table 14,All patients,6191,T11.All.patients,0
+148,Supp,Supp Table 14; Results,All rho,0.72,T11.All.rho,0.0051
+149,Supp,Supp Table 14,All AUROC RASS<=-3,0.87,T11.All.auc3,0.0051
+150,Supp,Supp Table 14,All AUROC RASS<=-4,0.86,T11.All.auc4,0.0051
+151,Supp,Supp Table 14,NoInfusion24h observations,23753,T11.NoInfusion24h.obs,1
+152,Supp,Supp Table 14,NoInfusion24h patients,3349,T11.NoInfusion24h.patients,0
+153,Supp,Supp Table 14; Results,NoInfusion24h rho,0.67,T11.NoInfusion24h.rho,0.0051
+154,Supp,Supp Table 14,NoInfusion24h AUROC RASS<=-3,0.85,T11.NoInfusion24h.auc3,0.0051
+155,Supp,Supp Table 14,NoInfusion24h AUROC RASS<=-4,0.86,T11.NoInfusion24h.auc4,0.0051
+156,Supp,Supp Table 14,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,1
+157,Supp,Supp Table 14,NoInfusion24hNoASM patients,1119,T11.NoInfusion24hNoASM.patients,0
+158,Supp,Supp Table 14; Results,NoInfusion24hNoASM rho,0.73,T11.NoInfusion24hNoASM.rho,0.0051
+159,Supp,Supp Table 14,NoInfusion24hNoASM AUROC RASS<=-3,0.87,T11.NoInfusion24hNoASM.auc3,0.0051
+160,Supp,Supp Table 14,NoInfusion24hNoASM AUROC RASS<=-4,0.88,T11.NoInfusion24hNoASM.auc4,0.0051
 161,Supp,Supp Tables 2-3,RASS cut,0.584,T3.RASS.cut,0.00051
 162,Supp,Supp Tables 2-3,RASS sens,0.772,T3.RASS.sens,0.00051
 163,Supp,Supp Tables 2-3,RASS spec,0.8,T3.RASS.spec,0.00051
@@ -296,15 +289,6 @@ id,doc,location,description,expected,key,tolerance
 295,Supp,Supp Table 1,ICANS score 3 med,0.233,T1.ICANS.3.med,0.00051
 296,Supp,Supp Table 1,ICANS score 3 q1,-0.034,T1.ICANS.3.q1,0.00051
 297,Supp,Supp Table 1,ICANS score 3 q3,1.18,T1.ICANS.3.q3,0.00051
-298,Main,"Results, Table 5",Propofol observations,30090,T5.Propofol.obs,0
-299,Main,Table 5,Propofol patients,2278,T5.Propofol.patients,0
-300,Main,Table 5,Propofol offset,0.55,T5.Propofol.offset,0.0051
-301,Main,Table 5,Midazolam offset,0.41,T5.Midazolam.offset,0.0051
-302,Main,Table 5,Dexmedetomidine offset,0.28,T5.Dexmedetomidine.offset,0.0051
-303,Main,Table 5,Midazolam + propofol offset,0.84,T5.Midazolampropofol.offset,0.0051
-304,Main,Table 5,Ketamine offset,0.62,T5.Ketamine.offset,0.0051
-305,Main,Table 5,Opioid only offset,0.26,T5.Opioidonly.offset,0.0051
-306,Main,Table 5,Vasopressor control offset,0.31,T5.Vasopressor.offset,0.0051
 307,Main,Results,RASS by diagnosis lowest,0.54,DX.RASS.min,0.0051
 308,Main,Results,RASS by diagnosis highest,0.75,DX.RASS.max,0.0051
 309,Main,Results,GCS by diagnosis lowest,0.68,DX.GCS.min,0.0051
@@ -334,13 +318,13 @@ id,doc,location,description,expected,key,tolerance
 333,Main,External validation,RASS 30 rho,0.65,EXT.rass.30.rho,0.0051
 334,Main,External validation,RASS 30 CI low,0.59,EXT.rass.30.lo,0.0151
 335,Main,External validation,RASS 30 CI high,0.7,EXT.rass.30.hi,0.0151
-336,Main,External validation,RASS 60 n,674,EXT.rass.60.n,0
+336,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 60 n,674,EXT.rass.60.n,0
 337,Main,External validation,RASS 60 rho,0.64,EXT.rass.60.rho,0.0051
 338,Main,External validation,RASS 60 CI low,0.59,EXT.rass.60.lo,0.0151
 339,Main,External validation,RASS 60 CI high,0.69,EXT.rass.60.hi,0.0151
-340,Main,External validation,RASS 120 n,874,EXT.rass.120.n,0
+340,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 120 n,874,EXT.rass.120.n,0
 341,Main,External validation,RASS 120 rho,0.61,EXT.rass.120.rho,0.0051
-342,Main,External validation,RASS 120 CI low,0.56,EXT.rass.120.lo,0.0151
+342,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 120 CI low,0.56,EXT.rass.120.lo,0.0151
 343,Main,External validation,RASS 120 CI high,0.66,EXT.rass.120.hi,0.0151
 344,Main,External validation,RASS All n,990,EXT.rass.All.n,0
 345,Main,External validation,RASS All rho,0.6,EXT.rass.All.rho,0.0051
@@ -350,11 +334,11 @@ id,doc,location,description,expected,key,tolerance
 349,Main,External validation,GCS 30 rho,0.7,EXT.gcs.30.rho,0.0051
 350,Main,External validation,GCS 30 CI low,0.64,EXT.gcs.30.lo,0.0151
 351,Main,External validation,GCS 30 CI high,0.75,EXT.gcs.30.hi,0.0151
-352,Main,External validation,GCS 60 n,565,EXT.gcs.60.n,0
+352,Supp,"Supp Fig 36 text (external validation, time windows)",GCS 60 n,565,EXT.gcs.60.n,0
 353,Main,External validation,GCS 60 rho,0.68,EXT.gcs.60.rho,0.0051
 354,Main,External validation,GCS 60 CI low,0.63,EXT.gcs.60.lo,0.0151
 355,Main,External validation,GCS 60 CI high,0.72,EXT.gcs.60.hi,0.0151
-356,Main,External validation,GCS 120 n,812,EXT.gcs.120.n,0
+356,Supp,"Supp Fig 36 text (external validation, time windows)",GCS 120 n,812,EXT.gcs.120.n,0
 357,Main,External validation,GCS 120 rho,0.65,EXT.gcs.120.rho,0.0051
 358,Main,External validation,GCS 120 CI low,0.6,EXT.gcs.120.lo,0.0151
 359,Main,External validation,GCS 120 CI high,0.69,EXT.gcs.120.hi,0.0151
@@ -362,14 +346,13 @@ id,doc,location,description,expected,key,tolerance
 361,Main,External validation,GCS All rho,0.65,EXT.gcs.All.rho,0.0051
 362,Main,External validation,GCS All CI low,0.62,EXT.gcs.All.lo,0.0151
 363,Main,External validation,GCS All CI high,0.69,EXT.gcs.All.hi,0.0151
-364,Main,External validation,RASS inside segment,175,EXT.rass.inside,0
-365,Main,External validation,RASS before,485,EXT.rass.before,0
-366,Main,External validation,RASS after,330,EXT.rass.after,0
+364,Supp,"Supp Fig 36 text (external validation, time windows)",RASS inside segment,175,EXT.rass.inside,0
+365,Supp,"Supp Fig 36 text (external validation, time windows)",RASS before,485,EXT.rass.before,0
+366,Supp,"Supp Fig 36 text (external validation, time windows)",RASS after,330,EXT.rass.after,0
 367,Main,External validation,GCS inside segment,129,EXT.gcs.inside,0
-368,Main,External validation,GCS before,469,EXT.gcs.before,0
-369,Main,External validation,GCS after,392,EXT.gcs.after,0
+368,Supp,"Supp Fig 36 text (external validation, time windows)",GCS before,469,EXT.gcs.before,0
+369,Supp,"Supp Fig 36 text (external validation, time windows)",GCS after,392,EXT.gcs.after,0
 376,Main,External validation,Recordings analyzed,990,EXT.recordings,0
-377,Main,External validation,Recordings with artifact rejection,356,EXT.autoreject_recordings,0
 378,Main,Main Results,Mortality patients,5397,MORT2.patients,0
 379,Main,Main Results,Mortality deaths,1263,MORT2.deaths,0
 380,Main,"Main Abstract, Results",NESI AUROC 4 h,0.77,MORT2.auroc_4h_NESI,0.0051
@@ -394,42 +377,42 @@ id,doc,location,description,expected,key,tolerance
 399,Main,"Main Methods, R3.14",Withheld retrain seed 2026 CAM-S,0.85,RETRAIN.withhold_overlap_seed2026.CAMS.rho,0.0051
 400,Main,"Main Methods, R3.14",Withheld retrain seed 2027 CAM-S,0.83,RETRAIN.withhold_overlap_seed2027.CAMS.rho,0.0051
 401,Main,"Main Methods, R3.14",Unchanged-data retrain CAM-S,0.84,RETRAIN.keep_overlap_seed2026.CAMS.rho,0.0051
-402,Supp,Supp Table 19,withhold_overlap_seed2026 RASS rho,0.69,RETRAIN.withhold_overlap_seed2026.RASS.rho,0.0051
-403,Supp,Supp Table 19,  CI low,0.63,RETRAIN.withhold_overlap_seed2026.RASS.lo,0.0051
-404,Supp,Supp Table 19,  CI high,0.73,RETRAIN.withhold_overlap_seed2026.RASS.hi,0.0051
-405,Supp,Supp Table 19,withhold_overlap_seed2026 GCS rho,0.7,RETRAIN.withhold_overlap_seed2026.GCS.rho,0.0051
-406,Supp,Supp Table 19,  CI low,0.65,RETRAIN.withhold_overlap_seed2026.GCS.lo,0.0051
-407,Supp,Supp Table 19,  CI high,0.74,RETRAIN.withhold_overlap_seed2026.GCS.hi,0.0051
-408,Supp,Supp Table 19,withhold_overlap_seed2026 CAMS rho,0.85,RETRAIN.withhold_overlap_seed2026.CAMS.rho,0.0051
-409,Supp,Supp Table 19,  CI low,0.8,RETRAIN.withhold_overlap_seed2026.CAMS.lo,0.0051
-410,Supp,Supp Table 19,  CI high,0.89,RETRAIN.withhold_overlap_seed2026.CAMS.hi,0.0051
-411,Supp,Supp Table 19,withhold_overlap_seed2026 ICANS rho,0.79,RETRAIN.withhold_overlap_seed2026.ICANS.rho,0.0051
-412,Supp,Supp Table 19,  CI low,0.66,RETRAIN.withhold_overlap_seed2026.ICANS.lo,0.0051
-413,Supp,Supp Table 19,  CI high,0.87,RETRAIN.withhold_overlap_seed2026.ICANS.hi,0.0051
-414,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 RASS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.RASS.rho,0.0051
-415,Supp,Supp Table 19,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.RASS.lo,0.0051
-416,Supp,Supp Table 19,  CI high,0.71,RETRAIN.downsample_withhold_overlap_seed2026.RASS.hi,0.0051
-417,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.GCS.rho,0.0051
-418,Supp,Supp Table 19,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.GCS.lo,0.0051
-419,Supp,Supp Table 19,  CI high,0.7,RETRAIN.downsample_withhold_overlap_seed2026.GCS.hi,0.0051
-420,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.rho,0.0051
-421,Supp,Supp Table 19,  CI low,0.77,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.lo,0.0051
-422,Supp,Supp Table 19,  CI high,0.88,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.hi,0.0051
-423,Supp,Supp Table 19,downsample_withhold_overlap_seed2026 ICANS rho,0.73,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.rho,0.0051
-424,Supp,Supp Table 19,  CI low,0.57,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.lo,0.0051
-425,Supp,Supp Table 19,  CI high,0.83,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.hi,0.0051
-426,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 RASS rho,0.68,RETRAIN.upweight_withhold_overlap_seed2026.RASS.rho,0.0051
-427,Supp,Supp Table 19,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.RASS.lo,0.0051
-428,Supp,Supp Table 19,  CI high,0.73,RETRAIN.upweight_withhold_overlap_seed2026.RASS.hi,0.0051
-429,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.upweight_withhold_overlap_seed2026.GCS.rho,0.0051
-430,Supp,Supp Table 19,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.GCS.lo,0.0051
-431,Supp,Supp Table 19,  CI high,0.71,RETRAIN.upweight_withhold_overlap_seed2026.GCS.hi,0.0051
-432,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.rho,0.0051
-433,Supp,Supp Table 19,  CI low,0.76,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.lo,0.0051
-434,Supp,Supp Table 19,  CI high,0.88,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.hi,0.0051
-435,Supp,Supp Table 19,upweight_withhold_overlap_seed2026 ICANS rho,0.71,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.rho,0.0051
-436,Supp,Supp Table 19,  CI low,0.55,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.lo,0.0051
-437,Supp,Supp Table 19,  CI high,0.82,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.hi,0.0051
+402,Supp,Supp Table 21,withhold_overlap_seed2026 RASS rho,0.69,RETRAIN.withhold_overlap_seed2026.RASS.rho,0.0051
+403,Supp,Supp Table 21,  CI low,0.63,RETRAIN.withhold_overlap_seed2026.RASS.lo,0.0051
+404,Supp,Supp Table 21,  CI high,0.73,RETRAIN.withhold_overlap_seed2026.RASS.hi,0.0051
+405,Supp,Supp Table 21,withhold_overlap_seed2026 GCS rho,0.7,RETRAIN.withhold_overlap_seed2026.GCS.rho,0.0051
+406,Supp,Supp Table 21,  CI low,0.65,RETRAIN.withhold_overlap_seed2026.GCS.lo,0.0051
+407,Supp,Supp Table 21,  CI high,0.74,RETRAIN.withhold_overlap_seed2026.GCS.hi,0.0051
+408,Supp,Supp Table 21,withhold_overlap_seed2026 CAMS rho,0.85,RETRAIN.withhold_overlap_seed2026.CAMS.rho,0.0051
+409,Supp,Supp Table 21,  CI low,0.8,RETRAIN.withhold_overlap_seed2026.CAMS.lo,0.0051
+410,Supp,Supp Table 21,  CI high,0.89,RETRAIN.withhold_overlap_seed2026.CAMS.hi,0.0051
+411,Supp,Supp Table 21,withhold_overlap_seed2026 ICANS rho,0.79,RETRAIN.withhold_overlap_seed2026.ICANS.rho,0.0051
+412,Supp,Supp Table 21,  CI low,0.66,RETRAIN.withhold_overlap_seed2026.ICANS.lo,0.0051
+413,Supp,Supp Table 21,  CI high,0.87,RETRAIN.withhold_overlap_seed2026.ICANS.hi,0.0051
+414,Supp,Supp Table 21,downsample_withhold_overlap_seed2026 RASS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.RASS.rho,0.0051
+415,Supp,Supp Table 21,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.RASS.lo,0.0051
+416,Supp,Supp Table 21,  CI high,0.71,RETRAIN.downsample_withhold_overlap_seed2026.RASS.hi,0.0051
+417,Supp,Supp Table 21,downsample_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.downsample_withhold_overlap_seed2026.GCS.rho,0.0051
+418,Supp,Supp Table 21,  CI low,0.6,RETRAIN.downsample_withhold_overlap_seed2026.GCS.lo,0.0051
+419,Supp,Supp Table 21,  CI high,0.7,RETRAIN.downsample_withhold_overlap_seed2026.GCS.hi,0.0051
+420,Supp,Supp Table 21,downsample_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.rho,0.0051
+421,Supp,Supp Table 21,  CI low,0.77,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.lo,0.0051
+422,Supp,Supp Table 21,  CI high,0.88,RETRAIN.downsample_withhold_overlap_seed2026.CAMS.hi,0.0051
+423,Supp,Supp Table 21,downsample_withhold_overlap_seed2026 ICANS rho,0.73,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.rho,0.0051
+424,Supp,Supp Table 21,  CI low,0.57,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.lo,0.0051
+425,Supp,Supp Table 21,  CI high,0.83,RETRAIN.downsample_withhold_overlap_seed2026.ICANS.hi,0.0051
+426,Supp,Supp Table 21,upweight_withhold_overlap_seed2026 RASS rho,0.68,RETRAIN.upweight_withhold_overlap_seed2026.RASS.rho,0.0051
+427,Supp,Supp Table 21,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.RASS.lo,0.0051
+428,Supp,Supp Table 21,  CI high,0.73,RETRAIN.upweight_withhold_overlap_seed2026.RASS.hi,0.0051
+429,Supp,Supp Table 21,upweight_withhold_overlap_seed2026 GCS rho,0.66,RETRAIN.upweight_withhold_overlap_seed2026.GCS.rho,0.0051
+430,Supp,Supp Table 21,  CI low,0.61,RETRAIN.upweight_withhold_overlap_seed2026.GCS.lo,0.0051
+431,Supp,Supp Table 21,  CI high,0.71,RETRAIN.upweight_withhold_overlap_seed2026.GCS.hi,0.0051
+432,Supp,Supp Table 21,upweight_withhold_overlap_seed2026 CAMS rho,0.83,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.rho,0.0051
+433,Supp,Supp Table 21,  CI low,0.76,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.lo,0.0051
+434,Supp,Supp Table 21,  CI high,0.88,RETRAIN.upweight_withhold_overlap_seed2026.CAMS.hi,0.0051
+435,Supp,Supp Table 21,upweight_withhold_overlap_seed2026 ICANS rho,0.71,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.rho,0.0051
+436,Supp,Supp Table 21,  CI low,0.55,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.lo,0.0051
+437,Supp,Supp Table 21,  CI high,0.82,RETRAIN.upweight_withhold_overlap_seed2026.ICANS.hi,0.0051
 438,Supp,Supp Fig 31 text,"RASS rho, delta/alpha (test-set sample)",-0.15,QEEG.RASS.delta_alpha.rho,0.0051
 439,Supp,Supp Fig 31 text,  CI low,-0.27,QEEG.RASS.delta_alpha.lo,0.0051
 440,Supp,Supp Fig 31 text,  CI high,-0.01,QEEG.RASS.delta_alpha.hi,0.0051
@@ -530,18 +513,18 @@ id,doc,location,description,expected,key,tolerance
 535,Main,"Discussion, limitations","GCS rho, scale withheld from training",0.65,LOCO.GCS.full_rho,0.0051
 536,Main,"Discussion, limitations","CAMS rho, scale withheld from training",0.78,LOCO.CAMS.full_rho,0.0051
 537,Main,"Discussion, limitations","ICANS rho, scale withheld from training",0.72,LOCO.ICANS.full_rho,0.0051
-538,Main,Fig 6 panel B legend,Burst windows,6897,FIG6.B._Burst,0
-539,Main,Fig 6 panel B legend,Seizure windows,2297,FIG6.B._Seizure,0
-540,Main,Fig 6 panel B legend,LPD windows,2898,FIG6.B._LPD,0
-541,Main,Fig 6 panel B legend,GPD windows,3191,FIG6.B._GPD,0
-542,Main,Fig 6 panel B legend,LRDA windows,1669,FIG6.B._LRDA,0
-543,Main,Fig 6 panel B legend,GRDA windows,5681,FIG6.B._GRDA,0
-544,Main,Fig 6 panel B legend,Other windows,21197,FIG6.B._Other,0
-545,Main,Fig 6 panel C legend,RASS windows,3626,FIG6.C._RASS,0
-546,Main,Fig 6 panel C legend,GCS windows,1361,FIG6.C._GCS,0
-547,Main,Fig 6 panel C legend,CAMS windows,310,FIG6.C._CAMS,0
-548,Main,Fig 6 panel C legend,ICANS windows,78,FIG6.C._ICANS,0
-549,Main,Fig 6 panel C legend,Other windows,38455,FIG6.C._Other,0
+538,Main,Fig 6 panel B legend (counts printed in the figure),Burst windows,6897,FIG6.B._Burst,0
+539,Main,Fig 6 panel B legend (counts printed in the figure),Seizure windows,2297,FIG6.B._Seizure,0
+540,Main,Fig 6 panel B legend (counts printed in the figure),LPD windows,2898,FIG6.B._LPD,0
+541,Main,Fig 6 panel B legend (counts printed in the figure),GPD windows,3191,FIG6.B._GPD,0
+542,Main,Fig 6 panel B legend (counts printed in the figure),LRDA windows,1669,FIG6.B._LRDA,0
+543,Main,Fig 6 panel B legend (counts printed in the figure),GRDA windows,5681,FIG6.B._GRDA,0
+544,Main,Fig 6 panel B legend (counts printed in the figure),Other windows,21197,FIG6.B._Other,0
+545,Main,Fig 6 panel C legend (counts printed in the figure),RASS windows,3626,FIG6.C._RASS,0
+546,Main,Fig 6 panel C legend (counts printed in the figure),GCS windows,1361,FIG6.C._GCS,0
+547,Main,Fig 6 panel C legend (counts printed in the figure),CAMS windows,310,FIG6.C._CAMS,0
+548,Main,Fig 6 panel C legend (counts printed in the figure),ICANS windows,78,FIG6.C._ICANS,0
+549,Main,Fig 6 panel C legend (counts printed in the figure),Other windows,38455,FIG6.C._Other,0
 550,Main,ICANS segment selection (Results),"ICANS rho, maximum-awake",0.83,ICSEG.max_awake.rho,0.0051
 551,Main,ICANS segment selection (Results),  CI low,0.72,ICSEG.max_awake.lo,0.0051
 552,Main,ICANS segment selection (Results),  CI high,0.9,ICSEG.max_awake.hi,0.0051
@@ -566,9 +549,9 @@ id,doc,location,description,expected,key,tolerance
 571,Supp,"Indication-stratified text, ICANS excluding controls","ICANS rho, patients with any grade above 0",0.55,ICSUB.1.rho,0.0051
 572,Supp,"Indication-stratified text, ICANS excluding controls",  CI low,0.31,ICSUB.1.lo,0.0051
 573,Supp,"Indication-stratified text, ICANS excluding controls",  CI high,0.77,ICSUB.1.hi,0.0051
-574,Main,Fig 6 panels D-F legend,Post-cardiac arrest with burst windows,3353,FIG6.D._Post-Cardiac_Arrest_with_Burst,0
-575,Main,Fig 6 panels D-F legend,Stroke with LPD windows,525,FIG6.F._Stroke_with_LPD,0
-576,Main,Fig 6 panels D-F legend,Post-cardiac arrest with GPD windows,1021,FIG6.E._Post-Cardiac_Arrest_with_GPD,0
+574,Main,Fig 6 panels D-F legend (counts printed in the figure),Post-cardiac arrest with burst windows,3353,FIG6.D._Post-Cardiac_Arrest_with_Burst,0
+575,Main,Fig 6 panels D-F legend (counts printed in the figure),Stroke with LPD windows,525,FIG6.F._Stroke_with_LPD,0
+576,Main,Fig 6 panels D-F legend (counts printed in the figure),Post-cardiac arrest with GPD windows,1021,FIG6.E._Post-Cardiac_Arrest_with_GPD,0
 577,Supp,Indication-stratified text (Supp Fig 27),Altered_Mental_Status RASS test rho,0.72,IND.Testing.Altered_Mental_Status.RASS.rho,0.0051
 578,Supp,Indication-stratified text (Supp Fig 27),  CI low,0.66,IND.Testing.Altered_Mental_Status.RASS.lo,0.0051
 579,Supp,Indication-stratified text (Supp Fig 27),  CI high,0.76,IND.Testing.Altered_Mental_Status.RASS.hi,0.0051
@@ -915,3 +898,24 @@ id,doc,location,description,expected,key,tolerance
 920,Supp,"SPECTRA mapping text, Supp Table 7, R3.4","M22 minus M1, RASS rho",0.02,MAP.M22.RASS.delta,0.0051
 921,Supp,"SPECTRA mapping text, Supp Table 7 footnote","Repeat of M1 minus M1, RASS rho",0.01,MAP.M1_repeat.RASS.delta,0.0051
 922,Supp,"SPECTRA mapping text, Supp Table 7 footnote","Repeat of M1 minus M1, ICANS rho",0.04,MAP.M1_repeat.ICANS.delta,0.0051
+923,Supp,Supp Table 10; Fig 8b; Results,Propofol patients (pooled group),2449,T5.Propofol.patients,0
+924,Main,Supp Table 10; Fig 8b; Results,Propofol offset vs reference at matched RASS,0.55,T5.Propofol.offset,0.0051
+925,Supp,Supp Table 10; Fig 8b; Results,Midazolam patients (pooled group),218,T5.Midazolam.patients,0
+926,Main,Supp Table 10; Fig 8b; Results,Midazolam offset vs reference at matched RASS,0.46,T5.Midazolam.offset,0.0051
+927,Supp,Supp Table 10; Fig 8b; Results,Dexmedetomidine patients (pooled group),923,T5.Dexmedetomidine.patients,0
+928,Main,Supp Table 10; Fig 8b; Results,Dexmedetomidine offset vs reference at matched RASS,0.30,T5.Dexmedetomidine.offset,0.0051
+929,Supp,Supp Table 10; Fig 8b; Results,Midazolampropofol patients (pooled group),418,T5.Midazolampropofol.patients,0
+930,Main,Supp Table 10; Fig 8b; Results,Midazolampropofol offset vs reference at matched RASS,0.82,T5.Midazolampropofol.offset,0.0051
+931,Supp,Supp Table 10; Fig 8b; Results,Ketamine patients (pooled group),44,T5.Ketamine.patients,0
+932,Main,Supp Table 10; Fig 8b; Results,Ketamine offset vs reference at matched RASS,0.29,T5.Ketamine.offset,0.0051
+933,Supp,Supp Table 10; Fig 8b; Results,Opioidonly patients (pooled group),365,T5.Opioidonly.patients,0
+934,Main,Supp Table 10; Fig 8b; Results,Opioidonly offset vs reference at matched RASS,0.30,T5.Opioidonly.offset,0.0051
+935,Supp,Supp Table 10; Fig 8b; Results,Vasopressor patients (pooled group),649,T5.Vasopressor.patients,0
+936,Main,Supp Table 10; Fig 8b; Results,Vasopressor offset vs reference at matched RASS,0.28,T5.Vasopressor.offset,0.0051
+937,Main,Results; Supp mortality text,"NRI, NESI added to Clinical* + GCS, 4 h",0.25,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4,0.0051
+938,Main,Results; Supp mortality text,NRI CI low,0.06,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.0151
+939,Main,Results; Supp mortality text,NRI CI high,0.44,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.hi,0.0151
+940,Main,Results; Supp mortality text,"LR test p, NESI added to Clinical* + GCS, 4 h (<0.001)",0,MORT3.lr.Clinical* + GCS + NESI|Clinical* + GCS|4.p,0.001
+941,Main,Results; Supp mortality text,"LR test p, NESI added to Clinical* + GCS, 20 h",0.62,MORT3.lr.Clinical* + GCS + NESI|Clinical* + GCS|20.p,0.0051
+942,Main,Results; Supp mortality text,"Calibration slope, minimum",0.83,MORT3.cal_slope_min,0.0051
+943,Main,Results; Supp mortality text,"Calibration slope, maximum",1.04,MORT3.cal_slope_max,0.0051

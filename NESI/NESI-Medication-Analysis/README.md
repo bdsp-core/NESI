@@ -40,9 +40,7 @@ step 5, several hours (three model runs). Steps 1–3 take minutes.
 
     NESI-Medication_Analysis/
     ├── README.md                                 (this file)
-    ├── CHANGES_since_Nov1.md                     (what changed in the Nov 3 update)
-    ├── requirements.txt                          (exact package versions; from write_requirements.py)
-    ├── write_requirements.py
+    ├── requirements.txt                          (exact package versions used for the paper)
     ├── eleveld-pk-analysis/                      (Pipeline 1; paths from medication-exposure/med_config.py)
     │   ├── (analysis scripts at top level)
     │   ├── data/
@@ -67,8 +65,7 @@ find it automatically.
 Python 3.10+ recommended. Exact package versions used for the paper are in
 `requirements.txt` (`pip install -r requirements.txt`); mixed-model fits can
 differ in the last decimal across statsmodels/scipy versions, so use these
-versions to reproduce the reported numbers exactly. `write_requirements.py`
-regenerates the file from the installed packages.
+versions to reproduce the reported numbers exactly.
 
 Common packages: `pandas`, `numpy`, `scipy`, `statsmodels`, `duckdb`,
 `matplotlib`, `python-docx`, `pyarrow`, `joblib`.

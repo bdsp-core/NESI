@@ -362,9 +362,10 @@ def propofol(ctx):
     w["NE"], w["r"] = pd.to_numeric(w.PredictedNESI, errors="coerce"), pd.to_numeric(w["R PHS IP RASS"], errors="coerce")
     q = w[(w.propofol_only_recomputed == True) & (w.PropofolSimStatus == "simulated") & w.Ce_ug_per_mL.notna() & w.NE.notna() & w.r.between(-5, 0)].rename(columns={"Ce_ug_per_mL": "CE"})  # noqa: E712
     n["PROP.obs"], n["PROP.patients"] = len(q), q.BDSPPatientID.nunique()
-    n["PROP.rho_nesi"], n["PROP.rho_rass"] = stats.spearmanr(q.CE, q.NE)[0], stats.spearmanr(q.CE, q.r)[0]
     Q = q[q.groupby("BDSPPatientID").NE.transform("size") >= 5].copy()
     n["VAR.obs"], n["VAR.patients"] = len(Q), Q.BDSPPatientID.nunique()
+    # Spearman rho on the same rows as the variance decomposition (rank_correlation.py, Nov 3)
+    n["PROP.rho_nesi"], n["PROP.rho_rass"] = stats.spearmanr(Q.CE, Q.NE)[0], stats.spearmanr(Q.CE, Q.r)[0]
     Q["m"], Q["d"] = Q.groupby("BDSPPatientID").CE.transform("mean"), Q.CE - Q.groupby("BDSPPatientID").CE.transform("mean")
     for y, tag in [("NE", "nesi"), ("r", "rass")]:
         fit = smf.mixedlm(f"{y}~CE", Q, groups=Q.BDSPPatientID).fit(reml=True)
@@ -409,6 +410,14 @@ def revision_tables(ctx):
     for x in d.itertuples():
         k = f"MORT2.delta.{x.a}|{x.b}|{x.hour}"
         ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"], ctx.num[k + ".p_holm"] = x.delta, x.lo, x.hi, x.p_holm
+    # likelihood-ratio tests, NRI and calibration (mortality_extra.py)
+    for x in pd.read_csv(t / "mortality_lr.csv").itertuples():
+        ctx.num[f"MORT3.lr.{x.full}|{x.reduced}|{x.hour}.p"] = x.p
+    for x in pd.read_csv(t / "mortality_nri.csv").itertuples():
+        k = f"MORT3.nri.{x.new}|{x.old}|{x.hour}"
+        ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"] = x.nri, x.lo, x.hi
+    cal = pd.read_csv(t / "mortality_calibration.csv")
+    ctx.num["MORT3.cal_slope_min"], ctx.num["MORT3.cal_slope_max"] = cal.slope.min(), cal.slope.max()
     a = pd.read_csv(t / "artifact_tolerance.csv")
     for x in a.itertuples():
         ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi
