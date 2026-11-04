@@ -418,6 +418,22 @@ def revision_tables(ctx):
         ctx.num[k], ctx.num[k + ".lo"], ctx.num[k + ".hi"] = x.nri, x.lo, x.hi
     cal = pd.read_csv(t / "mortality_calibration.csv")
     ctx.num["MORT3.cal_slope_min"], ctx.num["MORT3.cal_slope_max"] = cal.slope.min(), cal.slope.max()
+    ctx.num["MORT3.cal_int_corrected_min"], ctx.num["MORT3.cal_int_corrected_max"] = cal.intercept_corrected.min(), cal.intercept_corrected.max()
+    # Supplementary Table 19: Eleveld implementation check (sedation.py)
+    e = pd.read_csv(t / "eleveld_vs_pas_agreement.csv")
+    for _, x in e.iterrows():
+        for k in ["MDPE_%", "MDAPE_%", "P95_abs_%", "max_abs_%", "max_abs_ugml", "n"]:
+            ctx.num[f"ELEV.{x['subset']}.{k}"] = float(x["ce_" + k])
+    # Supplementary Table 20, the rows computed from the analyzed recordings
+    r = pd.read_csv(ctx.root / "intermediates/external/recordings.csv")
+    ctx.num["EXT20.patients"] = len(r)
+    for c in ["gcs", "rass"]:
+        ctx.num[f"EXT20.{c}.median"], ctx.num[f"EXT20.{c}.q1"], ctx.num[f"EXT20.{c}.q3"] = r[c].median(), r[c].quantile(0.25), r[c].quantile(0.75)
+    for lab, v in {"positive": "Positive", "negative": "Negative", "uta": "UTA, RASS score -4 or -5"}.items():
+        ctx.num[f"EXT20.cam.{lab}"] = int((r.cam == v).sum())
+    m = r.duration_s / 60
+    ctx.num.update({"EXT20.minutes.median": m.median(), "EXT20.minutes.q1": m.quantile(0.25), "EXT20.minutes.q3": m.quantile(0.75),
+                    "EXT20.minutes.min": m.min(), "EXT20.minutes.max": m.max()})
     a = pd.read_csv(t / "artifact_tolerance.csv")
     for x in a.itertuples():
         ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi

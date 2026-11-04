@@ -4,6 +4,10 @@
     python reproduce/sedation.py                # redraw figures and rebuild tables from saved results (minutes)
     python reproduce/sedation.py --from-source  # refit every model with 1,000 resamples (many hours)
 
+The fast route also reruns the Eleveld implementation check against python-anesthesia-simulator
+(Supplementary Table 19; seconds), which NESI_SEDATION_PYTHON needs installed:
+pip install --no-deps python-anesthesia-simulator "control>=0.10.1" casadi
+
 Her data are in NESI_DATA_ROOT/sedation_repo, with the layout of NESI/NESI-Medication-Analysis.
 The saved results of the full 1,000-resample run are in NESI_DATA_ROOT/intermediates/sedation,
 with the same layout; the fast route copies them into place first, and --from-source refreshes
@@ -88,6 +92,10 @@ def main():
     strata = work / "sedation-strata"
     run(strata, "agent_stratified_model.py", "--plots-only")
     run(strata, "build_tables.py")
+    run(work / "eleveld-pk-analysis", "validate_eleveld_vs_pas.py")
+    tables = BUILD / "output" / "tables"
+    tables.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(work / "eleveld-pk-analysis/validation/eleveld_vs_pas_agreement.csv", tables)
     out = BUILD / "output" / "figures" / "sedation"
     out.mkdir(parents=True, exist_ok=True)
     for f in (DATA / "medication-exposure/data/stratified_feasibility/model").glob("*.png"):

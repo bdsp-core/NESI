@@ -919,3 +919,50 @@ id,doc,location,description,expected,key,tolerance
 941,Main,Results; Supp mortality text,"LR test p, NESI added to Clinical* + GCS, 20 h",0.62,MORT3.lr.Clinical* + GCS + NESI|Clinical* + GCS|20.p,0.0051
 942,Main,Results; Supp mortality text,"Calibration slope, minimum",0.83,MORT3.cal_slope_min,0.0051
 943,Main,Results; Supp mortality text,"Calibration slope, maximum",1.04,MORT3.cal_slope_max,0.0051
+944,Supp,Supp Table 19,All samples: Ce MDPE (%),-0.016,ELEV.all.MDPE_%,0.0005
+945,Supp,Supp Table 19,All samples: Ce MDAPE (%),0.029,ELEV.all.MDAPE_%,0.0005
+946,Supp,Supp Table 19,All samples: Ce 95th pct |error| (%),0.104,ELEV.all.P95_abs_%,0.0005
+947,Supp,Supp Table 19,All samples: Ce max |error| (%),0.268,ELEV.all.max_abs_%,0.0005
+948,Supp,Supp Table 19,All samples: Ce max |error| (µg/mL),0.0018,ELEV.all.max_abs_ugml,5e-05
+949,Supp,Supp Table 19,All samples: Samples,287153,ELEV.all.n,0
+950,Supp,Supp Table 19,Bolus + infusion: Ce MDPE (%),-0.015,ELEV.bolus_infusion.MDPE_%,0.0005
+951,Supp,Supp Table 19,Bolus + infusion: Ce MDAPE (%),0.029,ELEV.bolus_infusion.MDAPE_%,0.0005
+952,Supp,Supp Table 19,Bolus + infusion: Ce 95th pct |error| (%),0.107,ELEV.bolus_infusion.P95_abs_%,0.0005
+953,Supp,Supp Table 19,Bolus + infusion: Ce max |error| (%),0.268,ELEV.bolus_infusion.max_abs_%,0.0005
+954,Supp,Supp Table 19,Bolus + infusion: Ce max |error| (µg/mL),0.0018,ELEV.bolus_infusion.max_abs_ugml,5e-05
+955,Supp,Supp Table 19,Bolus + infusion: Samples,143952,ELEV.bolus_infusion.n,0
+956,Supp,Supp Table 19,Infusion only: Ce MDPE (%),-0.016,ELEV.infusion.MDPE_%,0.0005
+957,Supp,Supp Table 19,Infusion only: Ce MDAPE (%),0.029,ELEV.infusion.MDAPE_%,0.0005
+958,Supp,Supp Table 19,Infusion only: Ce 95th pct |error| (%),0.102,ELEV.infusion.P95_abs_%,0.0005
+959,Supp,Supp Table 19,Infusion only: Ce max |error| (%),0.265,ELEV.infusion.max_abs_%,0.0005
+960,Supp,Supp Table 19,Infusion only: Ce max |error| (µg/mL),0.0008,ELEV.infusion.max_abs_ugml,5e-05
+961,Supp,Supp Table 19,Infusion only: Samples,143201,ELEV.infusion.n,0
+962,Supp,Supp Table 19,Opioid off: Ce MDPE (%),-0.022,ELEV.opioid=False.MDPE_%,0.0005
+963,Supp,Supp Table 19,Opioid off: Ce MDAPE (%),0.03,ELEV.opioid=False.MDAPE_%,0.0005
+964,Supp,Supp Table 19,Opioid off: Ce 95th pct |error| (%),0.075,ELEV.opioid=False.P95_abs_%,0.0005
+965,Supp,Supp Table 19,Opioid off: Ce max |error| (%),0.133,ELEV.opioid=False.max_abs_%,0.0005
+966,Supp,Supp Table 19,Opioid off: Ce max |error| (µg/mL),0.0015,ELEV.opioid=False.max_abs_ugml,5e-05
+967,Supp,Supp Table 19,Opioid off: Samples,143569,ELEV.opioid=False.n,0
+968,Supp,Supp Table 19,Opioid on: Ce MDPE (%),-0.01,ELEV.opioid=True.MDPE_%,0.0005
+969,Supp,Supp Table 19,Opioid on: Ce MDAPE (%),0.028,ELEV.opioid=True.MDAPE_%,0.0005
+970,Supp,Supp Table 19,Opioid on: Ce 95th pct |error| (%),0.139,ELEV.opioid=True.P95_abs_%,0.0005
+971,Supp,Supp Table 19,Opioid on: Ce max |error| (%),0.268,ELEV.opioid=True.max_abs_%,0.0005
+972,Supp,Supp Table 19,Opioid on: Ce max |error| (µg/mL),0.0018,ELEV.opioid=True.max_abs_ugml,5e-05
+973,Supp,Supp Table 19,Opioid on: Samples,143584,ELEV.opioid=True.n,0
+974,Supp,Supp Table 20,Patients analyzed,990,EXT20.patients,0
+975,Supp,Supp Table 20,GCS median,8,EXT20.gcs.median,0
+976,Supp,Supp Table 20,GCS Q1,6,EXT20.gcs.q1,0
+977,Supp,Supp Table 20,GCS Q3,11,EXT20.gcs.q3,0
+978,Supp,Supp Table 20,RASS median,-2,EXT20.rass.median,0
+979,Supp,Supp Table 20,RASS Q1,-4,EXT20.rass.q1,0
+980,Supp,Supp Table 20,RASS Q3,-1,EXT20.rass.q3,0
+981,Supp,Supp Table 20,CAM positive,347,EXT20.cam.positive,0
+982,Supp,Supp Table 20,CAM negative,452,EXT20.cam.negative,0
+983,Supp,Supp Table 20,CAM unable to assess,191,EXT20.cam.uta,0
+984,Supp,Supp Table 20,EEG length median (min),30,EXT20.minutes.median,0.051
+985,Supp,Supp Table 20,EEG length Q1,10.5,EXT20.minutes.q1,0.051
+986,Supp,Supp Table 20,EEG length Q3,33.3,EXT20.minutes.q3,0.051
+987,Supp,Supp Table 20,EEG length min,10,EXT20.minutes.min,0.51
+988,Supp,Supp Table 20,EEG length max,779,EXT20.minutes.max,0.51
+989,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, lowest",-0.11,MORT3.cal_int_corrected_min,0.0051
+990,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, highest",0.12,MORT3.cal_int_corrected_max,0.0051

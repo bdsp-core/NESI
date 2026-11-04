@@ -16,8 +16,8 @@ It does four things, in order:
 Nothing here retrains a model or reads raw EEG unless an intermediate is missing.
 See reproduce/README.md for the route from source data to each intermediate.
 
-MANIFEST lists every figure and table; items whose inputs were not saved are
-reported as not reproduced.
+MANIFEST lists every figure and table, with how it is produced; items still waiting for a saved
+input say which input.
 
 Environment:
   NESI_DATA_ROOT    folder holding github_moved/, s3/ and drive/
@@ -49,8 +49,8 @@ OUT = BUILD / "output"
 # script: an original repository script run by this file (status comes from that run)
 # reproduce: a script in reproduce/ run from saved intermediates
 # drawn: a schematic with no data; the final image is in figures/final/
-# not reproduced: the inputs were not saved; reported as published
-SCRIPT, REPRO, DRAWN, MISSING = "script", "reproduce", "drawn", "not reproduced"
+# awaiting input: the code is in the repo; the saved intermediate it reads is being added
+SCRIPT, REPRO, DRAWN, MISSING = "script", "reproduce", "drawn", "awaiting input"
 MANIFEST = [
     ("Fig 1", DRAWN, "pipeline schematic; labels updated by figures_relabel.py"),
     ("Fig 2", SCRIPT, "fig2"),
@@ -71,13 +71,13 @@ MANIFEST = [
     ("Supp Fig 10", REPRO, "supp_fig10_diagnosis.py"),
     ("Supp Figs 11-13", REPRO, "run_cohort_figures.py"),
     ("Supp Figs 14-17", REPRO, "cross_score.py --exact"),
-    ("Supp Figs 18-23", MISSING, "example trajectories; the per-recording NESI series were not saved (figures_relabel.py and figures_elapsed_time.py only relabel the published images)"),
+    ("Supp Figs 18-23", MISSING, "example trajectories: per-recording NESI series for the six recordings, from RevisionRelatedMaterials/LongEEG_NESI_Tracking/ (requested from Arka Roy, Nov 4; figures_relabel.py and figures_elapsed_time.py relabel the current images)"),
     ("Supp Figs 24-25", REPRO, "supp_figures_fast.py"),
     ("Supp Fig 26", REPRO, "ordinal_agreement.py"),
     ("Supp Fig 27", REPRO, "indication_stratified.py"),
-    ("Supp Fig 28", REPRO, "mortality.py"),
+    ("Supp Fig 28", REPRO, "mortality.py (decision curves), mortality_extra.py (calibration panels E-G and the combined figure)"),
     ("Supp Fig 29", REPRO, "qeeg_supp_fig31.py"),
-    ("Supp Fig 30", MISSING, "qEEG-trained heads; the per-channel qEEG features for the test set were not saved (qeeg_baseline_check.py compares single features)"),
+    ("Supp Fig 30", MISSING, "qEEG-trained heads: per-channel qEEG features for the test set, from RevisionRelatedMaterials/TraditionalFeaturevsNESI/ (requested from Arka Roy, Nov 4)"),
     ("Supp Fig 31", REPRO, "ablation_figure.py"),
     ("Supp Fig 32", REPRO, "icans_segment_ablation.py (numbers; panels are the published ones)"),
     ("Supp Fig 33", REPRO, "loco_summary.py"),
@@ -93,8 +93,8 @@ MANIFEST = [
     ("Supp Table 14", REPRO, "analyses.py (supp_table11: performance by sedative group, from the sedation strata labels)"),
     ("Supp Table 15", REPRO, "by_diagnosis.py"),
     ("Supp Tables 16-18", REPRO, "sedation.py (propofol sensitivity, within/between, opioid models)"),
-    ("Supp Table 19", MISSING, "Eleveld implementation check against python-anesthesia-simulator (NESI-Medication-Analysis/eleveld-pk-analysis/validate_eleveld_vs_pas.py, run separately)"),
-    ("Supp Table 20", MISSING, "external cohort characteristics, from Northwestern's records"),
+    ("Supp Table 19", REPRO, "sedation.py (validate_eleveld_vs_pas.py: Eleveld implementation check against python-anesthesia-simulator)"),
+    ("Supp Table 20", REPRO, "analyses.py (revision_tables: patients, GCS, RASS, CAM and EEG length from recordings.csv); the demographic, death, diagnosis and indication rows await Northwestern's per-patient file"),
     ("Supp Table 21", REPRO, "retrain_summary.py (downsample and upweight retrains)"),
     ("Supp Tables 22-23", REPRO, "analyses.py, partly: the full tables need the raw medication administration records"),
     ("Mortality likelihood-ratio tests, NRI, calibration (Results; Supplementary Materials)", REPRO, "mortality_extra.py"),
