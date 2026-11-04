@@ -78,11 +78,8 @@ LongEEG_NESI_Tracking/
 ├── code/
 ├── ContiniousNESI_GCS_EEG/
 ├── ContiniousNESI_RASS_EEG/
-├── DeliriumScoreModel/
 ├── EEG_ViewingCodes/
 ├── Metadata/
-├── morgoth/
-├── NESImodel/
 ├── Products_GCS_MDC/
 └── Products_RASS_MDC/
 ```
