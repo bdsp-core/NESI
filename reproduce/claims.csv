@@ -982,3 +982,33 @@ id,doc,location,description,expected,key,tolerance
 1004,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, GCS: Spearman",0.43,QHEAD.GCS.NESI allfea,0.0051
 1005,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, CAM-S: Spearman",0.57,QHEAD.CAM-S.NESI allfea,0.0051
 1006,Supp,Supp Fig 30; R1/R4 letter,"qEEG head NESI allfea, ICANS: Spearman",-0.1,QHEAD.ICANS.NESI allfea,0.0051
+1007,Supp,Supp Table 20,Patients enrolled,1000,EXT20.enrolled,0
+1008,Supp,Supp Table 20,Age median,66,EXT20.age.median,0
+1009,Supp,Supp Table 20,Age Q1,59,EXT20.age.q1,0
+1010,Supp,Supp Table 20,Age Q3,74,EXT20.age.q3,0
+1011,Supp,Supp Table 20,Male,554,EXT20.Sex.M,0
+1012,Supp,Supp Table 20,Female,446,EXT20.Sex.F,0
+1013,Supp,Supp Table 20,White,525,EXT20.Race.White,0
+1014,Supp,Supp Table 20,Black/African American,298,EXT20.Race.Black or African American,0
+1015,Supp,Supp Table 20,Asian,38,EXT20.Race.Asian,0
+1016,Supp,Supp Table 20,American Indian or Alaska Native,9,EXT20.Race.American Indian or Alaska Native,0
+1017,Supp,Supp Table 20,Native Hawaiian or Other Pacific Islander,5,EXT20.Race.Native Hawaiian or Other Pacific Islander,0
+1018,Supp,Supp Table 20,More than one race,2,EXT20.Race.More than One Race,0
+1019,Supp,Supp Table 20,Other/Unknown race,123,EXT20.Race.Not Reported,0
+1020,Supp,Supp Table 20,Not Hispanic or Latino,857,EXT20.Ethnicity.Not Hispanic or Latino,0
+1021,Supp,Supp Table 20,Hispanic or Latino,81,EXT20.Ethnicity.Hispanic or Latino,0
+1022,Supp,Supp Table 20,Ethnicity not reported,62,EXT20.Ethnicity.Not Reported,0
+1023,Supp,Supp Table 20,Died during hospitalization,344,EXT20.death.hospital,0
+1024,Supp,Supp Table 20,Died within 1 year after discharge,146,EXT20.death.1yr,0
+1025,Supp,Supp Table 20,Admission diagnosis neurological,368,EXT20.AdmissionDiagnosis_categories.Neurological,0
+1026,Supp,Supp Table 20,Admission diagnosis cardiac/circulatory,122,EXT20.AdmissionDiagnosis_categories.Cardiac/Circulatory,0
+1027,Supp,Supp Table 20,Admission diagnosis multisystemic,313,EXT20.AdmissionDiagnosis_categories.Multisystemic,0
+1028,Supp,Supp Table 20,Admission diagnosis respiratory,72,EXT20.AdmissionDiagnosis_categories.Respiratory disorders,0
+1029,Supp,Supp Table 20,Admission diagnosis psychiatric,3,EXT20.AdmissionDiagnosis_categories.Psychiatric disorders,0
+1030,Supp,Supp Table 20,Admission diagnosis other,122,EXT20.AdmissionDiagnosis_categories.Other,0
+1031,Supp,Supp Table 20,Indication altered mental status/encephalopathy,483,EXT20.EEG_indication.Altered mental status/encephalopathy,0
+1032,Supp,Supp Table 20,Indication suspected seizures/spells,359,EXT20.EEG_indication.Suspected Seizures / Spells,0
+1033,Supp,Supp Table 20,Indication known epilepsy/status epilepticus,35,EXT20.EEG_indication.Known Epilepsy / Status Epilepticus,0
+1034,Supp,Supp Table 20,Indication post-cardiac arrest,32,EXT20.EEG_indication.Post-Cardiac Arrest,0
+1035,Supp,Supp Table 20,Indication stroke/cerebrovascular,11,EXT20.EEG_indication.Stroke /Cerebrovascular disease,0
+1036,Supp,Supp Table 20,Indication other/unknown,80,EXT20.EEG_indication.Other/Unknown,0

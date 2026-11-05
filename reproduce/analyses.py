@@ -438,6 +438,15 @@ def revision_tables(ctx):
     m = r.duration_s / 60
     ctx.num.update({"EXT20.minutes.median": m.median(), "EXT20.minutes.q1": m.quantile(0.25), "EXT20.minutes.q3": m.quantile(0.75),
                     "EXT20.minutes.min": m.min(), "EXT20.minutes.max": m.max()})
+    # and the rows for all enrolled patients, from Northwestern's date-free per-recording file (ages over 89 coded 90)
+    d = pd.read_csv(ctx.root / "intermediates/external/demographics.csv")
+    ctx.num["EXT20.enrolled"] = len(d)
+    ctx.num["EXT20.age.median"], ctx.num["EXT20.age.q1"], ctx.num["EXT20.age.q3"] = d.Age.median(), d.Age.quantile(0.25), d.Age.quantile(0.75)
+    for c in ["Sex", "Race", "Ethnicity", "AdmissionDiagnosis_categories", "EEG_indication"]:
+        for v, k in d[c].value_counts().items():
+            ctx.num[f"EXT20.{c}.{v}"] = int(k)
+    ctx.num["EXT20.death.hospital"] = int(d.Death_during_hospitalization.sum())
+    ctx.num["EXT20.death.1yr"] = int(d.Death_within_1yr_postdischarge.sum())
     a = pd.read_csv(t / "artifact_tolerance.csv")
     for x in a.itertuples():
         ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi
