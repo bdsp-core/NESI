@@ -331,7 +331,7 @@ csv_files = sorted(bs_root.glob("*.csv"))
 print(f"Total activation CSV files found: {len(csv_files)}")
 
 for csv_file in tqdm(csv_files):
-    filename = csv_file.name  # Only filename, e.g., DA001009.csv
+    filename = csv_file.name  # Only filename, e.g., <recording>.csv
     edf_filename = csv_file.stem
 
     try:
