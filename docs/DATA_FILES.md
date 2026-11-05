@@ -28,7 +28,6 @@ Patient- and segment-level files are distributed through the credentialed BDSP r
 | `cohort_models/CAMS/Results5Fld/RESNET_5foldTIMESHUFFLE_Results_8class.pkl` | 35390 | `1140393e7fd5` | `yama/cohort_models/CAMS/Results5Fld/RESNET_5foldTIMESHUFFLE_Results_8class.pkl` |
 | `cohort_models/CAMS/model/Training/CAMSTraining_Final_Metadata.csv` | 57419 | `8c2a1d434e47` | `yama/cohort_models/CAMS/CAMSTraining_Final_Metadata.csv` |
 | `cohort_models/ExternalValidation/EEG_viewing_codes/sample_EEG_10min.mat` | 18488797 | `d16241812078` | `yama/cohort_models/ExternalValidation/EEG_viewing_codes/sample_EEG_10min.mat` |
-| `cohort_models/ExternalValidation/KIMCHI_FINAL_METADATA.xlsx` | 17164 | `fc9a5518c2e5` | `yama/cohort_models/ExternalValidation/KIMCHI_FINAL_METADATA.xlsx` |
 | `cohort_models/GCS/Cohort/BWH_GCS_download_AWS.txt` | 2501932 | `38e120c4bade` | `yama/cohort_models/GCS/Cohort/BWH_GCS_download_AWS.txt` |
 | `cohort_models/GCS/Cohort/GCS_BWH_HarvardEEG_metadata.csv` | 15565873 | `cdfbd95b42da` | `yama/NESI/NESI-Medication-Analysis/medication-exposure/data/GCS_i0001a_HarvardEEG_metadata.csv` |
 | `cohort_models/GCS/Cohort/GCS_MGH_HarvardEEG_metadata.csv` | 11330787 | `365b7124c739` | `yama/NESI/NESI-Medication-Analysis/medication-exposure/data/GCS_i0001b_HarvardEEG_metadata.csv` |
@@ -75,3 +74,9 @@ Patient- and segment-level files are distributed through the credentialed BDSP r
 | `figures/supplementary_score_prediction/PacMAP_4OrdinalModels/Yraw_tst_global_ICANS.pkl` | 6423 | `fb5aae2479fd` | `yama/figures/supplementary_score_prediction/PacMAP_4OrdinalModels/Yraw_tst_global_ICANS.pkl` |
 | `figures/supplementary_score_prediction/PacMAP_4OrdinalModels/Yraw_tst_global_RASS.pkl` | 159016 | `4807a3f2b6e3` | `yama/figures/supplementary_score_prediction/PacMAP_4OrdinalModels/Yraw_tst_global_RASS.pkl` |
 | `mortality_analysis/Cohort/YAMA_FINAL_DEATH_RANDOM_SINGLE_SESSIONS_COHORT.csv` | 4279827 | `a80e0d07c984` | `yama/mortality_analysis/Cohort/YAMA_FINAL_DEATH_RANDOM_SINGLE_SESSIONS_COHORT.csv` |
+
+## Northwestern external-validation cohort
+
+`yama/cohort_models/ExternalValidation/` holds the Northwestern recordings used for Fig. 7 and Supplementary Fig. 38: one 10-minute segment per recording (`ErikaSegmentsEEG/*.mat`, with `data`, `channels` and `Fs`; `MAT_file_metadata.csv` gives `Fs` and channels for every file), its NESI predictions, its MORGOTH activations, and `nesi-erika.xlsx`, the clinical scores and their times. Point `NESI_EXTERNAL_ROOT` at a copy of that folder to rebuild `intermediates/external/recordings.csv` (`reproduce/external_validation.py`).
+
+Each recording is a different patient. Northwestern's recording codes are replaced by subject ids `NW0001`–`NW1000`, and every date is shifted by a random whole number of weeks (up to a year) per patient; times of day and every interval within a patient are unchanged (`deid/northwestern_dates.py`). The key stays with the study team and is not distributed. Ages above 89 are recorded as 90.

@@ -95,6 +95,7 @@ MANIFEST = [
     ("Supp Tables 16-18", REPRO, "sedation.py (propofol sensitivity, within/between, opioid models)"),
     ("Supp Table 19", REPRO, "sedation.py (validate_eleveld_vs_pas.py: Eleveld implementation check against python-anesthesia-simulator)"),
     ("Supp Table 20", REPRO, "analyses.py (revision_tables: scores and EEG length from recordings.csv; demographics, deaths, diagnosis and indication from Northwestern's date-free demographics.csv)"),
+    ("Methods, external validation (sampling rate, RASS range)", REPRO, "analyses.py (revision_tables: Northwestern's EDF channel check, eeg_sampling.csv; recordings.csv)"),
     ("Supp Table 21", REPRO, "retrain_summary.py (downsample and upweight retrains)"),
     ("Supp Tables 22-23", REPRO, "analyses.py, partly: the full tables need the raw medication administration records"),
     ("Mortality likelihood-ratio tests, NRI, calibration (Results; Supplementary Materials)", REPRO, "mortality_extra.py"),

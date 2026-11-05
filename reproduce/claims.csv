@@ -1012,3 +1012,7 @@ id,doc,location,description,expected,key,tolerance
 1034,Supp,Supp Table 20,Indication post-cardiac arrest,32,EXT20.EEG_indication.Post-Cardiac Arrest,0
 1035,Supp,Supp Table 20,Indication stroke/cerebrovascular,11,EXT20.EEG_indication.Stroke /Cerebrovascular disease,0
 1036,Supp,Supp Table 20,Indication other/unknown,80,EXT20.EEG_indication.Other/Unknown,0
+1037,Main,"Methods, external validation",EDF recordings with a sampling rate on file,1000,EXT.edf.n,0
+1038,Main,"Methods, external validation",Recordings sampled at 200 Hz,998,EXT.edf.fs.200,0
+1039,Main,"Methods, external validation",Recordings sampled at 500 Hz (two),2,EXT.edf.fs.500,0
+1040,Main,"Methods, external validation",Highest RASS analyzed (RASS > 0 excluded),0,EXT.rass.max,0

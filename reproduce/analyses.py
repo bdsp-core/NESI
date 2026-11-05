@@ -447,6 +447,12 @@ def revision_tables(ctx):
             ctx.num[f"EXT20.{c}.{v}"] = int(k)
     ctx.num["EXT20.death.hospital"] = int(d.Death_during_hospitalization.sum())
     ctx.num["EXT20.death.1yr"] = int(d.Death_within_1yr_postdischarge.sum())
+    # Methods: sampling rate of every Northwestern EDF (Northwestern's channel check) and the RASS range analyzed
+    f = pd.read_csv(ctx.root / "intermediates/external/eeg_sampling.csv")
+    ctx.num["EXT.edf.n"] = len(f)
+    for hz, k in f.Sampling_frequency_Hz.value_counts().items():
+        ctx.num[f"EXT.edf.fs.{hz}"] = int(k)
+    ctx.num["EXT.rass.max"] = r.rass.max()
     a = pd.read_csv(t / "artifact_tolerance.csv")
     for x in a.itertuples():
         ctx.num[f"ART.{x.Scale}.{x.Artifact}.rho"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.lo"], ctx.num[f"ART.{x.Scale}.{x.Artifact}.hi"] = x.rho, x.lo, x.hi

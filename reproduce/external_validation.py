@@ -34,7 +34,7 @@ def build():
     ext = Path(os.environ["NESI_EXTERNAL_ROOT"])
     x = pd.read_excel(ext / "nesi-erika.xlsx")
     rows = []
-    for f in (ext / "NESIPredictions/NESIPredictions").glob("*.csv"):
+    for f in (ext / "NESIPredictions").rglob("*_NESI_predictions.csv"):
         m = re.match(r"(.+?)_ErikaSegment_(\d+)_NESI", f.name)
         v = pd.read_csv(f).NESI.values
         rows.append(dict(Filename=m[1], windows=len(v), nesi_median=np.median(v), nesi_mean=v.mean()))
