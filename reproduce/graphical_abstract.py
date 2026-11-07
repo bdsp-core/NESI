@@ -40,7 +40,7 @@ fig = plt.figure(figsize=(7.2, 5.05))
 ax = fig.add_axes([0, 0, 1, 1])
 ax.set_xlim(0, 7.2), ax.set_ylim(-0.2, 4.85), ax.axis("off")
 
-ax.text(0.3, 4.58, "NESI: one EEG-derived index of encephalopathy severity", fontsize=13, fontweight="bold", color=INK, va="center")
+ax.text(0.3, 4.58, "NESI: an EEG-derived index of encephalopathy severity", fontsize=13, fontweight="bold", color=INK, va="center")
 ax.text(0.3, 4.32, "along the delirium–coma continuum, in non-agitated states", fontsize=10, color=MUTED, va="center")
 
 # Flow
