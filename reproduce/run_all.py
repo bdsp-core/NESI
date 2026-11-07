@@ -91,6 +91,7 @@ MANIFEST = [
     ("Supp Tables 6-7", REPRO, "mapping_summary.py (24 retrained mappings)"),
     ("Supp Tables 8-13", REPRO, "sedation.py (strata counts, offsets and slopes, offsets by RASS level, sensitivity analyses)"),
     ("Supp Table 14", REPRO, "analyses.py (supp_table11: performance by sedative group, from the sedation strata labels)"),
+    ("Results, sedative groups (RASS range and range-matched reference correlation)", REPRO, "analyses.py (sedation_range)"),
     ("Supp Table 15", REPRO, "by_diagnosis.py"),
     ("Supp Tables 16-18", REPRO, "sedation.py (propofol sensitivity, within/between, opioid models)"),
     ("Supp Table 19", REPRO, "sedation.py (validate_eleveld_vs_pas.py: Eleveld implementation check against python-anesthesia-simulator)"),

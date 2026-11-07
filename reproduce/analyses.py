@@ -315,11 +315,10 @@ def retest(ctx):
     n["RETEST.icc"] = 1 - sem**2 / np.concatenate([p.n, p.pn]).var(ddof=1)
 
 
-def supp_table11(ctx):
-    """NESI-RASS performance by sedative group. Groups are Christine Eckhardt's per-assessment labels
-    (build_strata_labels.py: infusion running or stopped within 6 h; each sedative pooled with or
-    without an opioid infusion), joined on patient and RASS time."""
-    d, n = ctx.meds().copy(), ctx.num
+def _sedation_groups(ctx):
+    """Per-assessment sedative groups (Christine Eckhardt's labels, build_strata_labels.py: infusion running or
+    stopped within 6 h; each sedative pooled with or without an opioid infusion), joined on patient and RASS time."""
+    d = ctx.meds().copy()
     lab = pd.read_csv(ctx.root / "sedation_repo/medication-exposure/data/stratified_feasibility/labels/strata_labels_rass.csv")
     lab["t"] = pd.to_datetime(lab.assessment_time)
     d["t"] = pd.to_datetime(d.RASSRecordedDTS, errors="coerce")
@@ -339,6 +338,13 @@ def supp_table11(ctx):
         "NoInfusion24h": none24,
         "NoInfusion24hNoASM": none24 & ~asm,
     }
+    return d, G
+
+
+def supp_table11(ctx):
+    """NESI-RASS performance by sedative group (groups from _sedation_groups)."""
+    n = ctx.num
+    d, G = _sedation_groups(ctx)
     metrics = {"rho": lambda x: rho(x.r, x.n), "auc3": lambda x: roc_auc_score(x.r <= -3, x.n), "auc4": lambda x: roc_auc_score(x.r <= -4, x.n)}
     rows = []
     for k, v in G.items():
@@ -351,6 +357,28 @@ def supp_table11(ctx):
             n[f"T11.{k}.{name}"] = val
         rows.append(dict(Group=k, **res))
     ctx.table(pd.DataFrame(rows).round(3), "supp_table11")
+
+
+def sedation_range(ctx):
+    """How much of the lower NESI-RASS correlation within sedative groups comes from their narrower RASS range:
+    the reference group is resampled, within each RASS level, to each group's RASS distribution (200 draws of
+    5,000 observations; own seed, so other bootstraps are unchanged), and its correlation recomputed."""
+    n = ctx.num
+    d, G = _sedation_groups(ctx)
+    rng = np.random.default_rng(2026)
+    ref = d[G["Reference"]]
+    by_level = {r: g.index.values for r, g in ref.groupby("r")}
+    for k in ["Reference", "Propofol", "Dexmedetomidine", "Midazolam", "MidazolamPropofol", "Ketamine", "OpioidOnly"]:
+        x = d[G[k]]
+        n[f"T11.{k}.deep_pct"] = 100 * (x.r <= -4).mean()
+        if k == "Reference":
+            continue
+        share = x.r.value_counts(normalize=True)
+        vals = []
+        for _ in range(200):
+            ix = np.concatenate([rng.choice(by_level[r], int(round(w * 5000))) for r, w in share.items() if r in by_level])
+            vals.append(rho(ref.loc[ix, "r"], ref.loc[ix, "n"]))
+        n[f"T11.{k}.ref_matched_rho"] = np.mean(vals)
 
 
 def propofol(ctx):
@@ -503,6 +531,7 @@ ALL = [
     mortality_folds,
     retest,
     supp_table11,
+    sedation_range,
     propofol,
     sedation_strata,
     revision_tables,

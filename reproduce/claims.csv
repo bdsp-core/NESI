@@ -1016,3 +1016,11 @@ id,doc,location,description,expected,key,tolerance
 1038,Main,"Methods, external validation",Recordings sampled at 200 Hz,998,EXT.edf.fs.200,0
 1039,Main,"Methods, external validation",Recordings sampled at 500 Hz (two),2,EXT.edf.fs.500,0
 1040,Main,"Methods, external validation",Highest RASS analyzed (RASS > 0 excluded),0,EXT.rass.max,0
+1041,Main,"Results, sedative groups",Reference observations at RASS -5 or -4 (%),28,T11.Reference.deep_pct,0.51
+1042,Main,"Results, sedative groups",Propofol observations at RASS -5 or -4 (%),73,T11.Propofol.deep_pct,0.51
+1043,Main,"Results, sedative groups",Midazolam + propofol observations at RASS -5 or -4 (%),95,T11.MidazolamPropofol.deep_pct,0.51
+1044,Main,"Results, sedative groups",Reference rho at propofol RASS distribution,0.55,T11.Propofol.ref_matched_rho,0.0051
+1045,Main,"Results, sedative groups",Reference rho at midazolam + propofol RASS distribution,0.36,T11.MidazolamPropofol.ref_matched_rho,0.0051
+1046,Main,"Results, sedative groups",Reference rho at opioid-only RASS distribution,0.57,T11.OpioidOnly.ref_matched_rho,0.0051
+1047,Main,"Results, sedative groups",Reference rho at ketamine RASS distribution,0.75,T11.Ketamine.ref_matched_rho,0.0051
+1048,Main,"Results, sedative groups; Discussion",Reference rho at dexmedetomidine RASS distribution,0.55,T11.Dexmedetomidine.ref_matched_rho,0.0051
