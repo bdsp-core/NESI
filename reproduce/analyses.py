@@ -147,6 +147,8 @@ def correlations(ctx):
         n[f"{ds}.rho_pt_lo"], n[f"{ds}.rho_pt_hi"] = np.percentile(B[:, 0], [2.5, 97.5])
         n[f"{ds}.bespoke"] = rho(a, c)
         n[f"{ds}.bespoke_seg_lo"], n[f"{ds}.bespoke_seg_hi"] = sc[1], sc[2]
+        n[f"{ds}.bespoke_mean_boot"] = sc[0]
+        n[f"{ds}.bespoke_pt_lo"], n[f"{ds}.bespoke_pt_hi"] = np.percentile(B[:, 1], [2.5, 97.5])
         n[f"{ds}.delta"] = rho(a, u) - rho(a, c)
         n[f"{ds}.delta_lo"], n[f"{ds}.delta_hi"] = np.percentile(d, [2.5, 97.5])
         rows.append({k.split(".", 1)[1]: round(v, 3) for k, v in n.items() if k.startswith(ds + ".")} | {"Scale": ds})
@@ -237,23 +239,54 @@ def ordinal_agreement(ctx):
 
 
 def institutions_age_duration(ctx):
-    f, rows = ctx.scores(), []
+    """Supplementary Table 15, institution and age rows. Site comes from each segment's BIDS prefix (S0001 MGH,
+    S0002 BWH; the I0002 recordings are BIDMC), age group from the patient's median age over their test segments.
+    Patient-bootstrap CIs use their own seed, so other bootstraps are unchanged."""
+    f, rows, n = ctx.scores(), [], ctx.num
+    rng = np.random.default_rng(2027)
+
+    def boot(t):
+        groups = [g.index.values for _, g in t.groupby("BDSPPatientID")]
+        vals = [rho(t.loc[ix, "RawScore"], t.loc[ix, "NESI"]) for ix in
+                (np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))]) for _ in range(ctx.boot))]
+        return np.percentile(vals, [2.5, 97.5])
+
+    def put(prefix, v, group, ds):
+        n[f"{prefix}.rho"], n[f"{prefix}.patients"], n[f"{prefix}.segments"] = rho(v.RawScore, v.NESI), v.BDSPPatientID.nunique(), len(v)
+        n[f"{prefix}.lo"], n[f"{prefix}.hi"] = boot(v.reset_index(drop=True))
+        rows.append(dict(Scale=ds, Group=group, Patients=n[f"{prefix}.patients"], Segments=len(v), rho=n[f"{prefix}.rho"],
+                         lo=n[f"{prefix}.lo"], hi=n[f"{prefix}.hi"]))
+
     for ds in ["RASS", "GCS"]:
         md = ctx.meta(ds)
         x = md.drop_duplicates(["BDSPPatientID", "SessionID"]).DurationInSeconds / 3600
-        ctx.num[f"DUR.{ds}.median_h"] = x.median()
-        ctx.num[f"DUR.{ds}.pct_le1h"] = (x <= 1).mean() * 100
-        one = md.drop_duplicates("BDSPPatientID").set_index("BDSPPatientID")
+        n[f"DUR.{ds}.median_h"] = x.median()
+        n[f"DUR.{ds}.pct_le1h"] = (x <= 1).mean() * 100
+    for ds in ["RASS", "GCS", "CAMS"]:
         t = f[(f.Dataset == ds) & (f.Split == "Test")].copy()
-        t["Site"] = t.BDSPPatientID.map(one.Site).fillna("BIDMC")
-        t["Age"] = t.BDSPPatientID.map(one.AgeAtVisit)
+        code = t.MorgothOutputFilename.str.extract(r"sub-(S\d{4})")[0]
+        t["Site"] = code.map({"S0001": "MGH", "S0002": "BWH"}).fillna("BIDMC")
         for s, v in t.groupby("Site"):
-            ctx.num[f"SITE.{ds}.{s}.rho"] = rho(v.RawScore, v.NESI)
-            rows.append(dict(Scale=ds, Group=s, Patients=v.BDSPPatientID.nunique(), Segments=len(v), rho=rho(v.RawScore, v.NESI)))
+            put(f"SITE.{ds}.{s}", v, s, ds)
+        if ds == "CAMS":
+            continue
+        md = ctx.meta(ds)
+        m = md.drop_duplicates(["BDSPPatientID", "SessionID"])[["BDSPPatientID", "SessionID", "AgeAtVisit"]].copy()
+        m["ses"] = pd.to_numeric(m.SessionID, errors="coerce")
+        t["ses"] = t.MorgothOutputFilename.str.extract(r"ses-(\d+)")[0].astype(float)
+        t = t.merge(m.drop(columns="SessionID"), on=["BDSPPatientID", "ses"], how="left")
+        t["Age"] = t.BDSPPatientID.map(t.groupby("BDSPPatientID").AgeAtVisit.median())
         for nm, v in [("lt65", t[t.Age < 65]), ("ge65", t[t.Age >= 65])]:
-            ctx.num[f"AGE.{ds}.{nm}.rho"] = rho(v.RawScore, v.NESI)
-            rows.append(dict(Scale=ds, Group=nm, Patients=v.BDSPPatientID.nunique(), Segments=len(v), rho=rho(v.RawScore, v.NESI)))
+            put(f"AGE.{ds}.{nm}", v, nm, ds)
     ctx.table(pd.DataFrame(rows).round(3), "supp_table12_site_age")
+    # diagnosis rows of the same table, from by_diagnosis.py
+    dx = ctx.out / "tables" / "performance_by_diagnosis.csv"
+    for r in pd.read_csv(dx).itertuples():
+        key = f"DXP.{r.Scale}.{r.Dx.replace('/', '_')}"
+        n[f"{key}.patients"], n[f"{key}.segments"] = r.Patients, r.Segments
+        for k in ["rho", "lo", "hi"]:
+            if pd.notna(getattr(r, k)):
+                n[f"{key}.{k}"] = getattr(r, k)
 
 
 def table1(ctx):
@@ -525,21 +558,279 @@ def revision_tables(ctx):
         ctx.num["FIG6." + x.Panel.replace(" ", "_")] = x.Selected
 
 
+def table1_scripts(ctx):
+    """Every Table 1 cell from the original Table1_<cohort>.py scripts (their printed output, written to
+    output/logs/table1_<cohort>.log by the scripts step). Percentages are recomputed over the cohort size."""
+    import re
+
+    labels = {
+        "Male": "male", "Female": "female", "Unknown or not disclosed": "sex_unknown", "Unknown": "sex_unknown",
+        "White": "white", "Black/African American": "black", "Black": "black", "Asian": "asian",
+        "More than one race": "multi", "Other/Unknown": "race_other",
+        "Censored (no death date)": "no_death", "Died in hospital": "inhosp",
+        "No matching in-hospital death": "outhosp", "Died outside recorded hospital windows": "outhosp",
+        "Neurological": "dx_neuro", "Cardiac/Circulatory": "dx_cardiac", "Systemic/Metabolic": "dx_systemic",
+        "Respiratory": "dx_resp", "Unknown/Other": "dx_other",
+    }
+    for coh in ["RASS", "GCS", "CAMS", "ICANS"]:
+        log = ctx.out / "logs" / f"table1_{coh.lower()}.log"
+        txt = log.read_text().split("--STDERR--")[0]
+        n = ctx.num
+        N = int(re.findall(r"Total Unique subjects in \w+ cohort == (\d+)", txt)[-1])
+        n[f"T1S.{coh}.N"] = N
+        med, q1, q3 = map(float, re.search(r"median \[Q1, Q3\]\): ([\d.]+) \[([\d.]+), ([\d.]+)\]", txt).groups())
+        n[f"T1S.{coh}.age_med"], n[f"T1S.{coh}.age_q1"], n[f"T1S.{coh}.age_q3"] = med, q1, q3
+        section = ""
+        for line in txt.splitlines():
+            if "DIAGNOSIS-MALIGNANCY" in line:
+                section = "malig"
+            elif "DIAGNOSIS" in line:
+                section = "dx"
+            m = re.match(r"\s*([A-Za-z/ ()-]+?):?\s+(\d+)(?: \(\d|\s*$)", line)
+            if not m or section == "malig":
+                continue
+            key = labels.get(m.group(1).strip())
+            if key is None or (key.startswith("dx_") and section != "dx"):
+                continue
+            if f"T1S.{coh}.{key}.n" in n and key == "no_death":
+                continue
+            n[f"T1S.{coh}.{key}.n"] = int(m.group(2))
+            n[f"T1S.{coh}.{key}.pct"] = 100 * int(m.group(2)) / N
+        if f"T1S.{coh}.sex_unknown.n" not in n:  # printed only when nonzero
+            u = N - n[f"T1S.{coh}.male.n"] - n[f"T1S.{coh}.female.n"]
+            n[f"T1S.{coh}.sex_unknown.n"], n[f"T1S.{coh}.sex_unknown.pct"] = u, 100 * u / N
+        if coh == "ICANS":  # every ICANS patient is in the haematological-malignancy group, shown as Unknown/Other
+            n["T1S.ICANS.dx_other.n"], n["T1S.ICANS.dx_other.pct"] = N, 100.0
+            for k in ["dx_neuro", "dx_cardiac", "dx_systemic", "dx_resp", "multi"]:
+                n.setdefault(f"T1S.ICANS.{k}.n", 0)
+                n.setdefault(f"T1S.ICANS.{k}.pct", 0.0)
+
+
+def sedation_tables(ctx):
+    """Every number in the sedation tables as rebuilt by sedation.py (Christine Eckhardt's build_tables.py writes them
+    to nesi_tables.docx): key SEDT.<table>.<i>, the i-th number in reading order. Table X is the main Table 2;
+    S1-S5b are Supplementary Tables 8-13; S6, S6b, S6c are Supplementary Tables 16-18."""
+    import re, zipfile
+    from lxml import etree
+
+    W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+    path = ctx.root / "sedation_repo/medication-exposure/data/stratified_feasibility/tables/nesi_tables.docx"
+    root = etree.fromstring(zipfile.ZipFile(path).read("word/document.xml"))
+    cap, seq = None, {}
+    for el in root.find(W + "body"):
+        t = "".join(x.text or "" for x in el.iter(W + "t"))
+        if el.tag == W + "p" and t.strip():
+            m = re.match(r"\s*Table ([A-Z0-9]+[a-z]?)\.", t)
+            cap = m.group(1) if m else cap
+        elif el.tag == W + "tbl" and cap:
+            for tc in el.iter(W + "tc"):
+                cell = "".join(x.text or "" for x in tc.iter(W + "t"))
+                seq.setdefault(cap, []).extend(re.findall(r"\d[\d,]*(?:\.\d+)?", cell))
+    for cap, toks in seq.items():
+        for i, x in enumerate(toks):
+            ctx.num[f"SEDT.{cap}.{i}"] = float(x.replace(",", ""))
+
+
+def calibration_table(ctx):
+    """Supplementary Table 2: ECE and Brier score of severe-state probabilities on the test set, with patient-bootstrap
+    95% CIs. Port of RevisionRelatedMaterials/NESIScaleCalibration/NESI_calibration_analysis.py (Arka Roy): severe =
+    grouped score 2; unpenalized logistic model on training and validation data; 6 equal-width bins; 1,000 resamples,
+    seed 42, cohorts in the order RASS, GCS, CAM-S, ICANS."""
+    from sklearn.linear_model import LogisticRegression
+
+    f = ctx.scores().copy()
+    f["Severe"] = (pd.to_numeric(f.GroupedScore, errors="coerce") == 2).astype(int)
+    rng, nb = np.random.default_rng(42), 6
+
+    def ece(y, p, b):
+        c = np.bincount(b, minlength=nb); pos = np.bincount(b, weights=y, minlength=nb); pr = np.bincount(b, weights=p, minlength=nb)
+        v = c > 0
+        return np.sum(c[v] / len(y) * np.abs(pos[v] / c[v] - pr[v] / c[v]))
+
+    for ds in ["RASS", "GCS", "CAMS", "ICANS"]:
+        d = f[f.Dataset == ds]
+        dev = d[d.Split.isin(["Train", "Val"])]
+        m = LogisticRegression(penalty=None, solver="lbfgs", max_iter=2000, tol=1e-8).fit(dev[["NESI"]], dev.Severe)
+        t = d[d.Split == "Test"].copy().reset_index(drop=True)
+        t["p"] = m.predict_proba(t[["NESI"]])[:, 1]
+        t = t.dropna(subset=["BDSPPatientID", "Severe", "p"]).reset_index(drop=True)
+        y, p = t.Severe.to_numpy(int), t.p.to_numpy(float)
+        b = np.digitize(p, np.linspace(0, 1, nb + 1)[1:-1])
+        groups = [g.index.to_numpy() for _, g in t.astype({"BDSPPatientID": str}).groupby("BDSPPatientID", sort=False)]
+        be, bb = [], []
+        for _ in range(1000):
+            ix = np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))])
+            be.append(ece(y[ix], p[ix], b[ix])); bb.append(np.mean((p[ix] - y[ix]) ** 2))
+        n = ctx.num
+        n[f"CAL.{ds}.obs"], n[f"CAL.{ds}.patients"] = len(t), len(groups)
+        n[f"CAL.{ds}.ece"], n[f"CAL.{ds}.brier"] = ece(y, p, b), np.mean((p - y) ** 2)
+        n[f"CAL.{ds}.ece_lo"], n[f"CAL.{ds}.ece_hi"] = np.percentile(be, [2.5, 97.5])
+        n[f"CAL.{ds}.brier_lo"], n[f"CAL.{ds}.brier_hi"] = np.percentile(bb, [2.5, 97.5])
+
+
+def threshold_cis(ctx):
+    """Supplementary Table 3: patient-bootstrap 95% CIs (1,000 resamples, own seed) for sensitivity, specificity, PPV,
+    NPV and AUROC at the training-set Youden cutoff of supp_tables_2_3."""
+    f, rng = ctx.scores(), np.random.default_rng(2028)
+    for ds, sev in SEVERE.items():
+        t = f[f.Dataset == ds]
+        tr, te = t[t.Split != "Test"], t[t.Split == "Test"].reset_index(drop=True)
+        fp, tp, th = roc_curve(sev(tr.RawScore).astype(int), tr.NESI)
+        cut = th[np.argmax(tp - fp)]
+        yt, hit = sev(te.RawScore).astype(int).to_numpy(), (te.NESI >= cut).to_numpy()
+        groups = [g.index.to_numpy() for _, g in te.groupby("BDSPPatientID")]
+        out = {k: [] for k in ["sens", "spec", "ppv", "npv", "auc"]}
+        for _ in range(1000):
+            ix = np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))])
+            y, h = yt[ix], hit[ix]
+            out["sens"].append((h & (y == 1)).sum() / max(y.sum(), 1))
+            out["spec"].append((~h & (y == 0)).sum() / max((y == 0).sum(), 1))
+            out["ppv"].append((h & (y == 1)).sum() / max(h.sum(), 1))
+            out["npv"].append((~h & (y == 0)).sum() / max((~h).sum(), 1))
+            out["auc"].append(roc_auc_score(y, te.NESI.to_numpy()[ix]) if 0 < y.sum() < len(y) else np.nan)
+        for k, v in out.items():
+            ctx.num[f"T3.{ds}.{k}_lo"], ctx.num[f"T3.{ds}.{k}_hi"] = np.nanpercentile(v, [2.5, 97.5])
+
+
+MED_ROWS = {
+    "asm": ["LongActingASM_Exposure"], "benzo_par": ["FastActing_Benzo_Exposure"], "benzo_ent": ["SlowActing_Benzo_Exposure"],
+    "sed_inf": ["Propofol_Exposure", "Propofol_Infusion_Exposure", "Midazolam_Infusion_Exposure", "Ketamine_Infusion_Exposure",
+                "Dexmedetomidine_Infusion_Exposure"],
+    "propofol": ["Propofol_Exposure", "Propofol_Infusion_Exposure"], "midazolam": ["Midazolam_Infusion_Exposure"],
+    "ketamine": ["Ketamine_Infusion_Exposure"], "dexmed": ["Dexmedetomidine_Infusion_Exposure"],
+    "opi_inf": ["Fentanyl_Infusion_Exposure", "Morphine_Infusion_Exposure", "Hydromorphone_Infusion_Exposure"],
+    "fentanyl": ["Fentanyl_Infusion_Exposure"], "morphine": ["Morphine_Infusion_Exposure"], "hydromorphone": ["Hydromorphone_Infusion_Exposure"],
+    "opi_par": ["FastActing_Opiate_Exposure"], "opi_ent": ["SlowActing_Opiate_Exposure"], "antipsych": ["Antipsychotic_Exposure"],
+}
+
+
+def medication_tables(ctx):
+    """Supplementary Tables 22 (patients) and 23 (EEG segments): exposure within 24 h before each EEG/score, from the
+    per-EEG master exposure files of Christine Eckhardt's medication-exposure pipeline (build_final_exposure_tables.py):
+    rows kept if they match a NESI value by patient and assessment time (all CAM-S rows have one); a missing exposure
+    flag means no medication administration record. Keys MED22/MED23.<cohort>.<row>.n/.pct, plus .mar/.total."""
+    norm = lambda s: s.astype(str).str.replace(r"\.0$", "", regex=True).str.strip()
+
+    def keep(df, lookup, ts_df, ts_lk):
+        lk = pd.read_csv(ctx.s3 / lookup, low_memory=False, usecols=["BDSPPatientID", ts_lk, "NESI"])
+        lk = lk[lk.NESI.notna()]
+        keys = set(zip(norm(lk.BDSPPatientID), pd.to_datetime(lk[ts_lk], errors="coerce").astype("int64")))
+        k = zip(norm(df.BDSPPatientID), pd.to_datetime(df[ts_df], errors="coerce").astype("int64"))
+        return df[[x in keys for x in k]]
+
+    a = pd.read_csv(ctx.s3 / "i0001_per_eeg_master_exposure.csv", low_memory=False)
+    b = pd.read_csv(ctx.s3 / "i0002_per_eeg_master_exposure.csv", low_memory=False)
+    cohorts = {
+        "I0001GCS": keep(a[a._cohort == "GCS"], "GCS_NESI_lookup.csv", "GCSRecordedDTS", "GCSRecordedDTS"),
+        "I0002GCS": keep(b, "GCS_NESI_lookup.csv", "RecordedDTS", "GCSRecordedDTS"),
+        "RASS": keep(a[a._cohort == "RASS"], "RASS_NESI_lookup.csv", "RASSRecordedDTS", "RASSRecordedDTS"),
+        "CAMS": pd.read_csv(ctx.s3 / "i0001_cams_per_eeg_master_exposure.csv", low_memory=False),
+    }
+    n = ctx.num
+    for c, d in cohorts.items():
+        d = d.reset_index(drop=True)
+        has = d.LongActingASM_Exposure.notna()
+        dm = d[has]
+        pts = dm.BDSPPatientID.nunique()
+        n[f"MED22.{c}.mar"], n[f"MED22.{c}.total"] = pts, d.BDSPPatientID.nunique()
+        n[f"MED23.{c}.mar"], n[f"MED23.{c}.total"] = len(dm), len(d)
+        n[f"MED22.{c}.mar_pct"], n[f"MED23.{c}.mar_pct"] = 100 * pts / d.BDSPPatientID.nunique(), 100 * len(dm) / len(d)
+        for r, cols in MED_ROWS.items():
+            e = dm[cols].fillna(0).max(axis=1).astype(int)
+            npt = int(dm.assign(e=e).groupby("BDSPPatientID").e.max().sum())
+            n[f"MED22.{c}.{r}.n"], n[f"MED22.{c}.{r}.pct"] = npt, 100 * npt / pts
+            n[f"MED23.{c}.{r}.n"], n[f"MED23.{c}.{r}.pct"] = int(e.sum()), 100 * e.sum() / len(dm)
+
+
+def ext20_percentages(ctx):
+    """Supplementary Table 20 percentages: demographics, deaths, diagnosis and indication over the 1,000 enrolled
+    patients; CAM categories over the 990 analyzed."""
+    n = ctx.num
+    for k in [k for k in list(n) if k.startswith("EXT20.") and k.split(".")[1] in
+              ("Sex", "Race", "Ethnicity", "death", "AdmissionDiagnosis_categories", "EEG_indication")]:
+        n[k + ".pct"] = 100 * n[k] / n["EXT20.enrolled"]
+    for k in ["EXT20.cam.positive", "EXT20.cam.negative", "EXT20.cam.uta"]:
+        n[k + ".pct"] = 100 * n[k] / n["EXT20.patients"]
+
+
+def output_tables(ctx):
+    """Every numeric cell of the small tables the figure and revision scripts write to output/tables, as
+    CSV.<file>.<row>.<column>, so numbers quoted in the text from those tables can be checked."""
+    for f in sorted((ctx.out / "tables").glob("*.csv")):
+        if f.stat().st_size > 1_000_000:
+            continue
+        d = pd.read_csv(f)
+        for i, row in d.iterrows():
+            for c, v in row.items():
+                v = pd.to_numeric(v, errors="coerce")
+                if pd.notna(v):
+                    ctx.num[f"CSV.{f.stem}.{i}.{c}"] = float(v)
+
+
+def delta_bootstrap(ctx):
+    """Universal versus bespoke model on the same test set (Methods): paired cluster bootstrap over patients, 2,000
+    resamples (own seed), 95% percentile CI for the difference in rho and a two-sided bootstrap p, Holm-adjusted across
+    the four scales."""
+    from statsmodels.stats.multitest import multipletests
+
+    f, n, rng, ps = ctx.scores(), ctx.num, np.random.default_rng(2029), {}
+    for ds in SCALES:
+        b = pd.read_csv(ctx.gh / f"NESI/Bespoke_models/Results/{ds}Bespokescore_results.csv")
+        t = f[(f.Dataset == ds) & (f.Split == "Test")].merge(
+            b[["MorgothOutputFilename", "BespokeBadnessScore"]], on="MorgothOutputFilename").reset_index(drop=True)
+        groups = [g.index.to_numpy() for _, g in t.groupby("BDSPPatientID")]
+        a, u, c = t.RawScore.to_numpy(), t.NESI.to_numpy(), t.BespokeBadnessScore.to_numpy()
+        d = []
+        for _ in range(2000):
+            ix = np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))])
+            d.append(rho(a[ix], u[ix]) - rho(a[ix], c[ix]))
+        d = np.array(d)
+        n[f"DELTA.{ds}.lo"], n[f"DELTA.{ds}.hi"] = np.percentile(d, [2.5, 97.5])
+        ps[ds] = min(1.0, 2 * min((d <= 0).mean(), (d >= 0).mean()))
+        n[f"DELTA.{ds}.p"] = ps[ds]
+    adj = multipletests(list(ps.values()), method="holm")[1]
+    for ds, q in zip(ps, adj):
+        n[f"DELTA.{ds}.p_holm"] = q
+    n["DELTA.max_p_holm"] = max(adj)
+
+
+def text_numbers(ctx):
+    """Numbers quoted in the text that come from script outputs or simple ratios of other checked numbers."""
+    import re
+    n = ctx.num
+    log = (ctx.out / "logs" / "rass_positive.log").read_text()
+    m = re.search(r"held-out RASS>0 segments (\d+) patients (\d+)", log)
+    n["RASSPOS.excluded_segments"], n["RASSPOS.excluded_patients"] = int(m.group(1)), int(m.group(2))
+    n["MORT2.death_pct"] = 100 * n["MORT2.deaths"] / n["MORT2.patients"]
+    for ds in SCALES:
+        if f"{ds}.test_patients" in n and f"{ds}.patients" in n:
+            n[f"split.{ds}.test_pct"] = 100 * n[f"{ds}.test_patients"] / n[f"{ds}.patients"]
+
+
 ALL = [
     cohorts_and_splits,
     correlations,
+    delta_bootstrap,
     cams_sensitivity,
     supp_table1,
     supp_tables_2_3,
+    calibration_table,
+    threshold_cis,
     threshold_aurocs,
     ordinal_agreement,
     institutions_age_duration,
     table1,
+    table1_scripts,
     mortality_folds,
     retest,
     supp_table11,
     sedation_range,
     propofol,
     sedation_strata,
+    sedation_tables,
     revision_tables,
+    ext20_percentages,
+    medication_tables,
+    output_tables,
+    text_numbers,
 ]

@@ -26,47 +26,47 @@ id,doc,location,description,expected,key,tolerance
 25,Main,"Methods, R3.14","Patients in more than one model set, IDs harmonized",94,split.patients_multi_model_sets,0
 26,Main,Methods,Segments in more than one split,0,split.segments_multi_model_sets,0
 27,Main,"Abstract, Results",RASS universal rho (bootstrap mean),0.72,RASS.rho_mean_boot,0.0051
-28,Main,"Abstract, Results",RASS rho CI low,0.66,RASS.rho_pt_lo,0.0151
-29,Main,"Abstract, Results",RASS rho CI high,0.76,RASS.rho_pt_hi,0.0151
-30,Main,Results,RASS bespoke rho,0.66,RASS.bespoke,0.0071
+28,Main,"Abstract, Results",RASS rho CI low,0.66,RASS.rho_pt_lo,0.0051
+29,Main,"Abstract, Results",RASS rho CI high,0.76,RASS.rho_pt_hi,0.0051
+30,Main,Results,RASS bespoke rho (bootstrap mean),0.66,RASS.bespoke_mean_boot,0.0051
 31,Main,"Abstract, Results",GCS universal rho (bootstrap mean),0.72,GCS.rho_mean_boot,0.0051
-32,Main,"Abstract, Results",GCS rho CI low,0.68,GCS.rho_pt_lo,0.0151
-33,Main,"Abstract, Results",GCS rho CI high,0.76,GCS.rho_pt_hi,0.0151
-34,Main,Results,GCS bespoke rho,0.68,GCS.bespoke,0.0071
+32,Main,"Abstract, Results",GCS rho CI low,0.68,GCS.rho_pt_lo,0.0051
+33,Main,"Abstract, Results",GCS rho CI high,0.76,GCS.rho_pt_hi,0.0051
+34,Main,Results,GCS bespoke rho (bootstrap mean),0.68,GCS.bespoke_mean_boot,0.0051
 35,Main,"Abstract, Results",CAM-S universal rho (bootstrap mean),0.84,CAMS.rho_mean_boot,0.0051
-36,Main,"Abstract, Results",CAM-S rho CI low,0.79,CAMS.rho_pt_lo,0.0151
-37,Main,"Abstract, Results",CAM-S rho CI high,0.88,CAMS.rho_pt_hi,0.0151
-38,Main,Results,CAM-S bespoke rho,0.78,CAMS.bespoke,0.0071
+36,Main,"Abstract, Results",CAM-S rho CI low,0.79,CAMS.rho_pt_lo,0.0051
+37,Main,"Abstract, Results",CAM-S rho CI high,0.89,CAMS.rho_pt_hi,0.0051
+38,Main,Results,CAM-S bespoke rho (bootstrap mean),0.78,CAMS.bespoke_mean_boot,0.0051
 39,Main,"Abstract, Results",ICANS universal rho (bootstrap mean),0.83,ICANS.rho_mean_boot,0.0051
-40,Main,"Abstract, Results",ICANS rho CI low,0.72,ICANS.rho_pt_lo,0.0151
+40,Main,"Abstract, Results",ICANS rho CI low,0.72,ICANS.rho_pt_lo,0.0051
 41,Main,"Abstract, Results",ICANS rho CI high,0.9,ICANS.rho_pt_hi,0.0151
-42,Main,Results,ICANS bespoke rho,0.76,ICANS.bespoke,0.0071
-43,Main,Results,RASS delta rho,0.056,RASS.delta,0.0011
-44,Main,Results,RASS delta CI low,0.034,RASS.delta_lo,0.01
-45,Main,Results,RASS delta CI high,0.08,RASS.delta_hi,0.015
-46,Main,Results,GCS delta rho,0.049,GCS.delta,0.0011
-47,Main,Results,GCS delta CI low,0.033,GCS.delta_lo,0.01
-48,Main,Results,GCS delta CI high,0.067,GCS.delta_hi,0.015
-49,Main,Results,CAM-S delta rho,0.063,CAMS.delta,0.0011
-50,Main,Results,CAM-S delta CI low,0.007,CAMS.delta_lo,0.01
-51,Main,Results,CAM-S delta CI high,0.122,CAMS.delta_hi,0.015
-52,Main,Results,ICANS delta rho,0.068,ICANS.delta,0.0011
-53,Main,Results,ICANS delta CI low,0.012,ICANS.delta_lo,0.01
-54,Main,Results,ICANS delta CI high,0.142,ICANS.delta_hi,0.015
-55,Main,"Results, Supp Table 15",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0151
-56,Main,"Results, Supp Table 15",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0151
-57,Main,"Results, Supp Table 15",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0151
-58,Main,"Results, Supp Table 15",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0151
-59,Main,"Results, Supp Table 15",GCS.BIDMC rho,0.38,SITE.GCS.BIDMC.rho,0.0151
-60,Supp,Supp Table 15,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0151
-61,Supp,Supp Table 15,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0151
-62,Supp,Supp Table 15,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0151
-63,Supp,Supp Table 15,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0151
+42,Main,Results,ICANS bespoke rho (bootstrap mean),0.76,ICANS.bespoke_mean_boot,0.0051
+43,Main,Results,RASS delta rho,0.056,RASS.delta,0.00051
+44,Main,Results,RASS delta CI low,0.035,DELTA.RASS.lo,0.00051
+45,Main,Results,RASS delta CI high,0.081,DELTA.RASS.hi,0.00051
+46,Main,Results,GCS delta rho,0.049,GCS.delta,0.00051
+47,Main,Results,GCS delta CI low,0.034,DELTA.GCS.lo,0.00051
+48,Main,Results,GCS delta CI high,0.067,DELTA.GCS.hi,0.00051
+49,Main,Results,CAM-S delta rho,0.063,CAMS.delta,0.00051
+50,Main,Results,CAM-S delta CI low,0.007,DELTA.CAMS.lo,0.00051
+51,Main,Results,CAM-S delta CI high,0.128,DELTA.CAMS.hi,0.00051
+52,Main,Results,ICANS delta rho,0.068,ICANS.delta,0.00051
+53,Main,Results,ICANS delta CI low,0.015,DELTA.ICANS.lo,0.00051
+54,Main,Results,ICANS delta CI high,0.142,DELTA.ICANS.hi,0.00051
+55,Main,"Results, Supp Table 15",RASS.BWH rho,0.77,SITE.RASS.BWH.rho,0.0051
+56,Main,"Results, Supp Table 15",RASS.MGH rho,0.65,SITE.RASS.MGH.rho,0.0051
+57,Main,"Results, Supp Table 15",GCS.MGH rho,0.69,SITE.GCS.MGH.rho,0.0051
+58,Main,"Results, Supp Table 15",GCS.BWH rho,0.75,SITE.GCS.BWH.rho,0.0051
+59,Main,"Results, Supp Table 15",GCS.BIDMC rho,0.37,SITE.GCS.BIDMC.rho,0.0051
+60,Supp,Supp Table 15,RASS.lt65 rho,0.72,AGE.RASS.lt65.rho,0.0051
+61,Supp,Supp Table 15,RASS.ge65 rho,0.71,AGE.RASS.ge65.rho,0.0051
+62,Supp,Supp Table 15,GCS.lt65 rho,0.72,AGE.GCS.lt65.rho,0.0051
+63,Supp,Supp Table 15,GCS.ge65 rho,0.72,AGE.GCS.ge65.rho,0.0051
 64,Main,Results,RETEST.sem,0.45,RETEST.sem,0.0051
 65,Main,Results,RETEST.mdc,1.24,RETEST.mdc,0.0051
 66,Main,Results,RETEST.icc,0.86,RETEST.icc,0.0051
-67,Main,Results,Retest pairs,51004,RETEST.pairs,20
-68,Main,Results,Retest patients,3757,RETEST.patients,5
+67,Main,Results,Retest pairs,51018,RETEST.pairs,0.5
+68,Main,Results,Retest patients,3759,RETEST.patients,0.5
 69,Main,Introduction,DUR.RASS.median_h,17.0,DUR.RASS.median_h,0.051
 70,Main,Introduction,DUR.GCS.median_h,16.3,DUR.GCS.median_h,0.051
 71,Main,Introduction,DUR.RASS.pct_le1h,5.3,DUR.RASS.pct_le1h,0.051
@@ -102,52 +102,52 @@ id,doc,location,description,expected,key,tolerance
 105,Main,"Results, propofol",WB.nesi.between,0.28,WB.nesi.between,0.0051
 106,Main,"Results, propofol",WB.rass.within,-0.38,WB.rass.within,0.0051
 107,Main,"Results, propofol",WB.rass.between,-0.34,WB.rass.between,0.0051
-111,Supp,Supp Table 14,Reference observations,32145,T11.Reference.obs,1
+111,Supp,Supp Table 14,Reference observations,32145,T11.Reference.obs,0.5
 112,Supp,Supp Table 14,Reference patients,4068,T11.Reference.patients,0
 113,Supp,Supp Table 14; Results,Reference rho,0.69,T11.Reference.rho,0.0051
 114,Supp,Supp Table 14,Reference AUROC RASS<=-3,0.86,T11.Reference.auc3,0.0051
 115,Supp,Supp Table 14,Reference AUROC RASS<=-4,0.86,T11.Reference.auc4,0.0051
-116,Supp,Supp Table 14,Propofol observations,32656,T11.Propofol.obs,1
+116,Supp,Supp Table 14,Propofol observations,32656,T11.Propofol.obs,0.5
 117,Supp,Supp Table 14,Propofol patients,2450,T11.Propofol.patients,0
 118,Supp,Supp Table 14; Results,Propofol rho,0.54,T11.Propofol.rho,0.0051
 119,Supp,Supp Table 14,Propofol AUROC RASS<=-3,0.80,T11.Propofol.auc3,0.0051
 120,Supp,Supp Table 14,Propofol AUROC RASS<=-4,0.79,T11.Propofol.auc4,0.0051
-121,Supp,Supp Table 14,Dexmedetomidine observations,7324,T11.Dexmedetomidine.obs,1
+121,Supp,Supp Table 14,Dexmedetomidine observations,7324,T11.Dexmedetomidine.obs,0.5
 122,Supp,Supp Table 14,Dexmedetomidine patients,924,T11.Dexmedetomidine.patients,0
 123,Supp,Supp Table 14; Results,Dexmedetomidine rho,0.44,T11.Dexmedetomidine.rho,0.0051
 124,Supp,Supp Table 14,Dexmedetomidine AUROC RASS<=-3,0.71,T11.Dexmedetomidine.auc3,0.0051
 125,Supp,Supp Table 14,Dexmedetomidine AUROC RASS<=-4,0.73,T11.Dexmedetomidine.auc4,0.0051
-126,Supp,Supp Table 14,Midazolam observations,3029,T11.Midazolam.obs,1
+126,Supp,Supp Table 14,Midazolam observations,3029,T11.Midazolam.obs,0.5
 127,Supp,Supp Table 14,Midazolam patients,218,T11.Midazolam.patients,0
 128,Supp,Supp Table 14; Results,Midazolam rho,0.49,T11.Midazolam.rho,0.0051
 129,Supp,Supp Table 14,Midazolam AUROC RASS<=-3,0.87,T11.Midazolam.auc3,0.0051
 130,Supp,Supp Table 14,Midazolam AUROC RASS<=-4,0.83,T11.Midazolam.auc4,0.0051
-131,Supp,Supp Table 14,MidazolamPropofol observations,6953,T11.MidazolamPropofol.obs,1
+131,Supp,Supp Table 14,MidazolamPropofol observations,6953,T11.MidazolamPropofol.obs,0.5
 132,Supp,Supp Table 14,MidazolamPropofol patients,419,T11.MidazolamPropofol.patients,0
 133,Supp,Supp Table 14; Results,MidazolamPropofol rho,0.39,T11.MidazolamPropofol.rho,0.0051
 134,Supp,Supp Table 14,MidazolamPropofol AUROC RASS<=-3,0.86,T11.MidazolamPropofol.auc3,0.0051
 135,Supp,Supp Table 14,MidazolamPropofol AUROC RASS<=-4,0.87,T11.MidazolamPropofol.auc4,0.0051
-136,Supp,Supp Table 14,Ketamine observations,571,T11.Ketamine.obs,1
+136,Supp,Supp Table 14,Ketamine observations,571,T11.Ketamine.obs,0.5
 137,Supp,Supp Table 14,Ketamine patients,44,T11.Ketamine.patients,0
 138,Supp,Supp Table 14; Results,Ketamine rho,0.74,T11.Ketamine.rho,0.0051
 139,Supp,Supp Table 14,Ketamine AUROC RASS<=-3,0.91,T11.Ketamine.auc3,0.0051
 140,Supp,Supp Table 14,Ketamine AUROC RASS<=-4,0.92,T11.Ketamine.auc4,0.0051
-141,Supp,Supp Table 14,OpioidOnly observations,2806,T11.OpioidOnly.obs,1
+141,Supp,Supp Table 14,OpioidOnly observations,2806,T11.OpioidOnly.obs,0.5
 142,Supp,Supp Table 14,OpioidOnly patients,366,T11.OpioidOnly.patients,0
 143,Supp,Supp Table 14; Results,OpioidOnly rho,0.54,T11.OpioidOnly.rho,0.0051
 144,Supp,Supp Table 14,OpioidOnly AUROC RASS<=-3,0.79,T11.OpioidOnly.auc3,0.0051
 145,Supp,Supp Table 14,OpioidOnly AUROC RASS<=-4,0.79,T11.OpioidOnly.auc4,0.0051
-146,Supp,Supp Table 14,All observations,97620,T11.All.obs,1
+146,Supp,Supp Table 14,All observations,97620,T11.All.obs,0.5
 147,Supp,Supp Table 14,All patients,6191,T11.All.patients,0
 148,Supp,Supp Table 14; Results,All rho,0.72,T11.All.rho,0.0051
 149,Supp,Supp Table 14,All AUROC RASS<=-3,0.87,T11.All.auc3,0.0051
 150,Supp,Supp Table 14,All AUROC RASS<=-4,0.86,T11.All.auc4,0.0051
-151,Supp,Supp Table 14,NoInfusion24h observations,23753,T11.NoInfusion24h.obs,1
+151,Supp,Supp Table 14,NoInfusion24h observations,23753,T11.NoInfusion24h.obs,0.5
 152,Supp,Supp Table 14,NoInfusion24h patients,3349,T11.NoInfusion24h.patients,0
 153,Supp,Supp Table 14; Results,NoInfusion24h rho,0.67,T11.NoInfusion24h.rho,0.0051
 154,Supp,Supp Table 14,NoInfusion24h AUROC RASS<=-3,0.85,T11.NoInfusion24h.auc3,0.0051
 155,Supp,Supp Table 14,NoInfusion24h AUROC RASS<=-4,0.86,T11.NoInfusion24h.auc4,0.0051
-156,Supp,Supp Table 14,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,1
+156,Supp,Supp Table 14,NoInfusion24hNoASM observations,5091,T11.NoInfusion24hNoASM.obs,0.5
 157,Supp,Supp Table 14,NoInfusion24hNoASM patients,1119,T11.NoInfusion24hNoASM.patients,0
 158,Supp,Supp Table 14; Results,NoInfusion24hNoASM rho,0.73,T11.NoInfusion24hNoASM.rho,0.0051
 159,Supp,Supp Table 14,NoInfusion24hNoASM AUROC RASS<=-3,0.87,T11.NoInfusion24hNoASM.auc3,0.0051
@@ -188,14 +188,14 @@ id,doc,location,description,expected,key,tolerance
 194,Supp,Threshold-specific discrimination,CAMS highest,0.97,AUC.CAMS.max,0.0051
 195,Supp,Threshold-specific discrimination,ICANS lowest,0.86,AUC.ICANS.min,0.0051
 196,Supp,Threshold-specific discrimination,ICANS highest,0.98,AUC.ICANS.max,0.0051
-197,Supp,Ordinal agreement,RASS MAOE,0.393,ORD.RASS.maoe,0.0051
+197,Supp,Ordinal agreement,RASS MAOE,0.393,ORD.RASS.maoe,0.00051
 198,Supp,Ordinal agreement,RASS QWK,0.65,ORD.RASS.qwk,0.0051
-199,Supp,Ordinal agreement,GCS MAOE,0.432,ORD.GCS.maoe,0.0051
-200,Supp,Ordinal agreement,GCS QWK,0.633,ORD.GCS.qwk,0.0051
-201,Supp,Ordinal agreement,CAMS MAOE,0.257,ORD.CAMS.maoe,0.0051
-202,Supp,Ordinal agreement,CAMS QWK,0.832,ORD.CAMS.qwk,0.0051
-203,Supp,Ordinal agreement,ICANS MAOE,0.297,ORD.ICANS.maoe,0.0051
-204,Supp,Ordinal agreement,ICANS QWK,0.772,ORD.ICANS.qwk,0.0051
+199,Supp,Ordinal agreement,GCS MAOE,0.432,ORD.GCS.maoe,0.00051
+200,Supp,Ordinal agreement,GCS QWK,0.633,ORD.GCS.qwk,0.00051
+201,Supp,Ordinal agreement,CAMS MAOE,0.257,ORD.CAMS.maoe,0.00051
+202,Supp,Ordinal agreement,CAMS QWK,0.832,ORD.CAMS.qwk,0.00051
+203,Supp,Ordinal agreement,ICANS MAOE,0.297,ORD.ICANS.maoe,0.00051
+204,Supp,Ordinal agreement,ICANS QWK,0.772,ORD.ICANS.qwk,0.00051
 205,Supp,Supp Table 1,RASS score -5 med,1.75,T1.RASS.-5.med,0.00051
 206,Supp,Supp Table 1,RASS score -5 q1,1.02,T1.RASS.-5.q1,0.00051
 207,Supp,Supp Table 1,RASS score -5 q3,2.382,T1.RASS.-5.q3,0.00051
@@ -302,50 +302,50 @@ id,doc,location,description,expected,key,tolerance
 317,Main,"Methods, R3.14",Train and val segments from test patients,1807,split.train_val_rows_of_test_patients,0
 318,Main,"Methods, R3.14",CAM-S test patients affected,37,split.CAMS.test_patients_with_train_val,0
 319,Main,"Methods, R3.14",ICANS test patients affected,8,split.ICANS.test_patients_with_train_val,0
-320,Supp,Supp Fig 33,"RASS rho, median-feature head",0.668,ABL.Median.RASS.rho,0.0051
-321,Supp,Supp Fig 33,"GCS rho, median-feature head",0.642,ABL.Median.GCS.rho,0.0051
-322,Supp,Supp Fig 33,"CAMS rho, median-feature head",0.819,ABL.Median.CAMS.rho,0.0051
-323,Supp,Supp Fig 33,"ICANS rho, median-feature head",0.637,ABL.Median.ICANS.rho,0.0051
-324,Supp,Supp Fig 33,"RASS rho, mean-feature head",0.701,ABL.Mean.RASS.rho,0.0051
+320,Supp,Supp Fig 33,"RASS rho, median-feature head",0.668,ABL.Median.RASS.rho,0.00051
+321,Supp,Supp Fig 33,"GCS rho, median-feature head",0.642,ABL.Median.GCS.rho,0.00051
+322,Supp,Supp Fig 33,"CAMS rho, median-feature head",0.819,ABL.Median.CAMS.rho,0.00051
+323,Supp,Supp Fig 33,"ICANS rho, median-feature head",0.637,ABL.Median.ICANS.rho,0.00051
+324,Supp,Supp Fig 33,"RASS rho, mean-feature head",0.701,ABL.Mean.RASS.rho,0.00051
 325,Supp,Supp Fig 33,"GCS rho, mean-feature head",0.68,ABL.Mean.GCS.rho,0.0051
-326,Supp,Supp Fig 33,"CAMS rho, mean-feature head",0.835,ABL.Mean.CAMS.rho,0.0051
-327,Supp,Supp Fig 33,"ICANS rho, mean-feature head",0.683,ABL.Mean.ICANS.rho,0.0051
-328,Main,Main Results,Median.RASS delta rho,-0.048,ABL.Median.RASS.delta,0.0051
-329,Main,Main Results,Median.ICANS delta rho,-0.195,ABL.Median.ICANS.delta,0.0051
-330,Main,Main Results,Mean.GCS delta rho,-0.045,ABL.Mean.GCS.delta,0.0051
-331,Main,Main Results,Mean.ICANS delta rho,-0.149,ABL.Mean.ICANS.delta,0.0051
+326,Supp,Supp Fig 33,"CAMS rho, mean-feature head",0.835,ABL.Mean.CAMS.rho,0.00051
+327,Supp,Supp Fig 33,"ICANS rho, mean-feature head",0.683,ABL.Mean.ICANS.rho,0.00051
+328,Main,Main Results,Median.RASS delta rho,-0.048,ABL.Median.RASS.delta,0.00051
+329,Main,Main Results,Median.ICANS delta rho,-0.195,ABL.Median.ICANS.delta,0.00051
+330,Main,Main Results,Mean.GCS delta rho,-0.045,ABL.Mean.GCS.delta,0.00051
+331,Main,Main Results,Mean.ICANS delta rho,-0.149,ABL.Mean.ICANS.delta,0.00051
 332,Main,External validation,RASS 30 n,484,EXT.rass.30.n,0
 333,Main,External validation,RASS 30 rho,0.65,EXT.rass.30.rho,0.0051
-334,Main,External validation,RASS 30 CI low,0.59,EXT.rass.30.lo,0.0151
+334,Main,External validation,RASS 30 CI low,0.59,EXT.rass.30.lo,0.0051
 335,Main,External validation,RASS 30 CI high,0.7,EXT.rass.30.hi,0.0151
 336,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 60 n,674,EXT.rass.60.n,0
 337,Main,External validation,RASS 60 rho,0.64,EXT.rass.60.rho,0.0051
-338,Main,External validation,RASS 60 CI low,0.59,EXT.rass.60.lo,0.0151
-339,Main,External validation,RASS 60 CI high,0.69,EXT.rass.60.hi,0.0151
+338,Main,External validation,RASS 60 CI low,0.59,EXT.rass.60.lo,0.0051
+339,Main,External validation,RASS 60 CI high,0.69,EXT.rass.60.hi,0.0051
 340,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 120 n,874,EXT.rass.120.n,0
 341,Main,External validation,RASS 120 rho,0.61,EXT.rass.120.rho,0.0051
-342,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 120 CI low,0.56,EXT.rass.120.lo,0.0151
-343,Main,External validation,RASS 120 CI high,0.66,EXT.rass.120.hi,0.0151
+342,Supp,"Supp Fig 36 text (external validation, time windows)",RASS 120 CI low,0.56,EXT.rass.120.lo,0.0051
+343,Main,External validation,RASS 120 CI high,0.66,EXT.rass.120.hi,0.0051
 344,Main,External validation,RASS All n,990,EXT.rass.All.n,0
 345,Main,External validation,RASS All rho,0.6,EXT.rass.All.rho,0.0051
-346,Main,External validation,RASS All CI low,0.55,EXT.rass.All.lo,0.0151
-347,Main,External validation,RASS All CI high,0.64,EXT.rass.All.hi,0.0151
+346,Main,External validation,RASS All CI low,0.55,EXT.rass.All.lo,0.0051
+347,Main,External validation,RASS All CI high,0.64,EXT.rass.All.hi,0.0051
 348,Main,External validation,GCS 30 n,381,EXT.gcs.30.n,0
 349,Main,External validation,GCS 30 rho,0.7,EXT.gcs.30.rho,0.0051
-350,Main,External validation,GCS 30 CI low,0.64,EXT.gcs.30.lo,0.0151
-351,Main,External validation,GCS 30 CI high,0.75,EXT.gcs.30.hi,0.0151
+350,Main,External validation,GCS 30 CI low,0.64,EXT.gcs.30.lo,0.0051
+351,Main,External validation,GCS 30 CI high,0.75,EXT.gcs.30.hi,0.0051
 352,Supp,"Supp Fig 36 text (external validation, time windows)",GCS 60 n,565,EXT.gcs.60.n,0
 353,Main,External validation,GCS 60 rho,0.68,EXT.gcs.60.rho,0.0051
-354,Main,External validation,GCS 60 CI low,0.63,EXT.gcs.60.lo,0.0151
-355,Main,External validation,GCS 60 CI high,0.72,EXT.gcs.60.hi,0.0151
+354,Main,External validation,GCS 60 CI low,0.63,EXT.gcs.60.lo,0.0051
+355,Main,External validation,GCS 60 CI high,0.72,EXT.gcs.60.hi,0.0051
 356,Supp,"Supp Fig 36 text (external validation, time windows)",GCS 120 n,812,EXT.gcs.120.n,0
 357,Main,External validation,GCS 120 rho,0.65,EXT.gcs.120.rho,0.0051
 358,Main,External validation,GCS 120 CI low,0.6,EXT.gcs.120.lo,0.0151
-359,Main,External validation,GCS 120 CI high,0.69,EXT.gcs.120.hi,0.0151
+359,Main,External validation,GCS 120 CI high,0.69,EXT.gcs.120.hi,0.0051
 360,Main,External validation,GCS All n,990,EXT.gcs.All.n,0
 361,Main,External validation,GCS All rho,0.65,EXT.gcs.All.rho,0.0051
-362,Main,External validation,GCS All CI low,0.62,EXT.gcs.All.lo,0.0151
-363,Main,External validation,GCS All CI high,0.69,EXT.gcs.All.hi,0.0151
+362,Main,External validation,GCS All CI low,0.62,EXT.gcs.All.lo,0.0051
+363,Main,External validation,GCS All CI high,0.69,EXT.gcs.All.hi,0.0051
 364,Supp,"Supp Fig 36 text (external validation, time windows)",RASS inside segment,175,EXT.rass.inside,0
 365,Supp,"Supp Fig 36 text (external validation, time windows)",RASS before,485,EXT.rass.before,0
 366,Supp,"Supp Fig 36 text (external validation, time windows)",RASS after,330,EXT.rass.after,0
@@ -362,12 +362,12 @@ id,doc,location,description,expected,key,tolerance
 384,Main,Main Results,Clinical*+NESI vs Clinical* 4 h,0.06,MORT2.delta.Clinical* + NESI|Clinical*|4,0.0051
 385,Main,Main Results,  CI low,0.03,MORT2.delta.Clinical* + NESI|Clinical*|4.lo,0.0051
 386,Main,Main Results,  CI high,0.1,MORT2.delta.Clinical* + NESI|Clinical*|4.hi,0.0051
-387,Main,Main Results,  Holm p,0.005,MORT2.delta.Clinical* + NESI|Clinical*|4.p_holm,0.0006
+387,Main,Main Results,  Holm p,0.005,MORT2.delta.Clinical* + NESI|Clinical*|4.p_holm,0.00051
 388,Main,Main Results,Clinical*+GCS vs Clinical* 4 h,0.09,MORT2.delta.Clinical* + GCS|Clinical*|4,0.0051
-389,Main,Main Results,"Adding NESI to Clinical*+GCS, 4 h",0.003,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4,0.0006
-390,Main,Main Results,  CI low,-0.004,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.0006
+389,Main,Main Results,"Adding NESI to Clinical*+GCS, 4 h",0.003,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4,0.00051
+390,Main,Main Results,  CI low,-0.004,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.00051
 391,Main,Main Results,  CI high,0.01,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|4.hi,0.0006
-392,Main,Main Results,"Adding NESI to Clinical*+GCS, 20 h",-0.015,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|20,0.0006
+392,Main,Main Results,"Adding NESI to Clinical*+GCS, 20 h",-0.015,MORT2.delta.Clinical* + GCS + NESI|Clinical* + GCS|20,0.00051
 393,Main,"Main Discussion, R3.17",Artifact RASS 0% rho,0.73,ART.RASS.0%.rho,0.0051
 394,Main,"Main Discussion, R3.17",Artifact RASS >0% rho,0.66,ART.RASS.>0% to <40%.rho,0.0051
 395,Main,Main Discussion,  CI low,0.39,ART.RASS.>0% to <40%.lo,0.0051
@@ -913,8 +913,8 @@ id,doc,location,description,expected,key,tolerance
 935,Supp,Supp Table 10; Fig 8b; Results,Vasopressor patients (pooled group),649,T5.Vasopressor.patients,0
 936,Main,Supp Table 10; Fig 8b; Results,Vasopressor offset vs reference at matched RASS,0.28,T5.Vasopressor.offset,0.0051
 937,Main,Results; Supp mortality text,"NRI, NESI added to Clinical* + GCS, 4 h",0.25,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4,0.0051
-938,Main,Results; Supp mortality text,NRI CI low,0.06,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.0151
-939,Main,Results; Supp mortality text,NRI CI high,0.44,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.hi,0.0151
+938,Main,Results; Supp mortality text,NRI CI low,0.06,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.lo,0.0051
+939,Main,Results; Supp mortality text,NRI CI high,0.43,MORT3.nri.Clinical* + GCS + NESI|Clinical* + GCS|4.hi,0.0051
 940,Main,Results; Supp mortality text,"LR test p, NESI added to Clinical* + GCS, 4 h (<0.001)",0,MORT3.lr.Clinical* + GCS + NESI|Clinical* + GCS|4.p,0.001
 941,Main,Results; Supp mortality text,"LR test p, NESI added to Clinical* + GCS, 20 h",0.62,MORT3.lr.Clinical* + GCS + NESI|Clinical* + GCS|20.p,0.0051
 942,Main,Results; Supp mortality text,"Calibration slope, minimum",0.83,MORT3.cal_slope_min,0.0051
@@ -962,8 +962,8 @@ id,doc,location,description,expected,key,tolerance
 984,Supp,Supp Table 20,EEG length median (min),30,EXT20.minutes.median,0.051
 985,Supp,Supp Table 20,EEG length Q1,10.5,EXT20.minutes.q1,0.051
 986,Supp,Supp Table 20,EEG length Q3,33.3,EXT20.minutes.q3,0.051
-987,Supp,Supp Table 20,EEG length min,10,EXT20.minutes.min,0.51
-988,Supp,Supp Table 20,EEG length max,779,EXT20.minutes.max,0.51
+987,Supp,Supp Table 20,EEG length min,10,EXT20.minutes.min,0.5
+988,Supp,Supp Table 20,EEG length max,779,EXT20.minutes.max,0.5
 989,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, lowest",-0.11,MORT3.cal_int_corrected_min,0.0051
 990,Supp,Supp mortality text; Supp Fig 28E-G,"Corrected calibration intercept, highest",0.12,MORT3.cal_int_corrected_max,0.0051
 991,Supp,Supp Fig 30; R1/R4 letter,"qEEG head DeltaAlpha NESI, RASS: Spearman",0.42,QHEAD.RASS.DeltaAlpha NESI,0.0051
@@ -1016,9 +1016,9 @@ id,doc,location,description,expected,key,tolerance
 1038,Main,"Methods, external validation",Recordings sampled at 200 Hz,998,EXT.edf.fs.200,0
 1039,Main,"Methods, external validation",Recordings sampled at 500 Hz (two),2,EXT.edf.fs.500,0
 1040,Main,"Methods, external validation",Highest RASS analyzed (RASS > 0 excluded),0,EXT.rass.max,0
-1041,Main,"Results, sedative groups",Reference observations at RASS -5 or -4 (%),28,T11.Reference.deep_pct,0.51
-1042,Main,"Results, sedative groups",Propofol observations at RASS -5 or -4 (%),73,T11.Propofol.deep_pct,0.51
-1043,Main,"Results, sedative groups",Midazolam + propofol observations at RASS -5 or -4 (%),95,T11.MidazolamPropofol.deep_pct,0.51
+1041,Main,"Results, sedative groups",Reference observations at RASS -5 or -4 (%),28,T11.Reference.deep_pct,0.5
+1042,Main,"Results, sedative groups",Propofol observations at RASS -5 or -4 (%),73,T11.Propofol.deep_pct,0.5
+1043,Main,"Results, sedative groups",Midazolam + propofol observations at RASS -5 or -4 (%),95,T11.MidazolamPropofol.deep_pct,0.5
 1044,Main,"Results, sedative groups",Reference rho at propofol RASS distribution,0.55,T11.Propofol.ref_matched_rho,0.0051
 1045,Main,"Results, sedative groups",Reference rho at midazolam + propofol RASS distribution,0.36,T11.MidazolamPropofol.ref_matched_rho,0.0051
 1046,Main,"Results, sedative groups",Reference rho at opioid-only RASS distribution,0.57,T11.OpioidOnly.ref_matched_rho,0.0051
@@ -1041,3 +1041,1682 @@ id,doc,location,description,expected,key,tolerance
 1063,Main,Results; Supp Table 1,Test observations at CAM-S 3,6,T1.CAMS.3.n,0
 1064,Main,Results; Supp Table 1,Test observations at CAM-S 4,4,T1.CAMS.4.n,0
 1065,Main,Results; Supp Table 1,Test observations at CAM-S 5,8,T1.CAMS.5.n,0
+1066,Main,Table 1,Table 1 RASS No. of subjects n,6793,T1S.RASS.N,0
+1067,Main,Table 1,Table 1 GCS No. of subjects n,7651,T1S.GCS.N,0
+1068,Main,Table 1,Table 1 CAMS No. of subjects n,629,T1S.CAMS.N,0
+1069,Main,Table 1,Table 1 ICANS No. of subjects n,245,T1S.ICANS.N,0
+1070,Main,Table 1,Table 1 RASS age age_med,65,T1S.RASS.age_med,0
+1071,Main,Table 1,Table 1 RASS age age_q1,53,T1S.RASS.age_q1,0
+1072,Main,Table 1,Table 1 RASS age age_q3,74,T1S.RASS.age_q3,0
+1073,Main,Table 1,Table 1 GCS age age_med,65,T1S.GCS.age_med,0
+1074,Main,Table 1,Table 1 GCS age age_q1,53,T1S.GCS.age_q1,0
+1075,Main,Table 1,Table 1 GCS age age_q3,75,T1S.GCS.age_q3,0
+1076,Main,Table 1,Table 1 CAMS age age_med,60,T1S.CAMS.age_med,0
+1077,Main,Table 1,Table 1 CAMS age age_q1,48,T1S.CAMS.age_q1,0
+1078,Main,Table 1,Table 1 CAMS age age_q3,72,T1S.CAMS.age_q3,0
+1079,Main,Table 1,Table 1 ICANS age age_med,63,T1S.ICANS.age_med,0
+1080,Main,Table 1,Table 1 ICANS age age_q1,55,T1S.ICANS.age_q1,0
+1081,Main,Table 1,Table 1 ICANS age age_q3,69,T1S.ICANS.age_q3,0
+1082,Main,Table 1,Table 1 RASS Male n,3776,T1S.RASS.male.n,0
+1083,Main,Table 1,Table 1 RASS Male %,55.6,T1S.RASS.male.pct,0.051
+1084,Main,Table 1,Table 1 GCS Male n,4118,T1S.GCS.male.n,0
+1085,Main,Table 1,Table 1 GCS Male %,53.8,T1S.GCS.male.pct,0.051
+1086,Main,Table 1,Table 1 CAMS Male n,331,T1S.CAMS.male.n,0
+1087,Main,Table 1,Table 1 CAMS Male %,52.6,T1S.CAMS.male.pct,0.051
+1088,Main,Table 1,Table 1 ICANS Male n,157,T1S.ICANS.male.n,0
+1089,Main,Table 1,Table 1 ICANS Male %,64.1,T1S.ICANS.male.pct,0.051
+1090,Main,Table 1,Table 1 RASS Female n,3017,T1S.RASS.female.n,0
+1091,Main,Table 1,Table 1 RASS Female %,44.4,T1S.RASS.female.pct,0.051
+1092,Main,Table 1,Table 1 GCS Female n,3533,T1S.GCS.female.n,0
+1093,Main,Table 1,Table 1 GCS Female %,46.2,T1S.GCS.female.pct,0.051
+1094,Main,Table 1,Table 1 CAMS Female n,281,T1S.CAMS.female.n,0
+1095,Main,Table 1,Table 1 CAMS Female %,44.7,T1S.CAMS.female.pct,0.051
+1096,Main,Table 1,Table 1 ICANS Female n,87,T1S.ICANS.female.n,0
+1097,Main,Table 1,Table 1 ICANS Female %,35.5,T1S.ICANS.female.pct,0.051
+1098,Main,Table 1,Table 1 RASS Unknown n,0,T1S.RASS.sex_unknown.n,0
+1099,Main,Table 1,Table 1 RASS Unknown %,0.0,T1S.RASS.sex_unknown.pct,0.051
+1100,Main,Table 1,Table 1 GCS Unknown n,0,T1S.GCS.sex_unknown.n,0
+1101,Main,Table 1,Table 1 GCS Unknown %,0.0,T1S.GCS.sex_unknown.pct,0.051
+1102,Main,Table 1,Table 1 CAMS Unknown n,17,T1S.CAMS.sex_unknown.n,0
+1103,Main,Table 1,Table 1 CAMS Unknown %,2.7,T1S.CAMS.sex_unknown.pct,0.051
+1104,Main,Table 1,Table 1 ICANS Unknown n,1,T1S.ICANS.sex_unknown.n,0
+1105,Main,Table 1,Table 1 ICANS Unknown %,0.4,T1S.ICANS.sex_unknown.pct,0.051
+1106,Main,Table 1,Table 1 RASS White n,5077,T1S.RASS.white.n,0
+1107,Main,Table 1,Table 1 RASS White %,74.7,T1S.RASS.white.pct,0.051
+1108,Main,Table 1,Table 1 GCS White n,5755,T1S.GCS.white.n,0
+1109,Main,Table 1,Table 1 GCS White %,75.2,T1S.GCS.white.pct,0.051
+1110,Main,Table 1,Table 1 CAMS White n,474,T1S.CAMS.white.n,0
+1111,Main,Table 1,Table 1 CAMS White %,75.4,T1S.CAMS.white.pct,0.051
+1112,Main,Table 1,Table 1 ICANS White n,110,T1S.ICANS.white.n,0
+1113,Main,Table 1,Table 1 ICANS White %,44.9,T1S.ICANS.white.pct,0.051
+1114,Main,Table 1,Table 1 RASS Black/African American n,719,T1S.RASS.black.n,0
+1115,Main,Table 1,Table 1 RASS Black/African American %,10.6,T1S.RASS.black.pct,0.051
+1116,Main,Table 1,Table 1 GCS Black/African American n,767,T1S.GCS.black.n,0
+1117,Main,Table 1,Table 1 GCS Black/African American %,10,T1S.GCS.black.pct,0.5
+1118,Main,Table 1,Table 1 CAMS Black/African American n,46,T1S.CAMS.black.n,0
+1119,Main,Table 1,Table 1 CAMS Black/African American %,7.3,T1S.CAMS.black.pct,0.051
+1120,Main,Table 1,Table 1 ICANS Black/African American n,2,T1S.ICANS.black.n,0
+1121,Main,Table 1,Table 1 ICANS Black/African American %,0.8,T1S.ICANS.black.pct,0.051
+1122,Main,Table 1,Table 1 RASS Asian n,219,T1S.RASS.asian.n,0
+1123,Main,Table 1,Table 1 RASS Asian %,3.2,T1S.RASS.asian.pct,0.051
+1124,Main,Table 1,Table 1 GCS Asian n,255,T1S.GCS.asian.n,0
+1125,Main,Table 1,Table 1 GCS Asian %,3.3,T1S.GCS.asian.pct,0.051
+1126,Main,Table 1,Table 1 CAMS Asian n,20,T1S.CAMS.asian.n,0
+1127,Main,Table 1,Table 1 CAMS Asian %,3.2,T1S.CAMS.asian.pct,0.051
+1128,Main,Table 1,Table 1 ICANS Asian n,4,T1S.ICANS.asian.n,0
+1129,Main,Table 1,Table 1 ICANS Asian %,1.6,T1S.ICANS.asian.pct,0.051
+1130,Main,Table 1,Table 1 RASS More than one race n,12,T1S.RASS.multi.n,0
+1131,Main,Table 1,Table 1 RASS More than one race %,0.2,T1S.RASS.multi.pct,0.051
+1132,Main,Table 1,Table 1 GCS More than one race n,17,T1S.GCS.multi.n,0
+1133,Main,Table 1,Table 1 GCS More than one race %,0.2,T1S.GCS.multi.pct,0.051
+1134,Main,Table 1,Table 1 CAMS More than one race n,2,T1S.CAMS.multi.n,0
+1135,Main,Table 1,Table 1 CAMS More than one race %,0.3,T1S.CAMS.multi.pct,0.051
+1136,Main,Table 1,Table 1 ICANS More than one race n,0,T1S.ICANS.multi.n,0
+1137,Main,Table 1,Table 1 ICANS More than one race %,0,T1S.ICANS.multi.pct,0.5
+1138,Main,Table 1,Table 1 RASS Other/Unknown n,766,T1S.RASS.race_other.n,0
+1139,Main,Table 1,Table 1 RASS Other/Unknown %,11.3,T1S.RASS.race_other.pct,0.051
+1140,Main,Table 1,Table 1 GCS Other/Unknown n,857,T1S.GCS.race_other.n,0
+1141,Main,Table 1,Table 1 GCS Other/Unknown %,11.2,T1S.GCS.race_other.pct,0.051
+1142,Main,Table 1,Table 1 CAMS Other/Unknown n,87,T1S.CAMS.race_other.n,0
+1143,Main,Table 1,Table 1 CAMS Other/Unknown %,13.8,T1S.CAMS.race_other.pct,0.051
+1144,Main,Table 1,Table 1 ICANS Other/Unknown n,129,T1S.ICANS.race_other.n,0
+1145,Main,Table 1,Table 1 ICANS Other/Unknown %,52.7,T1S.ICANS.race_other.pct,0.051
+1146,Main,Table 1,Table 1 RASS No death recorded (survivor at last disc n,2609,T1S.RASS.no_death.n,0
+1147,Main,Table 1,Table 1 RASS No death recorded (survivor at last disc %,38.4,T1S.RASS.no_death.pct,0.051
+1148,Main,Table 1,Table 1 GCS No death recorded (survivor at last disc n,3092,T1S.GCS.no_death.n,0
+1149,Main,Table 1,Table 1 GCS No death recorded (survivor at last disc %,40.4,T1S.GCS.no_death.pct,0.051
+1150,Main,Table 1,Table 1 CAMS No death recorded (survivor at last disc n,413,T1S.CAMS.no_death.n,0
+1151,Main,Table 1,Table 1 CAMS No death recorded (survivor at last disc %,65.7,T1S.CAMS.no_death.pct,0.051
+1152,Main,Table 1,Table 1 ICANS No death recorded (survivor at last disc n,208,T1S.ICANS.no_death.n,0
+1153,Main,Table 1,Table 1 ICANS No death recorded (survivor at last disc %,84.9,T1S.ICANS.no_death.pct,0.051
+1154,Main,Table 1,Table 1 RASS Death recorded: Deceased (In-Hospital) n,2137,T1S.RASS.inhosp.n,0
+1155,Main,Table 1,Table 1 RASS Death recorded: Deceased (In-Hospital) %,31.5,T1S.RASS.inhosp.pct,0.051
+1156,Main,Table 1,Table 1 GCS Death recorded: Deceased (In-Hospital) n,2024,T1S.GCS.inhosp.n,0
+1157,Main,Table 1,Table 1 GCS Death recorded: Deceased (In-Hospital) %,26.5,T1S.GCS.inhosp.pct,0.051
+1158,Main,Table 1,Table 1 CAMS Death recorded: Deceased (In-Hospital) n,75,T1S.CAMS.inhosp.n,0
+1159,Main,Table 1,Table 1 CAMS Death recorded: Deceased (In-Hospital) %,11.9,T1S.CAMS.inhosp.pct,0.051
+1160,Main,Table 1,Table 1 ICANS Death recorded: Deceased (In-Hospital) n,0,T1S.ICANS.inhosp.n,0
+1161,Main,Table 1,Table 1 ICANS Death recorded: Deceased (In-Hospital) %,0,T1S.ICANS.inhosp.pct,0.5
+1162,Main,Table 1,Table 1 RASS Death recorded: Deceased (Out-of-Hospita n,2047,T1S.RASS.outhosp.n,0
+1163,Main,Table 1,Table 1 RASS Death recorded: Deceased (Out-of-Hospita %,30.1,T1S.RASS.outhosp.pct,0.051
+1164,Main,Table 1,Table 1 GCS Death recorded: Deceased (Out-of-Hospita n,2535,T1S.GCS.outhosp.n,0
+1165,Main,Table 1,Table 1 GCS Death recorded: Deceased (Out-of-Hospita %,33.1,T1S.GCS.outhosp.pct,0.051
+1166,Main,Table 1,Table 1 CAMS Death recorded: Deceased (Out-of-Hospita n,141,T1S.CAMS.outhosp.n,0
+1167,Main,Table 1,Table 1 CAMS Death recorded: Deceased (Out-of-Hospita %,22.4,T1S.CAMS.outhosp.pct,0.051
+1168,Main,Table 1,Table 1 ICANS Death recorded: Deceased (Out-of-Hospita n,37,T1S.ICANS.outhosp.n,0
+1169,Main,Table 1,Table 1 ICANS Death recorded: Deceased (Out-of-Hospita %,15.1,T1S.ICANS.outhosp.pct,0.051
+1170,Main,Table 1,Table 1 RASS Neurological n,2977,T1S.RASS.dx_neuro.n,0
+1171,Main,Table 1,Table 1 RASS Neurological %,43.8,T1S.RASS.dx_neuro.pct,0.051
+1172,Main,Table 1,Table 1 GCS Neurological n,3803,T1S.GCS.dx_neuro.n,0
+1173,Main,Table 1,Table 1 GCS Neurological %,49.7,T1S.GCS.dx_neuro.pct,0.051
+1174,Main,Table 1,Table 1 CAMS Neurological n,217,T1S.CAMS.dx_neuro.n,0
+1175,Main,Table 1,Table 1 CAMS Neurological %,34.5,T1S.CAMS.dx_neuro.pct,0.051
+1176,Main,Table 1,Table 1 ICANS Neurological n,0,T1S.ICANS.dx_neuro.n,0
+1177,Main,Table 1,Table 1 RASS Cardiac/Circulatory n,695,T1S.RASS.dx_cardiac.n,0
+1178,Main,Table 1,Table 1 RASS Cardiac/Circulatory %,10.2,T1S.RASS.dx_cardiac.pct,0.051
+1179,Main,Table 1,Table 1 GCS Cardiac/Circulatory n,550,T1S.GCS.dx_cardiac.n,0
+1180,Main,Table 1,Table 1 GCS Cardiac/Circulatory %,7.2,T1S.GCS.dx_cardiac.pct,0.051
+1181,Main,Table 1,Table 1 CAMS Cardiac/Circulatory n,43,T1S.CAMS.dx_cardiac.n,0
+1182,Main,Table 1,Table 1 CAMS Cardiac/Circulatory %,6.8,T1S.CAMS.dx_cardiac.pct,0.051
+1183,Main,Table 1,Table 1 ICANS Cardiac/Circulatory n,0,T1S.ICANS.dx_cardiac.n,0
+1184,Main,Table 1,Table 1 RASS Systemic/Metabolic n,1257,T1S.RASS.dx_systemic.n,0
+1185,Main,Table 1,Table 1 RASS Systemic/Metabolic %,18.5,T1S.RASS.dx_systemic.pct,0.051
+1186,Main,Table 1,Table 1 GCS Systemic/Metabolic n,1190,T1S.GCS.dx_systemic.n,0
+1187,Main,Table 1,Table 1 GCS Systemic/Metabolic %,15.6,T1S.GCS.dx_systemic.pct,0.051
+1188,Main,Table 1,Table 1 CAMS Systemic/Metabolic n,36,T1S.CAMS.dx_systemic.n,0
+1189,Main,Table 1,Table 1 CAMS Systemic/Metabolic %,5.7,T1S.CAMS.dx_systemic.pct,0.051
+1190,Main,Table 1,Table 1 ICANS Systemic/Metabolic n,0,T1S.ICANS.dx_systemic.n,0
+1191,Main,Table 1,Table 1 RASS Respiratory n,460,T1S.RASS.dx_resp.n,0
+1192,Main,Table 1,Table 1 RASS Respiratory %,6.8,T1S.RASS.dx_resp.pct,0.051
+1193,Main,Table 1,Table 1 GCS Respiratory n,406,T1S.GCS.dx_resp.n,0
+1194,Main,Table 1,Table 1 GCS Respiratory %,5.3,T1S.GCS.dx_resp.pct,0.051
+1195,Main,Table 1,Table 1 CAMS Respiratory n,14,T1S.CAMS.dx_resp.n,0
+1196,Main,Table 1,Table 1 CAMS Respiratory %,2.2,T1S.CAMS.dx_resp.pct,0.051
+1197,Main,Table 1,Table 1 ICANS Respiratory n,0,T1S.ICANS.dx_resp.n,0
+1198,Main,Table 1,Table 1 RASS Unknown/Other n,1404,T1S.RASS.dx_other.n,0
+1199,Main,Table 1,Table 1 RASS Unknown/Other %,20.7,T1S.RASS.dx_other.pct,0.051
+1200,Main,Table 1,Table 1 GCS Unknown/Other n,1702,T1S.GCS.dx_other.n,0
+1201,Main,Table 1,Table 1 GCS Unknown/Other %,22.2,T1S.GCS.dx_other.pct,0.051
+1202,Main,Table 1,Table 1 CAMS Unknown/Other n,319,T1S.CAMS.dx_other.n,0
+1203,Main,Table 1,Table 1 CAMS Unknown/Other %,50.7,T1S.CAMS.dx_other.pct,0.051
+1204,Main,Table 1,Table 1 ICANS Unknown/Other n,245,T1S.ICANS.dx_other.n,0
+1205,Main,Table 1,Table 1 ICANS Unknown/Other %,100,T1S.ICANS.dx_other.pct,0.5
+1206,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / RASS patients,200,SITE.RASS.MGH.patients,0
+1207,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / RASS segments,3682,SITE.RASS.MGH.segments,0
+1208,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / RASS lo,0.56,SITE.RASS.MGH.lo,0.0051
+1209,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / RASS hi,0.72,SITE.RASS.MGH.hi,0.0051
+1210,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / RASS patients,172,SITE.RASS.BWH.patients,0
+1211,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / RASS segments,2461,SITE.RASS.BWH.segments,0
+1212,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / RASS lo,0.71,SITE.RASS.BWH.lo,0.0051
+1213,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / RASS hi,0.81,SITE.RASS.BWH.hi,0.0051
+1214,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / GCS patients,348,SITE.GCS.MGH.patients,0
+1215,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / GCS segments,3624,SITE.GCS.MGH.segments,0
+1216,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / GCS lo,0.64,SITE.GCS.MGH.lo,0.0051
+1217,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / GCS hi,0.74,SITE.GCS.MGH.hi,0.0051
+1218,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / GCS patients,161,SITE.GCS.BWH.patients,0
+1219,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / GCS segments,3191,SITE.GCS.BWH.segments,0
+1220,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / GCS lo,0.69,SITE.GCS.BWH.lo,0.0051
+1221,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Brigham and Women's Hospital / GCS hi,0.80,SITE.GCS.BWH.hi,0.0051
+1222,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / GCS patients,45,SITE.GCS.BIDMC.patients,0
+1223,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / GCS segments,51,SITE.GCS.BIDMC.segments,0
+1224,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / GCS lo,0.06,SITE.GCS.BIDMC.lo,0.0051
+1225,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / GCS hi,0.64,SITE.GCS.BIDMC.hi,0.0051
+1226,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / CAM-S patients,80,SITE.CAMS.MGH.patients,0
+1227,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / CAM-S segments,80,SITE.CAMS.MGH.segments,0
+1228,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / CAM-S rho,0.84,SITE.CAMS.MGH.rho,0.0051
+1229,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / CAM-S lo,0.77,SITE.CAMS.MGH.lo,0.0051
+1230,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Massachusetts General Hospital / CAM-S hi,0.88,SITE.CAMS.MGH.hi,0.0051
+1231,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / CAM-S patients,25,SITE.CAMS.BIDMC.patients,0
+1232,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / CAM-S segments,25,SITE.CAMS.BIDMC.segments,0
+1233,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / CAM-S rho,0.81,SITE.CAMS.BIDMC.rho,0.0051
+1234,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / CAM-S lo,0.60,SITE.CAMS.BIDMC.lo,0.0051
+1235,Supp,Supplementary Table 15,Supplementary Table 15 Institution / Beth Israel Deaconess Medical Center / CAM-S hi,0.90,SITE.CAMS.BIDMC.hi,0.0051
+1236,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / RASS patients,182,AGE.RASS.lt65.patients,0
+1237,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / RASS segments,3336,AGE.RASS.lt65.segments,0
+1238,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / RASS lo,0.63,AGE.RASS.lt65.lo,0.0051
+1239,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / RASS hi,0.77,AGE.RASS.lt65.hi,0.0051
+1240,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / RASS patients,190,AGE.RASS.ge65.patients,0
+1241,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / RASS segments,2807,AGE.RASS.ge65.segments,0
+1242,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / RASS lo,0.64,AGE.RASS.ge65.lo,0.0051
+1243,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / RASS hi,0.77,AGE.RASS.ge65.hi,0.0051
+1244,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / GCS patients,249,AGE.GCS.lt65.patients,0
+1245,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / GCS segments,3221,AGE.GCS.lt65.segments,0
+1246,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / GCS lo,0.65,AGE.GCS.lt65.lo,0.0051
+1247,Supp,Supplementary Table 15,Supplementary Table 15 Age / < 65 years / GCS hi,0.77,AGE.GCS.lt65.hi,0.0051
+1248,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / GCS patients,258,AGE.GCS.ge65.patients,0
+1249,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / GCS segments,3594,AGE.GCS.ge65.segments,0
+1250,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / GCS lo,0.65,AGE.GCS.ge65.lo,0.0051
+1251,Supp,Supplementary Table 15,Supplementary Table 15 Age / ≥ 65 years / GCS hi,0.76,AGE.GCS.ge65.hi,0.0051
+1252,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / RASS patients,135,DXP.RASS.Neurological.patients,0
+1253,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / RASS segments,2086,DXP.RASS.Neurological.segments,0
+1254,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / RASS rho,0.71,DXP.RASS.Neurological.rho,0.0051
+1255,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / RASS lo,0.62,DXP.RASS.Neurological.lo,0.0051
+1256,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / RASS hi,0.77,DXP.RASS.Neurological.hi,0.0051
+1257,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / RASS patients,79,DXP.RASS.Systemic_Metabolic.patients,0
+1258,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / RASS segments,1274,DXP.RASS.Systemic_Metabolic.segments,0
+1259,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / RASS rho,0.69,DXP.RASS.Systemic_Metabolic.rho,0.0051
+1260,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / RASS lo,0.53,DXP.RASS.Systemic_Metabolic.lo,0.0051
+1261,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / RASS hi,0.80,DXP.RASS.Systemic_Metabolic.hi,0.0051
+1262,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / RASS patients,64,DXP.RASS.Cardiac_Circulatory.patients,0
+1263,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / RASS segments,1522,DXP.RASS.Cardiac_Circulatory.segments,0
+1264,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / RASS rho,0.62,DXP.RASS.Cardiac_Circulatory.rho,0.0051
+1265,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / RASS lo,0.49,DXP.RASS.Cardiac_Circulatory.lo,0.0051
+1266,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / RASS hi,0.70,DXP.RASS.Cardiac_Circulatory.hi,0.0051
+1267,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / RASS patients,36,DXP.RASS.Respiratory.patients,0
+1268,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / RASS segments,621,DXP.RASS.Respiratory.segments,0
+1269,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / RASS rho,0.54,DXP.RASS.Respiratory.rho,0.0051
+1270,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / RASS lo,0.30,DXP.RASS.Respiratory.lo,0.0051
+1271,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / RASS hi,0.71,DXP.RASS.Respiratory.hi,0.0051
+1272,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / RASS patients,58,DXP.RASS.Unknown_Other.patients,0
+1273,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / RASS segments,640,DXP.RASS.Unknown_Other.segments,0
+1274,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / RASS rho,0.75,DXP.RASS.Unknown_Other.rho,0.0051
+1275,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / RASS lo,0.59,DXP.RASS.Unknown_Other.lo,0.0051
+1276,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / RASS hi,0.80,DXP.RASS.Unknown_Other.hi,0.0051
+1277,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / GCS patients,301,DXP.GCS.Neurological.patients,0
+1278,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / GCS segments,4253,DXP.GCS.Neurological.segments,0
+1279,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / GCS rho,0.70,DXP.GCS.Neurological.rho,0.0051
+1280,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / GCS lo,0.64,DXP.GCS.Neurological.lo,0.0051
+1281,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / GCS hi,0.75,DXP.GCS.Neurological.hi,0.0051
+1282,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / GCS patients,74,DXP.GCS.Systemic_Metabolic.patients,0
+1283,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / GCS segments,809,DXP.GCS.Systemic_Metabolic.segments,0
+1284,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / GCS rho,0.68,DXP.GCS.Systemic_Metabolic.rho,0.0051
+1285,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / GCS lo,0.57,DXP.GCS.Systemic_Metabolic.lo,0.0051
+1286,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / GCS hi,0.79,DXP.GCS.Systemic_Metabolic.hi,0.0051
+1287,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / GCS patients,23,DXP.GCS.Cardiac_Circulatory.patients,0
+1288,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / GCS segments,351,DXP.GCS.Cardiac_Circulatory.segments,0
+1289,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / GCS rho,0.69,DXP.GCS.Cardiac_Circulatory.rho,0.0051
+1290,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / GCS lo,0.44,DXP.GCS.Cardiac_Circulatory.lo,0.0051
+1291,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Cardiac/Circulatory / GCS hi,0.82,DXP.GCS.Cardiac_Circulatory.hi,0.0051
+1292,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / GCS patients,31,DXP.GCS.Respiratory.patients,0
+1293,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / GCS segments,357,DXP.GCS.Respiratory.segments,0
+1294,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / GCS rho,0.76,DXP.GCS.Respiratory.rho,0.0051
+1295,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / GCS lo,0.57,DXP.GCS.Respiratory.lo,0.0051
+1296,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Respiratory / GCS hi,0.82,DXP.GCS.Respiratory.hi,0.0051
+1297,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / GCS patients,123,DXP.GCS.Unknown_Other.patients,0
+1298,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / GCS segments,1096,DXP.GCS.Unknown_Other.segments,0
+1299,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / GCS rho,0.73,DXP.GCS.Unknown_Other.rho,0.0051
+1300,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / GCS lo,0.52,DXP.GCS.Unknown_Other.lo,0.0051
+1301,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / GCS hi,0.79,DXP.GCS.Unknown_Other.hi,0.0051
+1302,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / CAM-S patients,20,DXP.CAMS.Neurological.patients,0
+1303,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / CAM-S segments,20,DXP.CAMS.Neurological.segments,0
+1304,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / CAM-S rho,0.82,DXP.CAMS.Neurological.rho,0.0051
+1305,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / CAM-S lo,0.62,DXP.CAMS.Neurological.lo,0.0051
+1306,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Neurological / CAM-S hi,0.94,DXP.CAMS.Neurological.hi,0.0051
+1307,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / CAM-S patients,9,DXP.CAMS.Systemic_Metabolic.patients,0
+1308,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / CAM-S segments,9,DXP.CAMS.Systemic_Metabolic.segments,0
+1309,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / CAM-S rho,0.89,DXP.CAMS.Systemic_Metabolic.rho,0.0051
+1310,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / CAM-S lo,0.56,DXP.CAMS.Systemic_Metabolic.lo,0.0051
+1311,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Systemic/Metabolic / CAM-S hi,0.97,DXP.CAMS.Systemic_Metabolic.hi,0.0051
+1312,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / CAM-S patients,70,DXP.CAMS.Unknown_Other.patients,0
+1313,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / CAM-S segments,70,DXP.CAMS.Unknown_Other.segments,0
+1314,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / CAM-S rho,0.82,DXP.CAMS.Unknown_Other.rho,0.0051
+1315,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / CAM-S lo,0.71,DXP.CAMS.Unknown_Other.lo,0.0051
+1316,Supp,Supplementary Table 15,Supplementary Table 15 Diagnosis / Unknown/Other / CAM-S hi,0.88,DXP.CAMS.Unknown_Other.hi,0.0051
+1317,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 rho_lo",0.67,T11.Reference.rho_lo,0.0051
+1318,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 rho_hi",0.71,T11.Reference.rho_hi,0.0051
+1319,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 auc3_lo",0.85,T11.Reference.auc3_lo,0.0051
+1320,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 auc3_hi",0.87,T11.Reference.auc3_hi,0.0051
+1321,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 auc4_lo",0.84,T11.Reference.auc4_lo,0.0051
+1322,Supp,Supplementary Table 14,"Supplementary Table 14 Reference / 32,145 / 4,068 auc4_hi",0.87,T11.Reference.auc4_hi,0.0051
+1323,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 rho_lo",0.51,T11.Propofol.rho_lo,0.0051
+1324,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 rho_hi",0.56,T11.Propofol.rho_hi,0.0051
+1325,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 auc3_lo",0.78,T11.Propofol.auc3_lo,0.0051
+1326,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 auc3_hi",0.81,T11.Propofol.auc3_hi,0.0051
+1327,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 auc4_lo",0.78,T11.Propofol.auc4_lo,0.0051
+1328,Supp,Supplementary Table 14,"Supplementary Table 14 Propofol (± opioid) / 32,656 / 2,450 auc4_hi",0.81,T11.Propofol.auc4_hi,0.0051
+1329,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 rho_lo",0.38,T11.Dexmedetomidine.rho_lo,0.0051
+1330,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 rho_hi",0.49,T11.Dexmedetomidine.rho_hi,0.0051
+1331,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 auc3_lo",0.69,T11.Dexmedetomidine.auc3_lo,0.0051
+1332,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 auc3_hi",0.74,T11.Dexmedetomidine.auc3_hi,0.0051
+1333,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 auc4_lo",0.70,T11.Dexmedetomidine.auc4_lo,0.0051
+1334,Supp,Supplementary Table 14,"Supplementary Table 14 Dexmedetomidine (± opioid) / 7,324 / 924 auc4_hi",0.77,T11.Dexmedetomidine.auc4_hi,0.0051
+1335,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 rho_lo",0.39,T11.Midazolam.rho_lo,0.0051
+1336,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 rho_hi",0.57,T11.Midazolam.rho_hi,0.0051
+1337,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 auc3_lo",0.80,T11.Midazolam.auc3_lo,0.0051
+1338,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 auc3_hi",0.93,T11.Midazolam.auc3_hi,0.0051
+1339,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 auc4_lo",0.77,T11.Midazolam.auc4_lo,0.0051
+1340,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam (± opioid) / 3,029 / 218 auc4_hi",0.88,T11.Midazolam.auc4_hi,0.0051
+1341,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 rho_lo",0.32,T11.MidazolamPropofol.rho_lo,0.0051
+1342,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 rho_hi",0.45,T11.MidazolamPropofol.rho_hi,0.0051
+1343,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 auc3_lo",0.80,T11.MidazolamPropofol.auc3_lo,0.0051
+1344,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 auc3_hi",0.91,T11.MidazolamPropofol.auc3_hi,0.0051
+1345,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 auc4_lo",0.84,T11.MidazolamPropofol.auc4_lo,0.0051
+1346,Supp,Supplementary Table 14,"Supplementary Table 14 Midazolam + propofol (± opioid) / 6,953 / 419 auc4_hi",0.90,T11.MidazolamPropofol.auc4_hi,0.0051
+1347,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 rho_lo,0.54,T11.Ketamine.rho_lo,0.0051
+1348,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 rho_hi,0.79,T11.Ketamine.rho_hi,0.0051
+1349,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 auc3_lo,0.83,T11.Ketamine.auc3_lo,0.0051
+1350,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 auc3_hi,0.95,T11.Ketamine.auc3_hi,0.0051
+1351,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 auc4_lo,0.86,T11.Ketamine.auc4_lo,0.0051
+1352,Supp,Supplementary Table 14,Supplementary Table 14 Ketamine (± opioid) / 571 / 44 auc4_hi,0.96,T11.Ketamine.auc4_hi,0.0051
+1353,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 rho_lo",0.46,T11.OpioidOnly.rho_lo,0.0051
+1354,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 rho_hi",0.60,T11.OpioidOnly.rho_hi,0.0051
+1355,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 auc3_lo",0.75,T11.OpioidOnly.auc3_lo,0.0051
+1356,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 auc3_hi",0.83,T11.OpioidOnly.auc3_hi,0.0051
+1357,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 auc4_lo",0.74,T11.OpioidOnly.auc4_lo,0.0051
+1358,Supp,Supplementary Table 14,"Supplementary Table 14 Opioid only / 2,806 / 366 auc4_hi",0.83,T11.OpioidOnly.auc4_hi,0.0051
+1359,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 rho_lo",0.71,T11.All.rho_lo,0.0051
+1360,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 rho_hi",0.73,T11.All.rho_hi,0.0051
+1361,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 auc3_lo",0.87,T11.All.auc3_lo,0.0051
+1362,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 auc3_hi",0.88,T11.All.auc3_hi,0.0051
+1363,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 auc4_lo",0.85,T11.All.auc4_lo,0.0051
+1364,Supp,Supplementary Table 14,"Supplementary Table 14 All observations / 97,620 / 6,191 auc4_hi",0.87,T11.All.auc4_hi,0.0051
+1365,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 rho_lo",0.65,T11.NoInfusion24h.rho_lo,0.0051
+1366,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 rho_hi",0.69,T11.NoInfusion24h.rho_hi,0.0051
+1367,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 auc3_lo",0.84,T11.NoInfusion24h.auc3_lo,0.0051
+1368,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 auc3_hi",0.87,T11.NoInfusion24h.auc3_hi,0.0051
+1369,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 auc4_lo",0.84,T11.NoInfusion24h.auc4_lo,0.0051
+1370,Supp,Supplementary Table 14,"Supplementary Table 14 No sedative or opioid infusion in prior 24 h, no parenteral benzodiazepine / 23,753 / 3,349 auc4_hi",0.87,T11.NoInfusion24h.auc4_hi,0.0051
+1371,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 rho_lo",0.68,T11.NoInfusion24hNoASM.rho_lo,0.0051
+1372,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 rho_hi",0.76,T11.NoInfusion24hNoASM.rho_hi,0.0051
+1373,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 auc3_lo",0.85,T11.NoInfusion24hNoASM.auc3_lo,0.0051
+1374,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 auc3_hi",0.89,T11.NoInfusion24hNoASM.auc3_hi,0.0051
+1375,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 auc4_lo",0.85,T11.NoInfusion24hNoASM.auc4_lo,0.0051
+1376,Supp,Supplementary Table 14,"Supplementary Table 14 As above, no maintenance antiseizure medication / 5,091 / 1,119 auc4_hi",0.90,T11.NoInfusion24hNoASM.auc4_hi,0.0051
+1377,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 obs",6143,CAL.RASS.obs,0.5
+1378,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 patients",372,CAL.RASS.patients,0
+1379,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 ece",0.017,CAL.RASS.ece,0.00051
+1380,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 ece_lo",0.010,CAL.RASS.ece_lo,0.00051
+1381,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 ece_hi",0.053,CAL.RASS.ece_hi,0.00051
+1382,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 brier",0.148,CAL.RASS.brier,0.00051
+1383,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 brier_lo",0.131,CAL.RASS.brier_lo,0.00051
+1384,Supp,Supplementary Table 2,"Supplementary Table 2 RASS / 6,143 / 372 brier_hi",0.169,CAL.RASS.brier_hi,0.00051
+1385,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 obs",6866,CAL.GCS.obs,0.5
+1386,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 patients",552,CAL.GCS.patients,0
+1387,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 ece",0.023,CAL.GCS.ece,0.00051
+1388,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 ece_lo",0.014,CAL.GCS.ece_lo,0.00051
+1389,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 ece_hi",0.051,CAL.GCS.ece_hi,0.00051
+1390,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 brier",0.147,CAL.GCS.brier,0.00051
+1391,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 brier_lo",0.132,CAL.GCS.brier_lo,0.00051
+1392,Supp,Supplementary Table 2,"Supplementary Table 2 GCS / 6,866 / 552 brier_hi",0.162,CAL.GCS.brier_hi,0.00051
+1393,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 obs,105,CAL.CAMS.obs,0.5
+1394,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 patients,105,CAL.CAMS.patients,0
+1395,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 ece,0.057,CAL.CAMS.ece,0.00051
+1396,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 ece_lo,0.035,CAL.CAMS.ece_lo,0.00051
+1397,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 ece_hi,0.113,CAL.CAMS.ece_hi,0.00051
+1398,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 brier,0.073,CAL.CAMS.brier,0.00051
+1399,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 brier_lo,0.041,CAL.CAMS.brier_lo,0.00051
+1400,Supp,Supplementary Table 2,Supplementary Table 2 CAM-S / 105 / 105 brier_hi,0.111,CAL.CAMS.brier_hi,0.00051
+1401,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 obs,145,CAL.ICANS.obs,0.5
+1402,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 patients,47,CAL.ICANS.patients,0
+1403,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 ece,0.062,CAL.ICANS.ece,0.00051
+1404,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 ece_lo,0.038,CAL.ICANS.ece_lo,0.00051
+1405,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 ece_hi,0.172,CAL.ICANS.ece_hi,0.00051
+1406,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 brier,0.131,CAL.ICANS.brier,0.00051
+1407,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 brier_lo,0.070,CAL.ICANS.brier_lo,0.00051
+1408,Supp,Supplementary Table 2,Supplementary Table 2 ICANS / 145 / 47 brier_hi,0.192,CAL.ICANS.brier_hi,0.00051
+1409,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 sens_lo,0.716,T3.RASS.sens_lo,0.00051
+1410,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 sens_hi,0.820,T3.RASS.sens_hi,0.00051
+1411,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 spec_lo,0.752,T3.RASS.spec_lo,0.00051
+1412,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 spec_hi,0.840,T3.RASS.spec_hi,0.00051
+1413,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 ppv_lo,0.747,T3.RASS.ppv_lo,0.00051
+1414,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 ppv_hi,0.858,T3.RASS.ppv_hi,0.00051
+1415,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 npv_lo,0.706,T3.RASS.npv_lo,0.00051
+1416,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 npv_hi,0.811,T3.RASS.npv_hi,0.00051
+1417,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 auc_lo,0.833,T3.RASS.auc_lo,0.00051
+1418,Supp,Supplementary Table 3,Supplementary Table 3 RASS / ≤−4 / ≥0.584 auc_hi,0.898,T3.RASS.auc_hi,0.00051
+1419,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 sens_lo,0.703,T3.GCS.sens_lo,0.00051
+1420,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 sens_hi,0.808,T3.GCS.sens_hi,0.00051
+1421,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 spec_lo,0.745,T3.GCS.spec_lo,0.00051
+1422,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 spec_hi,0.817,T3.GCS.spec_hi,0.00051
+1423,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 ppv_lo,0.626,T3.GCS.ppv_lo,0.00051
+1424,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 ppv_hi,0.771,T3.GCS.ppv_hi,0.00051
+1425,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 npv_lo,0.787,T3.GCS.npv_lo,0.00051
+1426,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 npv_hi,0.871,T3.GCS.npv_hi,0.00051
+1427,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 auc_lo,0.833,T3.GCS.auc_lo,0.00051
+1428,Supp,Supplementary Table 3,Supplementary Table 3 GCS / ≤8 / ≥0.046 auc_hi,0.892,T3.GCS.auc_hi,0.00051
+1429,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 sens_lo,0.745,T3.CAMS.sens_lo,0.00051
+1430,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 sens_hi,0.943,T3.CAMS.sens_hi,0.00051
+1431,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 spec_lo,0.831,T3.CAMS.spec_lo,0.00051
+1432,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 spec_hi,0.981,T3.CAMS.spec_hi,0.00051
+1433,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 ppv_lo,0.800,T3.CAMS.ppv_lo,0.00051
+1434,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 ppv_hi,0.978,T3.CAMS.ppv_hi,0.00051
+1435,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 npv_lo,0.783,T3.CAMS.npv_lo,0.00051
+1436,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 npv_hi,0.954,T3.CAMS.npv_hi,0.00051
+1437,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 auc_lo,0.933,T3.CAMS.auc_lo,0.00051
+1438,Supp,Supplementary Table 3,Supplementary Table 3 CAM-S / ≥6 / ≥−0.629 auc_hi,0.992,T3.CAMS.auc_hi,0.00051
+1439,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 sens_lo,0.500,T3.ICANS.sens_lo,0.00051
+1440,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 sens_hi,1.000,T3.ICANS.sens_hi,0.00051
+1441,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 spec_lo,0.695,T3.ICANS.spec_lo,0.00051
+1442,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 spec_hi,0.912,T3.ICANS.spec_hi,0.00051
+1443,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 ppv_lo,0.211,T3.ICANS.ppv_lo,0.00051
+1444,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 ppv_hi,0.754,T3.ICANS.ppv_hi,0.00051
+1445,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 npv_lo,0.795,T3.ICANS.npv_lo,0.00051
+1446,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 npv_hi,1.000,T3.ICANS.npv_hi,0.00051
+1447,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 auc_lo,0.760,T3.ICANS.auc_lo,0.00051
+1448,Supp,Supplementary Table 3,Supplementary Table 3 ICANS / ≥3 / ≥−0.096 auc_hi,0.986,T3.ICANS.auc_hi,0.00051
+1449,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0001GCS mar,6889,MED22.I0001GCS.mar,0
+1450,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0001GCS total,6892,MED22.I0001GCS.total,0
+1451,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0001GCS mar_pct,100.0,MED22.I0001GCS.mar_pct,0.051
+1452,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0002GCS mar,200,MED22.I0002GCS.mar,0
+1453,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0002GCS total,220,MED22.I0002GCS.total,0
+1454,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data I0002GCS mar_pct,90.9,MED22.I0002GCS.mar_pct,0.051
+1455,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data RASS mar,6188,MED22.RASS.mar,0
+1456,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data RASS total,6191,MED22.RASS.total,0
+1457,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data RASS mar_pct,100.0,MED22.RASS.mar_pct,0.051
+1458,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data CAMS mar,410,MED22.CAMS.mar,0
+1459,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data CAMS total,523,MED22.CAMS.total,0
+1460,Supp,Supplementary Table 22,Supplementary Table 22 Patients with MAR data CAMS mar_pct,78.4,MED22.CAMS.mar_pct,0.051
+1461,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM I0001GCS asm.n,5202,MED22.I0001GCS.asm.n,0
+1462,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM I0001GCS asm.pct,75.5,MED22.I0001GCS.asm.pct,0.051
+1463,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM I0002GCS asm.n,133,MED22.I0002GCS.asm.n,0
+1464,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM I0002GCS asm.pct,66.5,MED22.I0002GCS.asm.pct,0.051
+1465,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM RASS asm.n,4382,MED22.RASS.asm.n,0
+1466,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM RASS asm.pct,70.8,MED22.RASS.asm.pct,0.051
+1467,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM CAMS asm.n,212,MED22.CAMS.asm.n,0
+1468,Supp,Supplementary Table 22,Supplementary Table 22 Maintenance ASM CAMS asm.pct,51.7,MED22.CAMS.asm.pct,0.051
+1469,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea I0001GCS benzo_par.n,2131,MED22.I0001GCS.benzo_par.n,0
+1470,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea I0001GCS benzo_par.pct,30.9,MED22.I0001GCS.benzo_par.pct,0.051
+1471,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea I0002GCS benzo_par.n,24,MED22.I0002GCS.benzo_par.n,0
+1472,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea I0002GCS benzo_par.pct,12.0,MED22.I0002GCS.benzo_par.pct,0.051
+1473,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea RASS benzo_par.n,1747,MED22.RASS.benzo_par.n,0
+1474,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea RASS benzo_par.pct,28.2,MED22.RASS.benzo_par.pct,0.051
+1475,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea CAMS benzo_par.n,48,MED22.CAMS.benzo_par.n,0
+1476,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral benzodiazepinea CAMS benzo_par.pct,11.7,MED22.CAMS.benzo_par.pct,0.051
+1477,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb I0001GCS benzo_ent.n,369,MED22.I0001GCS.benzo_ent.n,0
+1478,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb I0001GCS benzo_ent.pct,5.4,MED22.I0001GCS.benzo_ent.pct,0.051
+1479,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb I0002GCS benzo_ent.n,8,MED22.I0002GCS.benzo_ent.n,0
+1480,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb I0002GCS benzo_ent.pct,4.0,MED22.I0002GCS.benzo_ent.pct,0.051
+1481,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb RASS benzo_ent.n,259,MED22.RASS.benzo_ent.n,0
+1482,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb RASS benzo_ent.pct,4.2,MED22.RASS.benzo_ent.pct,0.051
+1483,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb CAMS benzo_ent.n,17,MED22.CAMS.benzo_ent.n,0
+1484,Supp,Supplementary Table 22,Supplementary Table 22 Enteral benzodiazepineb CAMS benzo_ent.pct,4.1,MED22.CAMS.benzo_ent.pct,0.051
+1485,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion I0001GCS sed_inf.n,3394,MED22.I0001GCS.sed_inf.n,0
+1486,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion I0001GCS sed_inf.pct,49.3,MED22.I0001GCS.sed_inf.pct,0.051
+1487,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion RASS sed_inf.n,3550,MED22.RASS.sed_inf.n,0
+1488,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion RASS sed_inf.pct,57.4,MED22.RASS.sed_inf.pct,0.051
+1489,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion CAMS sed_inf.n,124,MED22.CAMS.sed_inf.n,0
+1490,Supp,Supplementary Table 22,Supplementary Table 22 Sedative infusion CAMS sed_inf.pct,30.2,MED22.CAMS.sed_inf.pct,0.051
+1491,Supp,Supplementary Table 22,Supplementary Table 22 Propofole I0001GCS propofol.n,3120,MED22.I0001GCS.propofol.n,0
+1492,Supp,Supplementary Table 22,Supplementary Table 22 Propofole I0001GCS propofol.pct,45.3,MED22.I0001GCS.propofol.pct,0.051
+1493,Supp,Supplementary Table 22,Supplementary Table 22 Propofole RASS propofol.n,3250,MED22.RASS.propofol.n,0
+1494,Supp,Supplementary Table 22,Supplementary Table 22 Propofole RASS propofol.pct,52.5,MED22.RASS.propofol.pct,0.051
+1495,Supp,Supplementary Table 22,Supplementary Table 22 Propofole CAMS propofol.n,107,MED22.CAMS.propofol.n,0
+1496,Supp,Supplementary Table 22,Supplementary Table 22 Propofole CAMS propofol.pct,26.1,MED22.CAMS.propofol.pct,0.051
+1497,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam I0001GCS midazolam.n,572,MED22.I0001GCS.midazolam.n,0
+1498,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam I0001GCS midazolam.pct,8.3,MED22.I0001GCS.midazolam.pct,0.051
+1499,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam RASS midazolam.n,663,MED22.RASS.midazolam.n,0
+1500,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam RASS midazolam.pct,10.7,MED22.RASS.midazolam.pct,0.051
+1501,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam CAMS midazolam.n,20,MED22.CAMS.midazolam.n,0
+1502,Supp,Supplementary Table 22,Supplementary Table 22 Midazolam CAMS midazolam.pct,4.9,MED22.CAMS.midazolam.pct,0.051
+1503,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine I0001GCS ketamine.n,91,MED22.I0001GCS.ketamine.n,0
+1504,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine I0001GCS ketamine.pct,1.3,MED22.I0001GCS.ketamine.pct,0.051
+1505,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine RASS ketamine.n,107,MED22.RASS.ketamine.n,0
+1506,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine RASS ketamine.pct,1.7,MED22.RASS.ketamine.pct,0.051
+1507,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine CAMS ketamine.n,3,MED22.CAMS.ketamine.n,0
+1508,Supp,Supplementary Table 22,Supplementary Table 22 Ketamine CAMS ketamine.pct,0.7,MED22.CAMS.ketamine.pct,0.051
+1509,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine I0001GCS dexmed.n,1448,MED22.I0001GCS.dexmed.n,0
+1510,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine I0001GCS dexmed.pct,21.0,MED22.I0001GCS.dexmed.pct,0.051
+1511,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine RASS dexmed.n,1508,MED22.RASS.dexmed.n,0
+1512,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine RASS dexmed.pct,24.4,MED22.RASS.dexmed.pct,0.051
+1513,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine CAMS dexmed.n,43,MED22.CAMS.dexmed.n,0
+1514,Supp,Supplementary Table 22,Supplementary Table 22 Dexmedetomidine CAMS dexmed.pct,10.5,MED22.CAMS.dexmed.pct,0.051
+1515,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion I0001GCS opi_inf.n,1446,MED22.I0001GCS.opi_inf.n,0
+1516,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion I0001GCS opi_inf.pct,21.0,MED22.I0001GCS.opi_inf.pct,0.051
+1517,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion RASS opi_inf.n,1715,MED22.RASS.opi_inf.n,0
+1518,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion RASS opi_inf.pct,27.7,MED22.RASS.opi_inf.pct,0.051
+1519,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion CAMS opi_inf.n,50,MED22.CAMS.opi_inf.n,0
+1520,Supp,Supplementary Table 22,Supplementary Table 22 Opiate infusion CAMS opi_inf.pct,12.2,MED22.CAMS.opi_inf.pct,0.051
+1521,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl I0001GCS fentanyl.n,1138,MED22.I0001GCS.fentanyl.n,0
+1522,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl I0001GCS fentanyl.pct,16.5,MED22.I0001GCS.fentanyl.pct,0.051
+1523,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl RASS fentanyl.n,1314,MED22.RASS.fentanyl.n,0
+1524,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl RASS fentanyl.pct,21.2,MED22.RASS.fentanyl.pct,0.051
+1525,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl CAMS fentanyl.n,34,MED22.CAMS.fentanyl.n,0
+1526,Supp,Supplementary Table 22,Supplementary Table 22 Fentanyl CAMS fentanyl.pct,8.3,MED22.CAMS.fentanyl.pct,0.051
+1527,Supp,Supplementary Table 22,Supplementary Table 22 Morphine I0001GCS morphine.n,11,MED22.I0001GCS.morphine.n,0
+1528,Supp,Supplementary Table 22,Supplementary Table 22 Morphine I0001GCS morphine.pct,0.2,MED22.I0001GCS.morphine.pct,0.051
+1529,Supp,Supplementary Table 22,Supplementary Table 22 Morphine RASS morphine.n,15,MED22.RASS.morphine.n,0
+1530,Supp,Supplementary Table 22,Supplementary Table 22 Morphine RASS morphine.pct,0.2,MED22.RASS.morphine.pct,0.051
+1531,Supp,Supplementary Table 22,Supplementary Table 22 Morphine CAMS morphine.n,0,MED22.CAMS.morphine.n,0
+1532,Supp,Supplementary Table 22,Supplementary Table 22 Morphine CAMS morphine.pct,0.0,MED22.CAMS.morphine.pct,0.051
+1533,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone I0001GCS hydromorphone.n,376,MED22.I0001GCS.hydromorphone.n,0
+1534,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone I0001GCS hydromorphone.pct,5.5,MED22.I0001GCS.hydromorphone.pct,0.051
+1535,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone RASS hydromorphone.n,504,MED22.RASS.hydromorphone.n,0
+1536,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone RASS hydromorphone.pct,8.1,MED22.RASS.hydromorphone.pct,0.051
+1537,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone CAMS hydromorphone.n,16,MED22.CAMS.hydromorphone.n,0
+1538,Supp,Supplementary Table 22,Supplementary Table 22 Hydromorphone CAMS hydromorphone.pct,3.9,MED22.CAMS.hydromorphone.pct,0.051
+1539,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec I0001GCS opi_par.n,1296,MED22.I0001GCS.opi_par.n,0
+1540,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec I0001GCS opi_par.pct,18.8,MED22.I0001GCS.opi_par.pct,0.051
+1541,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec I0002GCS opi_par.n,0,MED22.I0002GCS.opi_par.n,0
+1542,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec I0002GCS opi_par.pct,0.0,MED22.I0002GCS.opi_par.pct,0.051
+1543,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec RASS opi_par.n,1289,MED22.RASS.opi_par.n,0
+1544,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec RASS opi_par.pct,20.8,MED22.RASS.opi_par.pct,0.051
+1545,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec CAMS opi_par.n,34,MED22.CAMS.opi_par.n,0
+1546,Supp,Supplementary Table 22,Supplementary Table 22 Parenteral opiatec CAMS opi_par.pct,8.3,MED22.CAMS.opi_par.pct,0.051
+1547,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated I0001GCS opi_ent.n,127,MED22.I0001GCS.opi_ent.n,0
+1548,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated I0001GCS opi_ent.pct,1.8,MED22.I0001GCS.opi_ent.pct,0.051
+1549,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated I0002GCS opi_ent.n,2,MED22.I0002GCS.opi_ent.n,0
+1550,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated I0002GCS opi_ent.pct,1.0,MED22.I0002GCS.opi_ent.pct,0.051
+1551,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated RASS opi_ent.n,109,MED22.RASS.opi_ent.n,0
+1552,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated RASS opi_ent.pct,1.8,MED22.RASS.opi_ent.pct,0.051
+1553,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated CAMS opi_ent.n,4,MED22.CAMS.opi_ent.n,0
+1554,Supp,Supplementary Table 22,Supplementary Table 22 Enteral opiated CAMS opi_ent.pct,1.0,MED22.CAMS.opi_ent.pct,0.051
+1555,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) I0001GCS antipsych.n,1731,MED22.I0001GCS.antipsych.n,0
+1556,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) I0001GCS antipsych.pct,25.1,MED22.I0001GCS.antipsych.pct,0.051
+1557,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) I0002GCS antipsych.n,28,MED22.I0002GCS.antipsych.n,0
+1558,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) I0002GCS antipsych.pct,14.0,MED22.I0002GCS.antipsych.pct,0.051
+1559,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) RASS antipsych.n,1408,MED22.RASS.antipsych.n,0
+1560,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) RASS antipsych.pct,22.8,MED22.RASS.antipsych.pct,0.051
+1561,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) CAMS antipsych.n,56,MED22.CAMS.antipsych.n,0
+1562,Supp,Supplementary Table 22,Supplementary Table 22 Antipsychotics (any route) CAMS antipsych.pct,13.7,MED22.CAMS.antipsych.pct,0.051
+1563,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0001GCS mar,114017,MED23.I0001GCS.mar,0
+1564,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0001GCS total,114080,MED23.I0001GCS.total,0
+1565,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0001GCS mar_pct,99.9,MED23.I0001GCS.mar_pct,0.051
+1566,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0002GCS mar,217,MED23.I0002GCS.mar,0
+1567,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0002GCS total,237,MED23.I0002GCS.total,0
+1568,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data I0002GCS mar_pct,91.6,MED23.I0002GCS.mar_pct,0.051
+1569,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data RASS mar,99716,MED23.RASS.mar,0
+1570,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data RASS total,99772,MED23.RASS.total,0
+1571,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data RASS mar_pct,99.9,MED23.RASS.mar_pct,0.051
+1572,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data CAMS mar,413,MED23.CAMS.mar,0
+1573,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data CAMS total,526,MED23.CAMS.total,0
+1574,Supp,Supplementary Table 23,Supplementary Table 23 EEG segments with med data CAMS mar_pct,78.5,MED23.CAMS.mar_pct,0.051
+1575,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM I0001GCS asm.n,96137,MED23.I0001GCS.asm.n,0
+1576,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM I0001GCS asm.pct,84.3,MED23.I0001GCS.asm.pct,0.051
+1577,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM I0002GCS asm.n,147,MED23.I0002GCS.asm.n,0
+1578,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM I0002GCS asm.pct,67.7,MED23.I0002GCS.asm.pct,0.051
+1579,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM RASS asm.n,69329,MED23.RASS.asm.n,0
+1580,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM RASS asm.pct,69.5,MED23.RASS.asm.pct,0.051
+1581,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM CAMS asm.n,214,MED23.CAMS.asm.n,0
+1582,Supp,Supplementary Table 23,Supplementary Table 23 Maintenance ASM CAMS asm.pct,51.8,MED23.CAMS.asm.pct,0.051
+1583,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea I0001GCS benzo_par.n,16796,MED23.I0001GCS.benzo_par.n,0
+1584,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea I0001GCS benzo_par.pct,14.7,MED23.I0001GCS.benzo_par.pct,0.051
+1585,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea I0002GCS benzo_par.n,25,MED23.I0002GCS.benzo_par.n,0
+1586,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea I0002GCS benzo_par.pct,11.5,MED23.I0002GCS.benzo_par.pct,0.051
+1587,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea RASS benzo_par.n,12749,MED23.RASS.benzo_par.n,0
+1588,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea RASS benzo_par.pct,12.8,MED23.RASS.benzo_par.pct,0.051
+1589,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea CAMS benzo_par.n,48,MED23.CAMS.benzo_par.n,0
+1590,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral benzodiazepinea CAMS benzo_par.pct,11.6,MED23.CAMS.benzo_par.pct,0.051
+1591,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb I0001GCS benzo_ent.n,2311,MED23.I0001GCS.benzo_ent.n,0
+1592,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb I0001GCS benzo_ent.pct,2.0,MED23.I0001GCS.benzo_ent.pct,0.051
+1593,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb I0002GCS benzo_ent.n,9,MED23.I0002GCS.benzo_ent.n,0
+1594,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb I0002GCS benzo_ent.pct,4.1,MED23.I0002GCS.benzo_ent.pct,0.051
+1595,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb RASS benzo_ent.n,1272,MED23.RASS.benzo_ent.n,0
+1596,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb RASS benzo_ent.pct,1.3,MED23.RASS.benzo_ent.pct,0.051
+1597,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb CAMS benzo_ent.n,17,MED23.CAMS.benzo_ent.n,0
+1598,Supp,Supplementary Table 23,Supplementary Table 23 Enteral benzodiazepineb CAMS benzo_ent.pct,4.1,MED23.CAMS.benzo_ent.pct,0.051
+1599,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion I0001GCS sed_inf.n,56046,MED23.I0001GCS.sed_inf.n,0
+1600,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion I0001GCS sed_inf.pct,49.2,MED23.I0001GCS.sed_inf.pct,0.051
+1601,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion RASS sed_inf.n,69363,MED23.RASS.sed_inf.n,0
+1602,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion RASS sed_inf.pct,69.6,MED23.RASS.sed_inf.pct,0.051
+1603,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion CAMS sed_inf.n,124,MED23.CAMS.sed_inf.n,0
+1604,Supp,Supplementary Table 23,Supplementary Table 23 Sedative infusion CAMS sed_inf.pct,30.0,MED23.CAMS.sed_inf.pct,0.051
+1605,Supp,Supplementary Table 23,Supplementary Table 23 Propofole I0001GCS propofol.n,45980,MED23.I0001GCS.propofol.n,0
+1606,Supp,Supplementary Table 23,Supplementary Table 23 Propofole I0001GCS propofol.pct,40.3,MED23.I0001GCS.propofol.pct,0.051
+1607,Supp,Supplementary Table 23,Supplementary Table 23 Propofole RASS propofol.n,59682,MED23.RASS.propofol.n,0
+1608,Supp,Supplementary Table 23,Supplementary Table 23 Propofole RASS propofol.pct,59.9,MED23.RASS.propofol.pct,0.051
+1609,Supp,Supplementary Table 23,Supplementary Table 23 Propofole CAMS propofol.n,107,MED23.CAMS.propofol.n,0
+1610,Supp,Supplementary Table 23,Supplementary Table 23 Propofole CAMS propofol.pct,25.9,MED23.CAMS.propofol.pct,0.051
+1611,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam I0001GCS midazolam.n,9547,MED23.I0001GCS.midazolam.n,0
+1612,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam I0001GCS midazolam.pct,8.4,MED23.I0001GCS.midazolam.pct,0.051
+1613,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam RASS midazolam.n,15442,MED23.RASS.midazolam.n,0
+1614,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam RASS midazolam.pct,15.5,MED23.RASS.midazolam.pct,0.051
+1615,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam CAMS midazolam.n,20,MED23.CAMS.midazolam.n,0
+1616,Supp,Supplementary Table 23,Supplementary Table 23 Midazolam CAMS midazolam.pct,4.8,MED23.CAMS.midazolam.pct,0.051
+1617,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine I0001GCS ketamine.n,2465,MED23.I0001GCS.ketamine.n,0
+1618,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine I0001GCS ketamine.pct,2.2,MED23.I0001GCS.ketamine.pct,0.051
+1619,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine RASS ketamine.n,2753,MED23.RASS.ketamine.n,0
+1620,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine RASS ketamine.pct,2.8,MED23.RASS.ketamine.pct,0.051
+1621,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine CAMS ketamine.n,3,MED23.CAMS.ketamine.n,0
+1622,Supp,Supplementary Table 23,Supplementary Table 23 Ketamine CAMS ketamine.pct,0.7,MED23.CAMS.ketamine.pct,0.051
+1623,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine I0001GCS dexmed.n,17519,MED23.I0001GCS.dexmed.n,0
+1624,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine I0001GCS dexmed.pct,15.4,MED23.I0001GCS.dexmed.pct,0.051
+1625,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine RASS dexmed.n,18481,MED23.RASS.dexmed.n,0
+1626,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine RASS dexmed.pct,18.5,MED23.RASS.dexmed.pct,0.051
+1627,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine CAMS dexmed.n,43,MED23.CAMS.dexmed.n,0
+1628,Supp,Supplementary Table 23,Supplementary Table 23 Dexmedetomidine CAMS dexmed.pct,10.4,MED23.CAMS.dexmed.pct,0.051
+1629,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion I0001GCS opi_inf.n,16514,MED23.I0001GCS.opi_inf.n,0
+1630,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion I0001GCS opi_inf.pct,14.5,MED23.I0001GCS.opi_inf.pct,0.051
+1631,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion RASS opi_inf.n,36475,MED23.RASS.opi_inf.n,0
+1632,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion RASS opi_inf.pct,36.6,MED23.RASS.opi_inf.pct,0.051
+1633,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion CAMS opi_inf.n,50,MED23.CAMS.opi_inf.n,0
+1634,Supp,Supplementary Table 23,Supplementary Table 23 Opiate infusion CAMS opi_inf.pct,12.1,MED23.CAMS.opi_inf.pct,0.051
+1635,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl I0001GCS fentanyl.n,14131,MED23.I0001GCS.fentanyl.n,0
+1636,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl I0001GCS fentanyl.pct,12.4,MED23.I0001GCS.fentanyl.pct,0.051
+1637,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl RASS fentanyl.n,27465,MED23.RASS.fentanyl.n,0
+1638,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl RASS fentanyl.pct,27.5,MED23.RASS.fentanyl.pct,0.051
+1639,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl CAMS fentanyl.n,34,MED23.CAMS.fentanyl.n,0
+1640,Supp,Supplementary Table 23,Supplementary Table 23 Fentanyl CAMS fentanyl.pct,8.2,MED23.CAMS.fentanyl.pct,0.051
+1641,Supp,Supplementary Table 23,Supplementary Table 23 Morphine I0001GCS morphine.n,101,MED23.I0001GCS.morphine.n,0
+1642,Supp,Supplementary Table 23,Supplementary Table 23 Morphine I0001GCS morphine.pct,0.1,MED23.I0001GCS.morphine.pct,0.051
+1643,Supp,Supplementary Table 23,Supplementary Table 23 Morphine RASS morphine.n,123,MED23.RASS.morphine.n,0
+1644,Supp,Supplementary Table 23,Supplementary Table 23 Morphine RASS morphine.pct,0.1,MED23.RASS.morphine.pct,0.051
+1645,Supp,Supplementary Table 23,Supplementary Table 23 Morphine CAMS morphine.n,0,MED23.CAMS.morphine.n,0
+1646,Supp,Supplementary Table 23,Supplementary Table 23 Morphine CAMS morphine.pct,0.0,MED23.CAMS.morphine.pct,0.051
+1647,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone I0001GCS hydromorphone.n,2530,MED23.I0001GCS.hydromorphone.n,0
+1648,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone I0001GCS hydromorphone.pct,2.2,MED23.I0001GCS.hydromorphone.pct,0.051
+1649,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone RASS hydromorphone.n,9776,MED23.RASS.hydromorphone.n,0
+1650,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone RASS hydromorphone.pct,9.8,MED23.RASS.hydromorphone.pct,0.051
+1651,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone CAMS hydromorphone.n,16,MED23.CAMS.hydromorphone.n,0
+1652,Supp,Supplementary Table 23,Supplementary Table 23 Hydromorphone CAMS hydromorphone.pct,3.9,MED23.CAMS.hydromorphone.pct,0.051
+1653,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec I0001GCS opi_par.n,9708,MED23.I0001GCS.opi_par.n,0
+1654,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec I0001GCS opi_par.pct,8.5,MED23.I0001GCS.opi_par.pct,0.051
+1655,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec I0002GCS opi_par.n,0,MED23.I0002GCS.opi_par.n,0
+1656,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec I0002GCS opi_par.pct,0.0,MED23.I0002GCS.opi_par.pct,0.051
+1657,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec RASS opi_par.n,10337,MED23.RASS.opi_par.n,0
+1658,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec RASS opi_par.pct,10.4,MED23.RASS.opi_par.pct,0.051
+1659,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec CAMS opi_par.n,34,MED23.CAMS.opi_par.n,0
+1660,Supp,Supplementary Table 23,Supplementary Table 23 Parenteral opiatec CAMS opi_par.pct,8.2,MED23.CAMS.opi_par.pct,0.051
+1661,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated I0001GCS opi_ent.n,766,MED23.I0001GCS.opi_ent.n,0
+1662,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated I0001GCS opi_ent.pct,0.7,MED23.I0001GCS.opi_ent.pct,0.051
+1663,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated I0002GCS opi_ent.n,3,MED23.I0002GCS.opi_ent.n,0
+1664,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated I0002GCS opi_ent.pct,1.4,MED23.I0002GCS.opi_ent.pct,0.051
+1665,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated RASS opi_ent.n,570,MED23.RASS.opi_ent.n,0
+1666,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated RASS opi_ent.pct,0.6,MED23.RASS.opi_ent.pct,0.051
+1667,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated CAMS opi_ent.n,4,MED23.CAMS.opi_ent.n,0
+1668,Supp,Supplementary Table 23,Supplementary Table 23 Enteral opiated CAMS opi_ent.pct,1.0,MED23.CAMS.opi_ent.pct,0.051
+1669,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) I0001GCS antipsych.n,13470,MED23.I0001GCS.antipsych.n,0
+1670,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) I0001GCS antipsych.pct,11.8,MED23.I0001GCS.antipsych.pct,0.051
+1671,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) I0002GCS antipsych.n,29,MED23.I0002GCS.antipsych.n,0
+1672,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) I0002GCS antipsych.pct,13.4,MED23.I0002GCS.antipsych.pct,0.051
+1673,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) RASS antipsych.n,9561,MED23.RASS.antipsych.n,0
+1674,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) RASS antipsych.pct,9.6,MED23.RASS.antipsych.pct,0.051
+1675,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) CAMS antipsych.n,57,MED23.CAMS.antipsych.n,0
+1676,Supp,Supplementary Table 23,Supplementary Table 23 Antipsychotics (any route) CAMS antipsych.pct,13.8,MED23.CAMS.antipsych.pct,0.051
+1677,Main,Table 2,Table 2 number 1,95,SEDT.X.0,0
+1678,Main,Table 2,Table 2 number 2,95,SEDT.X.1,0
+1679,Main,Table 2,Table 2 number 3,95,SEDT.X.2,0
+1680,Main,Table 2,Table 2 number 4,95,SEDT.X.3,0
+1681,Main,Table 2,Table 2 number 5,95,SEDT.X.4,0
+1682,Main,Table 2,Table 2 number 6,14105,SEDT.X.5,0
+1683,Main,Table 2,Table 2 number 7,909,SEDT.X.6,0
+1684,Main,Table 2,Table 2 number 8,4,SEDT.X.7,0
+1685,Main,Table 2,Table 2 number 9,5,SEDT.X.8,0
+1686,Main,Table 2,Table 2 number 10,3,SEDT.X.9,0
+1687,Main,Table 2,Table 2 number 11,0.30,SEDT.X.10,0.0051
+1688,Main,Table 2,Table 2 number 12,0.25,SEDT.X.11,0.0051
+1689,Main,Table 2,Table 2 number 13,0.36,SEDT.X.12,0.0051
+1690,Main,Table 2,Table 2 number 14,0.39,SEDT.X.13,0.0051
+1691,Main,Table 2,Table 2 number 15,0.33,SEDT.X.14,0.0051
+1692,Main,Table 2,Table 2 number 16,0.46,SEDT.X.15,0.0051
+1693,Main,Table 2,Table 2 number 17,10.0,SEDT.X.16,0.051
+1694,Main,Table 2,Table 2 number 18,7.2,SEDT.X.17,0.051
+1695,Main,Table 2,Table 2 number 19,13.2,SEDT.X.18,0.051
+1696,Main,Table 2,Table 2 number 20,53.6,SEDT.X.19,0.051
+1697,Main,Table 2,Table 2 number 21,50.0,SEDT.X.20,0.051
+1698,Main,Table 2,Table 2 number 22,57.2,SEDT.X.21,0.051
+1699,Main,Table 2,Table 2 number 23,36.4,SEDT.X.22,0.051
+1700,Main,Table 2,Table 2 number 24,33.4,SEDT.X.23,0.051
+1701,Main,Table 2,Table 2 number 25,39.4,SEDT.X.24,0.051
+1702,Main,Table 2,Table 2 number 26,31104,SEDT.X.25,0
+1703,Main,Table 2,Table 2 number 27,1578,SEDT.X.26,0
+1704,Main,Table 2,Table 2 number 28,4,SEDT.X.27,0
+1705,Main,Table 2,Table 2 number 29,5,SEDT.X.28,0
+1706,Main,Table 2,Table 2 number 30,3,SEDT.X.29,0
+1707,Main,Table 2,Table 2 number 31,0.28,SEDT.X.30,0.0051
+1708,Main,Table 2,Table 2 number 32,0.24,SEDT.X.31,0.0051
+1709,Main,Table 2,Table 2 number 33,0.31,SEDT.X.32,0.0051
+1710,Main,Table 2,Table 2 number 34,0.34,SEDT.X.33,0.0051
+1711,Main,Table 2,Table 2 number 35,0.30,SEDT.X.34,0.0051
+1712,Main,Table 2,Table 2 number 36,0.38,SEDT.X.35,0.0051
+1713,Main,Table 2,Table 2 number 37,8.6,SEDT.X.36,0.051
+1714,Main,Table 2,Table 2 number 38,6.8,SEDT.X.37,0.051
+1715,Main,Table 2,Table 2 number 39,10.6,SEDT.X.38,0.051
+1716,Main,Table 2,Table 2 number 40,52.4,SEDT.X.39,0.051
+1717,Main,Table 2,Table 2 number 41,49.8,SEDT.X.40,0.051
+1718,Main,Table 2,Table 2 number 42,55.0,SEDT.X.41,0.051
+1719,Main,Table 2,Table 2 number 43,39.0,SEDT.X.42,0.051
+1720,Main,Table 2,Table 2 number 44,36.7,SEDT.X.43,0.051
+1721,Main,Table 2,Table 2 number 45,41.3,SEDT.X.44,0.051
+1722,Main,Table 2,Table 2 number 46,14105,SEDT.X.45,0
+1723,Main,Table 2,Table 2 number 47,909,SEDT.X.46,0
+1724,Main,Table 2,Table 2 number 48,4,SEDT.X.47,0
+1725,Main,Table 2,Table 2 number 49,5,SEDT.X.48,0
+1726,Main,Table 2,Table 2 number 50,3,SEDT.X.49,0
+1727,Main,Table 2,Table 2 number 51,0.26,SEDT.X.50,0.0051
+1728,Main,Table 2,Table 2 number 52,0.33,SEDT.X.51,0.0051
+1729,Main,Table 2,Table 2 number 53,0.20,SEDT.X.52,0.0051
+1730,Main,Table 2,Table 2 number 54,0.38,SEDT.X.53,0.0051
+1731,Main,Table 2,Table 2 number 55,0.45,SEDT.X.54,0.0051
+1732,Main,Table 2,Table 2 number 56,0.31,SEDT.X.55,0.0051
+1733,Main,Table 2,Table 2 number 57,6.4,SEDT.X.56,0.051
+1734,Main,Table 2,Table 2 number 58,4.3,SEDT.X.57,0.051
+1735,Main,Table 2,Table 2 number 59,9.1,SEDT.X.58,0.051
+1736,Main,Table 2,Table 2 number 60,68.4,SEDT.X.59,0.051
+1737,Main,Table 2,Table 2 number 61,64.6,SEDT.X.60,0.051
+1738,Main,Table 2,Table 2 number 62,72.0,SEDT.X.61,0.051
+1739,Main,Table 2,Table 2 number 63,25.2,SEDT.X.62,0.051
+1740,Main,Table 2,Table 2 number 64,22.7,SEDT.X.63,0.051
+1741,Main,Table 2,Table 2 number 65,28.0,SEDT.X.64,0.051
+1742,Main,Table 2,Table 2 number 66,31104,SEDT.X.65,0
+1743,Main,Table 2,Table 2 number 67,1578,SEDT.X.66,0
+1744,Main,Table 2,Table 2 number 68,4,SEDT.X.67,0
+1745,Main,Table 2,Table 2 number 69,5,SEDT.X.68,0
+1746,Main,Table 2,Table 2 number 70,3,SEDT.X.69,0
+1747,Main,Table 2,Table 2 number 71,0.33,SEDT.X.70,0.0051
+1748,Main,Table 2,Table 2 number 72,0.37,SEDT.X.71,0.0051
+1749,Main,Table 2,Table 2 number 73,0.29,SEDT.X.72,0.0051
+1750,Main,Table 2,Table 2 number 74,0.38,SEDT.X.73,0.0051
+1751,Main,Table 2,Table 2 number 75,0.43,SEDT.X.74,0.0051
+1752,Main,Table 2,Table 2 number 76,0.33,SEDT.X.75,0.0051
+1753,Main,Table 2,Table 2 number 77,8.3,SEDT.X.76,0.051
+1754,Main,Table 2,Table 2 number 78,6.5,SEDT.X.77,0.051
+1755,Main,Table 2,Table 2 number 79,10.3,SEDT.X.78,0.051
+1756,Main,Table 2,Table 2 number 80,65.9,SEDT.X.79,0.051
+1757,Main,Table 2,Table 2 number 81,62.7,SEDT.X.80,0.051
+1758,Main,Table 2,Table 2 number 82,69.2,SEDT.X.81,0.051
+1759,Main,Table 2,Table 2 number 83,25.8,SEDT.X.82,0.051
+1760,Main,Table 2,Table 2 number 84,23.8,SEDT.X.83,0.051
+1761,Main,Table 2,Table 2 number 85,28.1,SEDT.X.84,0.051
+1762,Supp,Supplementary Table 8,Supplementary Table 8 number 1,31798,SEDT.S1.0,0
+1763,Supp,Supplementary Table 8,Supplementary Table 8 number 2,4063,SEDT.S1.1,0
+1764,Supp,Supplementary Table 8,Supplementary Table 8 number 3,16115,SEDT.S1.2,0
+1765,Supp,Supplementary Table 8,Supplementary Table 8 number 4,1730,SEDT.S1.3,0
+1766,Supp,Supplementary Table 8,Supplementary Table 8 number 5,16434,SEDT.S1.4,0
+1767,Supp,Supplementary Table 8,Supplementary Table 8 number 6,1073,SEDT.S1.5,0
+1768,Supp,Supplementary Table 8,Supplementary Table 8 number 7,5514,SEDT.S1.6,0
+1769,Supp,Supplementary Table 8,Supplementary Table 8 number 8,763,SEDT.S1.7,0
+1770,Supp,Supplementary Table 8,Supplementary Table 8 number 9,1768,SEDT.S1.8,0
+1771,Supp,Supplementary Table 8,Supplementary Table 8 number 10,231,SEDT.S1.9,0
+1772,Supp,Supplementary Table 8,Supplementary Table 8 number 11,1071,SEDT.S1.10,0
+1773,Supp,Supplementary Table 8,Supplementary Table 8 number 12,79,SEDT.S1.11,0
+1774,Supp,Supplementary Table 8,Supplementary Table 8 number 13,1930,SEDT.S1.12,0
+1775,Supp,Supplementary Table 8,Supplementary Table 8 number 14,158,SEDT.S1.13,0
+1776,Supp,Supplementary Table 8,Supplementary Table 8 number 15,500,SEDT.S1.14,0
+1777,Supp,Supplementary Table 8,Supplementary Table 8 number 16,35,SEDT.S1.15,0
+1778,Supp,Supplementary Table 8,Supplementary Table 8 number 17,3046,SEDT.S1.16,0
+1779,Supp,Supplementary Table 8,Supplementary Table 8 number 18,205,SEDT.S1.17,0
+1780,Supp,Supplementary Table 8,Supplementary Table 8 number 19,3850,SEDT.S1.18,0
+1781,Supp,Supplementary Table 8,Supplementary Table 8 number 20,254,SEDT.S1.19,0
+1782,Supp,Supplementary Table 8,Supplementary Table 8 number 21,197,SEDT.S1.20,0
+1783,Supp,Supplementary Table 8,Supplementary Table 8 number 22,32,SEDT.S1.21,0
+1784,Supp,Supplementary Table 8,Supplementary Table 8 number 23,2792,SEDT.S1.22,0
+1785,Supp,Supplementary Table 8,Supplementary Table 8 number 24,365,SEDT.S1.23,0
+1786,Supp,Supplementary Table 8,Supplementary Table 8 number 25,54,SEDT.S1.24,0
+1787,Supp,Supplementary Table 8,Supplementary Table 8 number 26,10,SEDT.S1.25,0
+1788,Supp,Supplementary Table 8,Supplementary Table 8 number 27,62,SEDT.S1.26,0
+1789,Supp,Supplementary Table 8,Supplementary Table 8 number 28,14,SEDT.S1.27,0
+1790,Supp,Supplementary Table 9,Supplementary Table 9 number 1,95,SEDT.S2.0,0
+1791,Supp,Supplementary Table 9,Supplementary Table 9 number 2,95,SEDT.S2.1,0
+1792,Supp,Supplementary Table 9,Supplementary Table 9 number 3,95,SEDT.S2.2,0
+1793,Supp,Supplementary Table 9,Supplementary Table 9 number 4,4063,SEDT.S2.3,0
+1794,Supp,Supplementary Table 9,Supplementary Table 9 number 5,0,SEDT.S2.4,0
+1795,Supp,Supplementary Table 9,Supplementary Table 9 number 6,0.33,SEDT.S2.5,0.0051
+1796,Supp,Supplementary Table 9,Supplementary Table 9 number 7,0.35,SEDT.S2.6,0.0051
+1797,Supp,Supplementary Table 9,Supplementary Table 9 number 8,0.31,SEDT.S2.7,0.0051
+1798,Supp,Supplementary Table 9,Supplementary Table 9 number 9,0,SEDT.S2.8,0
+1799,Supp,Supplementary Table 9,Supplementary Table 9 number 10,1730,SEDT.S2.9,0
+1800,Supp,Supplementary Table 9,Supplementary Table 9 number 11,0.52,SEDT.S2.10,0.0051
+1801,Supp,Supplementary Table 9,Supplementary Table 9 number 12,0.46,SEDT.S2.11,0.0051
+1802,Supp,Supplementary Table 9,Supplementary Table 9 number 13,0.57,SEDT.S2.12,0.0051
+1803,Supp,Supplementary Table 9,Supplementary Table 9 number 14,0.30,SEDT.S2.13,0.0051
+1804,Supp,Supplementary Table 9,Supplementary Table 9 number 15,0.32,SEDT.S2.14,0.0051
+1805,Supp,Supplementary Table 9,Supplementary Table 9 number 16,0.27,SEDT.S2.15,0.0051
+1806,Supp,Supplementary Table 9,Supplementary Table 9 number 17,0.03,SEDT.S2.16,0.0051
+1807,Supp,Supplementary Table 9,Supplementary Table 9 number 18,0.00,SEDT.S2.17,0.0051
+1808,Supp,Supplementary Table 9,Supplementary Table 9 number 19,0.06,SEDT.S2.18,0.0051
+1809,Supp,Supplementary Table 9,Supplementary Table 9 number 20,1073,SEDT.S2.19,0
+1810,Supp,Supplementary Table 9,Supplementary Table 9 number 21,0.62,SEDT.S2.20,0.0051
+1811,Supp,Supplementary Table 9,Supplementary Table 9 number 22,0.55,SEDT.S2.21,0.0051
+1812,Supp,Supplementary Table 9,Supplementary Table 9 number 23,0.68,SEDT.S2.22,0.0051
+1813,Supp,Supplementary Table 9,Supplementary Table 9 number 24,0.35,SEDT.S2.23,0.0051
+1814,Supp,Supplementary Table 9,Supplementary Table 9 number 25,0.38,SEDT.S2.24,0.0051
+1815,Supp,Supplementary Table 9,Supplementary Table 9 number 26,0.31,SEDT.S2.25,0.0051
+1816,Supp,Supplementary Table 9,Supplementary Table 9 number 27,0.02,SEDT.S2.26,0.0051
+1817,Supp,Supplementary Table 9,Supplementary Table 9 number 28,0.06,SEDT.S2.27,0.0051
+1818,Supp,Supplementary Table 9,Supplementary Table 9 number 29,0.02,SEDT.S2.28,0.0051
+1819,Supp,Supplementary Table 9,Supplementary Table 9 number 30,763,SEDT.S2.29,0
+1820,Supp,Supplementary Table 9,Supplementary Table 9 number 31,0.30,SEDT.S2.30,0.0051
+1821,Supp,Supplementary Table 9,Supplementary Table 9 number 32,0.23,SEDT.S2.31,0.0051
+1822,Supp,Supplementary Table 9,Supplementary Table 9 number 33,0.36,SEDT.S2.32,0.0051
+1823,Supp,Supplementary Table 9,Supplementary Table 9 number 34,0.20,SEDT.S2.33,0.0051
+1824,Supp,Supplementary Table 9,Supplementary Table 9 number 35,0.24,SEDT.S2.34,0.0051
+1825,Supp,Supplementary Table 9,Supplementary Table 9 number 36,0.17,SEDT.S2.35,0.0051
+1826,Supp,Supplementary Table 9,Supplementary Table 9 number 37,0.12,SEDT.S2.36,0.0051
+1827,Supp,Supplementary Table 9,Supplementary Table 9 number 38,0.09,SEDT.S2.37,0.0051
+1828,Supp,Supplementary Table 9,Supplementary Table 9 number 39,0.16,SEDT.S2.38,0.0051
+1829,Supp,Supplementary Table 9,Supplementary Table 9 number 40,231,SEDT.S2.39,0
+1830,Supp,Supplementary Table 9,Supplementary Table 9 number 41,0.31,SEDT.S2.40,0.0051
+1831,Supp,Supplementary Table 9,Supplementary Table 9 number 42,0.20,SEDT.S2.41,0.0051
+1832,Supp,Supplementary Table 9,Supplementary Table 9 number 43,0.44,SEDT.S2.42,0.0051
+1833,Supp,Supplementary Table 9,Supplementary Table 9 number 44,0.20,SEDT.S2.43,0.0051
+1834,Supp,Supplementary Table 9,Supplementary Table 9 number 45,0.27,SEDT.S2.44,0.0051
+1835,Supp,Supplementary Table 9,Supplementary Table 9 number 46,0.14,SEDT.S2.45,0.0051
+1836,Supp,Supplementary Table 9,Supplementary Table 9 number 47,0.13,SEDT.S2.46,0.0051
+1837,Supp,Supplementary Table 9,Supplementary Table 9 number 48,0.05,SEDT.S2.47,0.0051
+1838,Supp,Supplementary Table 9,Supplementary Table 9 number 49,0.19,SEDT.S2.48,0.0051
+1839,Supp,Supplementary Table 9,Supplementary Table 9 number 50,79,SEDT.S2.49,0
+1840,Supp,Supplementary Table 9,Supplementary Table 9 number 51,0.35,SEDT.S2.50,0.0051
+1841,Supp,Supplementary Table 9,Supplementary Table 9 number 52,0.15,SEDT.S2.51,0.0051
+1842,Supp,Supplementary Table 9,Supplementary Table 9 number 53,0.56,SEDT.S2.52,0.0051
+1843,Supp,Supplementary Table 9,Supplementary Table 9 number 54,0.40,SEDT.S2.53,0.0051
+1844,Supp,Supplementary Table 9,Supplementary Table 9 number 55,0.57,SEDT.S2.54,0.0051
+1845,Supp,Supplementary Table 9,Supplementary Table 9 number 56,0.25,SEDT.S2.55,0.0051
+1846,Supp,Supplementary Table 9,Supplementary Table 9 number 57,0.07,SEDT.S2.56,0.0051
+1847,Supp,Supplementary Table 9,Supplementary Table 9 number 58,0.25,SEDT.S2.57,0.0051
+1848,Supp,Supplementary Table 9,Supplementary Table 9 number 59,0.09,SEDT.S2.58,0.0051
+1849,Supp,Supplementary Table 9,Supplementary Table 9 number 60,158,SEDT.S2.59,0
+1850,Supp,Supplementary Table 9,Supplementary Table 9 number 61,0.56,SEDT.S2.60,0.0051
+1851,Supp,Supplementary Table 9,Supplementary Table 9 number 62,0.43,SEDT.S2.61,0.0051
+1852,Supp,Supplementary Table 9,Supplementary Table 9 number 63,0.68,SEDT.S2.62,0.0051
+1853,Supp,Supplementary Table 9,Supplementary Table 9 number 64,0.34,SEDT.S2.63,0.0051
+1854,Supp,Supplementary Table 9,Supplementary Table 9 number 65,0.44,SEDT.S2.64,0.0051
+1855,Supp,Supplementary Table 9,Supplementary Table 9 number 66,0.24,SEDT.S2.65,0.0051
+1856,Supp,Supplementary Table 9,Supplementary Table 9 number 67,0.01,SEDT.S2.66,0.0051
+1857,Supp,Supplementary Table 9,Supplementary Table 9 number 68,0.12,SEDT.S2.67,0.0051
+1858,Supp,Supplementary Table 9,Supplementary Table 9 number 69,0.09,SEDT.S2.68,0.0051
+1859,Supp,Supplementary Table 9,Supplementary Table 9 number 70,35,SEDT.S2.69,0
+1860,Supp,Supplementary Table 9,Supplementary Table 9 number 71,0.30,SEDT.S2.70,0.0051
+1861,Supp,Supplementary Table 9,Supplementary Table 9 number 72,0.07,SEDT.S2.71,0.0051
+1862,Supp,Supplementary Table 9,Supplementary Table 9 number 73,0.69,SEDT.S2.72,0.0051
+1863,Supp,Supplementary Table 9,Supplementary Table 9 number 74,0.35,SEDT.S2.73,0.0051
+1864,Supp,Supplementary Table 9,Supplementary Table 9 number 75,0.47,SEDT.S2.74,0.0051
+1865,Supp,Supplementary Table 9,Supplementary Table 9 number 76,0.17,SEDT.S2.75,0.0051
+1866,Supp,Supplementary Table 9,Supplementary Table 9 number 77,0.02,SEDT.S2.76,0.0051
+1867,Supp,Supplementary Table 9,Supplementary Table 9 number 78,0.14,SEDT.S2.77,0.0051
+1868,Supp,Supplementary Table 9,Supplementary Table 9 number 79,0.16,SEDT.S2.78,0.0051
+1869,Supp,Supplementary Table 9,Supplementary Table 9 number 80,205,SEDT.S2.79,0
+1870,Supp,Supplementary Table 9,Supplementary Table 9 number 81,0.85,SEDT.S2.80,0.0051
+1871,Supp,Supplementary Table 9,Supplementary Table 9 number 82,0.73,SEDT.S2.81,0.0051
+1872,Supp,Supplementary Table 9,Supplementary Table 9 number 83,0.97,SEDT.S2.82,0.0051
+1873,Supp,Supplementary Table 9,Supplementary Table 9 number 84,0.32,SEDT.S2.83,0.0051
+1874,Supp,Supplementary Table 9,Supplementary Table 9 number 85,0.45,SEDT.S2.84,0.0051
+1875,Supp,Supplementary Table 9,Supplementary Table 9 number 86,0.22,SEDT.S2.85,0.0051
+1876,Supp,Supplementary Table 9,Supplementary Table 9 number 87,0.01,SEDT.S2.86,0.0051
+1877,Supp,Supplementary Table 9,Supplementary Table 9 number 88,0.12,SEDT.S2.87,0.0051
+1878,Supp,Supplementary Table 9,Supplementary Table 9 number 89,0.12,SEDT.S2.88,0.0051
+1879,Supp,Supplementary Table 9,Supplementary Table 9 number 90,254,SEDT.S2.89,0
+1880,Supp,Supplementary Table 9,Supplementary Table 9 number 91,0.83,SEDT.S2.90,0.0051
+1881,Supp,Supplementary Table 9,Supplementary Table 9 number 92,0.71,SEDT.S2.91,0.0051
+1882,Supp,Supplementary Table 9,Supplementary Table 9 number 93,0.93,SEDT.S2.92,0.0051
+1883,Supp,Supplementary Table 9,Supplementary Table 9 number 94,0.29,SEDT.S2.93,0.0051
+1884,Supp,Supplementary Table 9,Supplementary Table 9 number 95,0.38,SEDT.S2.94,0.0051
+1885,Supp,Supplementary Table 9,Supplementary Table 9 number 96,0.21,SEDT.S2.95,0.0051
+1886,Supp,Supplementary Table 9,Supplementary Table 9 number 97,0.04,SEDT.S2.96,0.0051
+1887,Supp,Supplementary Table 9,Supplementary Table 9 number 98,0.06,SEDT.S2.97,0.0051
+1888,Supp,Supplementary Table 9,Supplementary Table 9 number 99,0.12,SEDT.S2.98,0.0051
+1889,Supp,Supplementary Table 9,Supplementary Table 9 number 100,32,SEDT.S2.99,0
+1890,Supp,Supplementary Table 9,Supplementary Table 9 number 101,0.58,SEDT.S2.100,0.0051
+1891,Supp,Supplementary Table 9,Supplementary Table 9 number 102,0.35,SEDT.S2.101,0.0051
+1892,Supp,Supplementary Table 9,Supplementary Table 9 number 103,0.75,SEDT.S2.102,0.0051
+1893,Supp,Supplementary Table 9,Supplementary Table 9 number 104,0.30,SEDT.S2.103,0.0051
+1894,Supp,Supplementary Table 9,Supplementary Table 9 number 105,0.45,SEDT.S2.104,0.0051
+1895,Supp,Supplementary Table 9,Supplementary Table 9 number 106,0.13,SEDT.S2.105,0.0051
+1896,Supp,Supplementary Table 9,Supplementary Table 9 number 107,0.02,SEDT.S2.106,0.0051
+1897,Supp,Supplementary Table 9,Supplementary Table 9 number 108,0.11,SEDT.S2.107,0.0051
+1898,Supp,Supplementary Table 9,Supplementary Table 9 number 109,0.20,SEDT.S2.108,0.0051
+1899,Supp,Supplementary Table 9,Supplementary Table 9 number 110,365,SEDT.S2.109,0
+1900,Supp,Supplementary Table 9,Supplementary Table 9 number 111,0.33,SEDT.S2.110,0.0051
+1901,Supp,Supplementary Table 9,Supplementary Table 9 number 112,0.24,SEDT.S2.111,0.0051
+1902,Supp,Supplementary Table 9,Supplementary Table 9 number 113,0.42,SEDT.S2.112,0.0051
+1903,Supp,Supplementary Table 9,Supplementary Table 9 number 114,0.30,SEDT.S2.113,0.0051
+1904,Supp,Supplementary Table 9,Supplementary Table 9 number 115,0.36,SEDT.S2.114,0.0051
+1905,Supp,Supplementary Table 9,Supplementary Table 9 number 116,0.23,SEDT.S2.115,0.0051
+1906,Supp,Supplementary Table 9,Supplementary Table 9 number 117,0.03,SEDT.S2.116,0.0051
+1907,Supp,Supplementary Table 9,Supplementary Table 9 number 118,0.03,SEDT.S2.117,0.0051
+1908,Supp,Supplementary Table 9,Supplementary Table 9 number 119,0.10,SEDT.S2.118,0.0051
+1909,Supp,Supplementary Table 9,Supplementary Table 9 number 120,649,SEDT.S2.119,0
+1910,Supp,Supplementary Table 9,Supplementary Table 9 number 121,0.28,SEDT.S2.120,0.0051
+1911,Supp,Supplementary Table 9,Supplementary Table 9 number 122,0.19,SEDT.S2.121,0.0051
+1912,Supp,Supplementary Table 9,Supplementary Table 9 number 123,0.37,SEDT.S2.122,0.0051
+1913,Supp,Supplementary Table 9,Supplementary Table 9 number 124,0.31,SEDT.S2.123,0.0051
+1914,Supp,Supplementary Table 9,Supplementary Table 9 number 125,0.39,SEDT.S2.124,0.0051
+1915,Supp,Supplementary Table 9,Supplementary Table 9 number 126,0.25,SEDT.S2.125,0.0051
+1916,Supp,Supplementary Table 9,Supplementary Table 9 number 127,0.01,SEDT.S2.126,0.0051
+1917,Supp,Supplementary Table 9,Supplementary Table 9 number 128,0.07,SEDT.S2.127,0.0051
+1918,Supp,Supplementary Table 9,Supplementary Table 9 number 129,0.05,SEDT.S2.128,0.0051
+1919,Supp,Supplementary Table 10,Supplementary Table 10 number 1,95,SEDT.S3.0,0
+1920,Supp,Supplementary Table 10,Supplementary Table 10 number 2,95,SEDT.S3.1,0
+1921,Supp,Supplementary Table 10,Supplementary Table 10 number 3,95,SEDT.S3.2,0
+1922,Supp,Supplementary Table 10,Supplementary Table 10 number 4,4063,SEDT.S3.3,0
+1923,Supp,Supplementary Table 10,Supplementary Table 10 number 5,0,SEDT.S3.4,0
+1924,Supp,Supplementary Table 10,Supplementary Table 10 number 6,0.33,SEDT.S3.5,0.0051
+1925,Supp,Supplementary Table 10,Supplementary Table 10 number 7,0.35,SEDT.S3.6,0.0051
+1926,Supp,Supplementary Table 10,Supplementary Table 10 number 8,0.31,SEDT.S3.7,0.0051
+1927,Supp,Supplementary Table 10,Supplementary Table 10 number 9,0,SEDT.S3.8,0
+1928,Supp,Supplementary Table 10,Supplementary Table 10 number 10,2449,SEDT.S3.9,0
+1929,Supp,Supplementary Table 10,Supplementary Table 10 number 11,0.55,SEDT.S3.10,0.0051
+1930,Supp,Supplementary Table 10,Supplementary Table 10 number 12,0.50,SEDT.S3.11,0.0051
+1931,Supp,Supplementary Table 10,Supplementary Table 10 number 13,0.60,SEDT.S3.12,0.0051
+1932,Supp,Supplementary Table 10,Supplementary Table 10 number 14,0.32,SEDT.S3.13,0.0051
+1933,Supp,Supplementary Table 10,Supplementary Table 10 number 15,0.34,SEDT.S3.14,0.0051
+1934,Supp,Supplementary Table 10,Supplementary Table 10 number 16,0.30,SEDT.S3.15,0.0051
+1935,Supp,Supplementary Table 10,Supplementary Table 10 number 17,0.01,SEDT.S3.16,0.0051
+1936,Supp,Supplementary Table 10,Supplementary Table 10 number 18,0.02,SEDT.S3.17,0.0051
+1937,Supp,Supplementary Table 10,Supplementary Table 10 number 19,0.04,SEDT.S3.18,0.0051
+1938,Supp,Supplementary Table 10,Supplementary Table 10 number 20,923,SEDT.S3.19,0
+1939,Supp,Supplementary Table 10,Supplementary Table 10 number 21,0.30,SEDT.S3.20,0.0051
+1940,Supp,Supplementary Table 10,Supplementary Table 10 number 22,0.23,SEDT.S3.21,0.0051
+1941,Supp,Supplementary Table 10,Supplementary Table 10 number 23,0.36,SEDT.S3.22,0.0051
+1942,Supp,Supplementary Table 10,Supplementary Table 10 number 24,0.21,SEDT.S3.23,0.0051
+1943,Supp,Supplementary Table 10,Supplementary Table 10 number 25,0.24,SEDT.S3.24,0.0051
+1944,Supp,Supplementary Table 10,Supplementary Table 10 number 26,0.18,SEDT.S3.25,0.0051
+1945,Supp,Supplementary Table 10,Supplementary Table 10 number 27,0.12,SEDT.S3.26,0.0051
+1946,Supp,Supplementary Table 10,Supplementary Table 10 number 28,0.08,SEDT.S3.27,0.0051
+1947,Supp,Supplementary Table 10,Supplementary Table 10 number 29,0.15,SEDT.S3.28,0.0051
+1948,Supp,Supplementary Table 10,Supplementary Table 10 number 30,218,SEDT.S3.29,0
+1949,Supp,Supplementary Table 10,Supplementary Table 10 number 31,0.46,SEDT.S3.30,0.0051
+1950,Supp,Supplementary Table 10,Supplementary Table 10 number 32,0.33,SEDT.S3.31,0.0051
+1951,Supp,Supplementary Table 10,Supplementary Table 10 number 33,0.58,SEDT.S3.32,0.0051
+1952,Supp,Supplementary Table 10,Supplementary Table 10 number 34,0.37,SEDT.S3.33,0.0051
+1953,Supp,Supplementary Table 10,Supplementary Table 10 number 35,0.46,SEDT.S3.34,0.0051
+1954,Supp,Supplementary Table 10,Supplementary Table 10 number 36,0.27,SEDT.S3.35,0.0051
+1955,Supp,Supplementary Table 10,Supplementary Table 10 number 37,0.04,SEDT.S3.36,0.0051
+1956,Supp,Supplementary Table 10,Supplementary Table 10 number 38,0.13,SEDT.S3.37,0.0051
+1957,Supp,Supplementary Table 10,Supplementary Table 10 number 39,0.06,SEDT.S3.38,0.0051
+1958,Supp,Supplementary Table 10,Supplementary Table 10 number 40,44,SEDT.S3.39,0
+1959,Supp,Supplementary Table 10,Supplementary Table 10 number 41,0.29,SEDT.S3.40,0.0051
+1960,Supp,Supplementary Table 10,Supplementary Table 10 number 42,0.08,SEDT.S3.41,0.0051
+1961,Supp,Supplementary Table 10,Supplementary Table 10 number 43,0.67,SEDT.S3.42,0.0051
+1962,Supp,Supplementary Table 10,Supplementary Table 10 number 44,0.38,SEDT.S3.43,0.0051
+1963,Supp,Supplementary Table 10,Supplementary Table 10 number 45,0.50,SEDT.S3.44,0.0051
+1964,Supp,Supplementary Table 10,Supplementary Table 10 number 46,0.21,SEDT.S3.45,0.0051
+1965,Supp,Supplementary Table 10,Supplementary Table 10 number 47,0.05,SEDT.S3.46,0.0051
+1966,Supp,Supplementary Table 10,Supplementary Table 10 number 48,0.17,SEDT.S3.47,0.0051
+1967,Supp,Supplementary Table 10,Supplementary Table 10 number 49,0.12,SEDT.S3.48,0.0051
+1968,Supp,Supplementary Table 10,Supplementary Table 10 number 50,418,SEDT.S3.49,0
+1969,Supp,Supplementary Table 10,Supplementary Table 10 number 51,0.82,SEDT.S3.50,0.0051
+1970,Supp,Supplementary Table 10,Supplementary Table 10 number 52,0.73,SEDT.S3.51,0.0051
+1971,Supp,Supplementary Table 10,Supplementary Table 10 number 53,0.91,SEDT.S3.52,0.0051
+1972,Supp,Supplementary Table 10,Supplementary Table 10 number 54,0.31,SEDT.S3.53,0.0051
+1973,Supp,Supplementary Table 10,Supplementary Table 10 number 55,0.39,SEDT.S3.54,0.0051
+1974,Supp,Supplementary Table 10,Supplementary Table 10 number 56,0.23,SEDT.S3.55,0.0051
+1975,Supp,Supplementary Table 10,Supplementary Table 10 number 57,0.02,SEDT.S3.56,0.0051
+1976,Supp,Supplementary Table 10,Supplementary Table 10 number 58,0.06,SEDT.S3.57,0.0051
+1977,Supp,Supplementary Table 10,Supplementary Table 10 number 59,0.10,SEDT.S3.58,0.0051
+1978,Supp,Supplementary Table 10,Supplementary Table 10 number 60,365,SEDT.S3.59,0
+1979,Supp,Supplementary Table 10,Supplementary Table 10 number 61,0.30,SEDT.S3.60,0.0051
+1980,Supp,Supplementary Table 10,Supplementary Table 10 number 62,0.21,SEDT.S3.61,0.0051
+1981,Supp,Supplementary Table 10,Supplementary Table 10 number 63,0.39,SEDT.S3.62,0.0051
+1982,Supp,Supplementary Table 10,Supplementary Table 10 number 64,0.29,SEDT.S3.63,0.0051
+1983,Supp,Supplementary Table 10,Supplementary Table 10 number 65,0.35,SEDT.S3.64,0.0051
+1984,Supp,Supplementary Table 10,Supplementary Table 10 number 66,0.23,SEDT.S3.65,0.0051
+1985,Supp,Supplementary Table 10,Supplementary Table 10 number 67,0.04,SEDT.S3.66,0.0051
+1986,Supp,Supplementary Table 10,Supplementary Table 10 number 68,0.02,SEDT.S3.67,0.0051
+1987,Supp,Supplementary Table 10,Supplementary Table 10 number 69,0.10,SEDT.S3.68,0.0051
+1988,Supp,Supplementary Table 10,Supplementary Table 10 number 70,649,SEDT.S3.69,0
+1989,Supp,Supplementary Table 10,Supplementary Table 10 number 71,0.28,SEDT.S3.70,0.0051
+1990,Supp,Supplementary Table 10,Supplementary Table 10 number 72,0.19,SEDT.S3.71,0.0051
+1991,Supp,Supplementary Table 10,Supplementary Table 10 number 73,0.37,SEDT.S3.72,0.0051
+1992,Supp,Supplementary Table 10,Supplementary Table 10 number 74,0.31,SEDT.S3.73,0.0051
+1993,Supp,Supplementary Table 10,Supplementary Table 10 number 75,0.39,SEDT.S3.74,0.0051
+1994,Supp,Supplementary Table 10,Supplementary Table 10 number 76,0.25,SEDT.S3.75,0.0051
+1995,Supp,Supplementary Table 10,Supplementary Table 10 number 77,0.01,SEDT.S3.76,0.0051
+1996,Supp,Supplementary Table 10,Supplementary Table 10 number 78,0.07,SEDT.S3.77,0.0051
+1997,Supp,Supplementary Table 10,Supplementary Table 10 number 79,0.05,SEDT.S3.78,0.0051
+1998,Supp,Supplementary Table 11,Supplementary Table 11 number 1,5,SEDT.S4.0,0
+1999,Supp,Supplementary Table 11,Supplementary Table 11 number 2,4,SEDT.S4.1,0
+2000,Supp,Supplementary Table 11,Supplementary Table 11 number 3,3,SEDT.S4.2,0
+2001,Supp,Supplementary Table 11,Supplementary Table 11 number 4,2,SEDT.S4.3,0
+2002,Supp,Supplementary Table 11,Supplementary Table 11 number 5,1,SEDT.S4.4,0
+2003,Supp,Supplementary Table 11,Supplementary Table 11 number 6,0,SEDT.S4.5,0
+2004,Supp,Supplementary Table 11,Supplementary Table 11 number 7,0.42,SEDT.S4.6,0.0051
+2005,Supp,Supplementary Table 11,Supplementary Table 11 number 8,0.31,SEDT.S4.7,0.0051
+2006,Supp,Supplementary Table 11,Supplementary Table 11 number 9,0.54,SEDT.S4.8,0.0051
+2007,Supp,Supplementary Table 11,Supplementary Table 11 number 10,0.52,SEDT.S4.9,0.0051
+2008,Supp,Supplementary Table 11,Supplementary Table 11 number 11,0.44,SEDT.S4.10,0.0051
+2009,Supp,Supplementary Table 11,Supplementary Table 11 number 12,0.59,SEDT.S4.11,0.0051
+2010,Supp,Supplementary Table 11,Supplementary Table 11 number 13,0.38,SEDT.S4.12,0.0051
+2011,Supp,Supplementary Table 11,Supplementary Table 11 number 14,0.31,SEDT.S4.13,0.0051
+2012,Supp,Supplementary Table 11,Supplementary Table 11 number 15,0.46,SEDT.S4.14,0.0051
+2013,Supp,Supplementary Table 11,Supplementary Table 11 number 16,0.44,SEDT.S4.15,0.0051
+2014,Supp,Supplementary Table 11,Supplementary Table 11 number 17,0.35,SEDT.S4.16,0.0051
+2015,Supp,Supplementary Table 11,Supplementary Table 11 number 18,0.52,SEDT.S4.17,0.0051
+2016,Supp,Supplementary Table 11,Supplementary Table 11 number 19,0.51,SEDT.S4.18,0.0051
+2017,Supp,Supplementary Table 11,Supplementary Table 11 number 20,0.40,SEDT.S4.19,0.0051
+2018,Supp,Supplementary Table 11,Supplementary Table 11 number 21,0.61,SEDT.S4.20,0.0051
+2019,Supp,Supplementary Table 11,Supplementary Table 11 number 22,0.58,SEDT.S4.21,0.0051
+2020,Supp,Supplementary Table 11,Supplementary Table 11 number 23,0.45,SEDT.S4.22,0.0051
+2021,Supp,Supplementary Table 11,Supplementary Table 11 number 24,0.71,SEDT.S4.23,0.0051
+2022,Supp,Supplementary Table 11,Supplementary Table 11 number 25,0.04,SEDT.S4.24,0.0051
+2023,Supp,Supplementary Table 11,Supplementary Table 11 number 26,0.28,SEDT.S4.25,0.0051
+2024,Supp,Supplementary Table 11,Supplementary Table 11 number 27,0.21,SEDT.S4.26,0.0051
+2025,Supp,Supplementary Table 11,Supplementary Table 11 number 28,0.14,SEDT.S4.27,0.0051
+2026,Supp,Supplementary Table 11,Supplementary Table 11 number 29,0.02,SEDT.S4.28,0.0051
+2027,Supp,Supplementary Table 11,Supplementary Table 11 number 30,0.25,SEDT.S4.29,0.0051
+2028,Supp,Supplementary Table 11,Supplementary Table 11 number 31,0.16,SEDT.S4.30,0.0051
+2029,Supp,Supplementary Table 11,Supplementary Table 11 number 32,0.03,SEDT.S4.31,0.0051
+2030,Supp,Supplementary Table 11,Supplementary Table 11 number 33,0.27,SEDT.S4.32,0.0051
+2031,Supp,Supplementary Table 11,Supplementary Table 11 number 34,0.28,SEDT.S4.33,0.0051
+2032,Supp,Supplementary Table 11,Supplementary Table 11 number 35,0.19,SEDT.S4.34,0.0051
+2033,Supp,Supplementary Table 11,Supplementary Table 11 number 36,0.36,SEDT.S4.35,0.0051
+2034,Supp,Supplementary Table 11,Supplementary Table 11 number 37,0.41,SEDT.S4.36,0.0051
+2035,Supp,Supplementary Table 11,Supplementary Table 11 number 38,0.32,SEDT.S4.37,0.0051
+2036,Supp,Supplementary Table 11,Supplementary Table 11 number 39,0.49,SEDT.S4.38,0.0051
+2037,Supp,Supplementary Table 11,Supplementary Table 11 number 40,0.58,SEDT.S4.39,0.0051
+2038,Supp,Supplementary Table 11,Supplementary Table 11 number 41,0.44,SEDT.S4.40,0.0051
+2039,Supp,Supplementary Table 11,Supplementary Table 11 number 42,0.70,SEDT.S4.41,0.0051
+2040,Supp,Supplementary Table 11,Supplementary Table 11 number 43,0.37,SEDT.S4.42,0.0051
+2041,Supp,Supplementary Table 11,Supplementary Table 11 number 44,0.20,SEDT.S4.43,0.0051
+2042,Supp,Supplementary Table 11,Supplementary Table 11 number 45,0.57,SEDT.S4.44,0.0051
+2043,Supp,Supplementary Table 11,Supplementary Table 11 number 46,0.26,SEDT.S4.45,0.0051
+2044,Supp,Supplementary Table 11,Supplementary Table 11 number 47,0.00,SEDT.S4.46,0.0051
+2045,Supp,Supplementary Table 11,Supplementary Table 11 number 48,0.54,SEDT.S4.47,0.0051
+2046,Supp,Supplementary Table 11,Supplementary Table 11 number 49,0.14,SEDT.S4.48,0.0051
+2047,Supp,Supplementary Table 11,Supplementary Table 11 number 50,0.03,SEDT.S4.49,0.0051
+2048,Supp,Supplementary Table 11,Supplementary Table 11 number 51,0.33,SEDT.S4.50,0.0051
+2049,Supp,Supplementary Table 11,Supplementary Table 11 number 52,0.44,SEDT.S4.51,0.0051
+2050,Supp,Supplementary Table 11,Supplementary Table 11 number 53,0.02,SEDT.S4.52,0.0051
+2051,Supp,Supplementary Table 11,Supplementary Table 11 number 54,0.84,SEDT.S4.53,0.0051
+2052,Supp,Supplementary Table 11,Supplementary Table 11 number 55,0.16,SEDT.S4.54,0.0051
+2053,Supp,Supplementary Table 11,Supplementary Table 11 number 56,0.41,SEDT.S4.55,0.0051
+2054,Supp,Supplementary Table 11,Supplementary Table 11 number 57,0.78,SEDT.S4.56,0.0051
+2055,Supp,Supplementary Table 11,Supplementary Table 11 number 58,0.25,SEDT.S4.57,0.0051
+2056,Supp,Supplementary Table 11,Supplementary Table 11 number 59,0.07,SEDT.S4.58,0.0051
+2057,Supp,Supplementary Table 11,Supplementary Table 11 number 60,0.59,SEDT.S4.59,0.0051
+2058,Supp,Supplementary Table 11,Supplementary Table 11 number 61,0.07,SEDT.S4.60,0.0051
+2059,Supp,Supplementary Table 11,Supplementary Table 11 number 62,0.37,SEDT.S4.61,0.0051
+2060,Supp,Supplementary Table 11,Supplementary Table 11 number 63,0.55,SEDT.S4.62,0.0051
+2061,Supp,Supplementary Table 11,Supplementary Table 11 number 64,0.40,SEDT.S4.63,0.0051
+2062,Supp,Supplementary Table 11,Supplementary Table 11 number 65,0.05,SEDT.S4.64,0.0051
+2063,Supp,Supplementary Table 11,Supplementary Table 11 number 66,0.63,SEDT.S4.65,0.0051
+2064,Supp,Supplementary Table 11,Supplementary Table 11 number 67,0.58,SEDT.S4.66,0.0051
+2065,Supp,Supplementary Table 11,Supplementary Table 11 number 68,0.43,SEDT.S4.67,0.0051
+2066,Supp,Supplementary Table 11,Supplementary Table 11 number 69,0.73,SEDT.S4.68,0.0051
+2067,Supp,Supplementary Table 11,Supplementary Table 11 number 70,0.84,SEDT.S4.69,0.0051
+2068,Supp,Supplementary Table 11,Supplementary Table 11 number 71,0.69,SEDT.S4.70,0.0051
+2069,Supp,Supplementary Table 11,Supplementary Table 11 number 72,0.97,SEDT.S4.71,0.0051
+2070,Supp,Supplementary Table 11,Supplementary Table 11 number 73,0.52,SEDT.S4.72,0.0051
+2071,Supp,Supplementary Table 11,Supplementary Table 11 number 74,0.37,SEDT.S4.73,0.0051
+2072,Supp,Supplementary Table 11,Supplementary Table 11 number 75,0.68,SEDT.S4.74,0.0051
+2073,Supp,Supplementary Table 11,Supplementary Table 11 number 76,0.49,SEDT.S4.75,0.0051
+2074,Supp,Supplementary Table 11,Supplementary Table 11 number 77,0.15,SEDT.S4.76,0.0051
+2075,Supp,Supplementary Table 11,Supplementary Table 11 number 78,0.76,SEDT.S4.77,0.0051
+2076,Supp,Supplementary Table 11,Supplementary Table 11 number 79,0.73,SEDT.S4.78,0.0051
+2077,Supp,Supplementary Table 11,Supplementary Table 11 number 80,0.28,SEDT.S4.79,0.0051
+2078,Supp,Supplementary Table 11,Supplementary Table 11 number 81,1.09,SEDT.S4.80,0.0051
+2079,Supp,Supplementary Table 11,Supplementary Table 11 number 82,0.15,SEDT.S4.81,0.0051
+2080,Supp,Supplementary Table 11,Supplementary Table 11 number 83,0.01,SEDT.S4.82,0.0051
+2081,Supp,Supplementary Table 11,Supplementary Table 11 number 84,0.30,SEDT.S4.83,0.0051
+2082,Supp,Supplementary Table 11,Supplementary Table 11 number 85,0.27,SEDT.S4.84,0.0051
+2083,Supp,Supplementary Table 11,Supplementary Table 11 number 86,0.14,SEDT.S4.85,0.0051
+2084,Supp,Supplementary Table 11,Supplementary Table 11 number 87,0.38,SEDT.S4.86,0.0051
+2085,Supp,Supplementary Table 11,Supplementary Table 11 number 88,0.20,SEDT.S4.87,0.0051
+2086,Supp,Supplementary Table 11,Supplementary Table 11 number 89,0.07,SEDT.S4.88,0.0051
+2087,Supp,Supplementary Table 11,Supplementary Table 11 number 90,0.33,SEDT.S4.89,0.0051
+2088,Supp,Supplementary Table 11,Supplementary Table 11 number 91,0.28,SEDT.S4.90,0.0051
+2089,Supp,Supplementary Table 11,Supplementary Table 11 number 92,0.11,SEDT.S4.91,0.0051
+2090,Supp,Supplementary Table 11,Supplementary Table 11 number 93,0.47,SEDT.S4.92,0.0051
+2091,Supp,Supplementary Table 11,Supplementary Table 11 number 94,0.43,SEDT.S4.93,0.0051
+2092,Supp,Supplementary Table 11,Supplementary Table 11 number 95,0.26,SEDT.S4.94,0.0051
+2093,Supp,Supplementary Table 11,Supplementary Table 11 number 96,0.60,SEDT.S4.95,0.0051
+2094,Supp,Supplementary Table 11,Supplementary Table 11 number 97,0.36,SEDT.S4.96,0.0051
+2095,Supp,Supplementary Table 11,Supplementary Table 11 number 98,0.14,SEDT.S4.97,0.0051
+2096,Supp,Supplementary Table 11,Supplementary Table 11 number 99,0.58,SEDT.S4.98,0.0051
+2097,Supp,Supplementary Table 12,Supplementary Table 12 number 1,95,SEDT.S5.0,0
+2098,Supp,Supplementary Table 12,Supplementary Table 12 number 2,2,SEDT.S5.1,0
+2099,Supp,Supplementary Table 12,Supplementary Table 12 number 3,0,SEDT.S5.2,0
+2100,Supp,Supplementary Table 12,Supplementary Table 12 number 4,0.52,SEDT.S5.3,0.0051
+2101,Supp,Supplementary Table 12,Supplementary Table 12 number 5,0.46,SEDT.S5.4,0.0051
+2102,Supp,Supplementary Table 12,Supplementary Table 12 number 6,0.57,SEDT.S5.5,0.0051
+2103,Supp,Supplementary Table 12,Supplementary Table 12 number 7,0.50,SEDT.S5.6,0.0051
+2104,Supp,Supplementary Table 12,Supplementary Table 12 number 8,0.45,SEDT.S5.7,0.0051
+2105,Supp,Supplementary Table 12,Supplementary Table 12 number 9,0.55,SEDT.S5.8,0.0051
+2106,Supp,Supplementary Table 12,Supplementary Table 12 number 10,0.51,SEDT.S5.9,0.0051
+2107,Supp,Supplementary Table 12,Supplementary Table 12 number 11,0.46,SEDT.S5.10,0.0051
+2108,Supp,Supplementary Table 12,Supplementary Table 12 number 12,0.57,SEDT.S5.11,0.0051
+2109,Supp,Supplementary Table 12,Supplementary Table 12 number 13,0.52,SEDT.S5.12,0.0051
+2110,Supp,Supplementary Table 12,Supplementary Table 12 number 14,0.47,SEDT.S5.13,0.0051
+2111,Supp,Supplementary Table 12,Supplementary Table 12 number 15,0.57,SEDT.S5.14,0.0051
+2112,Supp,Supplementary Table 12,Supplementary Table 12 number 16,0.54,SEDT.S5.15,0.0051
+2113,Supp,Supplementary Table 12,Supplementary Table 12 number 17,0.46,SEDT.S5.16,0.0051
+2114,Supp,Supplementary Table 12,Supplementary Table 12 number 18,0.62,SEDT.S5.17,0.0051
+2115,Supp,Supplementary Table 12,Supplementary Table 12 number 19,0.62,SEDT.S5.18,0.0051
+2116,Supp,Supplementary Table 12,Supplementary Table 12 number 20,0.55,SEDT.S5.19,0.0051
+2117,Supp,Supplementary Table 12,Supplementary Table 12 number 21,0.68,SEDT.S5.20,0.0051
+2118,Supp,Supplementary Table 12,Supplementary Table 12 number 22,0.61,SEDT.S5.21,0.0051
+2119,Supp,Supplementary Table 12,Supplementary Table 12 number 23,0.55,SEDT.S5.22,0.0051
+2120,Supp,Supplementary Table 12,Supplementary Table 12 number 24,0.68,SEDT.S5.23,0.0051
+2121,Supp,Supplementary Table 12,Supplementary Table 12 number 25,0.61,SEDT.S5.24,0.0051
+2122,Supp,Supplementary Table 12,Supplementary Table 12 number 26,0.55,SEDT.S5.25,0.0051
+2123,Supp,Supplementary Table 12,Supplementary Table 12 number 27,0.68,SEDT.S5.26,0.0051
+2124,Supp,Supplementary Table 12,Supplementary Table 12 number 28,0.63,SEDT.S5.27,0.0051
+2125,Supp,Supplementary Table 12,Supplementary Table 12 number 29,0.57,SEDT.S5.28,0.0051
+2126,Supp,Supplementary Table 12,Supplementary Table 12 number 30,0.69,SEDT.S5.29,0.0051
+2127,Supp,Supplementary Table 12,Supplementary Table 12 number 31,0.52,SEDT.S5.30,0.0051
+2128,Supp,Supplementary Table 12,Supplementary Table 12 number 32,0.35,SEDT.S5.31,0.0051
+2129,Supp,Supplementary Table 12,Supplementary Table 12 number 33,0.69,SEDT.S5.32,0.0051
+2130,Supp,Supplementary Table 12,Supplementary Table 12 number 34,0.30,SEDT.S5.33,0.0051
+2131,Supp,Supplementary Table 12,Supplementary Table 12 number 35,0.23,SEDT.S5.34,0.0051
+2132,Supp,Supplementary Table 12,Supplementary Table 12 number 36,0.36,SEDT.S5.35,0.0051
+2133,Supp,Supplementary Table 12,Supplementary Table 12 number 37,0.30,SEDT.S5.36,0.0051
+2134,Supp,Supplementary Table 12,Supplementary Table 12 number 38,0.23,SEDT.S5.37,0.0051
+2135,Supp,Supplementary Table 12,Supplementary Table 12 number 39,0.36,SEDT.S5.38,0.0051
+2136,Supp,Supplementary Table 12,Supplementary Table 12 number 40,0.30,SEDT.S5.39,0.0051
+2137,Supp,Supplementary Table 12,Supplementary Table 12 number 41,0.23,SEDT.S5.40,0.0051
+2138,Supp,Supplementary Table 12,Supplementary Table 12 number 42,0.37,SEDT.S5.41,0.0051
+2139,Supp,Supplementary Table 12,Supplementary Table 12 number 43,0.27,SEDT.S5.42,0.0051
+2140,Supp,Supplementary Table 12,Supplementary Table 12 number 44,0.20,SEDT.S5.43,0.0051
+2141,Supp,Supplementary Table 12,Supplementary Table 12 number 45,0.33,SEDT.S5.44,0.0051
+2142,Supp,Supplementary Table 12,Supplementary Table 12 number 46,0.44,SEDT.S5.45,0.0051
+2143,Supp,Supplementary Table 12,Supplementary Table 12 number 47,0.37,SEDT.S5.46,0.0051
+2144,Supp,Supplementary Table 12,Supplementary Table 12 number 48,0.52,SEDT.S5.47,0.0051
+2145,Supp,Supplementary Table 12,Supplementary Table 12 number 49,0.31,SEDT.S5.48,0.0051
+2146,Supp,Supplementary Table 12,Supplementary Table 12 number 50,0.20,SEDT.S5.49,0.0051
+2147,Supp,Supplementary Table 12,Supplementary Table 12 number 51,0.44,SEDT.S5.50,0.0051
+2148,Supp,Supplementary Table 12,Supplementary Table 12 number 52,0.31,SEDT.S5.51,0.0051
+2149,Supp,Supplementary Table 12,Supplementary Table 12 number 53,0.20,SEDT.S5.52,0.0051
+2150,Supp,Supplementary Table 12,Supplementary Table 12 number 54,0.43,SEDT.S5.53,0.0051
+2151,Supp,Supplementary Table 12,Supplementary Table 12 number 55,0.32,SEDT.S5.54,0.0051
+2152,Supp,Supplementary Table 12,Supplementary Table 12 number 56,0.18,SEDT.S5.55,0.0051
+2153,Supp,Supplementary Table 12,Supplementary Table 12 number 57,0.45,SEDT.S5.56,0.0051
+2154,Supp,Supplementary Table 12,Supplementary Table 12 number 58,0.29,SEDT.S5.57,0.0051
+2155,Supp,Supplementary Table 12,Supplementary Table 12 number 59,0.19,SEDT.S5.58,0.0051
+2156,Supp,Supplementary Table 12,Supplementary Table 12 number 60,0.39,SEDT.S5.59,0.0051
+2157,Supp,Supplementary Table 12,Supplementary Table 12 number 61,0.57,SEDT.S5.60,0.0051
+2158,Supp,Supplementary Table 12,Supplementary Table 12 number 62,0.42,SEDT.S5.61,0.0051
+2159,Supp,Supplementary Table 12,Supplementary Table 12 number 63,0.74,SEDT.S5.62,0.0051
+2160,Supp,Supplementary Table 12,Supplementary Table 12 number 64,0.35,SEDT.S5.63,0.0051
+2161,Supp,Supplementary Table 12,Supplementary Table 12 number 65,0.15,SEDT.S5.64,0.0051
+2162,Supp,Supplementary Table 12,Supplementary Table 12 number 66,0.56,SEDT.S5.65,0.0051
+2163,Supp,Supplementary Table 12,Supplementary Table 12 number 67,0.42,SEDT.S5.66,0.0051
+2164,Supp,Supplementary Table 12,Supplementary Table 12 number 68,0.22,SEDT.S5.67,0.0051
+2165,Supp,Supplementary Table 12,Supplementary Table 12 number 69,0.62,SEDT.S5.68,0.0051
+2166,Supp,Supplementary Table 12,Supplementary Table 12 number 70,0.38,SEDT.S5.69,0.0051
+2167,Supp,Supplementary Table 12,Supplementary Table 12 number 71,0.21,SEDT.S5.70,0.0051
+2168,Supp,Supplementary Table 12,Supplementary Table 12 number 72,0.59,SEDT.S5.71,0.0051
+2169,Supp,Supplementary Table 12,Supplementary Table 12 number 73,0.30,SEDT.S5.72,0.0051
+2170,Supp,Supplementary Table 12,Supplementary Table 12 number 74,0.12,SEDT.S5.73,0.0051
+2171,Supp,Supplementary Table 12,Supplementary Table 12 number 75,0.49,SEDT.S5.74,0.0051
+2172,Supp,Supplementary Table 12,Supplementary Table 12 number 76,0.56,SEDT.S5.75,0.0051
+2173,Supp,Supplementary Table 12,Supplementary Table 12 number 77,0.43,SEDT.S5.76,0.0051
+2174,Supp,Supplementary Table 12,Supplementary Table 12 number 78,0.68,SEDT.S5.77,0.0051
+2175,Supp,Supplementary Table 12,Supplementary Table 12 number 79,0.54,SEDT.S5.78,0.0051
+2176,Supp,Supplementary Table 12,Supplementary Table 12 number 80,0.41,SEDT.S5.79,0.0051
+2177,Supp,Supplementary Table 12,Supplementary Table 12 number 81,0.67,SEDT.S5.80,0.0051
+2178,Supp,Supplementary Table 12,Supplementary Table 12 number 82,0.55,SEDT.S5.81,0.0051
+2179,Supp,Supplementary Table 12,Supplementary Table 12 number 83,0.42,SEDT.S5.82,0.0051
+2180,Supp,Supplementary Table 12,Supplementary Table 12 number 84,0.69,SEDT.S5.83,0.0051
+2181,Supp,Supplementary Table 12,Supplementary Table 12 number 85,0.53,SEDT.S5.84,0.0051
+2182,Supp,Supplementary Table 12,Supplementary Table 12 number 86,0.39,SEDT.S5.85,0.0051
+2183,Supp,Supplementary Table 12,Supplementary Table 12 number 87,0.66,SEDT.S5.86,0.0051
+2184,Supp,Supplementary Table 12,Supplementary Table 12 number 88,0.30,SEDT.S5.87,0.0051
+2185,Supp,Supplementary Table 12,Supplementary Table 12 number 89,0.07,SEDT.S5.88,0.0051
+2186,Supp,Supplementary Table 12,Supplementary Table 12 number 90,0.69,SEDT.S5.89,0.0051
+2187,Supp,Supplementary Table 12,Supplementary Table 12 number 91,0.24,SEDT.S5.90,0.0051
+2188,Supp,Supplementary Table 12,Supplementary Table 12 number 92,0.10,SEDT.S5.91,0.0051
+2189,Supp,Supplementary Table 12,Supplementary Table 12 number 93,0.59,SEDT.S5.92,0.0051
+2190,Supp,Supplementary Table 12,Supplementary Table 12 number 94,0.30,SEDT.S5.93,0.0051
+2191,Supp,Supplementary Table 12,Supplementary Table 12 number 95,0.07,SEDT.S5.94,0.0051
+2192,Supp,Supplementary Table 12,Supplementary Table 12 number 96,0.72,SEDT.S5.95,0.0051
+2193,Supp,Supplementary Table 12,Supplementary Table 12 number 97,0.31,SEDT.S5.96,0.0051
+2194,Supp,Supplementary Table 12,Supplementary Table 12 number 98,0.08,SEDT.S5.97,0.0051
+2195,Supp,Supplementary Table 12,Supplementary Table 12 number 99,0.76,SEDT.S5.98,0.0051
+2196,Supp,Supplementary Table 12,Supplementary Table 12 number 100,0.85,SEDT.S5.99,0.0051
+2197,Supp,Supplementary Table 12,Supplementary Table 12 number 101,0.73,SEDT.S5.100,0.0051
+2198,Supp,Supplementary Table 12,Supplementary Table 12 number 102,0.97,SEDT.S5.101,0.0051
+2199,Supp,Supplementary Table 12,Supplementary Table 12 number 103,0.84,SEDT.S5.102,0.0051
+2200,Supp,Supplementary Table 12,Supplementary Table 12 number 104,0.74,SEDT.S5.103,0.0051
+2201,Supp,Supplementary Table 12,Supplementary Table 12 number 105,0.94,SEDT.S5.104,0.0051
+2202,Supp,Supplementary Table 12,Supplementary Table 12 number 106,0.85,SEDT.S5.105,0.0051
+2203,Supp,Supplementary Table 12,Supplementary Table 12 number 107,0.74,SEDT.S5.106,0.0051
+2204,Supp,Supplementary Table 12,Supplementary Table 12 number 108,0.97,SEDT.S5.107,0.0051
+2205,Supp,Supplementary Table 12,Supplementary Table 12 number 109,0.87,SEDT.S5.108,0.0051
+2206,Supp,Supplementary Table 12,Supplementary Table 12 number 110,0.76,SEDT.S5.109,0.0051
+2207,Supp,Supplementary Table 12,Supplementary Table 12 number 111,0.98,SEDT.S5.110,0.0051
+2208,Supp,Supplementary Table 12,Supplementary Table 12 number 112,0.83,SEDT.S5.111,0.0051
+2209,Supp,Supplementary Table 12,Supplementary Table 12 number 113,0.71,SEDT.S5.112,0.0051
+2210,Supp,Supplementary Table 12,Supplementary Table 12 number 114,0.93,SEDT.S5.113,0.0051
+2211,Supp,Supplementary Table 12,Supplementary Table 12 number 115,0.81,SEDT.S5.114,0.0051
+2212,Supp,Supplementary Table 12,Supplementary Table 12 number 116,0.70,SEDT.S5.115,0.0051
+2213,Supp,Supplementary Table 12,Supplementary Table 12 number 117,0.91,SEDT.S5.116,0.0051
+2214,Supp,Supplementary Table 12,Supplementary Table 12 number 118,0.81,SEDT.S5.117,0.0051
+2215,Supp,Supplementary Table 12,Supplementary Table 12 number 119,0.71,SEDT.S5.118,0.0051
+2216,Supp,Supplementary Table 12,Supplementary Table 12 number 120,0.93,SEDT.S5.119,0.0051
+2217,Supp,Supplementary Table 12,Supplementary Table 12 number 121,0.87,SEDT.S5.120,0.0051
+2218,Supp,Supplementary Table 12,Supplementary Table 12 number 122,0.75,SEDT.S5.121,0.0051
+2219,Supp,Supplementary Table 12,Supplementary Table 12 number 123,0.99,SEDT.S5.122,0.0051
+2220,Supp,Supplementary Table 12,Supplementary Table 12 number 124,0.58,SEDT.S5.123,0.0051
+2221,Supp,Supplementary Table 12,Supplementary Table 12 number 125,0.35,SEDT.S5.124,0.0051
+2222,Supp,Supplementary Table 12,Supplementary Table 12 number 126,0.75,SEDT.S5.125,0.0051
+2223,Supp,Supplementary Table 12,Supplementary Table 12 number 127,0.55,SEDT.S5.126,0.0051
+2224,Supp,Supplementary Table 12,Supplementary Table 12 number 128,0.34,SEDT.S5.127,0.0051
+2225,Supp,Supplementary Table 12,Supplementary Table 12 number 129,0.72,SEDT.S5.128,0.0051
+2226,Supp,Supplementary Table 12,Supplementary Table 12 number 130,0.59,SEDT.S5.129,0.0051
+2227,Supp,Supplementary Table 12,Supplementary Table 12 number 131,0.38,SEDT.S5.130,0.0051
+2228,Supp,Supplementary Table 12,Supplementary Table 12 number 132,0.75,SEDT.S5.131,0.0051
+2229,Supp,Supplementary Table 12,Supplementary Table 12 number 133,0.63,SEDT.S5.132,0.0051
+2230,Supp,Supplementary Table 12,Supplementary Table 12 number 134,0.37,SEDT.S5.133,0.0051
+2231,Supp,Supplementary Table 12,Supplementary Table 12 number 135,0.79,SEDT.S5.134,0.0051
+2232,Supp,Supplementary Table 12,Supplementary Table 12 number 136,0.33,SEDT.S5.135,0.0051
+2233,Supp,Supplementary Table 12,Supplementary Table 12 number 137,0.24,SEDT.S5.136,0.0051
+2234,Supp,Supplementary Table 12,Supplementary Table 12 number 138,0.42,SEDT.S5.137,0.0051
+2235,Supp,Supplementary Table 12,Supplementary Table 12 number 139,0.34,SEDT.S5.138,0.0051
+2236,Supp,Supplementary Table 12,Supplementary Table 12 number 140,0.25,SEDT.S5.139,0.0051
+2237,Supp,Supplementary Table 12,Supplementary Table 12 number 141,0.42,SEDT.S5.140,0.0051
+2238,Supp,Supplementary Table 12,Supplementary Table 12 number 142,0.33,SEDT.S5.141,0.0051
+2239,Supp,Supplementary Table 12,Supplementary Table 12 number 143,0.24,SEDT.S5.142,0.0051
+2240,Supp,Supplementary Table 12,Supplementary Table 12 number 144,0.43,SEDT.S5.143,0.0051
+2241,Supp,Supplementary Table 12,Supplementary Table 12 number 145,0.30,SEDT.S5.144,0.0051
+2242,Supp,Supplementary Table 12,Supplementary Table 12 number 146,0.22,SEDT.S5.145,0.0051
+2243,Supp,Supplementary Table 12,Supplementary Table 12 number 147,0.37,SEDT.S5.146,0.0051
+2244,Supp,Supplementary Table 12,Supplementary Table 12 number 148,0.41,SEDT.S5.147,0.0051
+2245,Supp,Supplementary Table 12,Supplementary Table 12 number 149,0.27,SEDT.S5.148,0.0051
+2246,Supp,Supplementary Table 12,Supplementary Table 12 number 150,0.53,SEDT.S5.149,0.0051
+2247,Supp,Supplementary Table 12,Supplementary Table 12 number 151,0.28,SEDT.S5.150,0.0051
+2248,Supp,Supplementary Table 12,Supplementary Table 12 number 152,0.19,SEDT.S5.151,0.0051
+2249,Supp,Supplementary Table 12,Supplementary Table 12 number 153,0.37,SEDT.S5.152,0.0051
+2250,Supp,Supplementary Table 12,Supplementary Table 12 number 154,0.30,SEDT.S5.153,0.0051
+2251,Supp,Supplementary Table 12,Supplementary Table 12 number 155,0.23,SEDT.S5.154,0.0051
+2252,Supp,Supplementary Table 12,Supplementary Table 12 number 156,0.37,SEDT.S5.155,0.0051
+2253,Supp,Supplementary Table 12,Supplementary Table 12 number 157,0.29,SEDT.S5.156,0.0051
+2254,Supp,Supplementary Table 12,Supplementary Table 12 number 158,0.20,SEDT.S5.157,0.0051
+2255,Supp,Supplementary Table 12,Supplementary Table 12 number 159,0.38,SEDT.S5.158,0.0051
+2256,Supp,Supplementary Table 12,Supplementary Table 12 number 160,0.31,SEDT.S5.159,0.0051
+2257,Supp,Supplementary Table 12,Supplementary Table 12 number 161,0.24,SEDT.S5.160,0.0051
+2258,Supp,Supplementary Table 12,Supplementary Table 12 number 162,0.39,SEDT.S5.161,0.0051
+2259,Supp,Supplementary Table 12,Supplementary Table 12 number 163,0.17,SEDT.S5.162,0.0051
+2260,Supp,Supplementary Table 12,Supplementary Table 12 number 164,0.07,SEDT.S5.163,0.0051
+2261,Supp,Supplementary Table 12,Supplementary Table 12 number 165,0.28,SEDT.S5.164,0.0051
+2262,Supp,Supplementary Table 13,Supplementary Table 13 number 1,95,SEDT.S5b.0,0
+2263,Supp,Supplementary Table 13,Supplementary Table 13 number 2,2,SEDT.S5b.1,0
+2264,Supp,Supplementary Table 13,Supplementary Table 13 number 3,0,SEDT.S5b.2,0
+2265,Supp,Supplementary Table 13,Supplementary Table 13 number 4,0.30,SEDT.S5b.3,0.0051
+2266,Supp,Supplementary Table 13,Supplementary Table 13 number 5,0.32,SEDT.S5b.4,0.0051
+2267,Supp,Supplementary Table 13,Supplementary Table 13 number 6,0.27,SEDT.S5b.5,0.0051
+2268,Supp,Supplementary Table 13,Supplementary Table 13 number 7,0.29,SEDT.S5b.6,0.0051
+2269,Supp,Supplementary Table 13,Supplementary Table 13 number 8,0.32,SEDT.S5b.7,0.0051
+2270,Supp,Supplementary Table 13,Supplementary Table 13 number 9,0.27,SEDT.S5b.8,0.0051
+2271,Supp,Supplementary Table 13,Supplementary Table 13 number 10,0.30,SEDT.S5b.9,0.0051
+2272,Supp,Supplementary Table 13,Supplementary Table 13 number 11,0.33,SEDT.S5b.10,0.0051
+2273,Supp,Supplementary Table 13,Supplementary Table 13 number 12,0.27,SEDT.S5b.11,0.0051
+2274,Supp,Supplementary Table 13,Supplementary Table 13 number 13,0.27,SEDT.S5b.12,0.0051
+2275,Supp,Supplementary Table 13,Supplementary Table 13 number 14,0.29,SEDT.S5b.13,0.0051
+2276,Supp,Supplementary Table 13,Supplementary Table 13 number 15,0.24,SEDT.S5b.14,0.0051
+2277,Supp,Supplementary Table 13,Supplementary Table 13 number 16,0.30,SEDT.S5b.15,0.0051
+2278,Supp,Supplementary Table 13,Supplementary Table 13 number 17,0.37,SEDT.S5b.16,0.0051
+2279,Supp,Supplementary Table 13,Supplementary Table 13 number 18,0.24,SEDT.S5b.17,0.0051
+2280,Supp,Supplementary Table 13,Supplementary Table 13 number 19,0.35,SEDT.S5b.18,0.0051
+2281,Supp,Supplementary Table 13,Supplementary Table 13 number 20,0.38,SEDT.S5b.19,0.0051
+2282,Supp,Supplementary Table 13,Supplementary Table 13 number 21,0.31,SEDT.S5b.20,0.0051
+2283,Supp,Supplementary Table 13,Supplementary Table 13 number 22,0.35,SEDT.S5b.21,0.0051
+2284,Supp,Supplementary Table 13,Supplementary Table 13 number 23,0.38,SEDT.S5b.22,0.0051
+2285,Supp,Supplementary Table 13,Supplementary Table 13 number 24,0.31,SEDT.S5b.23,0.0051
+2286,Supp,Supplementary Table 13,Supplementary Table 13 number 25,0.34,SEDT.S5b.24,0.0051
+2287,Supp,Supplementary Table 13,Supplementary Table 13 number 26,0.38,SEDT.S5b.25,0.0051
+2288,Supp,Supplementary Table 13,Supplementary Table 13 number 27,0.31,SEDT.S5b.26,0.0051
+2289,Supp,Supplementary Table 13,Supplementary Table 13 number 28,0.32,SEDT.S5b.27,0.0051
+2290,Supp,Supplementary Table 13,Supplementary Table 13 number 29,0.36,SEDT.S5b.28,0.0051
+2291,Supp,Supplementary Table 13,Supplementary Table 13 number 30,0.27,SEDT.S5b.29,0.0051
+2292,Supp,Supplementary Table 13,Supplementary Table 13 number 31,0.27,SEDT.S5b.30,0.0051
+2293,Supp,Supplementary Table 13,Supplementary Table 13 number 32,0.39,SEDT.S5b.31,0.0051
+2294,Supp,Supplementary Table 13,Supplementary Table 13 number 33,0.16,SEDT.S5b.32,0.0051
+2295,Supp,Supplementary Table 13,Supplementary Table 13 number 34,0.20,SEDT.S5b.33,0.0051
+2296,Supp,Supplementary Table 13,Supplementary Table 13 number 35,0.24,SEDT.S5b.34,0.0051
+2297,Supp,Supplementary Table 13,Supplementary Table 13 number 36,0.17,SEDT.S5b.35,0.0051
+2298,Supp,Supplementary Table 13,Supplementary Table 13 number 37,0.20,SEDT.S5b.36,0.0051
+2299,Supp,Supplementary Table 13,Supplementary Table 13 number 38,0.24,SEDT.S5b.37,0.0051
+2300,Supp,Supplementary Table 13,Supplementary Table 13 number 39,0.17,SEDT.S5b.38,0.0051
+2301,Supp,Supplementary Table 13,Supplementary Table 13 number 40,0.21,SEDT.S5b.39,0.0051
+2302,Supp,Supplementary Table 13,Supplementary Table 13 number 41,0.24,SEDT.S5b.40,0.0051
+2303,Supp,Supplementary Table 13,Supplementary Table 13 number 42,0.18,SEDT.S5b.41,0.0051
+2304,Supp,Supplementary Table 13,Supplementary Table 13 number 43,0.20,SEDT.S5b.42,0.0051
+2305,Supp,Supplementary Table 13,Supplementary Table 13 number 44,0.24,SEDT.S5b.43,0.0051
+2306,Supp,Supplementary Table 13,Supplementary Table 13 number 45,0.17,SEDT.S5b.44,0.0051
+2307,Supp,Supplementary Table 13,Supplementary Table 13 number 46,0.25,SEDT.S5b.45,0.0051
+2308,Supp,Supplementary Table 13,Supplementary Table 13 number 47,0.31,SEDT.S5b.46,0.0051
+2309,Supp,Supplementary Table 13,Supplementary Table 13 number 48,0.19,SEDT.S5b.47,0.0051
+2310,Supp,Supplementary Table 13,Supplementary Table 13 number 49,0.20,SEDT.S5b.48,0.0051
+2311,Supp,Supplementary Table 13,Supplementary Table 13 number 50,0.27,SEDT.S5b.49,0.0051
+2312,Supp,Supplementary Table 13,Supplementary Table 13 number 51,0.14,SEDT.S5b.50,0.0051
+2313,Supp,Supplementary Table 13,Supplementary Table 13 number 52,0.20,SEDT.S5b.51,0.0051
+2314,Supp,Supplementary Table 13,Supplementary Table 13 number 53,0.27,SEDT.S5b.52,0.0051
+2315,Supp,Supplementary Table 13,Supplementary Table 13 number 54,0.14,SEDT.S5b.53,0.0051
+2316,Supp,Supplementary Table 13,Supplementary Table 13 number 55,0.20,SEDT.S5b.54,0.0051
+2317,Supp,Supplementary Table 13,Supplementary Table 13 number 56,0.27,SEDT.S5b.55,0.0051
+2318,Supp,Supplementary Table 13,Supplementary Table 13 number 57,0.14,SEDT.S5b.56,0.0051
+2319,Supp,Supplementary Table 13,Supplementary Table 13 number 58,0.19,SEDT.S5b.57,0.0051
+2320,Supp,Supplementary Table 13,Supplementary Table 13 number 59,0.25,SEDT.S5b.58,0.0051
+2321,Supp,Supplementary Table 13,Supplementary Table 13 number 60,0.13,SEDT.S5b.59,0.0051
+2322,Supp,Supplementary Table 13,Supplementary Table 13 number 61,0.23,SEDT.S5b.60,0.0051
+2323,Supp,Supplementary Table 13,Supplementary Table 13 number 62,0.35,SEDT.S5b.61,0.0051
+2324,Supp,Supplementary Table 13,Supplementary Table 13 number 63,0.09,SEDT.S5b.62,0.0051
+2325,Supp,Supplementary Table 13,Supplementary Table 13 number 64,0.40,SEDT.S5b.63,0.0051
+2326,Supp,Supplementary Table 13,Supplementary Table 13 number 65,0.57,SEDT.S5b.64,0.0051
+2327,Supp,Supplementary Table 13,Supplementary Table 13 number 66,0.25,SEDT.S5b.65,0.0051
+2328,Supp,Supplementary Table 13,Supplementary Table 13 number 67,0.41,SEDT.S5b.66,0.0051
+2329,Supp,Supplementary Table 13,Supplementary Table 13 number 68,0.58,SEDT.S5b.67,0.0051
+2330,Supp,Supplementary Table 13,Supplementary Table 13 number 69,0.24,SEDT.S5b.68,0.0051
+2331,Supp,Supplementary Table 13,Supplementary Table 13 number 70,0.38,SEDT.S5b.69,0.0051
+2332,Supp,Supplementary Table 13,Supplementary Table 13 number 71,0.54,SEDT.S5b.70,0.0051
+2333,Supp,Supplementary Table 13,Supplementary Table 13 number 72,0.23,SEDT.S5b.71,0.0051
+2334,Supp,Supplementary Table 13,Supplementary Table 13 number 73,0.40,SEDT.S5b.72,0.0051
+2335,Supp,Supplementary Table 13,Supplementary Table 13 number 74,0.53,SEDT.S5b.73,0.0051
+2336,Supp,Supplementary Table 13,Supplementary Table 13 number 75,0.24,SEDT.S5b.74,0.0051
+2337,Supp,Supplementary Table 13,Supplementary Table 13 number 76,0.34,SEDT.S5b.75,0.0051
+2338,Supp,Supplementary Table 13,Supplementary Table 13 number 77,0.44,SEDT.S5b.76,0.0051
+2339,Supp,Supplementary Table 13,Supplementary Table 13 number 78,0.24,SEDT.S5b.77,0.0051
+2340,Supp,Supplementary Table 13,Supplementary Table 13 number 79,0.32,SEDT.S5b.78,0.0051
+2341,Supp,Supplementary Table 13,Supplementary Table 13 number 80,0.43,SEDT.S5b.79,0.0051
+2342,Supp,Supplementary Table 13,Supplementary Table 13 number 81,0.22,SEDT.S5b.80,0.0051
+2343,Supp,Supplementary Table 13,Supplementary Table 13 number 82,0.33,SEDT.S5b.81,0.0051
+2344,Supp,Supplementary Table 13,Supplementary Table 13 number 83,0.44,SEDT.S5b.82,0.0051
+2345,Supp,Supplementary Table 13,Supplementary Table 13 number 84,0.24,SEDT.S5b.83,0.0051
+2346,Supp,Supplementary Table 13,Supplementary Table 13 number 85,0.34,SEDT.S5b.84,0.0051
+2347,Supp,Supplementary Table 13,Supplementary Table 13 number 86,0.44,SEDT.S5b.85,0.0051
+2348,Supp,Supplementary Table 13,Supplementary Table 13 number 87,0.25,SEDT.S5b.86,0.0051
+2349,Supp,Supplementary Table 13,Supplementary Table 13 number 88,0.35,SEDT.S5b.87,0.0051
+2350,Supp,Supplementary Table 13,Supplementary Table 13 number 89,0.47,SEDT.S5b.88,0.0051
+2351,Supp,Supplementary Table 13,Supplementary Table 13 number 90,0.17,SEDT.S5b.89,0.0051
+2352,Supp,Supplementary Table 13,Supplementary Table 13 number 91,0.29,SEDT.S5b.90,0.0051
+2353,Supp,Supplementary Table 13,Supplementary Table 13 number 92,0.43,SEDT.S5b.91,0.0051
+2354,Supp,Supplementary Table 13,Supplementary Table 13 number 93,0.16,SEDT.S5b.92,0.0051
+2355,Supp,Supplementary Table 13,Supplementary Table 13 number 94,0.35,SEDT.S5b.93,0.0051
+2356,Supp,Supplementary Table 13,Supplementary Table 13 number 95,0.48,SEDT.S5b.94,0.0051
+2357,Supp,Supplementary Table 13,Supplementary Table 13 number 96,0.18,SEDT.S5b.95,0.0051
+2358,Supp,Supplementary Table 13,Supplementary Table 13 number 97,0.39,SEDT.S5b.96,0.0051
+2359,Supp,Supplementary Table 13,Supplementary Table 13 number 98,0.52,SEDT.S5b.97,0.0051
+2360,Supp,Supplementary Table 13,Supplementary Table 13 number 99,0.20,SEDT.S5b.98,0.0051
+2361,Supp,Supplementary Table 13,Supplementary Table 13 number 100,0.32,SEDT.S5b.99,0.0051
+2362,Supp,Supplementary Table 13,Supplementary Table 13 number 101,0.45,SEDT.S5b.100,0.0051
+2363,Supp,Supplementary Table 13,Supplementary Table 13 number 102,0.22,SEDT.S5b.101,0.0051
+2364,Supp,Supplementary Table 13,Supplementary Table 13 number 103,0.35,SEDT.S5b.102,0.0051
+2365,Supp,Supplementary Table 13,Supplementary Table 13 number 104,0.45,SEDT.S5b.103,0.0051
+2366,Supp,Supplementary Table 13,Supplementary Table 13 number 105,0.24,SEDT.S5b.104,0.0051
+2367,Supp,Supplementary Table 13,Supplementary Table 13 number 106,0.31,SEDT.S5b.105,0.0051
+2368,Supp,Supplementary Table 13,Supplementary Table 13 number 107,0.43,SEDT.S5b.106,0.0051
+2369,Supp,Supplementary Table 13,Supplementary Table 13 number 108,0.21,SEDT.S5b.107,0.0051
+2370,Supp,Supplementary Table 13,Supplementary Table 13 number 109,0.23,SEDT.S5b.108,0.0051
+2371,Supp,Supplementary Table 13,Supplementary Table 13 number 110,0.38,SEDT.S5b.109,0.0051
+2372,Supp,Supplementary Table 13,Supplementary Table 13 number 111,0.10,SEDT.S5b.110,0.0051
+2373,Supp,Supplementary Table 13,Supplementary Table 13 number 112,0.29,SEDT.S5b.111,0.0051
+2374,Supp,Supplementary Table 13,Supplementary Table 13 number 113,0.38,SEDT.S5b.112,0.0051
+2375,Supp,Supplementary Table 13,Supplementary Table 13 number 114,0.21,SEDT.S5b.113,0.0051
+2376,Supp,Supplementary Table 13,Supplementary Table 13 number 115,0.30,SEDT.S5b.114,0.0051
+2377,Supp,Supplementary Table 13,Supplementary Table 13 number 116,0.38,SEDT.S5b.115,0.0051
+2378,Supp,Supplementary Table 13,Supplementary Table 13 number 117,0.22,SEDT.S5b.116,0.0051
+2379,Supp,Supplementary Table 13,Supplementary Table 13 number 118,0.29,SEDT.S5b.117,0.0051
+2380,Supp,Supplementary Table 13,Supplementary Table 13 number 119,0.37,SEDT.S5b.118,0.0051
+2381,Supp,Supplementary Table 13,Supplementary Table 13 number 120,0.21,SEDT.S5b.119,0.0051
+2382,Supp,Supplementary Table 13,Supplementary Table 13 number 121,0.18,SEDT.S5b.120,0.0051
+2383,Supp,Supplementary Table 13,Supplementary Table 13 number 122,0.27,SEDT.S5b.121,0.0051
+2384,Supp,Supplementary Table 13,Supplementary Table 13 number 123,0.09,SEDT.S5b.122,0.0051
+2385,Supp,Supplementary Table 13,Supplementary Table 13 number 124,0.30,SEDT.S5b.123,0.0051
+2386,Supp,Supplementary Table 13,Supplementary Table 13 number 125,0.44,SEDT.S5b.124,0.0051
+2387,Supp,Supplementary Table 13,Supplementary Table 13 number 126,0.13,SEDT.S5b.125,0.0051
+2388,Supp,Supplementary Table 13,Supplementary Table 13 number 127,0.28,SEDT.S5b.126,0.0051
+2389,Supp,Supplementary Table 13,Supplementary Table 13 number 128,0.42,SEDT.S5b.127,0.0051
+2390,Supp,Supplementary Table 13,Supplementary Table 13 number 129,0.12,SEDT.S5b.128,0.0051
+2391,Supp,Supplementary Table 13,Supplementary Table 13 number 130,0.30,SEDT.S5b.129,0.0051
+2392,Supp,Supplementary Table 13,Supplementary Table 13 number 131,0.45,SEDT.S5b.130,0.0051
+2393,Supp,Supplementary Table 13,Supplementary Table 13 number 132,0.13,SEDT.S5b.131,0.0051
+2394,Supp,Supplementary Table 13,Supplementary Table 13 number 133,0.30,SEDT.S5b.132,0.0051
+2395,Supp,Supplementary Table 13,Supplementary Table 13 number 134,0.43,SEDT.S5b.133,0.0051
+2396,Supp,Supplementary Table 13,Supplementary Table 13 number 135,0.15,SEDT.S5b.134,0.0051
+2397,Supp,Supplementary Table 13,Supplementary Table 13 number 136,0.30,SEDT.S5b.135,0.0051
+2398,Supp,Supplementary Table 13,Supplementary Table 13 number 137,0.36,SEDT.S5b.136,0.0051
+2399,Supp,Supplementary Table 13,Supplementary Table 13 number 138,0.23,SEDT.S5b.137,0.0051
+2400,Supp,Supplementary Table 13,Supplementary Table 13 number 139,0.29,SEDT.S5b.138,0.0051
+2401,Supp,Supplementary Table 13,Supplementary Table 13 number 140,0.34,SEDT.S5b.139,0.0051
+2402,Supp,Supplementary Table 13,Supplementary Table 13 number 141,0.23,SEDT.S5b.140,0.0051
+2403,Supp,Supplementary Table 13,Supplementary Table 13 number 142,0.30,SEDT.S5b.141,0.0051
+2404,Supp,Supplementary Table 13,Supplementary Table 13 number 143,0.36,SEDT.S5b.142,0.0051
+2405,Supp,Supplementary Table 13,Supplementary Table 13 number 144,0.23,SEDT.S5b.143,0.0051
+2406,Supp,Supplementary Table 13,Supplementary Table 13 number 145,0.28,SEDT.S5b.144,0.0051
+2407,Supp,Supplementary Table 13,Supplementary Table 13 number 146,0.33,SEDT.S5b.145,0.0051
+2408,Supp,Supplementary Table 13,Supplementary Table 13 number 147,0.23,SEDT.S5b.146,0.0051
+2409,Supp,Supplementary Table 13,Supplementary Table 13 number 148,0.25,SEDT.S5b.147,0.0051
+2410,Supp,Supplementary Table 13,Supplementary Table 13 number 149,0.38,SEDT.S5b.148,0.0051
+2411,Supp,Supplementary Table 13,Supplementary Table 13 number 150,0.10,SEDT.S5b.149,0.0051
+2412,Supp,Supplementary Table 13,Supplementary Table 13 number 151,0.31,SEDT.S5b.150,0.0051
+2413,Supp,Supplementary Table 13,Supplementary Table 13 number 152,0.39,SEDT.S5b.151,0.0051
+2414,Supp,Supplementary Table 13,Supplementary Table 13 number 153,0.25,SEDT.S5b.152,0.0051
+2415,Supp,Supplementary Table 13,Supplementary Table 13 number 154,0.33,SEDT.S5b.153,0.0051
+2416,Supp,Supplementary Table 13,Supplementary Table 13 number 155,0.38,SEDT.S5b.154,0.0051
+2417,Supp,Supplementary Table 13,Supplementary Table 13 number 156,0.28,SEDT.S5b.155,0.0051
+2418,Supp,Supplementary Table 13,Supplementary Table 13 number 157,0.31,SEDT.S5b.156,0.0051
+2419,Supp,Supplementary Table 13,Supplementary Table 13 number 158,0.38,SEDT.S5b.157,0.0051
+2420,Supp,Supplementary Table 13,Supplementary Table 13 number 159,0.25,SEDT.S5b.158,0.0051
+2421,Supp,Supplementary Table 13,Supplementary Table 13 number 160,0.31,SEDT.S5b.159,0.0051
+2422,Supp,Supplementary Table 13,Supplementary Table 13 number 161,0.37,SEDT.S5b.160,0.0051
+2423,Supp,Supplementary Table 13,Supplementary Table 13 number 162,0.26,SEDT.S5b.161,0.0051
+2424,Supp,Supplementary Table 13,Supplementary Table 13 number 163,0.22,SEDT.S5b.162,0.0051
+2425,Supp,Supplementary Table 13,Supplementary Table 13 number 164,0.32,SEDT.S5b.163,0.0051
+2426,Supp,Supplementary Table 13,Supplementary Table 13 number 165,0.11,SEDT.S5b.164,0.0051
+2427,Supp,Supplementary Table 16,Supplementary Table 16 number 1,95,SEDT.S6.0,0
+2428,Supp,Supplementary Table 16,Supplementary Table 16 number 2,14105,SEDT.S6.1,0
+2429,Supp,Supplementary Table 16,Supplementary Table 16 number 3,909,SEDT.S6.2,0
+2430,Supp,Supplementary Table 16,Supplementary Table 16 number 4,0.079,SEDT.S6.3,0.00051
+2431,Supp,Supplementary Table 16,Supplementary Table 16 number 5,0.045,SEDT.S6.4,0.00051
+2432,Supp,Supplementary Table 16,Supplementary Table 16 number 6,0.184,SEDT.S6.5,0.00051
+2433,Supp,Supplementary Table 16,Supplementary Table 16 number 7,2.2,SEDT.S6.6,0.051
+2434,Supp,Supplementary Table 16,Supplementary Table 16 number 8,1.1,SEDT.S6.7,0.051
+2435,Supp,Supplementary Table 16,Supplementary Table 16 number 9,7.4,SEDT.S6.8,0.051
+2436,Supp,Supplementary Table 16,Supplementary Table 16 number 10,56.7,SEDT.S6.9,0.051
+2437,Supp,Supplementary Table 16,Supplementary Table 16 number 11,52.8,SEDT.S6.10,0.051
+2438,Supp,Supplementary Table 16,Supplementary Table 16 number 12,60.0,SEDT.S6.11,0.051
+2439,Supp,Supplementary Table 16,Supplementary Table 16 number 13,41.0,SEDT.S6.12,0.051
+2440,Supp,Supplementary Table 16,Supplementary Table 16 number 14,37.0,SEDT.S6.13,0.051
+2441,Supp,Supplementary Table 16,Supplementary Table 16 number 15,44.0,SEDT.S6.14,0.051
+2442,Supp,Supplementary Table 16,Supplementary Table 16 number 16,0.074,SEDT.S6.15,0.00051
+2443,Supp,Supplementary Table 16,Supplementary Table 16 number 17,0.176,SEDT.S6.16,0.00051
+2444,Supp,Supplementary Table 16,Supplementary Table 16 number 18,0.040,SEDT.S6.17,0.00051
+2445,Supp,Supplementary Table 16,Supplementary Table 16 number 19,1.3,SEDT.S6.18,0.051
+2446,Supp,Supplementary Table 16,Supplementary Table 16 number 20,0.6,SEDT.S6.19,0.051
+2447,Supp,Supplementary Table 16,Supplementary Table 16 number 21,4.5,SEDT.S6.20,0.051
+2448,Supp,Supplementary Table 16,Supplementary Table 16 number 22,71.4,SEDT.S6.21,0.051
+2449,Supp,Supplementary Table 16,Supplementary Table 16 number 23,67.5,SEDT.S6.22,0.051
+2450,Supp,Supplementary Table 16,Supplementary Table 16 number 24,74.4,SEDT.S6.23,0.051
+2451,Supp,Supplementary Table 16,Supplementary Table 16 number 25,27.3,SEDT.S6.24,0.051
+2452,Supp,Supplementary Table 16,Supplementary Table 16 number 26,24.4,SEDT.S6.25,0.051
+2453,Supp,Supplementary Table 16,Supplementary Table 16 number 27,30.3,SEDT.S6.26,0.051
+2454,Supp,Supplementary Table 16,Supplementary Table 16 number 28,12949,SEDT.S6.27,0
+2455,Supp,Supplementary Table 16,Supplementary Table 16 number 29,857,SEDT.S6.28,0
+2456,Supp,Supplementary Table 16,Supplementary Table 16 number 30,0.39,SEDT.S6.29,0.0051
+2457,Supp,Supplementary Table 16,Supplementary Table 16 number 31,0.32,SEDT.S6.30,0.0051
+2458,Supp,Supplementary Table 16,Supplementary Table 16 number 32,0.45,SEDT.S6.31,0.0051
+2459,Supp,Supplementary Table 16,Supplementary Table 16 number 33,9.5,SEDT.S6.32,0.051
+2460,Supp,Supplementary Table 16,Supplementary Table 16 number 34,6.5,SEDT.S6.33,0.051
+2461,Supp,Supplementary Table 16,Supplementary Table 16 number 35,12.5,SEDT.S6.34,0.051
+2462,Supp,Supplementary Table 16,Supplementary Table 16 number 36,54.1,SEDT.S6.35,0.051
+2463,Supp,Supplementary Table 16,Supplementary Table 16 number 37,50.5,SEDT.S6.36,0.051
+2464,Supp,Supplementary Table 16,Supplementary Table 16 number 38,57.7,SEDT.S6.37,0.051
+2465,Supp,Supplementary Table 16,Supplementary Table 16 number 39,36.4,SEDT.S6.38,0.051
+2466,Supp,Supplementary Table 16,Supplementary Table 16 number 40,33.3,SEDT.S6.39,0.051
+2467,Supp,Supplementary Table 16,Supplementary Table 16 number 41,39.4,SEDT.S6.40,0.051
+2468,Supp,Supplementary Table 16,Supplementary Table 16 number 42,0.38,SEDT.S6.41,0.0051
+2469,Supp,Supplementary Table 16,Supplementary Table 16 number 43,0.45,SEDT.S6.42,0.0051
+2470,Supp,Supplementary Table 16,Supplementary Table 16 number 44,0.30,SEDT.S6.43,0.0051
+2471,Supp,Supplementary Table 16,Supplementary Table 16 number 45,6.3,SEDT.S6.44,0.051
+2472,Supp,Supplementary Table 16,Supplementary Table 16 number 46,4.1,SEDT.S6.45,0.051
+2473,Supp,Supplementary Table 16,Supplementary Table 16 number 47,8.8,SEDT.S6.46,0.051
+2474,Supp,Supplementary Table 16,Supplementary Table 16 number 48,68.8,SEDT.S6.47,0.051
+2475,Supp,Supplementary Table 16,Supplementary Table 16 number 49,65.2,SEDT.S6.48,0.051
+2476,Supp,Supplementary Table 16,Supplementary Table 16 number 50,72.4,SEDT.S6.49,0.051
+2477,Supp,Supplementary Table 16,Supplementary Table 16 number 51,24.9,SEDT.S6.50,0.051
+2478,Supp,Supplementary Table 16,Supplementary Table 16 number 52,22.4,SEDT.S6.51,0.051
+2479,Supp,Supplementary Table 16,Supplementary Table 16 number 53,27.6,SEDT.S6.52,0.051
+2480,Supp,Supplementary Table 17,Supplementary Table 17 number 1,95,SEDT.S6b.0,0
+2481,Supp,Supplementary Table 17,Supplementary Table 17 number 2,95,SEDT.S6b.1,0
+2482,Supp,Supplementary Table 17,Supplementary Table 17 number 3,95,SEDT.S6b.2,0
+2483,Supp,Supplementary Table 17,Supplementary Table 17 number 4,0.40,SEDT.S6b.3,0.0051
+2484,Supp,Supplementary Table 17,Supplementary Table 17 number 5,0.34,SEDT.S6b.4,0.0051
+2485,Supp,Supplementary Table 17,Supplementary Table 17 number 6,0.47,SEDT.S6b.5,0.0051
+2486,Supp,Supplementary Table 17,Supplementary Table 17 number 7,0.28,SEDT.S6b.6,0.0051
+2487,Supp,Supplementary Table 17,Supplementary Table 17 number 8,0.20,SEDT.S6b.7,0.0051
+2488,Supp,Supplementary Table 17,Supplementary Table 17 number 9,0.36,SEDT.S6b.8,0.0051
+2489,Supp,Supplementary Table 17,Supplementary Table 17 number 10,0.13,SEDT.S6b.9,0.0051
+2490,Supp,Supplementary Table 17,Supplementary Table 17 number 11,0.23,SEDT.S6b.10,0.0051
+2491,Supp,Supplementary Table 17,Supplementary Table 17 number 12,0.02,SEDT.S6b.11,0.0051
+2492,Supp,Supplementary Table 17,Supplementary Table 17 number 13,0.38,SEDT.S6b.12,0.0051
+2493,Supp,Supplementary Table 17,Supplementary Table 17 number 14,0.46,SEDT.S6b.13,0.0051
+2494,Supp,Supplementary Table 17,Supplementary Table 17 number 15,0.30,SEDT.S6b.14,0.0051
+2495,Supp,Supplementary Table 17,Supplementary Table 17 number 16,0.34,SEDT.S6b.15,0.0051
+2496,Supp,Supplementary Table 17,Supplementary Table 17 number 17,0.45,SEDT.S6b.16,0.0051
+2497,Supp,Supplementary Table 17,Supplementary Table 17 number 18,0.24,SEDT.S6b.17,0.0051
+2498,Supp,Supplementary Table 17,Supplementary Table 17 number 19,0.04,SEDT.S6b.18,0.0051
+2499,Supp,Supplementary Table 17,Supplementary Table 17 number 20,0.08,SEDT.S6b.19,0.0051
+2500,Supp,Supplementary Table 17,Supplementary Table 17 number 21,0.16,SEDT.S6b.20,0.0051
+2501,Supp,Supplementary Table 18,Supplementary Table 18 number 1,95,SEDT.S6c.0,0
+2502,Supp,Supplementary Table 18,Supplementary Table 18 number 2,95,SEDT.S6c.1,0
+2503,Supp,Supplementary Table 18,Supplementary Table 18 number 3,95,SEDT.S6c.2,0
+2504,Supp,Supplementary Table 18,Supplementary Table 18 number 4,95,SEDT.S6c.3,0
+2505,Supp,Supplementary Table 18,Supplementary Table 18 number 5,95,SEDT.S6c.4,0
+2506,Supp,Supplementary Table 18,Supplementary Table 18 number 6,95,SEDT.S6c.5,0
+2507,Supp,Supplementary Table 18,Supplementary Table 18 number 7,0.34,SEDT.S6c.6,0.0051
+2508,Supp,Supplementary Table 18,Supplementary Table 18 number 8,0.30,SEDT.S6c.7,0.0051
+2509,Supp,Supplementary Table 18,Supplementary Table 18 number 9,0.38,SEDT.S6c.8,0.0051
+2510,Supp,Supplementary Table 18,Supplementary Table 18 number 10,8.6,SEDT.S6c.9,0.051
+2511,Supp,Supplementary Table 18,Supplementary Table 18 number 11,6.8,SEDT.S6c.10,0.051
+2512,Supp,Supplementary Table 18,Supplementary Table 18 number 12,10.6,SEDT.S6c.11,0.051
+2513,Supp,Supplementary Table 18,Supplementary Table 18 number 13,52.4,SEDT.S6c.12,0.051
+2514,Supp,Supplementary Table 18,Supplementary Table 18 number 14,49.8,SEDT.S6c.13,0.051
+2515,Supp,Supplementary Table 18,Supplementary Table 18 number 15,55.0,SEDT.S6c.14,0.051
+2516,Supp,Supplementary Table 18,Supplementary Table 18 number 16,39.0,SEDT.S6c.15,0.051
+2517,Supp,Supplementary Table 18,Supplementary Table 18 number 17,36.7,SEDT.S6c.16,0.051
+2518,Supp,Supplementary Table 18,Supplementary Table 18 number 18,41.3,SEDT.S6c.17,0.051
+2519,Supp,Supplementary Table 18,Supplementary Table 18 number 19,0.33,SEDT.S6c.18,0.0051
+2520,Supp,Supplementary Table 18,Supplementary Table 18 number 20,0.30,SEDT.S6c.19,0.0051
+2521,Supp,Supplementary Table 18,Supplementary Table 18 number 21,0.37,SEDT.S6c.20,0.0051
+2522,Supp,Supplementary Table 18,Supplementary Table 18 number 22,0.06,SEDT.S6c.21,0.0051
+2523,Supp,Supplementary Table 18,Supplementary Table 18 number 23,0.01,SEDT.S6c.22,0.0051
+2524,Supp,Supplementary Table 18,Supplementary Table 18 number 24,0.15,SEDT.S6c.23,0.0051
+2525,Supp,Supplementary Table 18,Supplementary Table 18 number 25,8.9,SEDT.S6c.24,0.051
+2526,Supp,Supplementary Table 18,Supplementary Table 18 number 26,7.1,SEDT.S6c.25,0.051
+2527,Supp,Supplementary Table 18,Supplementary Table 18 number 27,11.1,SEDT.S6c.26,0.051
+2528,Supp,Supplementary Table 18,Supplementary Table 18 number 28,51.9,SEDT.S6c.27,0.051
+2529,Supp,Supplementary Table 18,Supplementary Table 18 number 29,49.1,SEDT.S6c.28,0.051
+2530,Supp,Supplementary Table 18,Supplementary Table 18 number 30,54.4,SEDT.S6c.29,0.051
+2531,Supp,Supplementary Table 18,Supplementary Table 18 number 31,39.1,SEDT.S6c.30,0.051
+2532,Supp,Supplementary Table 18,Supplementary Table 18 number 32,36.9,SEDT.S6c.31,0.051
+2533,Supp,Supplementary Table 18,Supplementary Table 18 number 33,41.5,SEDT.S6c.32,0.051
+2534,Supp,Supplementary Table 18,Supplementary Table 18 number 34,0.35,SEDT.S6c.33,0.0051
+2535,Supp,Supplementary Table 18,Supplementary Table 18 number 35,0.29,SEDT.S6c.34,0.0051
+2536,Supp,Supplementary Table 18,Supplementary Table 18 number 36,0.40,SEDT.S6c.35,0.0051
+2537,Supp,Supplementary Table 18,Supplementary Table 18 number 37,0.06,SEDT.S6c.36,0.0051
+2538,Supp,Supplementary Table 18,Supplementary Table 18 number 38,0.02,SEDT.S6c.37,0.0051
+2539,Supp,Supplementary Table 18,Supplementary Table 18 number 39,0.15,SEDT.S6c.38,0.0051
+2540,Supp,Supplementary Table 18,Supplementary Table 18 number 40,0.02,SEDT.S6c.39,0.0051
+2541,Supp,Supplementary Table 18,Supplementary Table 18 number 41,0.09,SEDT.S6c.40,0.0051
+2542,Supp,Supplementary Table 18,Supplementary Table 18 number 42,0.05,SEDT.S6c.41,0.0051
+2543,Supp,Supplementary Table 18,Supplementary Table 18 number 43,8.9,SEDT.S6c.42,0.051
+2544,Supp,Supplementary Table 18,Supplementary Table 18 number 44,7.2,SEDT.S6c.43,0.051
+2545,Supp,Supplementary Table 18,Supplementary Table 18 number 45,11.0,SEDT.S6c.44,0.051
+2546,Supp,Supplementary Table 18,Supplementary Table 18 number 46,51.9,SEDT.S6c.45,0.051
+2547,Supp,Supplementary Table 18,Supplementary Table 18 number 47,49.1,SEDT.S6c.46,0.051
+2548,Supp,Supplementary Table 18,Supplementary Table 18 number 48,54.4,SEDT.S6c.47,0.051
+2549,Supp,Supplementary Table 18,Supplementary Table 18 number 49,39.2,SEDT.S6c.48,0.051
+2550,Supp,Supplementary Table 18,Supplementary Table 18 number 50,36.9,SEDT.S6c.49,0.051
+2551,Supp,Supplementary Table 18,Supplementary Table 18 number 51,41.5,SEDT.S6c.50,0.051
+2552,Supp,Supplementary Table 18,Supplementary Table 18 number 52,0.38,SEDT.S6c.51,0.0051
+2553,Supp,Supplementary Table 18,Supplementary Table 18 number 53,0.43,SEDT.S6c.52,0.0051
+2554,Supp,Supplementary Table 18,Supplementary Table 18 number 54,0.33,SEDT.S6c.53,0.0051
+2555,Supp,Supplementary Table 18,Supplementary Table 18 number 55,8.3,SEDT.S6c.54,0.051
+2556,Supp,Supplementary Table 18,Supplementary Table 18 number 56,6.5,SEDT.S6c.55,0.051
+2557,Supp,Supplementary Table 18,Supplementary Table 18 number 57,10.3,SEDT.S6c.56,0.051
+2558,Supp,Supplementary Table 18,Supplementary Table 18 number 58,65.9,SEDT.S6c.57,0.051
+2559,Supp,Supplementary Table 18,Supplementary Table 18 number 59,62.7,SEDT.S6c.58,0.051
+2560,Supp,Supplementary Table 18,Supplementary Table 18 number 60,69.2,SEDT.S6c.59,0.051
+2561,Supp,Supplementary Table 18,Supplementary Table 18 number 61,25.8,SEDT.S6c.60,0.051
+2562,Supp,Supplementary Table 18,Supplementary Table 18 number 62,23.8,SEDT.S6c.61,0.051
+2563,Supp,Supplementary Table 18,Supplementary Table 18 number 63,28.1,SEDT.S6c.62,0.051
+2564,Supp,Supplementary Table 18,Supplementary Table 18 number 64,0.38,SEDT.S6c.63,0.0051
+2565,Supp,Supplementary Table 18,Supplementary Table 18 number 65,0.42,SEDT.S6c.64,0.0051
+2566,Supp,Supplementary Table 18,Supplementary Table 18 number 66,0.33,SEDT.S6c.65,0.0051
+2567,Supp,Supplementary Table 18,Supplementary Table 18 number 67,0.10,SEDT.S6c.66,0.0051
+2568,Supp,Supplementary Table 18,Supplementary Table 18 number 68,0.19,SEDT.S6c.67,0.0051
+2569,Supp,Supplementary Table 18,Supplementary Table 18 number 69,0.01,SEDT.S6c.68,0.0051
+2570,Supp,Supplementary Table 18,Supplementary Table 18 number 70,8.8,SEDT.S6c.69,0.051
+2571,Supp,Supplementary Table 18,Supplementary Table 18 number 71,6.8,SEDT.S6c.70,0.051
+2572,Supp,Supplementary Table 18,Supplementary Table 18 number 72,11.0,SEDT.S6c.71,0.051
+2573,Supp,Supplementary Table 18,Supplementary Table 18 number 73,65.1,SEDT.S6c.72,0.051
+2574,Supp,Supplementary Table 18,Supplementary Table 18 number 74,61.7,SEDT.S6c.73,0.051
+2575,Supp,Supplementary Table 18,Supplementary Table 18 number 75,68.7,SEDT.S6c.74,0.051
+2576,Supp,Supplementary Table 18,Supplementary Table 18 number 76,26.1,SEDT.S6c.75,0.051
+2577,Supp,Supplementary Table 18,Supplementary Table 18 number 77,24.0,SEDT.S6c.76,0.051
+2578,Supp,Supplementary Table 18,Supplementary Table 18 number 78,28.4,SEDT.S6c.77,0.051
+2579,Supp,Supplementary Table 18,Supplementary Table 18 number 79,0.37,SEDT.S6c.78,0.0051
+2580,Supp,Supplementary Table 18,Supplementary Table 18 number 80,0.43,SEDT.S6c.79,0.0051
+2581,Supp,Supplementary Table 18,Supplementary Table 18 number 81,0.30,SEDT.S6c.80,0.0051
+2582,Supp,Supplementary Table 18,Supplementary Table 18 number 82,0.11,SEDT.S6c.81,0.0051
+2583,Supp,Supplementary Table 18,Supplementary Table 18 number 83,0.20,SEDT.S6c.82,0.0051
+2584,Supp,Supplementary Table 18,Supplementary Table 18 number 84,0.02,SEDT.S6c.83,0.0051
+2585,Supp,Supplementary Table 18,Supplementary Table 18 number 85,0.02,SEDT.S6c.84,0.0051
+2586,Supp,Supplementary Table 18,Supplementary Table 18 number 86,0.09,SEDT.S6c.85,0.0051
+2587,Supp,Supplementary Table 18,Supplementary Table 18 number 87,0.06,SEDT.S6c.86,0.0051
+2588,Supp,Supplementary Table 18,Supplementary Table 18 number 88,8.9,SEDT.S6c.87,0.051
+2589,Supp,Supplementary Table 18,Supplementary Table 18 number 89,6.9,SEDT.S6c.88,0.051
+2590,Supp,Supplementary Table 18,Supplementary Table 18 number 90,11.1,SEDT.S6c.89,0.051
+2591,Supp,Supplementary Table 18,Supplementary Table 18 number 91,65.0,SEDT.S6c.90,0.051
+2592,Supp,Supplementary Table 18,Supplementary Table 18 number 92,61.7,SEDT.S6c.91,0.051
+2593,Supp,Supplementary Table 18,Supplementary Table 18 number 93,68.6,SEDT.S6c.92,0.051
+2594,Supp,Supplementary Table 18,Supplementary Table 18 number 94,26.1,SEDT.S6c.93,0.051
+2595,Supp,Supplementary Table 18,Supplementary Table 18 number 95,24.0,SEDT.S6c.94,0.051
+2596,Supp,Supplementary Table 18,Supplementary Table 18 number 96,28.3,SEDT.S6c.95,0.051
+2597,Supp,Supp Table 20,Male %,55.4,EXT20.Sex.M.pct,0.051
+2598,Supp,Supp Table 20,Female %,44.6,EXT20.Sex.F.pct,0.051
+2599,Supp,Supp Table 20,White %,52.5,EXT20.Race.White.pct,0.051
+2600,Supp,Supp Table 20,Black/African American %,29.8,EXT20.Race.Black or African American.pct,0.051
+2601,Supp,Supp Table 20,Asian %,3.8,EXT20.Race.Asian.pct,0.051
+2602,Supp,Supp Table 20,American Indian or Alaska Native %,0.9,EXT20.Race.American Indian or Alaska Native.pct,0.051
+2603,Supp,Supp Table 20,Native Hawaiian or Other Pacific Islander %,0.5,EXT20.Race.Native Hawaiian or Other Pacific Islander.pct,0.051
+2604,Supp,Supp Table 20,More than one race %,0.2,EXT20.Race.More than One Race.pct,0.051
+2605,Supp,Supp Table 20,Other/Unknown race %,12.3,EXT20.Race.Not Reported.pct,0.051
+2606,Supp,Supp Table 20,Not Hispanic or Latino %,85.7,EXT20.Ethnicity.Not Hispanic or Latino.pct,0.051
+2607,Supp,Supp Table 20,Hispanic or Latino %,8.1,EXT20.Ethnicity.Hispanic or Latino.pct,0.051
+2608,Supp,Supp Table 20,Ethnicity not reported %,6.2,EXT20.Ethnicity.Not Reported.pct,0.051
+2609,Supp,Supp Table 20,Died during hospitalization %,34.4,EXT20.death.hospital.pct,0.051
+2610,Supp,Supp Table 20,Died within 1 year after discharge %,14.6,EXT20.death.1yr.pct,0.051
+2611,Supp,Supp Table 20,CAM positive %,35.1,EXT20.cam.positive.pct,0.051
+2612,Supp,Supp Table 20,CAM negative %,45.7,EXT20.cam.negative.pct,0.051
+2613,Supp,Supp Table 20,CAM unable to assess (RASS −4 or −5) %,19.3,EXT20.cam.uta.pct,0.051
+2614,Supp,Supp Table 20,Neurological %,36.8,EXT20.AdmissionDiagnosis_categories.Neurological.pct,0.051
+2615,Supp,Supp Table 20,Cardiac/circulatory %,12.2,EXT20.AdmissionDiagnosis_categories.Cardiac/Circulatory.pct,0.051
+2616,Supp,Supp Table 20,Cardiac/circulatory %,12.2,EXT20.AdmissionDiagnosis_categories.Other.pct,0.051
+2617,Supp,Supp Table 20,Multisystemic %,31.3,EXT20.AdmissionDiagnosis_categories.Multisystemic.pct,0.051
+2618,Supp,Supp Table 20,Respiratory %,7.2,EXT20.AdmissionDiagnosis_categories.Respiratory disorders.pct,0.051
+2619,Supp,Supp Table 20,Psychiatric %,0.3,EXT20.AdmissionDiagnosis_categories.Psychiatric disorders.pct,0.051
+2620,Supp,Supp Table 20,Altered mental status / encephalopathy %,48.3,EXT20.EEG_indication.Altered mental status/encephalopathy.pct,0.051
+2621,Supp,Supp Table 20,Suspected seizures / spells %,35.9,EXT20.EEG_indication.Suspected Seizures / Spells.pct,0.051
+2622,Supp,Supp Table 20,Known epilepsy / status epilepticus %,3.5,EXT20.EEG_indication.Known Epilepsy / Status Epilepticus.pct,0.051
+2623,Supp,Supp Table 20,Post-cardiac arrest %,3.2,EXT20.EEG_indication.Post-Cardiac Arrest.pct,0.051
+2624,Supp,Supp Table 20,Stroke / cerebrovascular disease %,1.1,EXT20.EEG_indication.Stroke /Cerebrovascular disease.pct,0.051
+2625,Supp,Supp Table 20,Other / unknown %,8.0,EXT20.EEG_indication.Other/Unknown.pct,0.051
+2626,Supp,Supp Table 7,M2 RASS Holm p,1.000,MAP.M2.RASS.p_holm,0.00051
+2627,Supp,Supp Table 7,M2 GCS Holm p,1.000,MAP.M2.GCS.p_holm,0.00051
+2628,Supp,Supp Table 7,M2 CAMS Holm p,1.000,MAP.M2.CAMS.p_holm,0.00051
+2629,Supp,Supp Table 7,M2 ICANS Holm p,0.840,MAP.M2.ICANS.p_holm,0.00051
+2630,Supp,Supp Table 7,M3 RASS Holm p,1.000,MAP.M3.RASS.p_holm,0.00051
+2631,Supp,Supp Table 7,M3 GCS Holm p,0.684,MAP.M3.GCS.p_holm,0.00051
+2632,Supp,Supp Table 7,M3 CAMS Holm p,1.000,MAP.M3.CAMS.p_holm,0.00051
+2633,Supp,Supp Table 7,M3 ICANS Holm p,0.368,MAP.M3.ICANS.p_holm,0.00051
+2634,Supp,Supp Table 7,M4 RASS Holm p,0.080,MAP.M4.RASS.p_holm,0.00051
+2635,Supp,Supp Table 7,M4 GCS Holm p,1.000,MAP.M4.GCS.p_holm,0.00051
+2636,Supp,Supp Table 7,M4 CAMS Holm p,1.000,MAP.M4.CAMS.p_holm,0.00051
+2637,Supp,Supp Table 7,M4 ICANS Holm p,1.000,MAP.M4.ICANS.p_holm,0.00051
+2638,Supp,Supp Table 7,M5 RASS Holm p,1.000,MAP.M5.RASS.p_holm,0.00051
+2639,Supp,Supp Table 7,M5 GCS Holm p,0.748,MAP.M5.GCS.p_holm,0.00051
+2640,Supp,Supp Table 7,M5 CAMS Holm p,1.000,MAP.M5.CAMS.p_holm,0.00051
+2641,Supp,Supp Table 7,M5 ICANS Holm p,1.000,MAP.M5.ICANS.p_holm,0.00051
+2642,Supp,Supp Table 7,M6 RASS Holm p,0.152,MAP.M6.RASS.p_holm,0.00051
+2643,Supp,Supp Table 7,M6 GCS Holm p,1.000,MAP.M6.GCS.p_holm,0.00051
+2644,Supp,Supp Table 7,M6 CAMS Holm p,1.000,MAP.M6.CAMS.p_holm,0.00051
+2645,Supp,Supp Table 7,M6 ICANS Holm p,0.836,MAP.M6.ICANS.p_holm,0.00051
+2646,Supp,Supp Table 7,M7 GCS Holm p,1.000,MAP.M7.GCS.p_holm,0.00051
+2647,Supp,Supp Table 7,M7 CAMS Holm p,1.000,MAP.M7.CAMS.p_holm,0.00051
+2648,Supp,Supp Table 7,M7 ICANS Holm p,1.000,MAP.M7.ICANS.p_holm,0.00051
+2649,Supp,Supp Table 7,M8 GCS Holm p,0.546,MAP.M8.GCS.p_holm,0.00051
+2650,Supp,Supp Table 7,M8 CAMS Holm p,1.000,MAP.M8.CAMS.p_holm,0.00051
+2651,Supp,Supp Table 7,M8 ICANS Holm p,1.000,MAP.M8.ICANS.p_holm,0.00051
+2652,Supp,Supp Table 7,M9 RASS Holm p,1.000,MAP.M9.RASS.p_holm,0.00051
+2653,Supp,Supp Table 7,M9 GCS Holm p,1.000,MAP.M9.GCS.p_holm,0.00051
+2654,Supp,Supp Table 7,M9 CAMS Holm p,1.000,MAP.M9.CAMS.p_holm,0.00051
+2655,Supp,Supp Table 7,M9 ICANS Holm p,1.000,MAP.M9.ICANS.p_holm,0.00051
+2656,Supp,Supp Table 7,M10 RASS Holm p,1.000,MAP.M10.RASS.p_holm,0.00051
+2657,Supp,Supp Table 7,M10 GCS Holm p,1.000,MAP.M10.GCS.p_holm,0.00051
+2658,Supp,Supp Table 7,M10 CAMS Holm p,1.000,MAP.M10.CAMS.p_holm,0.00051
+2659,Supp,Supp Table 7,M10 ICANS Holm p,1.000,MAP.M10.ICANS.p_holm,0.00051
+2660,Supp,Supp Table 7,M11 RASS Holm p,1.000,MAP.M11.RASS.p_holm,0.00051
+2661,Supp,Supp Table 7,M11 GCS Holm p,0.560,MAP.M11.GCS.p_holm,0.00051
+2662,Supp,Supp Table 7,M11 CAMS Holm p,1.000,MAP.M11.CAMS.p_holm,0.00051
+2663,Supp,Supp Table 7,M11 ICANS Holm p,1.000,MAP.M11.ICANS.p_holm,0.00051
+2664,Supp,Supp Table 7,M12 RASS Holm p,1.000,MAP.M12.RASS.p_holm,0.00051
+2665,Supp,Supp Table 7,M12 GCS Holm p,1.000,MAP.M12.GCS.p_holm,0.00051
+2666,Supp,Supp Table 7,M12 CAMS Holm p,1.000,MAP.M12.CAMS.p_holm,0.00051
+2667,Supp,Supp Table 7,M12 ICANS Holm p,1.000,MAP.M12.ICANS.p_holm,0.00051
+2668,Supp,Supp Table 7,M13 RASS Holm p,0.152,MAP.M13.RASS.p_holm,0.00051
+2669,Supp,Supp Table 7,M13 GCS Holm p,1.000,MAP.M13.GCS.p_holm,0.00051
+2670,Supp,Supp Table 7,M13 CAMS Holm p,1.000,MAP.M13.CAMS.p_holm,0.00051
+2671,Supp,Supp Table 7,M13 ICANS Holm p,1.000,MAP.M13.ICANS.p_holm,0.00051
+2672,Supp,Supp Table 7,M14 RASS Holm p,1.000,MAP.M14.RASS.p_holm,0.00051
+2673,Supp,Supp Table 7,M14 GCS Holm p,1.000,MAP.M14.GCS.p_holm,0.00051
+2674,Supp,Supp Table 7,M14 CAMS Holm p,1.000,MAP.M14.CAMS.p_holm,0.00051
+2675,Supp,Supp Table 7,M14 ICANS Holm p,1.000,MAP.M14.ICANS.p_holm,0.00051
+2676,Supp,Supp Table 7,M15 RASS Holm p,1.000,MAP.M15.RASS.p_holm,0.00051
+2677,Supp,Supp Table 7,M15 GCS Holm p,0.440,MAP.M15.GCS.p_holm,0.00051
+2678,Supp,Supp Table 7,M15 CAMS Holm p,1.000,MAP.M15.CAMS.p_holm,0.00051
+2679,Supp,Supp Table 7,M15 ICANS Holm p,1.000,MAP.M15.ICANS.p_holm,0.00051
+2680,Supp,Supp Table 7,M16 RASS Holm p,1.000,MAP.M16.RASS.p_holm,0.00051
+2681,Supp,Supp Table 7,M16 GCS Holm p,1.000,MAP.M16.GCS.p_holm,0.00051
+2682,Supp,Supp Table 7,M16 CAMS Holm p,1.000,MAP.M16.CAMS.p_holm,0.00051
+2683,Supp,Supp Table 7,M16 ICANS Holm p,1.000,MAP.M16.ICANS.p_holm,0.00051
+2684,Supp,Supp Table 7,M17 RASS Holm p,1.000,MAP.M17.RASS.p_holm,0.00051
+2685,Supp,Supp Table 7,M17 GCS Holm p,0.930,MAP.M17.GCS.p_holm,0.00051
+2686,Supp,Supp Table 7,M17 CAMS Holm p,1.000,MAP.M17.CAMS.p_holm,0.00051
+2687,Supp,Supp Table 7,M17 ICANS Holm p,1.000,MAP.M17.ICANS.p_holm,0.00051
+2688,Supp,Supp Table 7,M18 RASS Holm p,1.000,MAP.M18.RASS.p_holm,0.00051
+2689,Supp,Supp Table 7,M18 GCS Holm p,1.000,MAP.M18.GCS.p_holm,0.00051
+2690,Supp,Supp Table 7,M18 CAMS Holm p,1.000,MAP.M18.CAMS.p_holm,0.00051
+2691,Supp,Supp Table 7,M18 ICANS Holm p,1.000,MAP.M18.ICANS.p_holm,0.00051
+2692,Supp,Supp Table 7,M19 RASS Holm p,1.000,MAP.M19.RASS.p_holm,0.00051
+2693,Supp,Supp Table 7,M19 GCS Holm p,0.414,MAP.M19.GCS.p_holm,0.00051
+2694,Supp,Supp Table 7,M19 CAMS Holm p,1.000,MAP.M19.CAMS.p_holm,0.00051
+2695,Supp,Supp Table 7,M19 ICANS Holm p,1.000,MAP.M19.ICANS.p_holm,0.00051
+2696,Supp,Supp Table 7,M20 RASS Holm p,1.000,MAP.M20.RASS.p_holm,0.00051
+2697,Supp,Supp Table 7,M20 GCS Holm p,1.000,MAP.M20.GCS.p_holm,0.00051
+2698,Supp,Supp Table 7,M20 CAMS Holm p,1.000,MAP.M20.CAMS.p_holm,0.00051
+2699,Supp,Supp Table 7,M20 ICANS Holm p,1.000,MAP.M20.ICANS.p_holm,0.00051
+2700,Supp,Supp Table 7,M21 RASS Holm p,1.000,MAP.M21.RASS.p_holm,0.00051
+2701,Supp,Supp Table 7,M21 GCS Holm p,0.608,MAP.M21.GCS.p_holm,0.00051
+2702,Supp,Supp Table 7,M21 CAMS Holm p,1.000,MAP.M21.CAMS.p_holm,0.00051
+2703,Supp,Supp Table 7,M21 ICANS Holm p,1.000,MAP.M21.ICANS.p_holm,0.00051
+2704,Supp,Supp Table 7,M22 GCS Holm p,1.000,MAP.M22.GCS.p_holm,0.00051
+2705,Supp,Supp Table 7,M22 CAMS Holm p,1.000,MAP.M22.CAMS.p_holm,0.00051
+2706,Supp,Supp Table 7,M22 ICANS Holm p,1.000,MAP.M22.ICANS.p_holm,0.00051
+2707,Supp,Supp Table 7,M23 RASS Holm p,1.000,MAP.M23.RASS.p_holm,0.00051
+2708,Supp,Supp Table 7,M23 GCS Holm p,0.928,MAP.M23.GCS.p_holm,0.00051
+2709,Supp,Supp Table 7,M23 CAMS Holm p,1.000,MAP.M23.CAMS.p_holm,0.00051
+2710,Supp,Supp Table 7,M23 ICANS Holm p,1.000,MAP.M23.ICANS.p_holm,0.00051
+2711,Supp,Supp Table 7,M24 RASS Holm p,1.000,MAP.M24.RASS.p_holm,0.00051
+2712,Supp,Supp Table 7,M24 GCS Holm p,1.000,MAP.M24.GCS.p_holm,0.00051
+2713,Supp,Supp Table 7,M24 CAMS Holm p,1.000,MAP.M24.CAMS.p_holm,0.00051
+2714,Supp,Supp Table 7,M24 ICANS Holm p,1.000,MAP.M24.ICANS.p_holm,0.00051
+2715,Main,Results,"Max Holm-adjusted p, universal vs bespoke",0.024,DELTA.max_p_holm,0.00051
+2716,Main,Results,EEG type RASS % LTM,93.2,CSV.eeg_type_by_cohort.3.pct_LTM_of_known,0.051
+2717,Main,Results,EEG type GCS % LTM,94.3,CSV.eeg_type_by_cohort.1.pct_LTM_of_known,0.051
+2718,Main,Results,EEG type CAM-S % LTM,63.7,CSV.eeg_type_by_cohort.0.pct_LTM_of_known,0.051
+2719,Main,Results,EEG type RASS % routine,5.2,CSV.eeg_type_by_cohort.3.pct_routine_of_known,0.051
+2720,Main,Results,EEG type GCS % routine,4.4,CSV.eeg_type_by_cohort.1.pct_routine_of_known,0.051
+2721,Main,Results,EEG type CAM-S % routine,36.3,CSV.eeg_type_by_cohort.0.pct_routine_of_known,0.051
+2722,Main,Methods; Supp,"MORGOTH pretraining, test patients",111,CSV.morgoth_overlap_counts.0.Test,0
+2723,Main,Methods; Supp,"MORGOTH HEEDB training, test patients",74,CSV.morgoth_overlap_counts.1.Test,0
+2724,Main,Methods; Supp,"MORGOTH all-heads training, test patients",118,CSV.morgoth_overlap_counts.2.Test,0
+2725,Main,Methods; Supp,"MORGOTH pretraining or training, test patients",193,CSV.morgoth_overlap_counts.4.Test,0
+2726,Main,Methods; Supp,"MORGOTH pretraining, NESI training patients",886,CSV.morgoth_overlap_counts.0.Train,0
+2727,Main,Methods; Supp,"MORGOTH all-heads training, NESI training patients",731,CSV.morgoth_overlap_counts.2.Train,0
+2728,Main,Methods; Supp,"MORGOTH pretraining, validation patients",87,CSV.morgoth_overlap_counts.0.Val,0
+2729,Main,Methods; Supp,"MORGOTH all-heads training, validation patients",68,CSV.morgoth_overlap_counts.2.Val,0
+2730,Main,Discussion; Supp,RASS>0 held-out segments,479,RASSPOS.excluded_segments,0
+2731,Supp,Supp RASS>0,RASS>0 held-out patients,89,RASSPOS.excluded_patients,0
+2732,Main,Results,"In-hospital deaths, %",23.4,MORT2.death_pct,0.051
+2733,Main,Methods,"GCS test patients, %",7.8,split.GCS.test_pct,0.051
+2734,Main,Methods,"CAM-S test patients, %",20.1,split.CAMS.test_pct,0.051
+2735,Main,Methods,"ICANS test patients, %",19.8,split.ICANS.test_pct,0.051
+2736,Main,Methods,"RASS test patients, %",6.0,split.RASS.test_pct,0.051
+2737,Main,Results; Fig 2,RASS bespoke rho CI low,0.60,RASS.bespoke_pt_lo,0.0051
+2738,Main,Results; Fig 2,RASS bespoke rho CI high,0.71,RASS.bespoke_pt_hi,0.0051
+2739,Main,Results; Fig 2,GCS bespoke rho CI low,0.62,GCS.bespoke_pt_lo,0.0051
+2740,Main,Results; Fig 2,GCS bespoke rho CI high,0.71,GCS.bespoke_pt_hi,0.0051
+2741,Main,Results; Fig 2,CAMS bespoke rho CI low,0.71,CAMS.bespoke_pt_lo,0.0051
+2742,Main,Results; Fig 2,CAMS bespoke rho CI high,0.84,CAMS.bespoke_pt_hi,0.0051
+2743,Main,Results; Fig 2,ICANS bespoke rho CI low,0.63,ICANS.bespoke_pt_lo,0.0051
+2744,Main,Results; Fig 2,ICANS bespoke rho CI high,0.85,ICANS.bespoke_pt_hi,0.0051

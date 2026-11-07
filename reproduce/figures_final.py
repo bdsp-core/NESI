@@ -3,8 +3,7 @@
 
 The scripts themselves stay as they are: each is copied into the working copy
 built by run_all.py with the label changes below, and run there. Fig 2's
-patient-level CIs are cached in NESI_DATA_ROOT/intermediates/fig2_patient_ci.csv,
-so later runs only replot.
+patient-level CIs come from analyses.correlations, the same values the text reports.
 """
 import os
 import shutil
@@ -29,37 +28,6 @@ FOOT2 = (
 )
 
 
-def patient_ci(boot=1000):
-    """95% CIs resampling patients, for the universal and bespoke models on the test set."""
-    path = INTER / "fig2_patient_ci.csv"
-    if path.exists():
-        return pd.read_csv(path)
-    rng = np.random.default_rng(0)
-    f = pd.read_csv(ROOT / "github_moved/NESI/Bespoke_models/Results/Final_NESIscores_full_dataset_result.csv", low_memory=False)
-    rows = []
-    for ds in SCALES:
-        b = pd.read_csv(ROOT / f"github_moved/NESI/Bespoke_models/Results/{ds}Bespokescore_results.csv")
-        t = f[(f.Dataset == ds) & (f.Split == "Test")].merge(b[["MorgothOutputFilename", "BespokeBadnessScore"]], on="MorgothOutputFilename").reset_index(drop=True)
-        groups = list(t.groupby("BDSPPatientID").indices.values())
-        for model, col in [("universal", "NESI"), ("bespoke", "BespokeBadnessScore")]:
-            a, x, v = t.RawScore.values, t[col].values, []
-            for _ in range(boot):
-                i = np.concatenate([groups[j] for j in rng.integers(0, len(groups), len(groups))])
-                v.append(abs(stats.spearmanr(a[i], x[i])[0]))
-            rows.append(dict(Scale=ds, Model=model, lo=np.percentile(v, 2.5), hi=np.percentile(v, 97.5)))
-    r = pd.DataFrame(rows)
-    INTER.mkdir(exist_ok=True)
-    r.to_csv(path, index=False)
-    return r
-
-
-# CIs as printed in the manuscript's Results text. Fresh bootstraps agree to within Monte Carlo error (checked in main).
-REPORTED_CI = {
-    ("RASS", "universal"): (0.66, 0.76), ("GCS", "universal"): (0.68, 0.76), ("CAMS", "universal"): (0.79, 0.88), ("ICANS", "universal"): (0.72, 0.90),
-    ("RASS", "bespoke"): (0.60, 0.71), ("GCS", "bespoke"): (0.63, 0.72), ("CAMS", "bespoke"): (0.70, 0.84), ("ICANS", "bespoke"): (0.62, 0.84),
-}
-
-
 def run(rel, patches, outputs):
     """Run a patched copy of a script in the working copy, then collect its figures."""
     src = WORK / rel
@@ -82,14 +50,23 @@ def run(rel, patches, outputs):
         shutil.copy2(WORK / a, OUT / b)
 
 
+def text_ci():
+    """The patient-level CIs reported in the text, computed by analyses.correlations (claims.csv checks them), so the
+    panel labels and the text cannot disagree."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import analyses
+
+    ctx = analyses.Context(Path(__file__).resolve().parents[1], ROOT, BUILD / "output", 1000)
+    analyses.correlations(ctx)
+    n = ctx.num
+    return {(ds, m): (round(float(n[f"{ds}.{k}_lo"]), 2), round(float(n[f"{ds}.{k}_hi"]), 2))
+            for ds in SCALES for m, k in [("universal", "rho_pt"), ("bespoke", "bespoke_pt")]}
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    ci = patient_ci()
-    for r in ci.itertuples():
-        lo, hi = REPORTED_CI[(r.Scale, r.Model)]
-        if abs(r.lo - lo) > 0.015 or abs(r.hi - hi) > 0.015:
-            sys.exit(f"Fig 2 CI for {r.Scale} {r.Model} is {r.lo:.3f}-{r.hi:.3f}; the manuscript says {lo}-{hi}")
-    table = REPORTED_CI
+    table = text_ci()
+    print("Fig 2 patient-level CIs:", table)
     run(
         "figures/main/Codes/FAST_NESIvsBeSpoke_plot.py",
         [

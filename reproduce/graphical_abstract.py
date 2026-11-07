@@ -7,6 +7,7 @@ all 8,274 patients). Agreement values are the held-out test-set correlations wit
 patient-level bootstrap CIs, and the external values are those in Results (Fig. 7).
 """
 import os
+import sys
 from pathlib import Path
 
 import matplotlib
@@ -22,8 +23,15 @@ OUT = Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build")) / "output" 
 SCORES = ROOT / "github_moved/NESI/Bespoke_models/Results/Final_NESIscores_full_dataset_result.csv"
 INK, MUTED, EDGE = "#222222", "#555555", "#9a9a9a"
 LEVELS = [-2, -1, 0, 1, 2]
-ROWS = [("GCS", "GCS", "0.72 (0.68–0.76)"), ("RASS", "RASS", "0.72 (0.66–0.76)"),
-        ("CAM-S", "CAMS", "0.84 (0.79–0.88)"), ("ICANS", "ICANS", "0.83 (0.72–0.90)")]
+# Agreement as reported in the text (bootstrap mean, patient-bootstrap 95% CI), computed by analyses.correlations.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import analyses  # noqa: E402
+
+_ctx = analyses.Context(Path(__file__).resolve().parents[1], ROOT, Path(os.environ.get("NESI_BUILD_ROOT", ROOT.parent / "build")) / "output", 1000)
+analyses.correlations(_ctx)
+_n = _ctx.num
+_agree = lambda ds: f"{_n[ds + '.rho_mean_boot']:.2f} ({_n[ds + '.rho_pt_lo']:.2f}–{_n[ds + '.rho_pt_hi']:.2f})"
+ROWS = [("GCS", "GCS", _agree("GCS")), ("RASS", "RASS", _agree("RASS")), ("CAM-S", "CAMS", _agree("CAMS")), ("ICANS", "ICANS", _agree("ICANS"))]
 
 d = pd.read_csv(SCORES, usecols=["BDSPPatientID", "Dataset", "RawScore", "NESI"], low_memory=False)
 typical, counts = {}, {}
