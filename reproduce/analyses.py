@@ -177,6 +177,7 @@ def supp_table1(ctx):
         for lvl, v in f[(f.Dataset == ds) & (f.Split == "Test")].groupby("RawScore").NESI:
             q = (v.median(), v.quantile(0.25), v.quantile(0.75))
             rows.append(dict(Scale=ds, Score=int(lvl), Median=q[0], Q1=q[1], Q3=q[2], N=len(v)))
+            ctx.num[f"T1.{ds}.{int(lvl)}.n"] = len(v)
             for name, val in zip(["med", "q1", "q3"], q):
                 ctx.num[f"T1.{ds}.{int(lvl)}.{name}"] = val
     ctx.table(pd.DataFrame(rows).round(3), "supp_table1")
@@ -313,6 +314,10 @@ def retest(ctx):
     n["RETEST.pairs"], n["RETEST.patients"], n["RETEST.sem"] = len(p), p.BDSPPatientID.nunique(), sem
     n["RETEST.mdc"] = 1.96 * np.sqrt(2) * sem
     n["RETEST.icc"] = 1 - sem**2 / np.concatenate([p.n, p.pn]).var(ddof=1)
+    med = ctx.meds().groupby("r").n.median()  # median NESI at each RASS level, all assessments
+    adj = (med.loc[-4:-1].values[:-1] - med.loc[-4:-1].values[1:])
+    n["RETEST.adj_min"], n["RETEST.adj_max"] = adj.min(), adj.max()
+    n["RETEST.range_5_0"] = med.loc[-5] - med.loc[0]
 
 
 def _sedation_groups(ctx):
@@ -365,6 +370,8 @@ def sedation_range(ctx):
     5,000 observations; own seed, so other bootstraps are unchanged), and its correlation recomputed."""
     n = ctx.num
     d, G = _sedation_groups(ctx)
+    for k, v in G.items():
+        n[f"T11.{k}.rass_sd"] = d[v].r.std()
     rng = np.random.default_rng(2026)
     ref = d[G["Reference"]]
     by_level = {r: g.index.values for r, g in ref.groupby("r")}

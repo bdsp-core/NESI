@@ -1024,3 +1024,20 @@ id,doc,location,description,expected,key,tolerance
 1046,Main,"Results, sedative groups",Reference rho at opioid-only RASS distribution,0.57,T11.OpioidOnly.ref_matched_rho,0.0051
 1047,Main,"Results, sedative groups",Reference rho at ketamine RASS distribution,0.75,T11.Ketamine.ref_matched_rho,0.0051
 1048,Main,"Results, sedative groups; Discussion",Reference rho at dexmedetomidine RASS distribution,0.55,T11.Dexmedetomidine.ref_matched_rho,0.0051
+1049,Supp,Supp Table 14,"RASS SD, reference",1.81,T11.Reference.rass_sd,0.0051
+1050,Supp,Supp Table 14,"RASS SD, propofol",1.21,T11.Propofol.rass_sd,0.0051
+1051,Supp,Supp Table 14,"RASS SD, dexmedetomidine",1.42,T11.Dexmedetomidine.rass_sd,0.0051
+1052,Supp,Supp Table 14,"RASS SD, midazolam",0.87,T11.Midazolam.rass_sd,0.0051
+1053,Supp,Supp Table 14,"RASS SD, midazolam + propofol",0.67,T11.MidazolamPropofol.rass_sd,0.0051
+1054,Supp,Supp Table 14,"RASS SD, ketamine",2.12,T11.Ketamine.rass_sd,0.0051
+1055,Supp,Supp Table 14,"RASS SD, opioid only",1.37,T11.OpioidOnly.rass_sd,0.0051
+1056,Supp,Supp Table 14,"RASS SD, all observations",1.77,T11.All.rass_sd,0.0051
+1057,Supp,Supp Table 14,"RASS SD, no infusion in prior 24 h",1.74,T11.NoInfusion24h.rass_sd,0.0051
+1058,Supp,Supp Table 14,"RASS SD, no infusion in prior 24 h and no ASM",1.93,T11.NoInfusion24hNoASM.rass_sd,0.0051
+1059,Main,"Results, retest",Smallest median NESI difference between adjacent RASS levels -4 to -1,0.24,RETEST.adj_min,0.0051
+1060,Main,"Results, retest",Largest median NESI difference between adjacent RASS levels -4 to -1,0.48,RETEST.adj_max,0.0051
+1061,Main,"Results, retest",Median NESI difference between RASS -5 and 0,3.46,RETEST.range_5_0,0.0051
+1062,Main,Results; Supp Table 1,Test observations at CAM-S 2,6,T1.CAMS.2.n,0
+1063,Main,Results; Supp Table 1,Test observations at CAM-S 3,6,T1.CAMS.3.n,0
+1064,Main,Results; Supp Table 1,Test observations at CAM-S 4,4,T1.CAMS.4.n,0
+1065,Main,Results; Supp Table 1,Test observations at CAM-S 5,8,T1.CAMS.5.n,0

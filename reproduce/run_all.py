@@ -327,7 +327,7 @@ def report(rows, log, torch_log, scripts):
         st = kind
         if kind == SCRIPT:
             runs = [scripts.get(k, {}) for k in detail.split(",")]
-            st = "FAILED" if not all(r.get("ok") for r in runs) else ("ok" if item.startswith("Table") or all(r["figures"] for r in runs) else "ran, wrote no figure")
+            st = "not run" if not any(runs) else "FAILED" if not all(r.get("ok") for r in runs) else ("ok" if item.startswith("Table") or all(r["figures"] for r in runs) else "ran, wrote no figure")
         L.append(f"| {item} | {st} | {detail} |")
     (OUT / "REPORT.md").write_text("\n".join(L) + "\n")
     print(f"\nReport: {OUT / 'REPORT.md'}\nNumbers: {dict(c)}")
