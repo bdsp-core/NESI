@@ -9,3 +9,6 @@ seaborn
 shap
 statsmodels
 torch
+python-docx
+python-anesthesia-simulator  # install with --no-deps (Supp Table 19 check)
+control  # needed by python-anesthesia-simulator
